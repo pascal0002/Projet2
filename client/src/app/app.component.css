@@ -10,9 +10,18 @@ header{
   padding-right: 20px;
 }
 
-
 h1{
   color: #2e88b3;
   font-size: 80px;
 }
 
+input{
+  display: block;
+  margin:auto;
+}
+
+button{
+  display: block;
+  margin:auto;
+  color: #2e88b3;
+}
