@@ -13,8 +13,6 @@ export class AppComponent implements OnInit {
   public readonly title: string = "LOG2990";
   public message: string;
 
-  public username: string;
-
   public ngOnInit(): void {
     this.basicService
       .basicGet()
