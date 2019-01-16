@@ -1,0 +1,17 @@
+.fichePVDSimple{
+    height: 325px;
+    width: 400px;
+    margin-left: 33px;
+    margin-top: 15px;
+    -moz-box-shadow: -2px 2px 12px #c0c0c0;
+	-webkit-box-shadow: -2px 2px 12px #c0c0c0;
+	box-shadow: -2px 2px 12px #c0c0c0;
+    margin-bottom: 25px;
+    border: 1px solid lightgray
+}
+
+.titreFiche{
+    font-family:'Lobster', Georgia, Times, serif;
+    color: #13315C;
+    font-size: 19px;
+}
