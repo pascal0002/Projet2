@@ -2,12 +2,11 @@
   <div id="logo"><img src="../../assets/logo.png" /> <span>PolyDiff</span></div>
 
   <div id="login-form">
-    <h3>Login</h3>
-    <div><i class="fas fa-user"></i> <input [(ngModel)]="username" placeholder="Username" maxlength="20" minlength="3" /></div>
+    <h3>Login <i class="fas fa-key"></i></h3>
 
-    <br />
+    <div class="field" [class.unvalidated]="!usernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" maxlength="20" /></div>
 
-    <button>Play now !</button>
+    <button>Play</button>
     <h1>{{ username }}</h1>
   </div>
 </main>

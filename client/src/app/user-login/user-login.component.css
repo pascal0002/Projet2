@@ -72,7 +72,7 @@
   border-left: #7acbcf solid 5px;
 }
 
-#login-form i {
+#login-form .field i {
   color: #475260;
 
   margin: 0 15px 0 8px;
@@ -83,10 +83,16 @@
   vertical-align: middle;
 }
 
-#login-form div {
+#login-form .field {
   background-color: white;
   border-top: 3px solid #13315c;
   border-bottom: 3px solid #13315c;
+  margin-bottom: 30px;
+}
+
+#login-form .field.unvalidated {
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
 }
 
 #login-form h3 {
