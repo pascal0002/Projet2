@@ -1,31 +1,19 @@
 {
-  "rulesDirectory": [
-    "node_modules/codelyzer",
-    "node_modules/tslint-microsoft-contrib"
-  ],
+  "rulesDirectory": ["node_modules/codelyzer", "node_modules/tslint-microsoft-contrib"],
   "rules": {
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
-    "comment-format": [
-      true,
-      "check-space"
-    ],
+    "comment-format": [true, "check-space"],
     "curly": true,
     "deprecation": {
       "severity": "warn"
     },
     "eofline": true,
     "forin": true,
-    "import-blacklist": [
-      true,
-      "rxjs/Rx"
-    ],
+    "import-blacklist": [true, "rxjs/Rx"],
     "import-spacing": true,
-    "indent": [
-      true,
-      "spaces"
-    ],
+    "indent": [true, "spaces"],
     "trailing-comma": [
       true,
       {
@@ -39,25 +27,12 @@
     ],
     "interface-over-type-literal": true,
     "label-position": true,
-    "max-line-length": [
-      true,
-      140
-    ],
-    "member-access": [
-      true,
-      "check-accessor",
-      "check-constructor",
-      "check-parameter-property"
-    ],
+    "max-line-length": [true, 140],
+    "member-access": [true, "check-accessor", "check-constructor", "check-parameter-property"],
     "member-ordering": [
       true,
       {
-        "order": [
-          "static-field",
-          "instance-field",
-          "static-method",
-          "instance-method"
-        ]
+        "order": ["static-field", "instance-field", "static-method", "instance-method"]
       }
     ],
     "ordered-imports": [
@@ -69,15 +44,7 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
-    "no-console": [
-      true,
-      "debug",
-      "info",
-      "time",
-      "timeEnd",
-      "trace",
-      "log"
-    ],
+    "no-console": [true, "debug", "info", "time", "timeEnd", "trace", "log"],
     "no-construct": true,
     "no-conditional-assignment": true,
     "no-debugger": true,
@@ -98,28 +65,12 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "one-line": [
-      true,
-      "check-open-brace",
-      "check-catch",
-      "check-else",
-      "check-whitespace"
-    ],
+    "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
     "prefer-const": true,
-    "quotemark": [
-      true,
-      "double",
-      "avoid-escape"
-    ],
+    "quotemark": [true, "double", "avoid-escape"],
     "radix": true,
-    "semicolon": [
-      true,
-      "always"
-    ],
-    "triple-equals": [
-      true,
-      "allow-null-check"
-    ],
+    "semicolon": [true, "always"],
+    "triple-equals": [true, "allow-null-check"],
     "typedef-whitespace": [
       true,
       {
@@ -131,20 +82,8 @@
       }
     ],
     "unified-signatures": true,
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore"
-    ],
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
-    ],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"],
     "no-output-on-prefix": true,
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
@@ -157,33 +96,17 @@
     "directive-class-suffix": true,
     "no-sparse-arrays": true,
     "no-irregular-whitespace": true,
-    "cyclomatic-complexity": [
-      true,
-      20
-    ],
-    "max-classes-per-file": [
-      true,
-      2
-    ],
+    "cyclomatic-complexity": [true, 20],
+    "max-classes-per-file": [true, 2],
     "no-unsafe-finally": true,
     "no-unused-variable": true,
-    "align": [
-      true,
-      "arguments",
-      "elements",
-      "members",
-      "parameters",
-      "statements"
-    ],
+    "align": [true, "arguments", "elements", "members", "parameters", "statements"],
     "arrow-parens": true,
     "no-any": true,
     "no-magic-numbers": true,
     "only-arrow-functions": true,
     "adjacent-overload-signatures": true,
-    "max-file-line-count": [
-      true,
-      300
-    ],
+    "max-file-line-count": [true, 300],
     "no-duplicate-imports": true,
     "binary-expression-operand-order": true,
     "ban-comma-operator": true,
@@ -206,33 +129,18 @@
     "promise-function-async": true,
     "await-promise": true,
     "no-floating-promises": true,
-    "no-invalid-this": [
-      true,
-      "check-function-in-method"
-    ],
+    "no-invalid-this": [true, "check-function-in-method"],
     "no-return-await": true,
     "no-this-assignment": [
       true,
       {
-        "allowed-names": [
-          "^self$"
-        ],
+        "allowed-names": ["^self$"],
         "allow-destructuring": false
       }
     ],
-    "prefer-conditional-expression": [
-      true,
-      "check-else-if"
-    ],
+    "prefer-conditional-expression": [true, "check-else-if"],
     "switch-default": true,
-    "typedef": [
-      true,
-      "call-signature",
-      "parameter",
-      "member-variable-declaration",
-      "property-declaration",
-      "variable-declaration"
-    ],
+    "typedef": [true, "call-signature", "parameter", "member-variable-declaration", "property-declaration", "variable-declaration"],
     "max-func-body-length": [
       true,
       30,

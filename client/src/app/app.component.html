@@ -1,11 +1,11 @@
-<header>
-  <img id="logo" src="https://www.baggette.co.uk/wp-content/uploads/2016/09/cropped-favicon.png"/>
-  <h1> PolyDiff </h1>
-</header>
+<!--à séparer dans un component (login) par exemple -->
+<main id="login-container">
+  <div id="logo"><img src="../assets/logo.png" /> <span>PolyDiff</span></div>
 
-<div>
-    <input [(ngModel)]="username" placeholder="Username">
-    <br>
-    <button> Play now !</button>
-    <h1> {{username}} </h1>
-</div>
+  <div id="login-form">
+    <h3>Login</h3>
+    <input [(ngModel)]="username" placeholder="Username" /> <br />
+    <button>Play now !</button>
+    <h1>{{ username }}</h1>
+  </div>
+</main>
