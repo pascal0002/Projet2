@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { UserLoginService } from "../user-login.service";
 
 @Component({
@@ -6,10 +6,11 @@ import { UserLoginService } from "../user-login.service";
   templateUrl: "./user-login.component.html",
   styleUrls: ["./user-login.component.css"],
 })
-export class UserLoginComponent {
+export class UserLoginComponent implements OnInit {
   public username: string;
   public usernameValid: boolean = true;
-  private readonly usernameMinLength: number = 3;
+  public readonly usernameMinLength: number = 3;
+  public readonly usernameMaxLenght: number = 20;
 
   public constructor(private userLoginServie: UserLoginService) {}
   public validateUsername(u: string): void {
@@ -26,4 +27,6 @@ export class UserLoginComponent {
       );
     }
   }
+
+  public ngOnInit() {}
 }

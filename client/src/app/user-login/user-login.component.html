@@ -4,9 +4,8 @@
   <div id="login-form">
     <h3>Login <i class="fas fa-key"></i></h3>
 
-    <div class="field" [class.unvalidated]="!usernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" maxlength="20" /></div>
+    <div class="field" [class.unvalidated]="!usernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" [maxlength]="usernameMaxLenght" /></div>
 
-    <button>Play</button>
-    <h1>{{ username }}</h1>
+    <button [disabled]="!usernameValid">Play</button>
   </div>
 </main>
