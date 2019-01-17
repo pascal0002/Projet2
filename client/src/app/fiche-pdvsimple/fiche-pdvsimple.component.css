@@ -10,7 +10,7 @@
     border: 1px solid lightgray;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 5fr
+    grid-template-rows: 1fr 7fr
 }
 
 .titreFiche{
@@ -48,10 +48,6 @@
 
 .scoreFiche{
   font-size: 12px;
-}
-
-.divBouton{
-  text-align: center;
 }
 
 .boutonFiche{
