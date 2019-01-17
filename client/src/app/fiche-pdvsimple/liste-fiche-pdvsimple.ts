@@ -1,6 +1,6 @@
-import {fichePDVSimple12} from './fiche-pdvsimple';
+import {fichePDVSimple} from './fiche-pdvsimple';
 
-export const LISTE_FICHE_PDV_SIMPLE: fichePDVSimple12[] =[
+export const LISTE_FICHE_PDV_SIMPLE: fichePDVSimple[] =[
     {   titre: "Nissan", 
         nomImage: 'nissan_patrol.jpg',
         meilleurTempsSolo: ['1:21 Paul', '1:34 AAA', '1:45 OOO'],
