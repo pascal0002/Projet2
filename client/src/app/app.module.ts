@@ -13,7 +13,7 @@ import { FichePDVSimpleComponent } from './fiche-pdvsimple/fiche-pdvsimple.compo
   declarations: [
     AppComponent,
     VueListeDesPartiesComponent,
-    FichePDVSimpleComponent,
+    FichePDVSimpleComponent
   ],
   imports: [
     BrowserModule,

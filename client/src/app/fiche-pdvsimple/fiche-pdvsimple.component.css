@@ -10,7 +10,8 @@
     border: 1px solid lightgray;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 7fr
+    grid-template-rows: 1fr 7fr;
+    margin-bottom: 50px;
 }
 
 .titreFiche{
