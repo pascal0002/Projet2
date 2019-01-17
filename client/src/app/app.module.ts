@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
+import { UserLoginService} from "./user-login.service";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from '@angular/forms';
 import { UserLoginComponent } from './user-login/user-login.component';
@@ -10,14 +11,14 @@ import { UserLoginComponent } from './user-login/user-login.component';
 @NgModule({
   declarations: [
     AppComponent,
-    UserLoginComponent
+    UserLoginComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
-  providers: [BasicService],
-  bootstrap: [AppComponent]
+  providers: [BasicService, UserLoginService],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
