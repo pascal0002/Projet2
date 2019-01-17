@@ -7,11 +7,48 @@
 	-webkit-box-shadow: -2px 2px 12px #c0c0c0;
 	box-shadow: -2px 2px 12px #c0c0c0;
     margin-bottom: 25px;
-    border: 1px solid lightgray
+    border: 1px solid lightgray;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 3fr
 }
 
 .titreFiche{
     font-family:'Lobster', Georgia, Times, serif;
     color: #13315C;
-    font-size: 19px;
+    font-size: 30px;
+    margin-top: 20px
+}
+
+.sectionsFiche{
+    font-family:'Lobster', Georgia, Times, serif;
+    color: #13315B;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-areas:
+    "image mode mode"
+    "image score score"
+    "image score score"
+    "image score score"
+    "image bouton bouton"
+}
+
+.imageFiche{
+  grid-area:image;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.modeFiche{
+
+}
+
+.scoreFiche{
+
+}
+
+.boutonFiche{
+
 }
