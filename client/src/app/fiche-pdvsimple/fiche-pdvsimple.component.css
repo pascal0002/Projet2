@@ -1,5 +1,5 @@
 .ficheSimple{
-    height: 325px;
+    height: 450px;
     width: 400px;
     margin-left: 33px;
     margin-top: 15px;
@@ -10,7 +10,7 @@
     border: 1px solid lightgray;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1fr 3fr
+    grid-template-rows: 1fr 5fr
 }
 
 .titreFiche{
@@ -25,13 +25,14 @@
     color: #13315B;
     font-size: 20px;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
-    "image mode mode"
-    "image score score"
-    "image score score"
-    "image score score"
-    "image bouton bouton"
+    "image image"
+    "mode mode"
+    "score score"
+    "score score"
+    "score score"
+    "bouton bouton"
 }
 
 .imageFiche{
@@ -46,12 +47,16 @@
 }
 
 .scoreFiche{
+  font-size: 12px;
+}
 
+.divBouton{
+  text-align: center;
 }
 
 .boutonFiche{
-  display: flex;
-  /*justify-content: center; 
+  /*display: flex;
+  justify-content: center; 
   align-items: center;
   border-radius: 50%;
   background-color:lightgray;
@@ -64,8 +69,10 @@
     font-size: 15px;
     padding-top: 9px;
     margin-right: 10px;
+    margin-left: 10px;
     margin-bottom: 8px;
     height: 30px;
+    width: 50%;
     border: 1px solid #2d6898;
     background-image: linear-gradient(bottom, #13315C,rgb(97,155,203) 100%);
     background-image: -o-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
