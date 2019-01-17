@@ -21,7 +21,7 @@
 }
 
 .sectionsFiche{
-    font-family:'Lobster', Georgia, Times, serif;
+    font-family:'Poppins';
     color: #13315B;
     font-size: 20px;
     display: grid;
@@ -51,9 +51,35 @@
 
 .boutonFiche{
   display: flex;
-  justify-content: center; 
+  /*justify-content: center; 
   align-items: center;
   border-radius: 50%;
   background-color:lightgray;
-  margin: 5px
+  margin: 5px*/
+  display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #13315C;
+    font-size: 15px;
+    padding-top: 9px;
+    margin-right: 10px;
+    margin-bottom: 8px;
+    height: 30px;
+    border: 1px solid #2d6898;
+    background-image: linear-gradient(bottom, #13315C,rgb(97,155,203) 100%);
+    background-image: -o-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    background-image: -moz-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    background-image: -webkit-linear-gradient(bottom,#13315C, rgb(97,155,203) 100%);
+    background-image: -ms-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-shadow: 0px -1px 0px rgba(0,0,0,.5);
+    -webkit-box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    -moz-box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
 }
+
+
