@@ -22,15 +22,15 @@
       <div class="ficheSimple">
           <div class="titreFiche"> {{fiche.titre}}</div>
           <div class="sectionsFiche"> 
-              <div class="imageFiche"><img src="assets/images/nissan_patrol.jpg" height="185px" width="210px" ></div>
+              <div class="imageFiche"><img src="{{fiche.nomImage}}" height="185px" width="210px" ></div>
               <div class="modeFiche">Solo</div> 
               <div class="modeFiche">1VS1</div> 
-              <div class="scoreFiche"></div> 
-              <div class="scoreFiche">2:22 BBB</div> 
-              <div class="scoreFiche">3:33 CCC</div> 
-              <div class="scoreFiche">4:44 DDD</div>  
-              <div class="scoreFiche">5:55 EEE</div> 
-              <div class="scoreFiche">6:00 FFF</div> 
+              <div class="scoreFiche">{{fiche.meilleurTempsSolo[0]}}</div> 
+              <div class="scoreFiche">{{fiche.meilleurTemps1V1[0]}}</div> 
+              <div class="scoreFiche">{{fiche.meilleurTempsSolo[1]}}</div> 
+              <div class="scoreFiche">{{fiche.meilleurTemps1V1[1]}}</div>  
+              <div class="scoreFiche">{{fiche.meilleurTempsSolo[2]}}</div> 
+              <div class="scoreFiche">{{fiche.meilleurTemps1V1[2]}}</div> 
               <div class="boutonFiche" onclick="">Jouer</div> 
               <div class="boutonFiche" onclick="">Créer</div>    
           </div>
