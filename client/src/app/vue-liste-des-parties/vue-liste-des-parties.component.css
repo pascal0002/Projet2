@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
 .cadrageFichesWrapper{
     text-align: center;
    
@@ -17,7 +19,7 @@
 }
 
 .titrePDVSimple{
-    font-family:'Lobster', Georgia, Times, serif;
+    font-family:'Poppins';
     text-align: center;
     border-bottom: 1px solid black;
     padding-top: 20px;
@@ -25,14 +27,14 @@
     font-size: 20px;
     width: 50%;
     color: white;
-    background-color: #3ca7d2;
+    background-color: #13315c;
 
     /*Pour faire un degrade de couleur*/
     /*background-image: linear-gradient(#3ca7d2, #99ccff);*/
 }
 
 .titrePDVLibre{
-    font-family:'Lobster', Georgia, Times, serif;
+    font-family:'Poppins';
     text-align: center;
     padding-top: 20px;
     height: 55px;
@@ -40,9 +42,8 @@
     color: white;
     border-bottom: 1px solid black;
     width: 50%;
-    background-color: #3ca7d2;
+    background-color: #13315c;
 }
-
 .fichesWrapper{
     display: flex;    
     height: 494px;
@@ -69,9 +70,9 @@
     width: 400px;
     margin-left: 33px;
     margin-top: 15px;
-    -moz-box-shadow: -2px 2px 12px #c0c0c0;
-	-webkit-box-shadow: -2px 2px 12px #c0c0c0;
-	box-shadow: -2px 2px 12px #c0c0c0;
+    -webkit-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
+    box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
     margin-bottom: 25px;
     border: 1px solid lightgray;
 }
