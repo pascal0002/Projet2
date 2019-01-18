@@ -8,12 +8,16 @@ import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
 import { VueListeDesPartiesComponent } from './vue-liste-des-parties/vue-liste-des-parties.component';
 import { FichePDVSimpleComponent } from './fiche-pdvsimple/fiche-pdvsimple.component';
+import { FichePDVLibreComponent } from './fiche-pdvlibre/fiche-pdvlibre.component';
+import { FicheParentComponent } from './fiche-parent/fiche-parent.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VueListeDesPartiesComponent,
-    FichePDVSimpleComponent
+    FichePDVSimpleComponent,
+    FichePDVLibreComponent,
+    FicheParentComponent
   ],
   imports: [
     BrowserModule,

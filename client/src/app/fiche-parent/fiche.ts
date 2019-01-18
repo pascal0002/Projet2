@@ -1,4 +1,4 @@
-export class fichePDVSimple{
+export class fiche{
     titre: string;
     nomImage: string;
     meilleurTempsSolo: string[];

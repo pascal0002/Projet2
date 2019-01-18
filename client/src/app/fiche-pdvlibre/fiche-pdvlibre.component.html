@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<div *ngFor="let fiche of listeFichePDVSimple">
+<div *ngFor="let fiche of listePDVLibre" >
     <div class="fiche">
         <div class="titreFiche"> {{fiche.titre}}</div>
         <div class="sectionsFiche"> 
@@ -10,21 +10,26 @@
               <i class="fas fa-medal" style="color: gold;"></i>
               {{fiche.meilleurTempsSolo[0]}}
             </div> 
-            <div class="scoreFiche">          
+            <div class="scoreFiche">
               <i class="fas fa-medal" style="color: gold;"></i>
-              {{fiche.meilleurTemps1V1[0]}}</div> 
+              {{fiche.meilleurTemps1V1[0]}}
+            </div> 
             <div class="scoreFiche">
               <i class="fas fa-medal" style="color: silver;"></i>
-              {{fiche.meilleurTempsSolo[1]}}</div> 
+              {{fiche.meilleurTempsSolo[1]}}
+            </div> 
             <div class="scoreFiche">
               <i class="fas fa-medal" style="color: silver;"></i>
-              {{fiche.meilleurTemps1V1[1]}}</div>  
+              {{fiche.meilleurTemps1V1[1]}}
+            </div>  
             <div class="scoreFiche">
               <i class="fas fa-medal" style="color: #cd7f32;"></i>
-              {{fiche.meilleurTempsSolo[2]}}</div> 
+              {{fiche.meilleurTempsSolo[2]}}
+            </div> 
             <div class="scoreFiche">
               <i class="fas fa-medal" style="color: #cd7f32;"></i>
-              {{fiche.meilleurTemps1V1[2]}}</div> 
+              {{fiche.meilleurTemps1V1[2]}}
+            </div> 
             <div>
               <div class="boutonFiche" onclick="">Jouer</div> 
             </div>
