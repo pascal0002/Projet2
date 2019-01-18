@@ -1,10 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
-.cadrageFichesWrapper{
+.gameCardsScreeningWrapper{
     text-align: center;
-   
 }
-.cadrageFiches{
+.gameCardsScreening{
     height: 570px;
     width: 930px;
     display: inline-block;
@@ -14,11 +13,11 @@
 
 }
 
-.titreWrapper{
+.titleWrapper{
     display: flex;
 }
 
-.titrePDVSimple{
+.title{
     font-family:'Poppins';
     text-align: center;
     border-bottom: 1px solid black;
@@ -30,18 +29,7 @@
     background-color: #13315c;
 }
 
-.titrePDVLibre{
-    font-family:'Poppins';
-    text-align: center;
-    padding-top: 20px;
-    height: 55px;
-    font-size: 20px;
-    color: white;
-    border-bottom: 1px solid black;
-    width: 50%;
-    background-color: #13315c;
-}
-.fichesWrapper{
+.gameCardsWrapper{
     display: flex;    
     height: 494px;
 
@@ -50,12 +38,12 @@
     overflow-x: hidden;
 }
 
-.fichesPDVSimple{
+.twoDimensionGameCards{
     width: 50%;   
     height: auto;
 }
 
-.fichesPDVLibre{
+.threeDimensionGameCards{
     width: 50%;
     height: 100%;
 }
