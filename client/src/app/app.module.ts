@@ -10,11 +10,12 @@ import { PartsListViewComponent } from './parts-list-view/parts-list-view.compon
 import { TwoDimensionGameCardComponent } from './2d-game-card/2d-game-card.component';
 import { ThreeDimensionGameCardComponent } from './3d-game-card/3d-game-card.component';
 import { GenericGameCardComponent } from './generic-game-card/generic-game-card.component';
+import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 
  const appRoutes: Routes =[
-   { path: 'admin', component: VueAdministrationComponent },
-   { path: '', component: VueListeDesPartiesComponent }
-  ];
+   { path: 'admin', component: AdministrationViewComponent },
+   { path: '', component: PartsListViewComponent }
+ ];
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { GenericGameCardComponent } from './generic-game-card/generic-game-card.
     PartsListViewComponent,
     TwoDimensionGameCardComponent,
     ThreeDimensionGameCardComponent,
-    GenericGameCardComponent
+    GenericGameCardComponent,
+    AdministrationViewComponent
   ],
   imports: [
     BrowserModule,
