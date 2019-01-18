@@ -10,6 +10,7 @@ import { VueListeDesPartiesComponent } from './vue-liste-des-parties/vue-liste-d
 import { FichePDVSimpleComponent } from './fiche-pdvsimple/fiche-pdvsimple.component';
 import { FichePDVLibreComponent } from './fiche-pdvlibre/fiche-pdvlibre.component';
 import { FicheParentComponent } from './fiche-parent/fiche-parent.component';
+import { VueAdministrationComponent } from './vue-administration/vue-administration.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FicheParentComponent } from './fiche-parent/fiche-parent.component';
     VueListeDesPartiesComponent,
     FichePDVSimpleComponent,
     FichePDVLibreComponent,
-    FicheParentComponent
+    FicheParentComponent,
+    VueAdministrationComponent
   ],
   imports: [
     BrowserModule,
