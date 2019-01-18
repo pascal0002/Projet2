@@ -12,21 +12,25 @@ export class UserLoginComponent implements OnInit {
   public readonly usernameMinLength: number = 3;
   public readonly usernameMaxLenght: number = 20;
 
-  public constructor(private userLoginServie: UserLoginService) {}
+  public constructor(private userLoginService: UserLoginService) { }
+
   public validateUsername(u: string): void {
-    const regex: RegExp = /^[0-9a-z]+$/i;
+    /*const regex: RegExp = /^[0-9a-z]+$/i;*/
 
     this.username = u;
-    this.usernameValid = regex.test(u) && u.length >= this.usernameMinLength;
+    /*this.usernameValid = regex.test(u) && u.length >= this.usernameMinLength;*/
 
-    if (this.usernameValid) {
-      this.userLoginServie
+    this.userLoginService
       .validateUsername(this.username)
       .subscribe(
-        (message: boolean) => {console.log("ok"); },
+        (validity: boolean) => { console.log(validity); this.usernameValid = validity; }
       );
-    }
   }
 
-  public ngOnInit() {}
+  public connect(u: string): void {
+    console.log("Trying to connect");
+    this.userLoginService.connect(this.username).subscribe();
+  }
+
+  public ngOnInit() { }
 }

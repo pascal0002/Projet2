@@ -6,6 +6,6 @@
 
     <div class="field" [class.unvalidated]="!usernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" [maxlength]="usernameMaxLenght" /></div>
 
-    <button [disabled]="!usernameValid">Play</button>
+    <button (click)="connect()" [disabled]="!usernameValid">Play</button>
   </div>
 </main>

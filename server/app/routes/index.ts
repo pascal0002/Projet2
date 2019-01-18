@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { Message } from "../../../common/communication/message";
 import "reflect-metadata";
+import { Message } from "../../../common/communication/message" // NE PAS SUPPRIMER
 import { injectable, } from "inversify";
 
 export module Route {
@@ -8,22 +8,24 @@ export module Route {
     @injectable()
     export class Index {
 
-        public helloWorld(req: Request, res: Response, next: NextFunction): void {
-            const message: Message = {
-                title: "Hello",
-                body: "World",
-            };
-            res.send(JSON.stringify(message));
-        }
+        private usersConnected: string[] = [];
 
         public validateUsername(req: Request, res: Response, next: NextFunction): void {
-            const username: string = req.body;
-            const message: boolean = this.isUsernameUnique(username);
-            res.send(JSON.stringify(message));
+            const username: string = req.body.username;
+            const validity: boolean = this.isUsernameUnique(username);
+            res.send(validity);
+        }
+
+        public connect(req: Request, res: Response, next: NextFunction): void {
+            const username: string = req.body.username;
+            this.usersConnected.push(username);
         }
 
         private isUsernameUnique(username: string): boolean {
-            return true;
+            console.log(this.usersConnected);
+            console.log(username);
+
+            return !this.usersConnected.includes(username);
         }
     }
 }
