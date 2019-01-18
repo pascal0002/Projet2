@@ -6,11 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { HttpClientModule } from "@angular/common/http";
-import { VueListeDesPartiesComponent } from './vue-liste-des-parties/vue-liste-des-parties.component';
-import { FichePDVSimpleComponent } from './fiche-pdvsimple/fiche-pdvsimple.component';
-import { FichePDVLibreComponent } from './fiche-pdvlibre/fiche-pdvlibre.component';
-import { FicheParentComponent } from './fiche-parent/fiche-parent.component';
-import { VueAdministrationComponent } from './vue-administration/vue-administration.component';
+import { PartsListViewComponent } from './parts-list-view/parts-list-view.component';
+import { TwoDimensionGameCardComponent } from './2d-game-card/2d-game-card.component';
+import { ThreeDimensionGameCardComponent } from './3d-game-card/3d-game-card.component';
+import { GenericGameCardComponent } from './generic-game-card/generic-game-card.component';
 
  const appRoutes: Routes =[
    { path: 'admin', component: VueAdministrationComponent },
@@ -20,11 +19,10 @@ import { VueAdministrationComponent } from './vue-administration/vue-administrat
 @NgModule({
   declarations: [
     AppComponent,
-    VueListeDesPartiesComponent,
-    FichePDVSimpleComponent,
-    FichePDVLibreComponent,
-    FicheParentComponent,
-    VueAdministrationComponent
+    PartsListViewComponent,
+    TwoDimensionGameCardComponent,
+    ThreeDimensionGameCardComponent,
+    GenericGameCardComponent
   ],
   imports: [
     BrowserModule,

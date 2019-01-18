@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FichePDVSimpleComponent } from './fiche-pdvsimple.component';
+import { AdministrationViewComponent } from './administration-view.component';
 
-describe('FichePDVSimpleComponent', () => {
-  let component: FichePDVSimpleComponent;
-  let fixture: ComponentFixture<FichePDVSimpleComponent>;
+describe('AdministrationViewComponent', () => {
+  let component: AdministrationViewComponent;
+  let fixture: ComponentFixture<AdministrationViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FichePDVSimpleComponent ]
+      declarations: [ AdministrationViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FichePDVSimpleComponent);
+    fixture = TestBed.createComponent(AdministrationViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
