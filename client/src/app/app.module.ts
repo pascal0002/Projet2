@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from '@angular/forms'; 
-
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
@@ -11,6 +11,11 @@ import { FichePDVSimpleComponent } from './fiche-pdvsimple/fiche-pdvsimple.compo
 import { FichePDVLibreComponent } from './fiche-pdvlibre/fiche-pdvlibre.component';
 import { FicheParentComponent } from './fiche-parent/fiche-parent.component';
 import { VueAdministrationComponent } from './vue-administration/vue-administration.component';
+
+ const appRoutes: Routes =[
+   { path: 'admin', component: VueAdministrationComponent },
+   { path: '', component: VueListeDesPartiesComponent }
+  ];
 
 @NgModule({
   declarations: [
@@ -24,7 +29,8 @@ import { VueAdministrationComponent } from './vue-administration/vue-administrat
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [BasicService],
   bootstrap: [AppComponent]
