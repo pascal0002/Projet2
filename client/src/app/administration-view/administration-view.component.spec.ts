@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VueAdministrationComponent } from './vue-administration.component';
+import { AdministrationViewComponent } from './administration-view.component';
 
-describe('VueAdministrationComponent', () => {
-  let component: VueAdministrationComponent;
-  let fixture: ComponentFixture<VueAdministrationComponent>;
+describe('AdministrationViewComponent', () => {
+  let component: AdministrationViewComponent;
+  let fixture: ComponentFixture<AdministrationViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VueAdministrationComponent ]
+      declarations: [ AdministrationViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VueAdministrationComponent);
+    fixture = TestBed.createComponent(AdministrationViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
