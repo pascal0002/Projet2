@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FicheParentComponent } from './fiche-parent.component';
+import { PartsListViewComponent } from './parts-list-view.component';
 
-describe('FicheParentComponent', () => {
-  let component: FicheParentComponent;
-  let fixture: ComponentFixture<FicheParentComponent>;
+describe('PartsListViewComponent', () => {
+  let component: PartsListViewComponent;
+  let fixture: ComponentFixture<PartsListViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FicheParentComponent ]
+      declarations: [ PartsListViewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FicheParentComponent);
+    fixture = TestBed.createComponent(PartsListViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

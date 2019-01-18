@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FichePDVSimpleComponent } from './fiche-pdvsimple.component';
+import { GenericGameCardComponent } from './generic-game-card.component';
 
-describe('FichePDVSimpleComponent', () => {
-  let component: FichePDVSimpleComponent;
-  let fixture: ComponentFixture<FichePDVSimpleComponent>;
+describe('GenericGameCardComponent', () => {
+  let component: GenericGameCardComponent;
+  let fixture: ComponentFixture<GenericGameCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FichePDVSimpleComponent ]
+      declarations: [ GenericGameCardComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FichePDVSimpleComponent);
+    fixture = TestBed.createComponent(GenericGameCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
