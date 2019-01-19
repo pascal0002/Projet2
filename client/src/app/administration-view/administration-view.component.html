@@ -1,3 +1,103 @@
-<p>
-    Admin view works!
-</p>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+    crossorigin="anonymous">
+
+<div class="adminMenu">
+    <div class="createCardButton">Créer une carte PDV simple (2D)</div>
+    <div class="createCardButton">Créer une carte PDV libre (3D)</div>
+</div>
+
+<div class="gameCardsScreeningWrapper" style="padding-top: 120px;" >
+    <div class="gameCardsScreening">
+        <div class="titleWrapper">
+            <div class="title">Point de vue simple (2D)</div>
+            <div class="title">Point de vue libre (3D)</div>
+        </div>
+
+        <div class="gameCardsWrapper">
+            <div class="twoDimensionGameCards">
+                <div *ngFor="let gameCard of twoDimensionGameCardListAdmin">
+                    <div class="gameCard" style="border: 4px solid darkgrey; margin-top: 30px;">
+                        <!--TODO: Add click event to delete button-->
+                        <div class="deleteButton"><i class="far fa-times-circle"></i></div>
+                        <div class="gameCardTitle"> {{gameCard.title}}</div>
+                        <div class="gameCardInfo">
+                            <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
+                            <div class="gameCardMode">Solo</div>
+                            <div class="gameCardMode">1VS1</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: gold;"></i>
+                                {{gameCard.bestTimeSolo[0]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: gold;"></i>
+                                {{gameCard.bestTime1v1[0]}}</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: silver;"></i>
+                                {{gameCard.bestTimeSolo[1]}}</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: silver;"></i>
+                                {{gameCard.bestTime1v1[1]}}</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                                {{gameCard.bestTimeSolo[2]}}</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                                {{gameCard.bestTime1v1[2]}}</div>
+                            <div>
+                                <div class="gameCardButton" onclick="">Jouer</div>
+                            </div>
+                            <div>
+                                <div class="gameCardButton" onclick="">Créer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="threeDimensionGameCards">
+                <div *ngFor="let gameCard of threeDimensionGameCardListAdmin">
+                    <!--TODO: Add click event to delete button-->
+                    <div class="gameCard" style="border: 4px solid darkgrey; margin-top: 30px;">
+                        <div class="deleteButton"><i class="far fa-times-circle"></i></div>
+                        <div class="gameCardTitle"> {{gameCard.title}}</div>
+                        <div class="gameCardInfo">
+                            <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
+                            <div class="gameCardMode">Solo</div>
+                            <div class="gameCardMode">1VS1</div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: gold;"></i>
+                                {{gameCard.bestTimeSolo[0]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: gold;"></i>
+                                {{gameCard.bestTime1v1[0]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: silver;"></i>
+                                {{gameCard.bestTimeSolo[1]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: silver;"></i>
+                                {{gameCard.bestTime1v1[1]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                                {{gameCard.bestTimeSolo[2]}}
+                            </div>
+                            <div class="gameCardScore">
+                                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                                {{gameCard.bestTime1v1[2]}}
+                            </div>
+                            <div>
+                                <div class="gameCardButton" onclick="">Jouer</div>
+                            </div>
+                            <div>
+                                <div class="gameCardButton" onclick="">Créer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

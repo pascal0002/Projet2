@@ -1,0 +1,36 @@
+.adminMenu{
+    color: white;
+    background-color: #13315C;
+    font-family: 'Poppins';
+    text-align: center;
+    height: 75px;
+    transform: translate(-8px,-15px);
+    width: 100%;
+    position: fixed;
+    margin-bottom: 1050px;
+    padding-top: 25px;
+}
+
+
+.createCardButton{
+    max-width: 300px;
+    display: inline-block;
+}
+
+.deleteButton{
+    color: #13315C;
+    text-align: right;
+    transform: translate(13px,-18px);
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 10px;
+}
+
+
+.fa-times-circle{
+    background-color: white;
+}
+
+.fa-times-circle:hover{
+    color: #7ACBCF;
+}

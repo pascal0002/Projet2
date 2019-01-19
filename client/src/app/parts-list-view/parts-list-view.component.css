@@ -9,8 +9,7 @@
     display: inline-block;
     -moz-box-shadow: -2px 2px 20px #c0c0c0;
 	-webkit-box-shadow: -2px 2px 20px #c0c0c0;
-	box-shadow: -2px 2px 20px #c0c0c0;
-
+    box-shadow: -2px 2px 20px #c0c0c0;
 }
 
 .titleWrapper{
@@ -32,8 +31,6 @@
 .gameCardsWrapper{
     display: flex;    
     height: 494px;
-
-    /*Scroll bar ici*/
     overflow-y: auto;
     overflow-x: hidden;
 }

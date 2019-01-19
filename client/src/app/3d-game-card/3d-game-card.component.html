@@ -1,43 +1,42 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<div *ngFor="let gameCard of threeDimensionGameCardList" >
-    <div class="gameCard">
-        <div class="gameCardTitle"> {{gameCard.title}}</div>
-        <div class="gameCardSections"> 
-            <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px" ></div>
-            <div class="gameCardMode">Solo</div> 
-            <div class="gameCardMode">1VS1</div> 
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: gold;"></i>
-              {{gameCard.bestTimeSolo[0]}}
-            </div> 
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: gold;"></i>
-              {{gameCard.bestTime1v1[0]}}
-            </div> 
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: silver;"></i>
-              {{gameCard.bestTimeSolo[1]}}
-            </div> 
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: silver;"></i>
-              {{gameCard.bestTime1v1[1]}}
-            </div>  
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: #cd7f32;"></i>
-              {{gameCard.bestTimeSolo[2]}}
-            </div> 
-            <div class="gameCardScore">
-              <i class="fas fa-medal" style="color: #cd7f32;"></i>
-              {{gameCard.bestTime1v1[2]}}
-            </div> 
-            <div>
-              <div class="gameCardButton" onclick="">Jouer</div> 
-            </div>
-            <div>
-              <div class="gameCardButton" onclick="">Créer</div> 
-            </div>   
-        </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+  crossorigin="anonymous">
+<div *ngFor="let gameCard of threeDimensionGameCardList">
+  <div class="gameCard">
+    <div class="gameCardTitle"> {{gameCard.title}}</div>
+    <div class="gameCardInfo">
+      <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
+      <div class="gameCardMode">Solo</div>
+      <div class="gameCardMode">1VS1</div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: gold;"></i>
+        {{gameCard.bestTimeSolo[0]}}
       </div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: gold;"></i>
+        {{gameCard.bestTime1v1[0]}}
+      </div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: silver;"></i>
+        {{gameCard.bestTimeSolo[1]}}
+      </div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: silver;"></i>
+        {{gameCard.bestTime1v1[1]}}
+      </div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: #cd7f32;"></i>
+        {{gameCard.bestTimeSolo[2]}}
+      </div>
+      <div class="gameCardScore">
+        <i class="fas fa-medal" style="color: #cd7f32;"></i>
+        {{gameCard.bestTime1v1[2]}}
+      </div>
+      <div>
+        <div class="gameCardButton" onclick="">Jouer</div>
+      </div>
+      <div>
+        <div class="gameCardButton" onclick="">Créer</div>
+      </div>
+    </div>
+  </div>
 </div>
-
-  
