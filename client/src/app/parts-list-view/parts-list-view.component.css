@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
-.gameCardsScreeningWrapper{
+.gameCardsWindowWrapper{
     text-align: center;
 }
-.gameCardsScreening{
+.gameCardsWindow{
     height: 570px;
     width: 930px;
     display: inline-block;
     -moz-box-shadow: -2px 2px 20px #c0c0c0;
 	-webkit-box-shadow: -2px 2px 20px #c0c0c0;
-	box-shadow: -2px 2px 20px #c0c0c0;
-
+    box-shadow: -2px 2px 20px #c0c0c0;
 }
 
 .titleWrapper{
@@ -29,21 +28,103 @@
     background-color: #13315c;
 }
 
-.gameCardsWrapper{
-    display: flex;    
-    height: 494px;
-
-    /*Scroll bar ici*/
-    overflow-y: auto;
-    overflow-x: hidden;
+.gameCard{
+    height: 450px;
+    width: 400px;
+    margin-left: 33px;
+    margin-top: 15px;
+    -webkit-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
+    box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
+    border: 1px solid lightgray;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1fr 7fr;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
 }
 
-.twoDimensionGameCards{
+.gameCardTitle{
+    font-family:'Poppins';
+    color: #13315C;
+    font-size: 30px;
+    margin-top: 20px
+}
+
+.gameCardInfo{
+    font-family:'Poppins';
+    color: #13315B;
+    font-size: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    "image image"
+    "mode mode"
+    "score score"
+    "score score"
+    "score score"
+    "bouton bouton"
+}
+
+.gameCardImage{
+  grid-area:image;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+.gameCardScore{
+  font-size: 12px;
+}
+
+.gameCardButton, .createCardButton{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    background-color: #13315C;
+    font-size: 15px;
+    padding-top: 9px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 8px;
+    height: 30px;
+    width: 50%;
+    border: 1px solid #2d6898;
+    background-image: linear-gradient(bottom, #13315C,rgb(97,155,203) 100%);
+    background-image: -o-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    background-image: -moz-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    background-image: -webkit-linear-gradient(bottom,#13315C, rgb(97,155,203) 100%);
+    background-image: -ms-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
+    cursor: pointer;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    text-shadow: 0px -1px 0px rgba(0,0,0,.5);
+    -webkit-box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    -moz-box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+    box-shadow: 0px 6px 0px #124f7e, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+}
+
+.gameCardButton:hover, .createCardButton:hover{
+    background-color: #7ACBCF;
+    color: #13315C;
+    -webkit-transform: translate(0, 4px);
+    -moz-transform: translate(0, 4px);
+    transform: translate(0, 2px);
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.gameCardsContainer{
     width: 50%;   
     height: auto;
 }
 
-.threeDimensionGameCards{
-    width: 50%;
-    height: 100%;
+.gameCardsWrapper{
+    display: flex;    
+    height: 494px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
