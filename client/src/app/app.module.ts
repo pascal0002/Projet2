@@ -7,13 +7,15 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { PartsListViewComponent } from './parts-list-view/parts-list-view.component';
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
+import { GameCardFormComponent } from './game-card-form-2d/game-card-form-2d.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PartsListViewComponent,
-    AdministrationViewComponent
+    AdministrationViewComponent,
+    GameCardFormComponent
   ],
   imports: [
     BrowserModule,
