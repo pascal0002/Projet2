@@ -22,7 +22,6 @@ export class AdministrationViewComponent implements OnInit {
 
   
 
-  ngOnInit() {
+  ngOnInit() { 
   }
-
 }
