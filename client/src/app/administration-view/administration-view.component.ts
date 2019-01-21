@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {THREE_DIMENSION_GAME_CARD_LIST} from '../3d-game-card-mock-list';
 import {TWO_DIMENSION_GAME_CARD_LIST} from '../2d-game-card-mock-list';
-
+import {gameCard} from '../game-card';
 
 @Component({
   selector: 'app-administration-view',
@@ -18,8 +18,7 @@ export class AdministrationViewComponent implements OnInit {
   //TODO: Subscribe the lists to an observer so that the view is updated when 
   //      lists are deleted/created.
 
-  twoDimensionGameCardListAdmin = TWO_DIMENSION_GAME_CARD_LIST;
-  threeDimensionGameCardListAdmin = THREE_DIMENSION_GAME_CARD_LIST;
+  listes:gameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST,THREE_DIMENSION_GAME_CARD_LIST];
 
   
 

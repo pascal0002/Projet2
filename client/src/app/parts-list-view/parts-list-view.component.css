@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
-.gameCardsScreeningWrapper{
+.gameCardsWindowWrapper{
     text-align: center;
 }
-.gameCardsScreening{
+.gameCardsWindow{
     height: 570px;
     width: 930px;
     display: inline-block;
@@ -117,7 +117,7 @@
     transition: all .2s ease-in-out;
 }
 
-.gameCards{
+.gameCardsContainer{
     width: 50%;   
     height: auto;
 }

@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
-<div class="gameCardsScreeningWrapper">
-  <div class="gameCardsScreening">
+<div class="gameCardsWindowWrapper">
+  <div class="gameCardsWindow">
     <div class="titleWrapper">
       <div class="title">Point de vue simple (2D)</div>
       <div class="title">Point de vue libre (3D)</div>
     </div>
     <div class="gameCardsWrapper">
-        <div class="gameCards" *ngFor="let string of listes; let i = index">
+        <div class="gameCardsContainer" *ngFor="let string of listes; let i = index">
             <div *ngFor="let gameCard of listes[i]">
                 <div class="gameCard">
                     <div class="gameCardTitle"> {{gameCard.title}}</div>
