@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PartsListViewComponent } from './parts-list-view.component';
+import { PartsListViewComponent } from "./parts-list-view.component";
 
-describe('PartsListViewComponent', () => {
+describe("PartsListViewComponent", () => {
   let component: PartsListViewComponent;
   let fixture: ComponentFixture<PartsListViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartsListViewComponent ]
+      declarations: [ PartsListViewComponent ],
     })
     .compileComponents();
   }));
@@ -19,7 +19,7 @@ describe('PartsListViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

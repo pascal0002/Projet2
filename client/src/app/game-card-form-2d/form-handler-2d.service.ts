@@ -1,9 +1,16 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class FormHandler2dService {
 
-  constructor() { }
+  public openForm(): void {
+    const form = document.getElementById("formWindow");
+    if (form) {
+      form.style.display = "block";
+    }
+  }
+
+  public constructor() { }
 }

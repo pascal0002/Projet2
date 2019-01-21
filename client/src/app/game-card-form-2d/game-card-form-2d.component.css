@@ -6,6 +6,10 @@
     padding: 20px;
     align-items: center;
     border: 2px solid #ddd;
+    z-index:1;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    display: inline-block;
 }
 
 #header {

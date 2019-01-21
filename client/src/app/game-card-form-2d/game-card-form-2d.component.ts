@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-game-card-form-2d',
-  templateUrl: './game-card-form-2d.component.html',
-  styleUrls: ['./game-card-form-2d.component.css']
+  selector: "app-game-card-form-2d",
+  templateUrl: "./game-card-form-2d.component.html",
+  styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
 
-  constructor() { }
+  public constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }
