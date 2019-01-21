@@ -1,0 +1,42 @@
+#gameCard {
+    display: grid;
+    width: 500px;
+    grid-gap: 10px;
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+    border: 2px solid #ddd;
+}
+
+#header {
+    border-bottom: 1px solid #ddd;
+    height: 140px;
+    width: 450px;
+}
+
+#content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 200px;
+    width: 100%;
+    padding-top: 30px;
+}
+
+#title{
+    text-align: left;
+    width: 100%;
+}
+
+#format {
+    text-align: left;
+}
+
+.contentLeft {
+    text-align: left;
+    width: 100%;
+}
+
+.contentRight {
+    text-align: left;
+    width: 100%;
+}
