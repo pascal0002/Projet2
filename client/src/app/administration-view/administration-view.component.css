@@ -23,7 +23,8 @@
     transform: translate(13px,-18px);
     font-size: 30px;
     cursor: pointer;
-    z-index: 10px;
+    position: relative;
+
 }
 
 
