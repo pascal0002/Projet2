@@ -15,21 +15,25 @@ export class UserLoginComponent implements OnInit {
   public constructor(private userLoginService: UserLoginService) { }
 
   public validateUsername(u: string): void {
-    /*const regex: RegExp = /^[0-9a-z]+$/i;*/
+    const regex: RegExp = /^[0-9a-z]+$/i;
 
     this.username = u;
-    /*this.usernameValid = regex.test(u) && u.length >= this.usernameMinLength;*/
 
-    this.userLoginService
-      .validateUsername(this.username)
-      .subscribe(
-        (validity: boolean) => { console.log(validity); this.usernameValid = validity; }
-      );
+    this.usernameValid = regex.test(u) && u.length >= this.usernameMinLength;
+    if (this.usernameValid) {
+      this.userLoginService
+        .validateUsername(this.username)
+        .subscribe(
+          (validity: boolean) => { console.log(validity); this.usernameValid = validity; }
+        );
+    }
   }
 
-  public connect(u: string): void {
-    console.log("Trying to connect");
-    this.userLoginService.connect(this.username).subscribe();
+  public connect(): void {
+    if (this.usernameValid) {
+      console.log("Trying to connect");
+      this.userLoginService.connect(this.username).subscribe();
+    }
   }
 
   public ngOnInit() { }

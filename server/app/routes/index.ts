@@ -1,7 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import "reflect-metadata";
-import { Message } from "../../../common/communication/message" // NE PAS SUPPRIMER
+import { NextFunction, Request, Response } from "express";
 import { injectable, } from "inversify";
+import "reflect-metadata";
+// tslint:disable-next-line
+import { Message } from "../../../common/communication/message"
 
 export module Route {
 
@@ -19,11 +20,12 @@ export module Route {
         public connect(req: Request, res: Response, next: NextFunction): void {
             const username: string = req.body.username;
             this.usersConnected.push(username);
+            console.log(this.usersConnected);
         }
 
         private isUsernameUnique(username: string): boolean {
             console.log(this.usersConnected);
-            console.log(username);
+            console.log("typed abc : " + username);
 
             return !this.usersConnected.includes(username);
         }

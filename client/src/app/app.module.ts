@@ -5,7 +5,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
-import { UserLoginService} from "./user-login.service";
+import { UserLoginService } from "./user-login.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
 
 @NgModule({
@@ -21,4 +21,4 @@ import { UserLoginComponent } from "./user-login/user-login.component";
   providers: [BasicService, UserLoginService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
