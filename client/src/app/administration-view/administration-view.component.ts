@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {THREE_DIMENSION_GAME_CARD_LIST} from '../3d-game-card/3d-game-card-mock-list';
-import {TWO_DIMENSION_GAME_CARD_LIST} from '../2d-game-card/2d-game-card-mock-list';
+import {THREE_DIMENSION_GAME_CARD_LIST} from '../3d-game-card-mock-list';
+import {TWO_DIMENSION_GAME_CARD_LIST} from '../2d-game-card-mock-list';
 
 
 @Component({
@@ -8,7 +8,7 @@ import {TWO_DIMENSION_GAME_CARD_LIST} from '../2d-game-card/2d-game-card-mock-li
   templateUrl: './administration-view.component.html',
   styleUrls: [
               './administration-view.component.css',
-              '../generic-game-card/generic-game-card.component.css',
+              '../parts-list-view/parts-list-view.component.css',
               '../parts-list-view/parts-list-view.component.css'
              ]
 })
