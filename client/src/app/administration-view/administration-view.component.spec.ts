@@ -1,14 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { AdministrationViewComponent } from './administration-view.component';
+import { AdministrationViewComponent } from "./administration-view.component";
 
-describe('AdministrationViewComponent', () => {
+describe("AdministrationViewComponent", () => {
   let component: AdministrationViewComponent;
   let fixture: ComponentFixture<AdministrationViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdministrationViewComponent ]
+      declarations: [ AdministrationViewComponent ],
     })
     .compileComponents();
   }));
@@ -19,7 +19,7 @@ describe('AdministrationViewComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

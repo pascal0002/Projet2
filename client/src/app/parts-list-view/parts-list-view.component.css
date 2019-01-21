@@ -48,7 +48,7 @@
     font-family:'Poppins';
     color: #13315C;
     font-size: 30px;
-    margin-top: 20px
+    padding-top: 10px;
 }
 
 .gameCardInfo{
@@ -67,14 +67,15 @@
 }
 
 .gameCardImage{
-  grid-area:image;
+  grid-area: image;
   display: flex;
   justify-content: center; 
   align-items: center;
 }
 
 .gameCardScore{
-  font-size: 12px;
+  font-size: 13px;
+  padding: 2px;
 }
 
 .gameCardButton, .createCardButton{

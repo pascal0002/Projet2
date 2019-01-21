@@ -1,4 +1,4 @@
-export class gameCard{
+export class GameCard {
     title: string;
     imageName: string;
     bestTimeSolo: string[];

@@ -2,7 +2,6 @@
     crossorigin="anonymous">
 <app-game-card-form-2d id="formWindow" style="display: none;"></app-game-card-form-2d>
 
-
 <div class="adminMenu">
     <div class="createCardButton" (click)="openForm2D()">Créer une carte PDV simple (2D)</div>
     <div class="createCardButton">Créer une carte PDV libre (3D)</div>
@@ -14,7 +13,6 @@
             <div class="title">Point de vue simple (2D)</div>
             <div class="title">Point de vue libre (3D)</div>
         </div>
-
         <div class="gameCardsWrapper">
             <div class="GameCardsContainer" *ngFor="let string of listes; let i = index">
                 <div *ngFor="let gameCard of listes[i]">
@@ -57,5 +55,4 @@
             </div>
         </div>
     </div>
-
 </div>
