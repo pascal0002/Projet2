@@ -1,4 +1,4 @@
-import {gameCard} from '../generic-game-card/game-card';
+import {gameCard} from './game-card';
 
 export const TWO_DIMENSION_GAME_CARD_LIST: gameCard[] =[
     {   title: "Nissan", 
