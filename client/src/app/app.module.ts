@@ -1,24 +1,29 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-
 import { HttpClientModule } from "@angular/common/http";
+import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import {RouterModule, Routes} from "@angular/router";
+import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
-import { PartsListViewComponent } from './parts-list-view/parts-list-view.component';
-import { AdministrationViewComponent } from "./administration-view/administration-view.component";
+import { PartsListViewComponent } from "./parts-list-view/parts-list-view.component";
 
+const appRoutes: Routes = [
 
+  {path: "admin", component: AdministrationViewComponent},
+  {path: "", component: PartsListViewComponent},
+];
 @NgModule({
   declarations: [
     AppComponent,
     PartsListViewComponent,
-    AdministrationViewComponent
+    AdministrationViewComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],
