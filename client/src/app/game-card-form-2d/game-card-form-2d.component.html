@@ -6,11 +6,11 @@
   </div>
 
   <div id="content">
-    <div class="contentLeft"> Nom du jeu </div> <div class="contentRight"> <input type="text" name="gameName" required [(ngModel)]="title">    
-      <div [hidden]="validName" class="alert alert-danger" style="width: 180px; height: 28px;padding-top: 4px;">Nom requis!</div>
+    <div class="contentLeft"> Nom du jeu :</div> <div class="contentRight"> <input type="text" name="gameName" required [(ngModel)]="title">    
+      <div [hidden]="validName" class="alert alert-danger error">Nom requis!</div>
   </div>
-    <div class="contentLeft"> Image originale</div> <div class="contentRight"> <input type="file" name="originalImg"> </div>
-    <div class="contentLeft"> Image modifiée </div> <div class="contentRight"> <input type="file" name="modifiedImg"> </div>
+    <div class="contentLeft"> Image originale :</div> <div class="contentRight"> <input type="file" name="originalImg"> </div>
+    <div class="contentLeft"> Image modifiée :</div> <div class="contentRight"> <input type="file" name="modifiedImg"> </div>
     
     <!--<div class="contentLeft"> <button>Soumettre</button> </div>-->
     <div class="contentLeft">
