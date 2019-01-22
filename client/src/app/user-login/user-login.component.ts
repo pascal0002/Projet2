@@ -8,7 +8,7 @@ import { UserLoginService } from "../user-login.service";
 })
 export class UserLoginComponent implements OnInit {
   public username: string;
-  public usernameValid: boolean = true;
+  public usernameValid: boolean = false;
   public readonly usernameMinLength: number = 3;
   public readonly usernameMaxLenght: number = 20;
 
