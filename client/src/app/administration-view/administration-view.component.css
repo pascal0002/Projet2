@@ -3,7 +3,7 @@
     background-color: #13315C;
     font-family: 'Poppins';
     text-align: center;
-    height: 75px;
+    height: 95px;
     transform: translate(-8px,-15px);
     width: 100%;
     position: fixed;
@@ -15,6 +15,7 @@
 .createCardButton{
     max-width: 300px;
     display: inline-block;
+    min-height: 40px;
 }
 
 .deleteButton{
