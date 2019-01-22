@@ -12,7 +12,7 @@ export class Server {
     private readonly baseDix: number = 10;
     private server: http.Server;
 
-    public constructor(@inject(Types.Application) private application: Application, 
+    public constructor(@inject(Types.Application) private application: Application,
                        @inject(Types.WebsocketService) private websocketService: WebsocketService) { }
 
     public init(): void {

@@ -32,7 +32,7 @@ export class UserLoginComponent implements OnInit {
   public connect(): void {
     if (this.usernameValid) {
       console.log("Trying to connect");
-      this.userLoginService.connect(this.username).subscribe();
+      this.userLoginService.connect(this.username);
     }
   }
 

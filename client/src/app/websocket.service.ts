@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 /*import { Observable } from "rxjs";*/
 
 import * as socketIo from "socket.io-client";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class WebsocketService {
@@ -12,9 +13,19 @@ export class WebsocketService {
         this.socket = socketIo(this.BASE_URL);
     }
 
-    public send(message: string): void {
-        this.socket.emit("message", message);
+    public testUsername(username: string): void {
+        this.socket.emit("testUsername", username);
     }
+
+    public connectUsername(username: string): void {
+        this.socket.emit("connectUsername", username);
+  }
+
+    public onTestUsername(): Observable<boolean> {
+        return new Observable<boolean>((observer) => {
+        this.socket.on("testUsername", (data: boolean) => observer.next(data));
+    });
+}
 /*
     public onMessage(): Observable<Message> {
         return new Observable<Message>(observer => {
