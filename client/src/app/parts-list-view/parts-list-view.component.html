@@ -41,19 +41,19 @@
                         <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
                         <ng-template #thenBlock>
                             <div>
-                                <div class="gameCardButton" onclick="">Supprimer</div>
+                                <div class="adminGameCardButton button">Supprimer</div>
                             </div>
                             <div>
-                                <div class="gameCardButton" onclick="">Réinitialiser</div>
+                                <div class="adminGameCardButton button">Réinitialiser</div>
                             </div>
                         </ng-template>
 
                         <ng-template #elseBlock>
                             <div>
-                                <div class="gameCardButton" onclick="">Jouer</div>
+                                <div class="gameCardButton button">Jouer</div>
                             </div>
                             <div>
-                                <div class="gameCardButton" onclick="">Créer</div>
+                                <div class="gameCardButton button">Créer</div>
                             </div>
                         </ng-template>
                         

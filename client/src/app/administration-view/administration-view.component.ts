@@ -24,6 +24,5 @@ export class AdministrationViewComponent implements OnInit {
   public openForm2D(): void {
     this.formHandler2D.openForm();
   }
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {/**/}
 }
