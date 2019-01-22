@@ -38,15 +38,16 @@
     "instrument": true
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cookie-parser": "1.4.1",
     "cors": "2.8.4",
     "debug": "^4.1.1",
     "express": "~4.16.0",
-    "inversify": "^4.13.0",
+    "inversify": "^4.14.0",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.9",
-    "reflect-metadata": "^0.1.10",
+    "reflect-metadata": "^0.1.13",
     "serve-favicon": "~2.5.0",
     "socket.io": "1.4.5",
     "ts-node": "^7.0.1"

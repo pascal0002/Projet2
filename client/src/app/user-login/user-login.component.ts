@@ -24,7 +24,7 @@ export class UserLoginComponent implements OnInit {
       this.userLoginService
         .validateUsername(this.username)
         .subscribe(
-          (validity: boolean) => { console.log(validity); this.usernameValid = validity; }
+          (validity: boolean) => { console.log(validity); this.usernameValid = validity; },
         );
     }
   }
