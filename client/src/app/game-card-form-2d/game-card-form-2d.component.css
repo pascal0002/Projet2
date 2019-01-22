@@ -1,27 +1,9 @@
-#gameCard {
-    display: grid;
-    width: 500px;
-    grid-gap: 10px;
-    flex-direction: row;
-    padding: 20px;
-    align-items: center;
-    border: 2px solid #ddd;
-    z-index:1;
-    background-color: rgb(255, 255, 255);
-    position: absolute;
-    display: inline-block;
-}
-
-#header {
-    border-bottom: 1px solid #ddd;
-    height: 100px;
-    width: 450px;
-}
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
 
 #content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 200px;
+    height: 270px;
     width: 100%;
     padding-top: 30px;
 }
@@ -38,6 +20,38 @@
 .contentLeft {
     text-align: left;
     width: 100%;
+    /*x.disabled = true en typescript*/
+}
+
+#formWindow2D {
+    margin-left: 25%;
+    margin-top: 2%;
+    display: grid;
+    width: 500px;
+    grid-gap: 10px;
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+    border: 2px solid #ddd;
+    z-index:1;
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    display: inline-block;
+}
+#header {
+    border-bottom: 1px solid #ddd;
+    height: 150px;
+    width: 450px;
+}
+
+
+.formWindow{
+    height: 100%;
+    width: 100%;
+    background-color: aqua;
+    position: absolute;
+    display: inline-block;
+    /*x.disabled = true en typescript*/
 }
 
 .contentRight {

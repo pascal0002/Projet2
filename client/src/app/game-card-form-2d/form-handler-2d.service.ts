@@ -6,9 +6,23 @@ import { Injectable } from "@angular/core";
 export class FormHandler2dService {
 
   public openForm(): void {
-    const form = document.getElementById("formWindow");
-    if (form) {
-      form.style.display = "block";
+
+    let form2D = document.getElementById("formWindow");
+    let pageMask = document.getElementById("pageMask");
+
+    if (form2D && pageMask) {
+      form2D.style.display = "block";
+      pageMask.style.display="block";
+    }
+  }
+
+  public closeForm(): void {
+    let form2D = document.getElementById("formWindow");
+    let pageMask = document.getElementById("pageMask");
+
+    if (form2D && pageMask) {
+      form2D.style.display = "none";
+      pageMask.style.display="none";
     }
   }
 
