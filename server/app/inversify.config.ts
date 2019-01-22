@@ -24,7 +24,6 @@ container.bind(Types.DateService).to(DateService);
 container.bind(Types.LoginController).to(LoginController);
 container.bind(Types.LoginService).to(LoginService);
 
-container.bind(Types.WebsocketController).to(WebsocketController);
 container.bind(Types.WebsocketService).to(WebsocketService);
 
 export { container };
