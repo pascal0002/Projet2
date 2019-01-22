@@ -7,4 +7,6 @@ export default {
         IndexService: Symbol("IndexService"),
         DateService: Symbol("DateService"),
         LoginService: Symbol("LoginService"),
+        WebsocketService: Symbol("WebsocketService"),
+        WebsocketController: Symbol("WebsocketController"),
 };

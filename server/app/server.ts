@@ -2,6 +2,7 @@ import * as http from "http";
 import { inject, injectable } from "inversify";
 import { AddressInfo } from "net";
 import { Application } from "./app";
+import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
 @injectable()
@@ -11,12 +12,14 @@ export class Server {
     private readonly baseDix: number = 10;
     private server: http.Server;
 
-    public constructor(@inject(Types.Application) private application: Application) { }
+    public constructor(@inject(Types.Application) private application: Application, 
+                       @inject(Types.WebsocketService) private websocketService: WebsocketService) { }
 
     public init(): void {
         this.application.app.set("port", this.appPort);
 
         this.server = http.createServer(this.application.app);
+        this.websocketService.init(this.server);
 
         this.server.listen(this.appPort);
         this.server.on("error", (error: NodeJS.ErrnoException) => this.onError(error));

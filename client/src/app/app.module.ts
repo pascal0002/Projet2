@@ -7,7 +7,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { UserLoginService } from "./user-login.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
-
+import { WebsocketService } from "./websocket.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +18,7 @@ import { UserLoginComponent } from "./user-login/user-login.component";
     HttpClientModule,
     FormsModule,
   ],
-  providers: [BasicService, UserLoginService],
+  providers: [BasicService, UserLoginService, WebsocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
