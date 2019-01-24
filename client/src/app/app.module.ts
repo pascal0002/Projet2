@@ -7,6 +7,9 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { PartsListViewComponent } from "./parts-list-view/parts-list-view.component";
+import { UserLoginService } from "./user-login.service";
+import { UserLoginComponent } from "./user-login/user-login.component";
+import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
 
@@ -18,6 +21,7 @@ const appRoutes: Routes = [
     AppComponent,
     PartsListViewComponent,
     AdministrationViewComponent,
+    UserLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +29,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [BasicService],
+  providers: [BasicService, UserLoginService, WebsocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
