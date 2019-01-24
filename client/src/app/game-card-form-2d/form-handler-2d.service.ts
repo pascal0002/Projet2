@@ -7,8 +7,8 @@ export class FormHandler2dService {
 
   public openForm(): void {
 
-    const form2D = document.getElementById("formWindow");
-    const pageMask = document.getElementById("pageMask");
+    const form2D: HTMLElement | null = document.getElementById("formWindow");
+    const pageMask: HTMLElement | null = document.getElementById("pageMask");
 
     if (form2D && pageMask) {
       form2D.style.display = "block";
@@ -17,8 +17,8 @@ export class FormHandler2dService {
   }
 
   public closeForm(): void {
-    const form2D = document.getElementById("formWindow");
-    const pageMask = document.getElementById("pageMask");
+    const form2D: HTMLElement | null = document.getElementById("formWindow");
+    const pageMask: HTMLElement | null = document.getElementById("pageMask");
 
     if (form2D && pageMask) {
       form2D.style.display = "none";

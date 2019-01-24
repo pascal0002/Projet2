@@ -40,25 +40,24 @@
 }
 
 .gameCard{
-    height: 450px;
+    height: 460px;
     width: 400px;
     margin-left: 33px;
     margin-top: 15px;
+    margin-bottom: 50px;
     -webkit-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
     -moz-box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
     box-shadow: 1px 15px 13px -7px rgba(0,0,0,0.75);
     border: 1px solid lightgray;
     display: grid;
     grid-template-rows: 50px 400px;
-    margin-bottom: 50px;
-    padding-bottom: 10px;
 }
 
 .gameCardTitle{
     font-family:'Poppins';
     color: #13315C;
     font-size: 30px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .gameCardInfo{
@@ -125,7 +124,7 @@
 .gameCardButton{
     font-size: 15px;
     padding-top: 6px;
-    height: 30px;
+    height: 28px;
 }
 
 .adminGameCardButton{
