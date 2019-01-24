@@ -1,6 +1,6 @@
 export class GameCard {
-    title: string;
-    imageName: string;
-    bestTimeSolo: string[];
-    bestTime1v1: string[];
+    public title: string;
+    public imageName: string;
+    public bestTimeSolo: string[];
+    public bestTime1v1: string[];
 }

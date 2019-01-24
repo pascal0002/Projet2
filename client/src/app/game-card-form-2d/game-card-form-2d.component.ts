@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import{FormHandler2dService} from "./form-handler-2d.service";
+import {FormHandler2dService} from "./form-handler-2d.service";
+import {DifferencesGeneratorService} from "../differences-generator.service";
 
 @Component({
   selector: "app-game-card-form-2d",
@@ -7,14 +8,19 @@ import{FormHandler2dService} from "./form-handler-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
-  public isFk:boolean = true;
-  title:String;
-  public constructor(private formHandlerService: FormHandler2dService) { }
+  public isFk: boolean = true;
+  public title: string;
 
-  public closeForm2D(){
+  public constructor(private formHandlerService: FormHandler2dService, private differencesGenerator: DifferencesGeneratorService) { }
+
+  public closeForm2D(): void {
     this.formHandlerService.closeForm();
   }
-  public ngOnInit() {
+  public generateDifferences(): void {
+    //this.differencesGenerator.generateDifferences();
+  }
+  public ngOnInit(): void {
+    /**/
   }
 
 }

@@ -16,14 +16,13 @@ import {FormHandler2dService} from "../game-card-form-2d/form-handler-2d.service
 export class AdministrationViewComponent implements OnInit {
 
   public constructor(private formHandler2D: FormHandler2dService) { }
-  //TODO: Subscribe the lists to an observer so that the view is updated when
-  //lists are deleted/created.
+  // Subscribe the lists to an observer so that the view is updated when
+  // lists are deleted/created.
 
   public listes: GameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
 
   public openForm2D(): void {
     this.formHandler2D.openForm();
   }
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {/**/}
 }

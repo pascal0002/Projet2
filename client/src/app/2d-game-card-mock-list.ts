@@ -1,6 +1,12 @@
 import {GameCard} from "./game-card";
 
 export const TWO_DIMENSION_GAME_CARD_LIST: GameCard[] = [
+    {   title: "Chat",
+        imageName: "assets/images/cat.bmp",
+        bestTimeSolo: ["1:21 Paul", "1:34 AAA", "1:45 OOO"],
+        bestTime1v1: ["0:58 Ko", "1:13 frew1", "1:21 frew2"],
+    },
+    
     {   title: "Nissan",
         imageName: "assets/images/nissan_patrol.jpg",
         bestTimeSolo: ["1:21 Paul", "1:34 AAA", "1:45 OOO"],
