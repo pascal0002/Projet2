@@ -1,6 +1,10 @@
-export default  {
+export default {
         Server: Symbol("Server"),
         Application: Symbol("Application"),
-        Routes: Symbol("Routes"),
-        Index: Symbol("Index")
+        IndexController: Symbol("IndexController"),
+        DateController: Symbol("DateController"),
+        IndexService: Symbol("IndexService"),
+        DateService: Symbol("DateService"),
+        LoginService: Symbol("LoginService"),
+        WebsocketService: Symbol("WebsocketService"),
 };

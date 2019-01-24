@@ -7,21 +7,25 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
+
+
 import { PartsListViewComponent } from "./parts-list-view/parts-list-view.component";
+import { UserLoginService } from "./user-login.service";
+import { UserLoginComponent } from "./user-login/user-login.component";
+import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
 
-    {path: "admin", component: AdministrationViewComponent},
-    {path: "", component: PartsListViewComponent},
-    {path: "test", component: GameCardFormComponent},
+  {path: "admin", component: AdministrationViewComponent},
+  {path: "", component: PartsListViewComponent},
 ];
-
 @NgModule({
   declarations: [
     AppComponent,
     PartsListViewComponent,
     AdministrationViewComponent,
     GameCardFormComponent,
+    UserLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],
-  providers: [BasicService],
+  providers: [BasicService, UserLoginService, WebsocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
