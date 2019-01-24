@@ -3,7 +3,6 @@ import { Application } from "./app";
 import { DateController } from "./controllers/date.controller";
 import { IndexController } from "./controllers/index.controller";
 import { LoginController } from "./controllers/login.controller";
-import { WebsocketController } from "./controllers/websocket.controller";
 import { Server } from "./server";
 import { DateService } from "./services/date.service";
 import { IndexService } from "./services/index.service";

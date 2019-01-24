@@ -6,7 +6,7 @@ import { catchError } from "rxjs/operators";
 import { WebsocketService } from "./websocket.service";
 @Injectable()
 export class UserLoginService {
-  private readonly BASE_URL: string = "http://localhost:3000/";
+  /*private readonly BASE_URL: string = "http://localhost:3000/";*/
 
   public constructor(private websocketService: WebsocketService) { }
 
