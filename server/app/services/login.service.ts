@@ -1,4 +1,3 @@
-import { NextFunction, Request, Response } from "express";
 import { injectable } from "inversify";
 import "reflect-metadata";
 
@@ -6,19 +5,6 @@ import "reflect-metadata";
 export class LoginService {
 
     private usersConnected: string[] = [];
-
-    public validateUsername(req: Request, res: Response, next: NextFunction): void {
-        const username: string = req.body.username;
-        const validity: boolean = this.isUsernameUnique(username);
-        res.send(validity);
-    }
-
-    public connect(req: Request, res: Response, next: NextFunction): void {
-        const username: string = req.body.username;
-        this.usersConnected.push(username);
-        console.log(this.usersConnected);
-        res.end();
-    }
 
     public connectUser(username: string): void {
         this.usersConnected.push(username);

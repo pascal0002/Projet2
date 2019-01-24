@@ -2,7 +2,6 @@ import { Container } from "inversify";
 import { Application } from "./app";
 import { DateController } from "./controllers/date.controller";
 import { IndexController } from "./controllers/index.controller";
-import { LoginController } from "./controllers/login.controller";
 import { Server } from "./server";
 import { DateService } from "./services/date.service";
 import { IndexService } from "./services/index.service";
@@ -20,7 +19,6 @@ container.bind(Types.IndexService).to(IndexService);
 container.bind(Types.DateController).to(DateController);
 container.bind(Types.DateService).to(DateService);
 
-container.bind(Types.LoginController).to(LoginController);
 container.bind(Types.LoginService).to(LoginService);
 
 container.bind(Types.WebsocketService).to(WebsocketService);

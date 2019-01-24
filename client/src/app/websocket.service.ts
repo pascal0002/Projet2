@@ -24,18 +24,6 @@ export class WebsocketService {
         return new Observable<boolean>((observer) => {
         this.socket.on("testUsername", (data: boolean) => observer.next(data));
     });
-}
-/*
-    public onMessage(): Observable<Message> {
-        return new Observable<Message>(observer => {
-            this.socket.on("message", (data: Message) => observer.next(data));
-        });
-    }
 
-    public onEvent(event: Event): Observable<any> {
-        return new Observable<Event>(observer => {
-            this.socket.on(event, () => observer.next());
-        });
-    }
-*/
+  }
 }

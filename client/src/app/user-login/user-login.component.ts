@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { UserLoginService } from "../user-login.service";
 
 @Component({
@@ -6,7 +6,7 @@ import { UserLoginService } from "../user-login.service";
   templateUrl: "./user-login.component.html",
   styleUrls: ["./user-login.component.css"],
 })
-export class UserLoginComponent implements OnInit {
+export class UserLoginComponent {
   public username: string;
   public usernameValid: boolean = false;
   public readonly usernameMinLength: number = 3;
@@ -35,6 +35,4 @@ export class UserLoginComponent implements OnInit {
       this.userLoginService.connect(this.username);
     }
   }
-
-  public ngOnInit() { }
 }
