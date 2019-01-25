@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { AdministrationViewComponent } from "./administration-view.component";
+import { GameCardFormComponent } from "./game-card-form-2d.component";
 
-describe("AdministrationViewComponent", () => {
-  let component: AdministrationViewComponent;
-  let fixture: ComponentFixture<AdministrationViewComponent>;
+describe("GameCardFormComponent", () => {
+  let component: GameCardFormComponent;
+  let fixture: ComponentFixture<GameCardFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdministrationViewComponent ],
+      declarations: [ GameCardFormComponent ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdministrationViewComponent);
+    fixture = TestBed.createComponent(GameCardFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

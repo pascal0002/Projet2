@@ -3,34 +3,19 @@
     background-color: #13315C;
     font-family: 'Poppins';
     text-align: center;
-    height: 75px;
+    height: 95px;
     transform: translate(-8px,-15px);
-    width: 100%;
+    width: 101%;
     position: fixed;
     margin-bottom: 1050px;
     padding-top: 25px;
 }
 
-
 .createCardButton{
     max-width: 300px;
-    display: inline-block;
-}
-
-.deleteButton{
-    color: #13315C;
-    text-align: right;
-    transform: translate(13px,-18px);
-    font-size: 30px;
-    cursor: pointer;
-    z-index: 10px;
-}
-
-
-.fa-times-circle{
-    background-color: white;
-}
-
-.fa-times-circle:hover{
-    color: #7ACBCF;
+    height: 40px;
+    padding-top: 9px;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-left: 10px;
 }
