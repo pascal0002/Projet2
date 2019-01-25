@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {FormHandler2dService} from "./form-handler-2d.service";
 import {DifferencesGeneratorService} from "../differences-generator.service";
+import {FormHandler2dService} from "./form-handler-2d.service";
 
 @Component({
   selector: "app-game-card-form-2d",
@@ -17,7 +17,7 @@ export class GameCardFormComponent implements OnInit {
     this.formHandlerService.closeForm();
   }
   public generateDifferences(): void {
-    //this.differencesGenerator.generateDifferences();
+    this.differencesGenerator.generateDifferences();
   }
   public ngOnInit(): void {
     /**/
