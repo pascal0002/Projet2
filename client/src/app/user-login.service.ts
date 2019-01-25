@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-
 import { Observable } from "rxjs";
+import { MessageType } from "../../../common/communication/messageType";
 import { WebsocketService } from "./websocket.service";
 @Injectable()
 export class UserLoginService {
@@ -8,12 +8,12 @@ export class UserLoginService {
   public constructor(private websocketService: WebsocketService) { }
 
   public validateUsername(username: string): Observable<boolean> {
-    this.websocketService.testUsername(username);
+    this.websocketService.sendMessage(MessageType.VALIDATE_USERNAME, username);
 
-    return this.websocketService.onTestUsername();
+    return this.websocketService.listenForUsernameValidation();
   }
 
   public connect(username: string): void {
-    this.websocketService.connectUsername(username);
+    this.websocketService.sendMessage(MessageType.CONNECT, username);
   }
 }

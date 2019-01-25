@@ -2,6 +2,7 @@ import * as http from "http";
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import * as socketIo from "socket.io";
+import {MessageType} from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
 @injectable()
@@ -20,11 +21,11 @@ export class WebsocketService {
         this.io.on("connection", (socket: socketIo.Server) => {
             let usernameSocket: string;
 
-            socket.on("testUsername", (username: string) => {
-                socket.emit("testUsername", this.loginService.validateUsername(username));
+            socket.on(MessageType.VALIDATE_USERNAME, (username: string) => {
+                socket.emit(MessageType.VALIDATE_USERNAME, this.loginService.validateUsername(username));
             });
 
-            socket.on("connectUsername", (username: string) => {
+            socket.on(MessageType.CONNECT, (username: string) => {
                 usernameSocket = username;
                 this.loginService.connectUser(username);
             });
