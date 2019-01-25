@@ -8,30 +8,21 @@ import { UserLoginService } from "../user-login.service";
 })
 export class UserLoginComponent {
   public username: string;
-  public usernameValid: boolean = false;
-  public readonly usernameMinLength: number = 3;
-  public readonly usernameMaxLenght: number = 20;
+  public isUsernameValid: boolean = false;
 
   public constructor(private userLoginService: UserLoginService) { }
 
-  public validateUsername(u: string): void {
-    const regex: RegExp = /^[0-9a-z]+$/i;
-
-    this.username = u;
-
-    this.usernameValid = regex.test(u) && u.length >= this.usernameMinLength;
-    if (this.usernameValid) {
-      this.userLoginService
-        .validateUsername(this.username)
-        .subscribe(
-          (validity: boolean) => { console.log(validity); this.usernameValid = validity; },
-        );
-    }
+  public validateUsername(username: string): void {
+    this.username = username;
+    this.userLoginService
+      .validateUsername(this.username)
+      .subscribe(
+        (validity: boolean) => {this.isUsernameValid = validity; },
+      );
   }
 
   public connect(): void {
-    if (this.usernameValid) {
-      console.log("Trying to connect");
+    if (this.isUsernameValid) {
       this.userLoginService.connect(this.username);
     }
   }
