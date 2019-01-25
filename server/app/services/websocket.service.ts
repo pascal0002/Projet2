@@ -19,21 +19,17 @@ export class WebsocketService {
     public listen(): void {
         this.io.on("connection", (socket: socketIo.Server) => {
             let usernameSocket: string;
-            console.log("Client connected");
 
             socket.on("testUsername", (username: string) => {
-                console.log("testUsername ", username);
-                socket.emit("testUsername", this.loginService.isUsernameUnique(username));
+                socket.emit("testUsername", this.loginService.validateUsername(username));
             });
 
             socket.on("connectUsername", (username: string) => {
-                console.log("connectUsername", username);
                 usernameSocket = username;
                 this.loginService.connectUser(username);
             });
 
             socket.on("disconnect", () => {
-                console.log("Client disconnected ", usernameSocket);
                 this.loginService.disconnect(usernameSocket);
             });
         });
