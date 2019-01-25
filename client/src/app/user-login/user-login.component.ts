@@ -17,7 +17,7 @@ export class UserLoginComponent {
     this.userLoginService
       .validateUsername(this.username)
       .subscribe(
-        (validity: boolean) => {this.isUsernameValid = validity; console.log(validity); },
+        (validity: boolean) => {this.isUsernameValid = validity; },
       );
   }
 
