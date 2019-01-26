@@ -1,24 +1,165 @@
 <div id=formWindow2D>
 
   <div id="header">
-      <h1 id="title">Créer un jeu point de vue simple</h1>
-      <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
+    <h1 id="title">Créer un jeu point de vue simple</h1>
+    <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
   </div>
 
   <div id="content">
-    <div class="contentLeft"> Nom du jeu </div> <div class="contentRight"> <input type="text" name="gameName" required [(ngModel)]="title">    
-      <div [hidden]="validName" class="alert alert-danger" style="width: 180px; height: 28px;padding-top: 4px;">Nom requis!</div>
-  </div>
-    <div class="contentLeft"> Image originale</div> <div class="contentRight"> <input type="file" name="originalImg"> </div>
-    <div class="contentLeft"> Image modifiée </div> <div class="contentRight"> <input type="file" name="modifiedImg"> </div>
-    
-    <!--<div class="contentLeft"> <button>Soumettre</button> </div>-->
+    <div class="contentLeft"> Nom du jeu </div>
+    <form [formGroup]="form2DGroup" #formDir="ngForm">
+      <div class="contentRight"><input type="text" formControlName="title" required></div>
+      <div *ngIf="titleName.invalid && (titleName.dirty || titleName.touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        <div *ngIf="titleName.errors.required">
+          Le nom du jeu est requis.
+        </div>
+        <div *ngIf="titleName.errors.minlength">
+          Le nom du jeu doit être d'au moins 3 caractères.
+        </div>
+        <div *ngIf="titleName.errors.maxlength">
+          Le nom du jeu doit être d'au plus 15 caractères.
+        </div>
+      </div>
+    </form>
+
+    <!-- <div class="contentLeft"> Nom du jeu </div>
+    <div class="contentRight"> <input type="text" name="gameName" required [(ngModel)]="title">
+      <div [hidden]="validName" class="alert alert-danger" style="width: 180px; height: 28px;padding-top: 4px;">Nom
+        requis!</div>
+    </div>-->
+    <div class="contentLeft"> Image originale</div>
+    <form [formGroup]="form2DGroup" #formDir="ngForm">
+      <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput" (change)="decodeOriginalBitmap()">
+      </div>
+      <div *ngIf="(originalFileInput.dirty) && (!validBMPExtension(this.originalBitmap.fileName) || !validBitDepth(this.originalBitmap.bitDepth) || !validImageDimensions(this.originalBitmap.height,this.originalBitmap.width))" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        <div *ngIf="!validBMPExtension(this.originalBitmap.fileName); else elseBlock1">
+          Le fichier doit être un .bmp
+        </div>
+        <ng-template #elseBlock1>
+          <div *ngIf="!validBitDepth(this.originalBitmap.bitDepth); else elseBlock2">
+            Le format du bmp doit être de 24-bit.
+          </div>
+          <ng-template #elseBlock2>
+            <div *ngIf="!validImageDimensions(this.originalBitmap.height,this.originalBitmap.width)">
+              Le dimensions de l'image doivent être de 640 x 480 pixels.
+            </div>
+          </ng-template>
+        </ng-template>
+      </div>
+    </form>
+
+    <div class="contentLeft"> Image modifiée</div>
+    <form [formGroup]="form2DGroup" #formDir="ngForm">
+      <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput" (change)="decodeModifiedBitmap()">
+      </div>
+      <div *ngIf="(modifiedFileInput.dirty) && (!validBMPExtension(this.modifiedBitmap.fileName)|| !validBitDepth(this.modifiedBitmap.bitDepth)|| !validImageDimensions(this.modifiedBitmap.height,this.modifiedBitmap.width))" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        <div *ngIf="!validBMPExtension(this.modifiedBitmap.fileName); else elseBlock3">
+          Le fichier doit être un .bmp
+        </div>
+        <ng-template #elseBlock3>
+          <div *ngIf="!validBitDepth(this.modifiedBitmap.bitDepth); else elseBlock4">
+            Le format du bmp doit être de 24-bit.
+          </div>
+          <ng-template #elseBlock4>
+            <div *ngIf="!validImageDimensions(this.modifiedBitmap.height,this.modifiedBitmap.width)">
+              Le dimensions de l'image doivent être de 640 x 480 pixels.
+            </div>
+          </ng-template>
+        </ng-template>
+      </div>
+    </form>
+
+
+    <!--<div class="contentLeft"> Image modifiée </div>
+    <div class="contentRight"> <input type="file" name="modifiedImg"> </div>-->
+
     <div class="contentLeft">
       <button type="submit" class="btn btn-default" [disabled]="true">Soumettre</button>
-  </div>
-    <div class="contentLeft"> 
-      <button class="btn btn-default" (click)="closeForm2D()">Annuler</button> 
     </div>
+    <div class="contentLeft">
+      <button class="btn btn-default" (click)="closeForm2D()">Annuler</button>
+    </div>
+
   </div>
 
 </div>
+
+
+
+
+
+<!--
+<div id=formWindow2D>
+  <div id="header">
+    <h1 id="title">Créer un jeu point de vue simple</h1>
+    <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
+  </div>
+  <div id="content">
+    <form [formGroup]="form2DGroup" #formDir="ngForm">
+      <div class="contentLeft"> Nom du jeu </div>
+      <div class="formGroup">
+        <input type="text" class="form-control" formControlName="title" required>
+        <div *ngIf="titleName.invalid && (titleName.dirty || titleName.touched)" class="alert alert-danger">
+          <div *ngIf="titleName.errors.required">
+            Le nom du jeu est requis.
+          </div>
+          <div *ngIf="titleName.errors.minlength">
+            Le nom du jeu doit être d'au moins 3 caractères.
+          </div>
+          <div *ngIf="titleName.errors.maxlength">
+            Le nom du jeu doit être d'au plus 15 caractères.
+          </div>
+        </div>
+      </div>
+      <div class="contentLeft"> Image originale </div>
+      <div class="formGroup">
+        <input type="file" id="myTest" required (change)="test()">
+      </div>
+
+      <div class="contentLeft"> Image modifiée </div>
+      <div class="formGroup">
+        <input type="file" id="myTest" required (change)="test()">
+      </div>
+
+
+
+
+
+    </form>
+  </div>-->
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
+<div id="content">
+  <div class="contentLeft"> Nom du jeu </div>
+  <div class="formGroup">
+
+
+
+  </div>
+
+  <div class="contentLeft"> Image originale</div>
+  <div class="contentRight"> <input type="file" accept=".bmp" id="originalImgFile"></div>
+  <div class="contentLeft"> Image modifiée </div>
+  <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedImgFile" name="modifiedImg" [(ngModel)]="modifedImagePath"
+      (change)="validModifiedImage(); checkIfCanSubmit();"> </div>
+
+  <div class="contentLeft">
+    <button type="submit" class="btn btn-default" [disabled]="!canSubmit">Soumettre</button>
+  </div>
+  <div class="contentLeft">
+    <button class="btn btn-default" (click)="closeForm2D()">Annuler</button>
+  </div>
+</div>
+
+</div>-->

@@ -8,6 +8,7 @@ import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { PartsListViewComponent } from "./parts-list-view/parts-list-view.component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
 
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
+    ReactiveFormsModule,
   ],
   providers: [BasicService],
   bootstrap: [AppComponent],

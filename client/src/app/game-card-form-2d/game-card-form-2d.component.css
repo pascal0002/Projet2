@@ -3,7 +3,7 @@
 #content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    height: 270px;
+    height: 360px;
     width: 100%;
     padding-top: 30px;
 }
@@ -17,10 +17,11 @@
     text-align: left;
 }
 
+
+
 .contentLeft {
     text-align: left;
     width: 100%;
-    /*x.disabled = true en typescript*/
 }
 
 #formWindow2D {
@@ -51,7 +52,6 @@
     background-color: aqua;
     position: absolute;
     display: inline-block;
-    /*x.disabled = true en typescript*/
 }
 
 .contentRight {
