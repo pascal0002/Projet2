@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { BitmapDecoderService } from './bitmap-decoder.service';
+import { BitmapDecoderService } from "./bitmap-decoder.service";
 
-describe('BitmapDecoderService', () => {
+describe("BitmapDecoderService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: BitmapDecoderService = TestBed.get(BitmapDecoderService);
     expect(service).toBeTruthy();
   });

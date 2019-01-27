@@ -2,7 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import {RouterModule, Routes} from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
@@ -12,9 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
 
-    {path: "admin", component: AdministrationViewComponent},
-    {path: "", component: PartsListViewComponent},
-    {path: "test", component: GameCardFormComponent},
+  { path: "admin", component: AdministrationViewComponent },
+  { path: "", component: PartsListViewComponent },
+  { path: "test", component: GameCardFormComponent },
 ];
 
 @NgModule({
@@ -34,4 +34,4 @@ const appRoutes: Routes = [
   providers: [BasicService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }
