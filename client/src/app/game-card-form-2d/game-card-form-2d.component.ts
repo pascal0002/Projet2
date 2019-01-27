@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+<<<<<<< HEAD
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BitmapImage } from "./BitmapImage";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
@@ -6,6 +7,10 @@ import { FormValidator2dService } from "./form-validator-2d.service";
 
 const MIN_LENGTH_TITLE: number = 3;
 const MAX_LENGTH_TITLE: number = 15;
+=======
+import {DifferencesGeneratorService} from "../differences-generator.service";
+import {FormHandler2dService} from "./form-handler-2d.service";
+>>>>>>> Dev
 
 @Component({
   selector: "app-game-card-form-2d",
@@ -13,6 +18,7 @@ const MAX_LENGTH_TITLE: number = 15;
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
+<<<<<<< HEAD
   public title: string;
   public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
   public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
@@ -76,6 +82,21 @@ export class GameCardFormComponent implements OnInit {
 
   public get modifiedFileInput(): AbstractControl | null {
     return this.form2DGroup.get("modifiedFileInput");
+=======
+  public isFk: boolean = true;
+  public title: string;
+
+  public constructor(private formHandlerService: FormHandler2dService, private differencesGenerator: DifferencesGeneratorService) { }
+
+  public closeForm2D(): void {
+    this.formHandlerService.closeForm();
+  }
+  public generateDifferences(): void {
+    this.differencesGenerator.generateDifferences();
+  }
+  public ngOnInit(): void {
+    /**/
+>>>>>>> Dev
   }
 
   public validImageDimensions(height: number, width: number): boolean {

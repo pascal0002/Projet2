@@ -1,0 +1,11 @@
+<main id="login-container">
+  <div id="logo"><img src="../../assets/logo.png" /> <span>PolyDiff</span></div>
+
+  <div id="login-form">
+    <h3>Login <i class="fas fa-key"></i></h3>
+
+    <div class="field" [class.unvalidated]="!isUsernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" [maxlength]="20" /></div>
+
+    <button (click)="connect()" [disabled]="!isUsernameValid">Play</button>
+  </div>
+</main>

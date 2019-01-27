@@ -15,15 +15,20 @@ import {FormValidator2dService} from "../game-card-form-2d/form-validator-2d.ser
 })
 export class AdministrationViewComponent implements OnInit {
 
+<<<<<<< HEAD
   public constructor(private formValidator2D: FormValidator2dService) { }
   //TODO: Subscribe the lists to an observer so that the view is updated when
   //lists are deleted/created.
+=======
+  public constructor(private formHandler2D: FormHandler2dService) { }
+  // Subscribe the lists to an observer so that the view is updated when
+  // lists are deleted/created.
+>>>>>>> Dev
 
   public listes: GameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
 
   public openForm2D(): void {
     this.formValidator2D.openForm();
   }
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {/**/}
 }

@@ -56,3 +56,9 @@
     text-align: left;
     width: 100%;
 }
+
+.error{
+    width: 181px; 
+    height: 28px;
+    padding-top: 4px;
+}
