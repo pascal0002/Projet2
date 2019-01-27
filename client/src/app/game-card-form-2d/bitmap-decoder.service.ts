@@ -1,32 +1,35 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { BitmapImage } from "./BitmapImage";
+
+const WIDTH_OFFSET: number = 18;
+const HEIGHT_OFFSET: number = 22;
+const BITS_PER_PIXEL_OFFSET: number = 28;
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class BitmapDecoderService {
-  constructor() { }
+  public constructor() {
+    //
+  }
 
-  decodeBitmapFile(file: File): BitmapImage {
-    console.log("is in the decoder");
-    let bitmapImage = new BitmapImage();
+  public decodeBitmapFile(file: File): BitmapImage {
+    const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
     bitmapImage.fileName = file.name;
-    let BMPpixelsBuffer = new ArrayBuffer(file.size);
-    let fileReader = new FileReader();
-    fileReader.onload = function (e) {
-      console.log("is in onload");
-      BMPpixelsBuffer = fileReader.result as ArrayBuffer;
-      let dataView = new DataView(BMPpixelsBuffer);
+    let bmpPixelsBuffer: ArrayBuffer = new ArrayBuffer(file.size);
+    const fileReader: FileReader = new FileReader();
+    fileReader.onload = () => {
 
-      bitmapImage.width = dataView.getUint32(18, true);
-      bitmapImage.height = dataView.getUint32(22, true);
-      bitmapImage.bitDepth = dataView.getUint32(28, true);
+      bmpPixelsBuffer = fileReader.result as ArrayBuffer;
+      const dataView: DataView = new DataView(bmpPixelsBuffer);
 
-    }
+      bitmapImage.width = dataView.getUint32(WIDTH_OFFSET, true);
+      bitmapImage.height = dataView.getUint32(HEIGHT_OFFSET, true);
+      bitmapImage.bitDepth = dataView.getUint32(BITS_PER_PIXEL_OFFSET, true);
+
+    };
     fileReader.readAsArrayBuffer(file);
 
     return bitmapImage;
   }
-  test(){
-    alert("fuck ce projet");
-  }
+
 }
