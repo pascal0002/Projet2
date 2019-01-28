@@ -9,5 +9,5 @@ export default {
       //  BitmapDecoderService: Symbol("BitmapDecoderService"),
         WebsocketService: Symbol("WebsocketService"),
         DifferencesGeneratorService: Symbol("DifferenceGeneratorService"),
-        DifferencesGeneratorController: Symbol("DifferenceGeneratorController"),
+        GameCardsController: Symbol("GameCardsController"),
 };

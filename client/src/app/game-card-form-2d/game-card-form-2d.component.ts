@@ -97,14 +97,15 @@ export class GameCardFormComponent implements OnInit {
     return this.formValidatorService.validTitle(this.title);
   }
 
-  public onSubmit(): void {
+  public onSubmit(): Promise<number> {
     // tslint:disable-next-line:no-console
     console.log("salut");
-    this.http.post<boolean>(this.BASE_URL + "image_pair/",
-                            {"originalImage": this.originalBitmap,
-                             "modifiedImage": this.modifiedBitmap}).pipe(
-    catchError(this.handleError<boolean>("error")),
-    );
+    const images: Object = {"originalImage": this.originalBitmap,
+                            "modifiedImage": this.modifiedBitmap};
+
+    return this.http.post<number>(`${this.BASE_URL}api/game_cards/image_pair`, images).pipe(
+      catchError(this.handleError<number>("error")),
+    ).toPromise();
   }
 
   private handleError<T>(

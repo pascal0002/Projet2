@@ -1,7 +1,7 @@
 import { Container } from "inversify";
 import { Application } from "./app";
 import { DateController } from "./controllers/date.controller";
-import { DifferencesGeneratorController } from "./controllers/differences-generator.controller";
+import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import { Server } from "./server";
 import { DateService } from "./services/date.service";
@@ -23,7 +23,7 @@ container.bind(Types.DateService).to(DateService);
 container.bind(Types.LoginService).to(LoginService);
 container.bind(Types.WebsocketService).to(WebsocketService);
 container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService);
-container.bind(Types.DifferencesGeneratorController).to(DifferencesGeneratorController);
+container.bind(Types.GameCardsController).to(GameCardsController);
 // container.bind(Types.BitmapDecoderService).to(BitmapDecoderService);
 
 export { container };

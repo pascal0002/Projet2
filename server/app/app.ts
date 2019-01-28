@@ -5,6 +5,7 @@ import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as logger from "morgan";
 import { DateController } from "./controllers/date.controller";
+import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import Types from "./types";
 
@@ -17,6 +18,7 @@ export class Application {
     public constructor(
         @inject(Types.IndexController) private indexController: IndexController,
         @inject(Types.DateController) private dateController: DateController,
+        @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
     ) {
         this.app = express();
 
@@ -28,7 +30,7 @@ export class Application {
     private config(): void {
         // Middlewares configuration
         this.app.use(logger("dev"));
-        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.json( {limit : "10mb" }));
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(cors());
@@ -38,19 +40,20 @@ export class Application {
         // Notre application utilise le routeur de notre API `Index`
         this.app.use("/api/index", this.indexController.router);
         this.app.use("/api/date", this.dateController.router);
+        this.app.use("/api/game_cards", this.gameCardsController.router);
         this.errorHandeling();
     }
 
     private errorHandeling(): void {
         // Gestion des erreurs
-        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            const err: Error = new Error("Not Found");
-            next(err);
-        });
+        // this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+        //     const err: Error = new Error("Not Found");
+        //     next(err);
+        // });
 
         // development error handler
         // will print stacktrace
-        if (this.app.get("env") === "development") {
+        if (true) {
             // tslint:disable-next-line:no-any
             this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                 res.status(err.status || this.internalError);

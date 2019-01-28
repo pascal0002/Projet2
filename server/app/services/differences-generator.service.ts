@@ -7,6 +7,6 @@ export class DifferencesGeneratorService {
   public constructor() {/**/}
 
   public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): void {
-    console.log("sup");
+    console.log(`Dans ${__filename}`);
   }
 }
