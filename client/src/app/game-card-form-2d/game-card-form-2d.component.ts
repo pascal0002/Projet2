@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BitmapImage } from "../../../../common/BitmapImage";
-import { BitmapDecoderService } from "../bitmap-decoder.service";
+import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
 const MIN_LENGTH_TITLE: number = 3;
@@ -45,8 +45,7 @@ export class GameCardFormComponent implements OnInit {
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-        //this.originalBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
-        this.bitmapDecoderService.decodeBitmapFile(file.name);
+        this.originalBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
       }
     }
   }
@@ -61,7 +60,7 @@ export class GameCardFormComponent implements OnInit {
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-       // this.modifiedBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
+        this.modifiedBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
       }
     }
   }

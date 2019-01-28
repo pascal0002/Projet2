@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BitmapDecoderService } from './bitmap-decoder.service';
+import { BitmapDecoderService } from './game-card-form-2d/bitmap-decoder.service';
 
 describe('BitmapDecoderService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

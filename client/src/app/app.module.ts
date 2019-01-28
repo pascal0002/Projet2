@@ -11,6 +11,7 @@ import { PartsListViewComponent } from "./parts-list-view/parts-list-view.compon
 import { UserLoginService } from "./user-login.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { WebsocketService } from "./websocket.service";
+import {BitmapDecoderService} from "./game-card-form-2d/bitmap-decoder.service";
 
 const appRoutes: Routes = [
     {path: "admin", component: AdministrationViewComponent},
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
-  providers: [BasicService, UserLoginService, WebsocketService],
+  providers: [BasicService, UserLoginService, WebsocketService, BitmapDecoderService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

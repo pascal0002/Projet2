@@ -6,6 +6,6 @@ export default {
         IndexService: Symbol("IndexService"),
         DateService: Symbol("DateService"),
         LoginService: Symbol("LoginService"),
-        BitmapDecoderService: Symbol("BitmapDecoderService"),
+      //  BitmapDecoderService: Symbol("BitmapDecoderService"),
         WebsocketService: Symbol("WebsocketService"),
 };

@@ -6,7 +6,7 @@ import {MessageType} from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
 //import { runInThisContext } from "vm";
-import {BitmapDecoderService} from "./form-service/bitmap-decoder.service";
+//import {BitmapDecoderService} from "../../../client/src/app/game-card-form-2d/bitmap-decoder.service";
 
 @injectable()
 export class WebsocketService {
@@ -14,7 +14,7 @@ export class WebsocketService {
     private io: socketIo.Server;
 
     public constructor( @inject(Types.LoginService) private loginService: LoginService,
-                        @inject(Types.BitmapDecoderService) private bitmapDecoderService: BitmapDecoderService,
+                        /*@inject(Types.BitmapDecoderService) private bitmapDecoderService: BitmapDecoderService,*/
                       ) {}
 
     public init(server: http.Server): void {
@@ -41,7 +41,7 @@ export class WebsocketService {
 
             socket.on(MessageType.DECODE_BITMAP_FILE, (file:File)=> {
                 console.log(file.name);
-                this.bitmapDecoderService.decodeBitmapFile(file);
+                //this.bitmapDecoderService.decodeBitmapFile(file);
               //  console.log(this.bitmapDecoderService.decodeBitmapFile(file).fileName);
                 console.log("Trying to decode file");
             });
