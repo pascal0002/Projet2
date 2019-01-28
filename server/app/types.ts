@@ -8,4 +8,5 @@ export default {
         LoginService: Symbol("LoginService"),
       //  BitmapDecoderService: Symbol("BitmapDecoderService"),
         WebsocketService: Symbol("WebsocketService"),
+        DifferencesGeneratorService: Symbol("DifferenceGeneratorService"),
 };
