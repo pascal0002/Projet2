@@ -12,7 +12,7 @@ export class BitmapDecoderService {
   }
 
   public decodeBitmapFile(file: File): BitmapImage {
-    
+
     const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
     bitmapImage.fileName = file.name;
     let bmpPixelsBuffer: ArrayBuffer = new ArrayBuffer(file.size);

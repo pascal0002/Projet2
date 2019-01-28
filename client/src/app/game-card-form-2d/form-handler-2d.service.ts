@@ -26,5 +26,9 @@ export class FormHandler2dService {
     }
   }
 
+  public addGameCard(): void {
+    /* */
+  }
+
   public constructor() {/**/}
 }
