@@ -30,11 +30,17 @@ export class FormValidator2dService {
   public closeForm(): void {
     const form2D: HTMLElement | null = document.getElementById("formWindow");
     const pageMask: HTMLElement | null = document.getElementById("pageMask");
+    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
 
-    if (form2D && pageMask) {
+    if (form2D && pageMask && gameName) {
       form2D.style.display = "none";
       pageMask.style.display = "none";
+      gameName.value = "";
     }
+  }
+
+  public addGameCard(): void {
+    alert("allo");
   }
 
   public validTitle(title: string): boolean {

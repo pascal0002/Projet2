@@ -24,6 +24,10 @@ export class GameCardFormComponent implements OnInit {
     this.formValidatorService.closeForm();
   }
 
+  public addGameCard2D(): void {
+    this.formValidatorService.addGameCard();
+  }
+
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
       title: new FormControl(this.title, [
@@ -36,7 +40,6 @@ export class GameCardFormComponent implements OnInit {
     });
   }
 
-  
   ///////////////////////////////////////////////////////////////////////////////////////////////
   public decodeOriginalBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
@@ -50,8 +53,6 @@ export class GameCardFormComponent implements OnInit {
     }
   }
   /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
   public decodeModifiedBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
