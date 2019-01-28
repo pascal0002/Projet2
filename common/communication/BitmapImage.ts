@@ -3,4 +3,5 @@ export interface BitmapImage {
     width: number;
     bitDepth: number;
     fileName: string;
+    pixels: Array<number>; 
 }

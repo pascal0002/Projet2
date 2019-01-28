@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { BitmapImage } from "../../../../common/BitmapImage";
+import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -14,8 +14,8 @@ const MAX_LENGTH_TITLE: number = 15;
 })
 export class GameCardFormComponent implements OnInit {
   public title: string;
-  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
-  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
+  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels:[]};
+  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels:[] };
   public form2DGroup: FormGroup;
 
   public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService) { }

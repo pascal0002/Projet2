@@ -1,19 +1,17 @@
 import { Injectable } from "@angular/core";
-import { BitmapImage } from "../../../../common/BitmapImage";
+import { BitmapImage } from "../../../../common/communication/BitmapImage";
 
 const WIDTH_OFFSET: number = 18;
 const HEIGHT_OFFSET: number = 22;
 const BITS_PER_PIXEL_OFFSET: number = 28;
+//const PIXEL_OFFSET: number = 10;
 
 @Injectable()
 export class BitmapDecoderService {
-  public constructor() {
-    //
-  }
 
   public decodeBitmapFile(file: File): BitmapImage {
     
-    const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
+    const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     bitmapImage.fileName = file.name;
     let bmpPixelsBuffer: ArrayBuffer = new ArrayBuffer(file.size);
     const fileReader: FileReader = new FileReader();
@@ -28,8 +26,6 @@ export class BitmapDecoderService {
 
     };
     fileReader.readAsArrayBuffer(file);
-
     return bitmapImage;
   }
-
 }
