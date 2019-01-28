@@ -13,13 +13,9 @@ export class PartsListViewComponent implements OnInit {
   @Input() public isInAdminView: boolean = false;
   public listes: GameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
 
-  public constructor(/*passe service, router*/) {
-    // this.service
+  public constructor(/**/) {
+    /**/
   }
-
-  /*onclick{}
-  this.router.navigate(...);
-  */
 
   public ngOnInit(): void {
     /**/

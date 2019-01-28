@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
+import { IMessage } from "../../../common/communication/message";
 import { DateService } from "../services/date.service";
 import Types from "../types";
 
@@ -13,10 +14,11 @@ export class DateController {
         router.get("/",
                    (req: Request, res: Response, next: NextFunction) => {
                 // Send the request to the service and send the response
-                this.dateService.currentTime().then((time) => {
+                this.dateService.currentTime().then((time: IMessage) => {
                     res.json(time);
                 });
             });
+
         return router;
     }
 }

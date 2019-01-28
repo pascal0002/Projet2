@@ -1,11 +1,11 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { DifferencesGeneratorService } from './differences-generator.service';
+import { DifferencesGeneratorService } from "./differences-generator.service";
 
-describe('DifferencesGeneratorService', () => {
+describe("DifferencesGeneratorService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should be created', () => {
+  it("should be created", () => {
     const service: DifferencesGeneratorService = TestBed.get(DifferencesGeneratorService);
     expect(service).toBeTruthy();
   });

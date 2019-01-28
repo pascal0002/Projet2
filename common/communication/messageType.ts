@@ -1,4 +1,4 @@
 export enum MessageType {
-    CONNECT = 'connectUsername',
-    VALIDATE_USERNAME = 'validateUsername',
+    CONNECT = "connectUsername",
+    VALIDATE_USERNAME = "validateUsername",
 }
