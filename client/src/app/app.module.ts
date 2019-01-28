@@ -2,7 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
-import {RouterModule, Routes} from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
@@ -13,8 +13,9 @@ import { UserLoginComponent } from "./user-login/user-login.component";
 import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
-    {path: "admin", component: AdministrationViewComponent},
-    {path: "", component: PartsListViewComponent},
+  { path: "", component: UserLoginComponent },
+  { path: "part", component: PartsListViewComponent },
+  { path: "admin", component: AdministrationViewComponent },
 ];
 
 @NgModule({
@@ -34,4 +35,4 @@ const appRoutes: Routes = [
   providers: [BasicService, UserLoginService, WebsocketService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

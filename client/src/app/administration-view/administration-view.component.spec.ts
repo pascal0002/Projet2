@@ -1,5 +1,5 @@
+import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { AdministrationViewComponent } from "./administration-view.component";
 
 describe("AdministrationViewComponent", () => {
@@ -10,6 +10,7 @@ describe("AdministrationViewComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ AdministrationViewComponent ],
     })
+    .catch((err) => new ErrorHandler())
     .compileComponents();
   }));
 

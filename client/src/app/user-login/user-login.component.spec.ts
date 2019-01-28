@@ -1,3 +1,4 @@
+import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
 import { UserLoginComponent } from "./user-login.component";
@@ -9,7 +10,9 @@ describe("UserLoginComponent", () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
-    }).compileComponents();
+    })
+    .catch((err) => new ErrorHandler())
+    .compileComponents();
   }));
 
   beforeEach(() => {
