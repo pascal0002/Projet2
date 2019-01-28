@@ -1,16 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-<<<<<<< HEAD
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { BitmapImage } from "./BitmapImage";
-import { BitmapDecoderService } from "./bitmap-decoder.service";
+import { BitmapImage } from "../../../../common/BitmapImage";
+import { BitmapDecoderService } from "../bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
 const MIN_LENGTH_TITLE: number = 3;
 const MAX_LENGTH_TITLE: number = 15;
-=======
-import {DifferencesGeneratorService} from "../differences-generator.service";
-import {FormHandler2dService} from "./form-handler-2d.service";
->>>>>>> Dev
 
 @Component({
   selector: "app-game-card-form-2d",
@@ -18,7 +13,6 @@ import {FormHandler2dService} from "./form-handler-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
-<<<<<<< HEAD
   public title: string;
   public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
   public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
@@ -42,28 +36,32 @@ export class GameCardFormComponent implements OnInit {
     });
   }
 
+  
+  ///////////////////////////////////////////////////////////////////////////////////////////////
   public decodeOriginalBitmap(): void {
-    // Faire: decodeOriginalImg(){ get element by id and pass it to decoder}
     const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
     let file: File;
 
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-        this.originalBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
+        //this.originalBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
+        this.bitmapDecoderService.decodeBitmapFile(file.name);
       }
     }
   }
+  /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
   public decodeModifiedBitmap(): void {
-    // Faire: decodeOriginalImg(){ get element by id and pass it to decoder}
     const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
     let file: File;
 
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-        this.modifiedBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
+       // this.modifiedBitmap = this.bitmapDecoderService.decodeBitmapFile(file);
       }
     }
   }
@@ -82,21 +80,6 @@ export class GameCardFormComponent implements OnInit {
 
   public get modifiedFileInput(): AbstractControl | null {
     return this.form2DGroup.get("modifiedFileInput");
-=======
-  public isFk: boolean = true;
-  public title: string;
-
-  public constructor(private formHandlerService: FormHandler2dService, private differencesGenerator: DifferencesGeneratorService) { }
-
-  public closeForm2D(): void {
-    this.formHandlerService.closeForm();
-  }
-  public generateDifferences(): void {
-    this.differencesGenerator.generateDifferences();
-  }
-  public ngOnInit(): void {
-    /**/
->>>>>>> Dev
   }
 
   public validImageDimensions(height: number, width: number): boolean {

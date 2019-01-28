@@ -7,6 +7,7 @@ import { DateService } from "./services/date.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
+import { BitmapDecoderService } from "./services/form-service/bitmap-decoder.service";
 import Types from "./types";
 
 const container: Container = new Container();
@@ -22,5 +23,7 @@ container.bind(Types.DateService).to(DateService);
 container.bind(Types.LoginService).to(LoginService);
 
 container.bind(Types.WebsocketService).to(WebsocketService);
+
+container.bind(Types.BitmapDecoderService).to(BitmapDecoderService);
 
 export { container };

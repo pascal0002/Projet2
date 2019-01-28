@@ -1,7 +1,6 @@
 <div id=formWindow2D>
 
   <div id="header">
-<<<<<<< HEAD
     <h1 id="title">Créer un jeu point de vue simple</h1>
     <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
   </div>
@@ -73,21 +72,6 @@
       </div>
     </form>
 
-=======
-      <h1 id="title">Créer un jeu point de vue simple</h1>
-      <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
-      <button (click)="generateDifferences()">Click me pls</button>
-  </div>
-
-  <div id="content">
-    <div class="contentLeft"> Nom du jeu :</div> <div class="contentRight"> <input type="text" name="gameName" required [(ngModel)]="title">    
-      <div [hidden]="validName" class="alert alert-danger error">Nom requis!</div>
-  </div>
-    <div class="contentLeft"> Image originale :</div> <div class="contentRight"> <input type="file" name="originalImg"> </div>
-    <div class="contentLeft"> Image modifiée :</div> <div class="contentRight"> <input type="file" name="modifiedImg"> </div>
-    
-    <!--<div class="contentLeft"> <button>Soumettre</button> </div>-->
->>>>>>> Dev
     <div class="contentLeft">
       <button type="submit" class="btn btn-default" 
        [disabled]="!(this.validBMPExtension(this.originalBitmap.fileName) &&

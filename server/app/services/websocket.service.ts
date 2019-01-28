@@ -5,12 +5,17 @@ import * as socketIo from "socket.io";
 import {MessageType} from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
+//import { runInThisContext } from "vm";
+import {BitmapDecoderService} from "./form-service/bitmap-decoder.service";
+
 @injectable()
 export class WebsocketService {
 
     private io: socketIo.Server;
 
-    public constructor(@inject(Types.LoginService) private loginService: LoginService) {}
+    public constructor( @inject(Types.LoginService) private loginService: LoginService,
+                        @inject(Types.BitmapDecoderService) private bitmapDecoderService: BitmapDecoderService,
+                      ) {}
 
     public init(server: http.Server): void {
         this.io = socketIo(server);
@@ -33,6 +38,15 @@ export class WebsocketService {
             socket.on("disconnect", () => {
                 this.loginService.disconnect(usernameSocket);
             });
+
+            socket.on(MessageType.DECODE_BITMAP_FILE, (file:File)=> {
+                console.log(file.name);
+                this.bitmapDecoderService.decodeBitmapFile(file);
+              //  console.log(this.bitmapDecoderService.decodeBitmapFile(file).fileName);
+                console.log("Trying to decode file");
+            });
+
+
         });
     }
 }

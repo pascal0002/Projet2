@@ -1,18 +1,23 @@
-import { Injectable } from "@angular/core";
-import { BitmapImage } from "./BitmapImage";
+import { injectable } from "inversify";
+import { BitmapImage } from "../../../../common/BitmapImage";
 
-const WIDTH_OFFSET: number = 18;
-const HEIGHT_OFFSET: number = 22;
-const BITS_PER_PIXEL_OFFSET: number = 28;
-@Injectable({
-  providedIn: "root",
-})
+//const WIDTH_OFFSET: number = 18;
+//const HEIGHT_OFFSET: number = 22;
+//const BITS_PER_PIXEL_OFFSET: number = 28;
+@injectable()
 export class BitmapDecoderService {
   public constructor() {
     //
   }
 
   public decodeBitmapFile(file: File): BitmapImage {
+    const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
+    console.log("tabarnak");
+    let buffer = new Buffer(200);
+    let fs = require("fs");
+    buffer = fs.readFileSync(file);
+    console.log(buffer);
+    /*
     const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" };
     bitmapImage.fileName = file.name;
     let bmpPixelsBuffer: ArrayBuffer = new ArrayBuffer(file.size);
@@ -27,7 +32,7 @@ export class BitmapDecoderService {
       bitmapImage.bitDepth = dataView.getUint32(BITS_PER_PIXEL_OFFSET, true);
 
     };
-    fileReader.readAsArrayBuffer(file);
+    fileReader.readAsArrayBuffer(file);*/
 
     return bitmapImage;
   }
