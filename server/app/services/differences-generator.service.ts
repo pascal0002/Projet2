@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
+import { injectable } from "inversify";
+import {BitmapImage} from "../../../common/communication/BitmapImage";
 
-@Injectable({
-  providedIn: 'root'
-})
+@injectable()
 export class DifferencesGeneratorService {
 
-  constructor() { }
+  public constructor() {/**/}
 
-  generateDifferences(originalImg: File, modifiedImg: File) {
-    alert("sup");
+  public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): void {
+    console.log("sup");
   }
 }

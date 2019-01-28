@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
+import { of, Observable } from "rxjs";
+import { catchError } from "rxjs/operators";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
@@ -27,10 +29,6 @@ export class GameCardFormComponent implements OnInit {
     this.formValidatorService.closeForm();
   }
 
-  public addGameCard2D(): void {
-    this.formValidatorService.addGameCard();
-  }
-
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
       title: new FormControl(this.title, [
@@ -43,7 +41,6 @@ export class GameCardFormComponent implements OnInit {
     });
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
   public decodeOriginalBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
     let file: File;
@@ -55,7 +52,6 @@ export class GameCardFormComponent implements OnInit {
       }
     }
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public decodeModifiedBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
@@ -102,7 +98,21 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const imagePair: Array<BitmapImage> = [this.originalBitmap, this.modifiedBitmap];
-    this.http.post(this.BASE_URL + "/image_pair/", imagePair);
+    // tslint:disable-next-line:no-console
+    console.log("salut");
+    this.http.post<boolean>(this.BASE_URL + "image_pair/",
+                            {"originalImage": this.originalBitmap,
+                             "modifiedImage": this.modifiedBitmap}).pipe(
+    catchError(this.handleError<boolean>("error")),
+    );
+  }
+
+  private handleError<T>(
+    request: string,
+    result?: T,
+  ): (error: Error) => Observable<T> {
+    return (error: Error): Observable<T> => {
+      return of(result as T);
+    };
   }
 }

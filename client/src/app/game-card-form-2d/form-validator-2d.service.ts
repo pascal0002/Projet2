@@ -39,10 +39,6 @@ export class FormValidator2dService {
     }
   }
 
-  public addGameCard(): void {
-    alert("allo");
-  }
-
   public validTitle(title: string): boolean {
     return (title.length >= MIN_TITLE_LENGTH && title.length <= MAX_TITLE_LENGTH);
   }

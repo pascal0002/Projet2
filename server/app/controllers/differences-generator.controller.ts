@@ -12,9 +12,10 @@ export class DifferencesGeneratorController {
     public get router(): Router {
         const router: Router = Router();
 
-        router.get("/image_pair/",
-            async (req: Request, res: Response, next: NextFunction) => {
-                this.differencesGeneratorService.generateDifferences(req);
+        router.post("image_pair/",
+                    async (req: Request, res: Response, next: NextFunction) => {
+                this.differencesGeneratorService.generateDifferences(req.body.originalImage, req.body.modifiedImage);
+                res.send(true);
             });
 
         return router;
