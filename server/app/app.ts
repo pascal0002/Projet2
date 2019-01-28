@@ -5,6 +5,7 @@ import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as logger from "morgan";
 import { DateController } from "./controllers/date.controller";
+import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import Types from "./types";
@@ -19,6 +20,7 @@ export class Application {
         @inject(Types.IndexController) private indexController: IndexController,
         @inject(Types.DateController) private dateController: DateController,
         @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
+        @inject(Types.DifferencesController) private differencesController: DifferencesController,
     ) {
         this.app = express();
 
@@ -41,6 +43,7 @@ export class Application {
         this.app.use("/api/index", this.indexController.router);
         this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/game_cards", this.gameCardsController.router);
+        this.app.use("/api/differences", this.differencesController.router);
         this.errorHandeling();
     }
 

@@ -6,8 +6,9 @@ export default {
         IndexService: Symbol("IndexService"),
         DateService: Symbol("DateService"),
         LoginService: Symbol("LoginService"),
-      //  BitmapDecoderService: Symbol("BitmapDecoderService"),
         WebsocketService: Symbol("WebsocketService"),
-        DifferencesGeneratorService: Symbol("DifferenceGeneratorService"),
+        DifferencesGeneratorService: Symbol("DifferencesGeneratorService"),
         GameCardsController: Symbol("GameCardsController"),
+        GameCardsService: Symbol("GameCardsService"),
+        DifferencesController: Symbol("DifferencesController"),
 };
