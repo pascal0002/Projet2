@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
@@ -13,12 +14,14 @@ const MAX_LENGTH_TITLE: number = 15;
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
+  private readonly BASE_URL: string = "http://localhost:3000/";
   public title: string;
-  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels:[]};
-  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels:[] };
+  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
+  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   public form2DGroup: FormGroup;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService) { }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService,
+                     private http: HttpClient) { }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm();
@@ -99,6 +102,7 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    //
+    const imagePair: Array<BitmapImage> = [this.originalBitmap, this.modifiedBitmap];
+    this.http.post(this.BASE_URL + "/image_pair/", imagePair);
   }
 }
