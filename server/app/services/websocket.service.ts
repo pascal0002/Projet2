@@ -5,8 +5,8 @@ import * as socketIo from "socket.io";
 import {MessageType} from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
-//import { runInThisContext } from "vm";
-//import {BitmapDecoderService} from "../../../client/src/app/game-card-form-2d/bitmap-decoder.service";
+// import { runInThisContext } from "vm";
+// import {BitmapDecoderService} from "../../../client/src/app/game-card-form-2d/bitmap-decoder.service";
 
 @injectable()
 export class WebsocketService {
@@ -39,13 +39,14 @@ export class WebsocketService {
                 this.loginService.disconnect(usernameSocket);
             });
 
-            socket.on(MessageType.DECODE_BITMAP_FILE, (file:File)=> {
+            socket.on(MessageType.DECODE_BITMAP_FILE, (file: File) => {
+                // tslint:disable-next-line:no-console
                 console.log(file.name);
-                //this.bitmapDecoderService.decodeBitmapFile(file);
+                // this.bitmapDecoderService.decodeBitmapFile(file);
               //  console.log(this.bitmapDecoderService.decodeBitmapFile(file).fileName);
+                // tslint:disable-next-line:no-console
                 console.log("Trying to decode file");
             });
-
 
         });
     }

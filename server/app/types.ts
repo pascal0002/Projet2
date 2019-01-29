@@ -8,4 +8,8 @@ export default {
         LoginService: Symbol("LoginService"),
         SubmitGameCardController: Symbol("SubmitGameCardController"),
         WebsocketService: Symbol("WebsocketService"),
+        DifferencesGeneratorService: Symbol("DifferencesGeneratorService"),
+        GameCardsController: Symbol("GameCardsController"),
+        GameCardsService: Symbol("GameCardsService"),
+        DifferencesController: Symbol("DifferencesController"),
 };

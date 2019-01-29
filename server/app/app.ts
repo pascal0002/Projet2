@@ -7,6 +7,8 @@ import * as logger from "morgan";
 //import { DateController } from "./controllers/date.controller";
 //import { IndexController } from "./controllers/index.controller";
 import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
+import { DifferencesController } from "./controllers/differences-controller";
+import { GameCardsController } from "./controllers/game-cards.controller";
 import Types from "./types";
 
 @injectable()
@@ -19,6 +21,10 @@ export class Application {
        // @inject(Types.IndexController) private indexController: IndexController,
         //@inject(Types.DateController) private dateController: DateController,
         @inject(Types.SubmitGameCardController) private subitGameCardController: SubmitGameCardController,
+        //@inject(Types.IndexController) private indexController: IndexController,
+        //@inject(Types.DateController) private dateController: DateController,
+        @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
+        @inject(Types.DifferencesController) private differencesController: DifferencesController,
     ) {
         this.app = express();
         console.log("constructeur");
@@ -30,7 +36,7 @@ export class Application {
     private config(): void {
         // Middlewares configuration
         this.app.use(logger("dev"));
-        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.json( {limit : "10mb" }));
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(cors());
@@ -42,19 +48,23 @@ export class Application {
 //        this.app.use("/api/index", this.indexController.router);
 //        this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/saveImagePair", this.subitGameCardController.router);
+        //this.app.use("/api/index", this.indexController.router);
+        //this.app.use("/api/date", this.dateController.router);
+        this.app.use("/api/game_cards", this.gameCardsController.router);
+        this.app.use("/api/differences", this.differencesController.router);
         this.errorHandeling();
     }
 
     private errorHandeling(): void {
         // Gestion des erreurs
-        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-            const err: Error = new Error("Not Found");
-            next(err);
-        });
+        // this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+        //     const err: Error = new Error("Not Found");
+        //     next(err);
+        // });
 
         // development error handler
         // will print stacktrace
-        if (this.app.get("env") === "development") {
+        if (true) {
             // tslint:disable-next-line:no-any
             this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                 res.status(err.status || this.internalError);

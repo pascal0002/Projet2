@@ -1,11 +1,10 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
-import { Observable, of } from "rxjs";
-import { catchError } from "rxjs/operators";
+//import { Observable, of } from "rxjs";
+//import { catchError } from "rxjs/operators";
 
 const MIN_LENGTH_TITLE: number = 3;
 const MAX_LENGTH_TITLE: number = 15;
@@ -16,21 +15,16 @@ const MAX_LENGTH_TITLE: number = 15;
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
-  private readonly BASE_URL: string = "http://localhost:3000/api/saveImagePair";
+ // private readonly BASE_URL: string = "http://localhost:3000/api/saveImagePair";
   public title: string;
   public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
   public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   public form2DGroup: FormGroup;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService,
-                     private http: HttpClient) { }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService) { }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm();
-  }
-
-  public addGameCard2D(): void {
-    this.formValidatorService.addGameCard();
   }
 
   public ngOnInit(): void {
@@ -45,7 +39,6 @@ export class GameCardFormComponent implements OnInit {
     });
   }
 
-  ///////////////////////////////////////////////////////////////////////////////////////////////
   public decodeOriginalBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
     let file: File;
@@ -57,7 +50,6 @@ export class GameCardFormComponent implements OnInit {
       }
     }
   }
-  /////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public decodeModifiedBitmap(): void {
     const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
@@ -102,7 +94,7 @@ export class GameCardFormComponent implements OnInit {
   public validTitle(): boolean {
     return this.formValidatorService.validTitle(this.title);
   }
-
+/*
   private handleError<T>(
         request: string,
         result?: T,
@@ -112,11 +104,11 @@ export class GameCardFormComponent implements OnInit {
         Observable<T> =>{
           return of(result as T);
         };
-  }
+  }*/
 
   public onSubmit(): void {
-    //const imagePair: Array<BitmapImage> = [this.originalBitmap, this.modifiedBitmap];
-    this.http.post(this.BASE_URL, "test").pipe(catchError(this.handleError<number>("error")),).toPromise();
-    console.log("onsubmit called.");
+    // tslint:disable-next-line:no-console
+    this.formValidatorService.onSubmit(this.originalBitmap, this.modifiedBitmap);
   }
+
 }

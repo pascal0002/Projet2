@@ -1,13 +1,12 @@
 /*import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@injectable()
 export class DifferencesGeneratorService {
 
-  constructor() { }
+  public constructor() {}
 
-  generateDifferences(originalImg: File, modifiedImg: File) {
-    alert("sup");
+  public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): BitmapImage {
+
+    return originalImg;
   }
 }*/
