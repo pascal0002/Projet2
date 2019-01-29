@@ -11,7 +11,6 @@ export class UserLoginComponent {
   public isUsernameValid: boolean = false;
 
   public constructor(private userLoginService: UserLoginService) { }
-  
 
   public validateUsername(username: string): void {
     this.username = username;
@@ -20,8 +19,6 @@ export class UserLoginComponent {
       .subscribe(
         (validity: boolean) => {this.isUsernameValid = validity; },
       );
-
-      ImageBitmap 
   }
 
   public connect(): void {

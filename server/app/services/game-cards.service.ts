@@ -1,4 +1,4 @@
-import Axios, { AxiosPromise } from "axios";
+import Axios, { AxiosResponse } from "axios";
 import { injectable } from "inversify";
 import {BitmapImage} from "../../../common/communication/BitmapImage";
 
@@ -7,10 +7,17 @@ export class GameCardsService {
 
   public constructor() {/**/}
 
-  public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): AxiosPromise<BitmapImage> {
+  public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): Promise<BitmapImage> {
     const images: Object = {"originalImage": originalImg,
                             "modifiedImage": modifiedImg};
 
-    return Axios.post<BitmapImage>("http://localhost:3000/api/differences", images);
+    return Axios.post<BitmapImage>("http://localhost:3000/api/differences", images)
+    .then((image: AxiosResponse<BitmapImage>) => {
+        return image.data;
+    });
+  }
+
+  public validateDifferencesImage(differencesImage: BitmapImage): boolean {
+    return true;
   }
 }

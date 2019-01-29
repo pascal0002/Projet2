@@ -58,13 +58,16 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<number> {
+  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<string> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 
-    return this.http.post<number>(`${this.BASE_URL}api/game_cards/image_pair/:imageId`, images).pipe(
-      catchError(this.handleError<number>("error")),
-      ).toPromise();
+    return new Promise<string>(() => {
+      this.http.post<string>(`${this.BASE_URL}api/game_cards/image_pair`, images)
+      .pipe( catchError(this.handleError<string>("error")), )
+      .toPromise()
+      .then((res) => { console.log(res); });
+    });
 }
 
   private handleError<T>(
