@@ -7,7 +7,7 @@
 
   <div id="content">
     <div class="contentLeft"> Nom du jeu </div>
-    <form [formGroup]="form2DGroup" #formDir="ngForm">
+    <form [formGroup]="form2DGroup" >
       <div class="contentRight"><input id="gameName" type="text" formControlName="title" [(ngModel)]="this.title" required></div>
       <div *ngIf="titleName.invalid && (titleName.dirty || titleName.touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
         <div *ngIf="titleName.errors.required">
@@ -23,8 +23,8 @@
     </form>
 
     <div class="contentLeft"> Image originale</div>
-    <form [formGroup]="form2DGroup" #formDir="ngForm" action="=/profile" method="post" enctype="multipart/form-data">
-      <div class="contentRight"> <input type="file" name="avatar" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput"
+    <form [formGroup]="form2DGroup">
+      <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput"
           (change)="decodeOriginalBitmap()">
       </div>
       <div *ngIf="(originalFileInput.dirty) && (!validBMPExtension(this.originalBitmap.fileName)
@@ -48,7 +48,7 @@
     </form>
 
     <div class="contentLeft"> Image modifiée</div>
-    <form [formGroup]="form2DGroup" #formDir="ngForm">
+    <form [formGroup]="form2DGroup" >
       <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput"
           (change)="decodeModifiedBitmap()">
       </div>
