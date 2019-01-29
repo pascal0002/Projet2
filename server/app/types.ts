@@ -11,4 +11,5 @@ export default {
         GameCardsController: Symbol("GameCardsController"),
         GameCardsService: Symbol("GameCardsService"),
         DifferencesController: Symbol("DifferencesController"),
+        DifferenceCounterService: Symbol("DifferenceCounterService"),
 };

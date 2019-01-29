@@ -6,12 +6,12 @@ import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import { Server } from "./server";
 import { DateService } from "./services/date.service";
+import { DifferenceCounterService } from "./services/difference-counter-service";
 import { DifferencesGeneratorService } from "./services/differences-generator.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
-// import { BitmapDecoderService } from "../../client/src/app/game-card-form-2d/bitmap-decoder.service";
 import Types from "./types";
 
 const container: Container = new Container();
@@ -28,5 +28,6 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.GameCardsController).to(GameCardsController);
 container.bind(Types.GameCardsService).to(GameCardsService);
 container.bind(Types.DifferencesController).to(DifferencesController);
+container.bind(Types.DifferenceCounterService).to(DifferenceCounterService);
 
 export { container };
