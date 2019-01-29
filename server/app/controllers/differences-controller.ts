@@ -10,8 +10,7 @@ export class DifferencesController {
 
     public get router(): Router {
         const router: Router = Router();
-
-        router.get("/", (req: Request, res: Response, next: NextFunction) => {
+        router.post("/", (req: Request, res: Response, next: NextFunction) => {
             res.send(this.differencesGeneratorService.generateDifferences(req.body.originalImage, req.body.modifiedImage));
         });
 

@@ -65,7 +65,7 @@ export class FormValidator2dService {
     return this.http.post<number>(`${this.BASE_URL}api/game_cards/image_pair/:imageId`, images).pipe(
       catchError(this.handleError<number>("error")),
       ).toPromise();
-}
+  }
 
   private handleError<T>(
     request: string,

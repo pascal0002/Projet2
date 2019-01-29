@@ -50,8 +50,8 @@ export class Application {
     private errorHandeling(): void {
         // Gestion des erreurs
         // this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-        //     const err: Error = new Error("Not Found");
-        //     next(err);
+        //    const err: Error = new Error("Not Found");
+        //    next(err);
         // });
 
         // development error handler

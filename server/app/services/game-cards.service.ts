@@ -11,6 +11,6 @@ export class GameCardsService {
     const images: Object = {"originalImage": originalImg,
                             "modifiedImage": modifiedImg};
 
-    return Axios.post<BitmapImage>("http://localhost:3000/api/differences", images);
+    return Axios.post<BitmapImage>("http://localhost:3000/api/differences/", images);
   }
 }
