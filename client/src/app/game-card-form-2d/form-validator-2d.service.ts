@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { of, Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { FormInfo } from "../../../../common/communication/FormInfo";
 
 const MIN_TITLE_LENGTH: number = 3;
 const MAX_TITLE_LENGTH: number = 15;
@@ -43,7 +43,7 @@ export class FormValidator2dService {
   }
 
   public validTitle(title: string): boolean {
-    if(title !== undefined){
+    if (title !== undefined) {
       return (title.length >= MIN_TITLE_LENGTH && title.length <= MAX_TITLE_LENGTH);
     }
     return false;
@@ -61,22 +61,36 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<number> {
-    const images: Object = {"originalImage": originalBitmap,
-                            "modifiedImage": modifiedBitmap};
-
-    return this.http.post<number>(`${this.BASE_URL}api/game_cards/image_pair/:imageId`, images).pipe(
-      catchError(this.handleError<number>("error")),
-      ).toPromise();
-}
-
   private handleError<T>(
     request: string,
     result?: T,
-    ): (error: Error) => Observable<T> {
+  ): (error: Error) => Observable<T> {
     return (error: Error): Observable<T> => {
       return of(result as T);
     };
   }
+
+  //public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<number> {
+    public onSubmit(formInfo: FormInfo): Promise<number> {
+   /*const images: Object = {
+      "originalImage": originalBitmap,
+      "modifiedImage": modifiedBitmap
+    };*/
+
+    //const BitmapPair: [BitmapImage, BitmapImage ] = [originalBitmap, modifiedBitmap];
+
+
+    
+
+   /* return this.http.post<number>(`${this.BASE_URL}api/saveImagePair/:imageId`, BitmapPair).pipe(
+      catchError(this.handleError<number>("error")),
+    ).toPromise();*/
+
+    return this.http.post<number>(`${this.BASE_URL}api/saveImagePair/`, formInfo).pipe(
+      catchError(this.handleError<number>("error")),
+    ).toPromise();
+  }
+
+  
 
 }

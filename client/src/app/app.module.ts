@@ -6,7 +6,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { BasicService } from "./basic.service";
-import {BitmapDecoderService} from "./game-card-form-2d/bitmap-decoder.service";
+import {BitmapReaderService} from "./game-card-form-2d/bitmap-reader.service";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { PartsListViewComponent } from "./parts-list-view/parts-list-view.component";
 import { UserLoginService } from "./user-login.service";
@@ -33,7 +33,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
-  providers: [BasicService, UserLoginService, WebsocketService, BitmapDecoderService],
+  providers: [BasicService, UserLoginService, WebsocketService, BitmapReaderService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
+import {PartsListViewComponent} from "../parts-list-view/parts-list-view.component"
 import { AdministrationViewComponent } from "./administration-view.component";
+import { GameCardFormComponent } from "../game-card-form-2d/game-card-form-2d.component";
 
 describe("AdministrationViewComponent", () => {
   let component: AdministrationViewComponent;
@@ -8,6 +9,7 @@ describe("AdministrationViewComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [PartsListViewComponent, GameCardFormComponent ],
       declarations: [ AdministrationViewComponent ],
     })
     .compileComponents();

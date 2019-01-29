@@ -12,6 +12,7 @@ import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
 import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
+import { FormValidatorService } from "./services/form-service/form-validator.service";
 // import { BitmapDecoderService } from "../../client/src/app/game-card-form-2d/bitmap-decoder.service";
 import Types from "./types";
 
@@ -30,5 +31,6 @@ container.bind(Types.WebsocketService).to(WebsocketService);
 container.bind(Types.GameCardsController).to(GameCardsController);
 container.bind(Types.GameCardsService).to(GameCardsService);
 container.bind(Types.DifferencesController).to(DifferencesController);
+container.bind(Types.FormValidatorService).to(FormValidatorService);
 
 export { container };

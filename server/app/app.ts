@@ -48,8 +48,6 @@ export class Application {
 //        this.app.use("/api/index", this.indexController.router);
 //        this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/saveImagePair", this.subitGameCardController.router);
-        //this.app.use("/api/index", this.indexController.router);
-        //this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/game_cards", this.gameCardsController.router);
         this.app.use("/api/differences", this.differencesController.router);
         this.errorHandeling();

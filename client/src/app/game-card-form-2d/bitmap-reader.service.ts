@@ -7,7 +7,9 @@ const BITS_PER_PIXEL_OFFSET: number = 28;
 const PIXEL_OFFSET: number = 10;
 
 @Injectable()
-export class BitmapDecoderService {
+export class BitmapReaderService {
+
+  public constructor() {/**/}
 
   public decodeBitmapFile(file: File): BitmapImage {
 
