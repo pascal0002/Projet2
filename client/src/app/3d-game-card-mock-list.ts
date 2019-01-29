@@ -1,4 +1,4 @@
-import { GameCard } from "./game-card";
+import { GameCard } from "../../../common/communication/game-card";
 
 export const THREE_DIMENSION_GAME_CARD_LIST: GameCard[] = [
     {
