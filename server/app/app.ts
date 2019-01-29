@@ -4,8 +4,9 @@ import * as cors from "cors";
 import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as logger from "morgan";
-import { DateController } from "./controllers/date.controller";
-import { IndexController } from "./controllers/index.controller";
+//import { DateController } from "./controllers/date.controller";
+//import { IndexController } from "./controllers/index.controller";
+import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
 import Types from "./types";
 
 @injectable()
@@ -15,11 +16,12 @@ export class Application {
     public app: express.Application;
 
     public constructor(
-        @inject(Types.IndexController) private indexController: IndexController,
-        @inject(Types.DateController) private dateController: DateController,
+       // @inject(Types.IndexController) private indexController: IndexController,
+        //@inject(Types.DateController) private dateController: DateController,
+        @inject(Types.SubmitGameCardController) private subitGameCardController: SubmitGameCardController,
     ) {
         this.app = express();
-
+        console.log("constructeur");
         this.config();
 
         this.bindRoutes();
@@ -35,9 +37,11 @@ export class Application {
     }
 
     public bindRoutes(): void {
+        console.log("dans bind routes");
         // Notre application utilise le routeur de notre API `Index`
-        this.app.use("/api/index", this.indexController.router);
-        this.app.use("/api/date", this.dateController.router);
+//        this.app.use("/api/index", this.indexController.router);
+//        this.app.use("/api/date", this.dateController.router);
+        this.app.use("/api/saveImagePair", this.subitGameCardController.router);
         this.errorHandeling();
     }
 

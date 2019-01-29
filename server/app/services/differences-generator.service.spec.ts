@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+/*import { TestBed } from "@angular/core/testing";
 
 import { DifferencesGeneratorService } from "./differences-generator.service";
 
@@ -9,4 +9,4 @@ describe("DifferencesGeneratorService", () => {
     const service: DifferencesGeneratorService = TestBed.get(DifferencesGeneratorService);
     expect(service).toBeTruthy();
   });
-});
+});*/

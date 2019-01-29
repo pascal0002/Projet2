@@ -7,6 +7,7 @@ import { DateService } from "./services/date.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
+import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
 //import { BitmapDecoderService } from "../../client/src/app/game-card-form-2d/bitmap-decoder.service";
 import Types from "./types";
 
@@ -21,7 +22,7 @@ container.bind(Types.DateController).to(DateController);
 container.bind(Types.DateService).to(DateService);
 
 container.bind(Types.LoginService).to(LoginService);
-
+container.bind(Types.SubmitGameCardController).to(SubmitGameCardController);
 container.bind(Types.WebsocketService).to(WebsocketService);
 
 //container.bind(Types.BitmapDecoderService).to(BitmapDecoderService);

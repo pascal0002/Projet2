@@ -4,6 +4,8 @@ import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/fo
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
+import { Observable, of } from "rxjs";
+import { catchError } from "rxjs/operators";
 
 const MIN_LENGTH_TITLE: number = 3;
 const MAX_LENGTH_TITLE: number = 15;
@@ -14,7 +16,7 @@ const MAX_LENGTH_TITLE: number = 15;
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
-  private readonly BASE_URL: string = "http://localhost:3000/";
+  private readonly BASE_URL: string = "http://localhost:3000/api/saveImagePair";
   public title: string;
   public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
   public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
@@ -101,8 +103,20 @@ export class GameCardFormComponent implements OnInit {
     return this.formValidatorService.validTitle(this.title);
   }
 
+  private handleError<T>(
+        request: string,
+        result?: T,
+        ): (error:Error)=>
+        Observable<T>{
+          return (error: Error):
+        Observable<T> =>{
+          return of(result as T);
+        };
+  }
+
   public onSubmit(): void {
-    const imagePair: Array<BitmapImage> = [this.originalBitmap, this.modifiedBitmap];
-    this.http.post(this.BASE_URL + "/image_pair/", imagePair);
+    //const imagePair: Array<BitmapImage> = [this.originalBitmap, this.modifiedBitmap];
+    this.http.post(this.BASE_URL, "test").pipe(catchError(this.handleError<number>("error")),).toPromise();
+    console.log("onsubmit called.");
   }
 }

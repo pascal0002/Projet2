@@ -6,6 +6,6 @@ export default {
         IndexService: Symbol("IndexService"),
         DateService: Symbol("DateService"),
         LoginService: Symbol("LoginService"),
-      //  BitmapDecoderService: Symbol("BitmapDecoderService"),
+        SubmitGameCardController: Symbol("SubmitGameCardController"),
         WebsocketService: Symbol("WebsocketService"),
 };

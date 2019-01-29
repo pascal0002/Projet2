@@ -44,7 +44,10 @@ export class FormValidator2dService {
   }
 
   public validTitle(title: string): boolean {
-    return (title.length >= MIN_TITLE_LENGTH && title.length <= MAX_TITLE_LENGTH);
+    if(title !== undefined){
+      return (title.length >= MIN_TITLE_LENGTH && title.length <= MAX_TITLE_LENGTH);
+    }
+    return false;
   }
 
   public validImageDimensions(height: number, width: number): boolean {

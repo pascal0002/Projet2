@@ -20,12 +20,12 @@ export class BitmapDecoderService {
 
       bmpPixelsBuffer = fileReader.result as ArrayBuffer;
       const dataView: DataView = new DataView(bmpPixelsBuffer);
+      const pixelsPosition: number = dataView.getUint32(PIXEL_OFFSET, true);
 
       bitmapImage.width = dataView.getUint32(WIDTH_OFFSET, true);
       bitmapImage.height = dataView.getUint32(HEIGHT_OFFSET, true);
       bitmapImage.bitDepth = dataView.getUint32(BITS_PER_PIXEL_OFFSET, true);
-      const offset: number = dataView.getUint32(PIXEL_OFFSET, true);
-      bitmapImage.pixels = Array.from(new Uint8Array(bmpPixelsBuffer, offset));
+      bitmapImage.pixels = Array.from(new Uint8Array(bmpPixelsBuffer, pixelsPosition));
     };
 
     fileReader.readAsArrayBuffer(file);
