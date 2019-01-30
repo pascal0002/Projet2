@@ -30,6 +30,8 @@ export class BitmapDecoderService {
 
     fileReader.readAsArrayBuffer(file);
 
+    console.log(bitmapImage);
+
     return bitmapImage;
   }
 }

@@ -1,4 +1,5 @@
 import { injectable } from "inversify";
+import "reflect-metadata";
 import {BitmapImage} from "../../../common/communication/BitmapImage";
 
 const IMAGE_HEIGHT: number = 480;
@@ -51,7 +52,6 @@ export class DifferenceCounterService {
       }
       pixelIndex ++;
     });
-    console.log(numberOfDifference);
 
     return numberOfDifference;
   }
