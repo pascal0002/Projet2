@@ -94,7 +94,7 @@
     font-weight: bold;
     background-color: #13315C;
     border: 1px solid #2d6898;
-    background-image: linear-gradient(bottom, #13315C,rgb(97,155,203) 100%);
+    /*background-image: linear-gradient(bottom, #13315C,rgb(97,155,203) 100%);*/
     background-image: -o-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
     background-image: -moz-linear-gradient(bottom, #13315C, rgb(97,155,203) 100%);
     background-image: -webkit-linear-gradient(bottom,#13315C, rgb(97,155,203) 100%);

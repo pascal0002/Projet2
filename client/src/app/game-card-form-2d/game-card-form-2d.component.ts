@@ -1,11 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { FormInfo } from "../../../../common/communication/FormInfo";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
-//import { Observable, of } from "rxjs";
-//import { catchError } from "rxjs/operators";
 
 const MIN_LENGTH_TITLE: number = 3;
 const MAX_LENGTH_TITLE: number = 15;
@@ -16,21 +13,23 @@ const MAX_LENGTH_TITLE: number = 15;
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardFormComponent implements OnInit {
- // private readonly BASE_URL: string = "http://localhost:3000/api/saveImagePair";
-  public title: string;
-  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
-  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
-  public form2DGroup: FormGroup;
+  private formInfo: FormInfo = {
+    gameName: "",
+    originalImage: { height:0, width:0, bitDepth:0, fileName: "", pixels:[]},
+    modifiedImage: { height:0, width:0, bitDepth:0, fileName: "", pixels:[]},
+}
 
+  public form2DGroup: FormGroup;
   public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm();
   }
 
+
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
-      title: new FormControl(this.title, [
+        title: new FormControl("", [
         Validators.required,
         Validators.minLength(MIN_LENGTH_TITLE),
         Validators.maxLength(MAX_LENGTH_TITLE),
@@ -47,7 +46,7 @@ export class GameCardFormComponent implements OnInit {
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-        this.originalBitmap = this.bitmapReaderService.decodeBitmapFile(file);
+        this.formInfo.originalImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
@@ -59,7 +58,7 @@ export class GameCardFormComponent implements OnInit {
     if (inputElement.files) {
       file = inputElement.files[0];
       if (file) {
-        this.modifiedBitmap = this.bitmapReaderService.decodeBitmapFile(file);
+        this.formInfo.modifiedImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
@@ -93,26 +92,15 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public validTitle(): boolean {
-    return this.formValidatorService.validTitle(this.title);
+   return this.formValidatorService.validTitle(this.formInfo.gameName);
   }
-/*
-  private handleError<T>(
-        request: string,
-        result?: T,
-        ): (error:Error)=>
-        Observable<T>{
-          return (error: Error):
-        Observable<T> =>{
-          return of(result as T);
-        };
-  }*/
+ 
 
   public onSubmit(): void {
     // tslint:disable-next-line:no-console
-    const gameCard: FormInfo = {gameName: this.title, originalImage: this.originalBitmap, modifiedImage: this.modifiedBitmap};
-    
-    //this.formValidatorService.onSubmit(this.originalBitmap, this.modifiedBitmap);
-    this.formValidatorService.onSubmit(gameCard);
+   // const gameCard: FormInfo = { gameName: this.title, originalImage: this.originalBitmap, modifiedImage: this.modifiedBitmap };
+
+    this.formValidatorService.onSubmit(this.formInfo);
   }
 
 }

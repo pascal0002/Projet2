@@ -70,22 +70,9 @@ export class FormValidator2dService {
     };
   }
 
-  //public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<number> {
     public onSubmit(formInfo: FormInfo): Promise<number> {
-   /*const images: Object = {
-      "originalImage": originalBitmap,
-      "modifiedImage": modifiedBitmap
-    };*/
-
-    //const BitmapPair: [BitmapImage, BitmapImage ] = [originalBitmap, modifiedBitmap];
-
-
-    
-
-   /* return this.http.post<number>(`${this.BASE_URL}api/saveImagePair/:imageId`, BitmapPair).pipe(
-      catchError(this.handleError<number>("error")),
-    ).toPromise();*/
-
+  
+    this.closeForm();
     return this.http.post<number>(`${this.BASE_URL}api/saveImagePair/`, formInfo).pipe(
       catchError(this.handleError<number>("error")),
     ).toPromise();

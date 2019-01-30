@@ -8,7 +8,7 @@
   <div id="content">
     <div class="contentLeft"> Nom du jeu </div>
     <form [formGroup]="form2DGroup" >
-      <div class="contentRight"><input id="gameName" type="text" formControlName="title" [(ngModel)]="this.title" required></div>
+      <div class="contentRight"><input id="gameName" type="text" formControlName="title" [(ngModel)]="this.formInfo.gameName" required></div>
       <div *ngIf="titleName.invalid && (titleName.dirty || titleName.touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
         <div *ngIf="titleName.errors.required">
           Le nom du jeu est requis.
@@ -27,19 +27,19 @@
       <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput"
           (change)="decodeOriginalBitmap()">
       </div>
-      <div *ngIf="(originalFileInput.dirty) && (!validBMPExtension(this.originalBitmap.fileName)
-                                                || !validBitDepth(this.originalBitmap.bitDepth)
-                                                || !validImageDimensions(this.originalBitmap.height,this.originalBitmap.width))"
+      <div *ngIf="(originalFileInput.dirty) && (!validBMPExtension(this.formInfo.originalImage.fileName)
+                                                || !validBitDepth(this.formInfo.originalImage.bitDepth)
+                                                || !validImageDimensions(this.formInfo.originalImage.height,this.formInfo.originalImage.width))"
         class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
-        <div *ngIf="!validBMPExtension(this.originalBitmap.fileName); else elseBlock1">
+        <div *ngIf="!validBMPExtension(this.formInfo.originalImage.fileName); else elseBlock1">
           Le fichier doit être un .bmp
         </div>
         <ng-template #elseBlock1>
-          <div *ngIf="!validBitDepth(this.originalBitmap.bitDepth); else elseBlock2">
+          <div *ngIf="!validBitDepth(this.formInfo.originalImage.bitDepth); else elseBlock2">
             Le format du bmp doit être de 24-bit.
           </div>
           <ng-template #elseBlock2>
-            <div *ngIf="!validImageDimensions(this.originalBitmap.height,this.originalBitmap.width)">
+            <div *ngIf="!validImageDimensions(this.formInfo.originalImage.height,this.formInfo.originalImage.width)">
               Le dimensions de l'image doivent être de 640 x 480 pixels.
             </div>
           </ng-template>
@@ -52,19 +52,19 @@
       <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput"
           (change)="decodeModifiedBitmap()">
       </div>
-      <div *ngIf="(modifiedFileInput.dirty) && (!validBMPExtension(this.modifiedBitmap.fileName)
-                                                || !validBitDepth(this.modifiedBitmap.bitDepth)
-                                                || !validImageDimensions(this.modifiedBitmap.height,this.modifiedBitmap.width))"
+      <div *ngIf="(modifiedFileInput.dirty) && (!validBMPExtension(this.formInfo.modifiedImage.fileName)
+                                                || !validBitDepth(this.formInfo.modifiedImage.bitDepth)
+                                                || !validImageDimensions(this.formInfo.modifiedImage.height,this.formInfo.modifiedImage.width))"
         class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
-        <div *ngIf="!validBMPExtension(this.modifiedBitmap.fileName); else elseBlock3">
+        <div *ngIf="!validBMPExtension(this.formInfo.modifiedImage.fileName); else elseBlock3">
           Le fichier doit être un .bmp
         </div>
         <ng-template #elseBlock3>
-          <div *ngIf="!validBitDepth(this.modifiedBitmap.bitDepth); else elseBlock4">
+          <div *ngIf="!validBitDepth(this.formInfo.modifiedImage.bitDepth); else elseBlock4">
             Le format du bmp doit être de 24-bit.
           </div>
           <ng-template #elseBlock4>
-            <div *ngIf="!validImageDimensions(this.modifiedBitmap.height,this.modifiedBitmap.width)">
+            <div *ngIf="!validImageDimensions(this.formInfo.modifiedImage.height,this.formInfo.modifiedImage.width)">
               Le dimensions de l'image doivent être de 640 x 480 pixels.
             </div>
           </ng-template>
@@ -74,12 +74,12 @@
 
     <div class="contentLeft">
       <button type="submit" class="btn btn-default" (click)="onSubmit()"
-       [disabled]="!(this.validBMPExtension(this.originalBitmap.fileName)
-                     && this.validBMPExtension(this.modifiedBitmap.fileName)
-                     && this.validBitDepth(this.originalBitmap.bitDepth)
-                     && this.validBitDepth(this.modifiedBitmap.bitDepth)
-                     && this.validImageDimensions(this.originalBitmap.height, this.originalBitmap.width)
-                     && this.validImageDimensions(this.modifiedBitmap.height, this.modifiedBitmap.width)
+       [disabled]="!(this.validBMPExtension(this.formInfo.originalImage.fileName)
+                     && this.validBMPExtension(this.formInfo.modifiedImage.fileName)
+                     && this.validBitDepth(this.formInfo.originalImage.bitDepth)
+                     && this.validBitDepth(this.formInfo.modifiedImage.bitDepth)
+                     && this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
+                     && this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
                      && this.validTitle()
                     )">
         Soumettre

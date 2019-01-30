@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { GameCardFormComponent } from "./game-card-form-2d.component";
+import { AppModule } from "../app.module";
 
 describe("GameCardFormComponent", () => {
   let component: GameCardFormComponent;
@@ -8,7 +9,8 @@ describe("GameCardFormComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameCardFormComponent ],
+      imports: [AppModule],
+      declarations: [  ]
     })
     .compileComponents();
   }));

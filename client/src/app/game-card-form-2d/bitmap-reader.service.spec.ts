@@ -9,4 +9,8 @@ describe("BitmapReaderService", () => {
     const service: BitmapReaderService = TestBed.get(BitmapReaderService);
     expect(service).toBeTruthy();
   });
+
+
+  
+
 });
