@@ -36,6 +36,7 @@ export class Application {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(cors());
+
     }
 
     public bindRoutes(): void {
@@ -44,6 +45,7 @@ export class Application {
         this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/game_cards", this.gameCardsController.router);
         this.app.use("/api/differences", this.differencesController.router);
+        this.app.use(express.static("./public"));
         this.errorHandeling();
     }
 
