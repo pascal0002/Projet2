@@ -3,12 +3,10 @@
     background-color: #13315C;
     font-family: 'Poppins';
     text-align: center;
-    height: 95px;
-    transform: translate(-8px,-15px);
-    width: 101%;
+    height: 85px;
+    width: 100%;
     position: fixed;
-    margin-bottom: 1050px;
-    padding-top: 25px;
+    padding-top: 15px;
 }
 
 .createCardButton{

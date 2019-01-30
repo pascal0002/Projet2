@@ -13,12 +13,13 @@
     text-align: center;
 }
 .gameCardsWindow{
-    height: 570px;
+    height: 95%;
     width: 930px;
+    margin-top: 50px;
+    background-color: white;
     display: inline-block;
-    -moz-box-shadow: -2px 2px 20px #c0c0c0;
-	-webkit-box-shadow: -2px 2px 20px #c0c0c0;
-    box-shadow: -2px 2px 20px #c0c0c0;
+    box-shadow: 28px -15px 83px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 10px;
 }
 
 .titleWrapper{
@@ -30,7 +31,7 @@
     text-align: center;
     border-bottom: 1px solid black;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     height: 75px;
     font-size: 20px;
@@ -79,7 +80,7 @@
 .gameCardImage{
   grid-area: image;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
 }
 
@@ -134,13 +135,13 @@
 }
 
 .gameCardsContainer{
-    width: 50%;   
+    width: 50%;
     height: auto;
 }
 
 .gameCardsWrapper{
-    display: flex;    
-    height: 494px;
+    display: flex;
+    height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
 }

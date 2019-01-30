@@ -9,7 +9,9 @@ export class LoginService {
     public readonly usernameMaxLenghth: number = 20;
 
     public connectUser(username: string): void {
-        this.usersConnected.push(username);
+        if (this.validateUsername(username)) {
+            this.usersConnected.push(username);
+        }
     }
 
     public validateUsername(username: string): boolean {

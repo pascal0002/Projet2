@@ -14,8 +14,9 @@ import { UserLoginComponent } from "./user-login/user-login.component";
 import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
-    {path: "admin", component: AdministrationViewComponent},
-    {path: "", component: PartsListViewComponent},
+  { path: "", component: UserLoginComponent },
+  { path: "part", component: PartsListViewComponent },
+  { path: "admin", component: AdministrationViewComponent },
 ];
 
 @NgModule({
