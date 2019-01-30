@@ -7,10 +7,10 @@ import { DifferenceCounterService } from "./difference-counter.service";
 
 const VALID_NUMBER_OF_DIFFERENCES: number = 7;
 
-const MINIMAL_TIME_SOLO: number = 150;
-const MAXIMAL_TIME_SOLO: number = 300;
-const MINIMAL_TIME_DUO: number = 210;
-const MAXIMAL_TIME_DUO: number = 360;
+const MINIMAL_TIME_DUO: number = 150;
+const MAXIMAL_TIME_DUO: number = 300;
+const MINIMAL_TIME_SOLO: number = 210;
+const MAXIMAL_TIME_SOLO: number = 360;
 
 const NUMBER_HIGH_SCORE: number = 3;
 
