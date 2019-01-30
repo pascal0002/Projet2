@@ -5,59 +5,74 @@ import { DifferencesGeneratorService } from "./differences-generator.service";
 
 const WHITE_PIXEL_PARAMETER: number = 255;
 const BLACK_PIXEL_PARAMETER: number = 0;
-const PIXEL_ENLARGING_SURFACE: number = 81;
+const PIXEL_NB: number = 81;
 const PIXEL_PARAMETERS_NB: number = 3;
 const CENTER: number = 40;
 const BOTTOM: number = 76;
 const TOP: number = 4;
 const LEFT: number = 36;
 const RIGHT: number = 44;
-const originalTestImg: BitmapImage = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: [0, 0, 0]};
+const originalTestImg: BitmapImage = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
+for (let i: number = 0; i < PIXEL_NB * PIXEL_PARAMETERS_NB; i++) {
+    originalTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+}
 
 let differencesGeneratorService: DifferencesGeneratorService;
+let modifiedTestImg: BitmapImage;
 let differenceTestImg: BitmapImage;
 let verificationArray: number[] = [];
 
 describe("DifferenceGeneratorService", () => {
     beforeEach(() => {
         differencesGeneratorService = new DifferencesGeneratorService();
-        differenceTestImg = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: []};
+        modifiedTestImg = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
+        for (let i: number = 0; i < (PIXEL_NB - 1) * PIXEL_PARAMETERS_NB; i++) {
+            modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        }
+        differenceTestImg = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
+        for (let i: number = 0; i < PIXEL_NB * PIXEL_PARAMETERS_NB; i ++) {
+            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
+        }
         verificationArray = [];
     });
 
-    it("deux pixels identiques devraient créer un pixel blanc", (done: Mocha.Done) => {
-    const modifiedTestImg: BitmapImage = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: [0, 0, 0]};
-    expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg, differenceTestImg).pixels)
-        .deep.equal([WHITE_PIXEL_PARAMETER, WHITE_PIXEL_PARAMETER, WHITE_PIXEL_PARAMETER]);
-    done();
+    it("des pixels identiques devraient créer des pixels blancs", (done: Mocha.Done) => {
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg).pixels[PIXEL_NB * PIXEL_PARAMETERS_NB - 1])
+        .to.equal(WHITE_PIXEL_PARAMETER);
+        done();
     });
 
     it("un pixel noir devrait être créé lorsque le paramètre rouge de deux pixels correspondants est différent", (done: Mocha.Done) => {
-        const modifiedTestImg: BitmapImage = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: [1, 0, 0]};
-        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg, differenceTestImg).pixels)
-            .deep.equal([BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER]);
+        modifiedTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg).pixels[PIXEL_NB * PIXEL_PARAMETERS_NB - 1])
+        .to.equal(BLACK_PIXEL_PARAMETER);
         done();
     });
 
     it("un pixel noir devrait être créé lorsque le paramètre vert de deux pixels correspondants est différent", (done: Mocha.Done) => {
-        const modifiedTestImg: BitmapImage = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: [0, 1, 0]};
-        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg, differenceTestImg).pixels)
-            .deep.equal([BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER]);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg).pixels[PIXEL_NB * PIXEL_PARAMETERS_NB - 1])
+        .to.equal(BLACK_PIXEL_PARAMETER);
         done();
     });
 
     it("un pixel noir devrait être créé lorsque le paramètre bleu de deux pixels correspondants est différent", (done: Mocha.Done) => {
-        const modifiedTestImg: BitmapImage = {height: 1, width: 1, bitDepth: 24, fileName: "", pixels: [0, 0, 1]};
-        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg, differenceTestImg).pixels)
-            .deep.equal([BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER]);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
+        modifiedTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
+        expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg).pixels[PIXEL_NB * PIXEL_PARAMETERS_NB - 1])
+        .to.equal(BLACK_PIXEL_PARAMETER);
         done();
     });
 
     it("Un pixel est élargis de 36 pixels autour de lui", (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[CENTER * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[36], pixelsArray[39], pixelsArray[42], pixelsArray[60], pixelsArray[63],
@@ -71,16 +86,11 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 36; i++) {
             verificationArray.push(BLACK_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 
     it("Un pixel n'est pas élargis plus que la région de 36 pixels", (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[CENTER * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[9], pixelsArray[12], pixelsArray[15], pixelsArray[33], pixelsArray[45],
@@ -90,17 +100,12 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 20; i++) {
             verificationArray.push(WHITE_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 
     it("L'élargissement d'un pixel ne devrait pas dépasser la bordure inférieure de l'image bitmap (pas de bits noirs en haut)",
        (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[BOTTOM * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[0], pixelsArray[3], pixelsArray[6], pixelsArray[9], pixelsArray[12],
@@ -108,17 +113,12 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 9; i++) {
             verificationArray.push(WHITE_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 
     it("L'élargissement d'un pixel ne devrait pas dépasser la bordure supérieure de l'image bitmap (pas de bits noirs en bas)",
        (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[TOP * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[216], pixelsArray[219], pixelsArray[222], pixelsArray[225], pixelsArray[228],
@@ -126,17 +126,12 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 9; i++) {
             verificationArray.push(WHITE_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 
     it("L'élargissement d'un pixel ne devrait pas dépasser la bordure gauche de l'image bitmap (pas de bits noirs a droite)",
        (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[LEFT * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[24], pixelsArray[51], pixelsArray[78], pixelsArray[105], pixelsArray[132],
@@ -144,17 +139,12 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 9; i++) {
             verificationArray.push(WHITE_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 
     it("L'élargissement d'un pixel ne devrait pas dépasser la bordure droite de l'image bitmap (pas de bits noirs a gauche)",
        (done: Mocha.Done) => {
-        differenceTestImg.height = differenceTestImg.width = Math.sqrt(PIXEL_ENLARGING_SURFACE);
-        for (let i: number = 0; i < PIXEL_ENLARGING_SURFACE * PIXEL_PARAMETERS_NB; i ++) {
-            differenceTestImg.pixels.push(WHITE_PIXEL_PARAMETER);
-        }
         differenceTestImg.pixels[RIGHT * PIXEL_PARAMETERS_NB] = BLACK_PIXEL_PARAMETER;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[0], pixelsArray[27], pixelsArray[54], pixelsArray[81], pixelsArray[108],
@@ -162,8 +152,7 @@ describe("DifferenceGeneratorService", () => {
         for (let i: number = 0; i < 9; i++) {
             verificationArray.push(WHITE_PIXEL_PARAMETER);
         }
-        expect(pixelsToVerify)
-            .deep.equal(verificationArray);
+        expect(pixelsToVerify).deep.equal(verificationArray);
         done();
     });
 });
