@@ -3,7 +3,7 @@ import { inject, injectable } from "inversify";
 import {BitmapImage} from "../../../common/communication/BitmapImage";
 import {GameCard} from "../../../common/communication/game-card";
 import Types from "../types";
-import { DifferenceCounterService } from "./difference-counter-service";
+import { DifferenceCounterService } from "./difference-counter.service";
 
 const VALID_NUMBER_OF_DIFFERENCES: number = 7;
 const MINIMAL_TIME_SOLO: number = 150;

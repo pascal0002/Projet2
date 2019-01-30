@@ -6,7 +6,7 @@ import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import { Server } from "./server";
 import { DateService } from "./services/date.service";
-import { DifferenceCounterService } from "./services/difference-counter-service";
+import { DifferenceCounterService } from "./services/difference-counter.service";
 import { DifferencesGeneratorService } from "./services/differences-generator.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { IndexService } from "./services/index.service";

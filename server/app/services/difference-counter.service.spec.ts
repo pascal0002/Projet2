@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { blackBitmap, diagonalDifferenceBitmap, fourCornerBlackBitmap, leftBottomBlackBitmap, leftTopBlackBitmap,
          rightBottomBlackBitmap, rightTopBlackBitmap, whiteBitmap } from "../../images/bitmap_mock";
-import { DifferenceCounterService } from "./difference-counter-service";
+import { DifferenceCounterService } from "./difference-counter.service";
 
 let differenceCounterService: DifferenceCounterService;
 
