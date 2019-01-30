@@ -49,8 +49,8 @@ describe("game-cards-service", () => {
         const expectedGameCard: GameCard = { title: "",
                                              imageName: "",
                                              modifiedImageName: "",
-                                             highScoreSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
-                                             highScore1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
+                                             bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
+                                             bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
                                            };
         expect(gameCardsService.generateGameCard()).equal(expectedGameCard);
         done();
@@ -61,8 +61,8 @@ describe("game-cards-service", () => {
         const expectedGameCard: GameCard = { title: "",
                                              imageName: "",
                                              modifiedImageName: "",
-                                             highScoreSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
-                                             highScore1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
+                                             bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
+                                             bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
                                            };
         expect(gameCardsService.generateGameCard()).equal(expectedGameCard);
         done();
@@ -73,8 +73,8 @@ describe("game-cards-service", () => {
         const expectedGameCard: GameCard = { title: "",
                                              imageName: "",
                                              modifiedImageName: "",
-                                             highScoreSolo: ["3:46 user109", "3:46 user109", "3:46 user109"],
-                                             highScore1v1: ["2:46 user109", "2:46 user109", "2:46 user109"],
+                                             bestTimeSolo: ["3:46 user109", "3:46 user109", "3:46 user109"],
+                                             bestTime1v1: ["2:46 user109", "2:46 user109", "2:46 user109"],
                                            };
         expect(gameCardsService.generateGameCard()).equal(expectedGameCard);
         done();

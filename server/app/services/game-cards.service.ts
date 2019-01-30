@@ -43,8 +43,8 @@ export class GameCardsService {
     return { title: "",
              imageName: "",
              modifiedImageName: "",
-             highScoreSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
-             highScore1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
+             bestTimeSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
+             bestTime1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
            };
   }
 
