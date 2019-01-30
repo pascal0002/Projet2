@@ -18,17 +18,17 @@ export class LoginService {
         const alphanumericCharacters: RegExp = /^[0-9a-z]+$/i;
 
         return alphanumericCharacters.test(username)
-               && username.length >= this.usernameMinLength
-               && username.length <= this.usernameMaxLenghth
-               && this.isUsernameUnique(username);
+            && username.length >= this.usernameMinLength
+            && username.length <= this.usernameMaxLenghth
+            && this.isUsernameUnique(username);
     }
 
     public disconnect(username: string): void {
         this.usersConnected = this.usersConnected.filter((userConnected: string) => userConnected !== username);
     }
 
-    private isUsernameUnique(username: string): boolean {
-       return !this.usersConnected.includes(username);
+    public isUsernameUnique(username: string): boolean {
+        return !this.usersConnected.includes(username);
     }
 
 }
