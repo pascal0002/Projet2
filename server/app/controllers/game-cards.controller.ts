@@ -14,7 +14,7 @@ export class GameCardsController {
 
         router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
-            .then((image: BitmapImage) => {console.log("allo3"); res.json(this.gameCardsService.validateDifferencesImage(image)); });
+            .then((image: BitmapImage) => {res.json(this.gameCardsService.validateDifferencesImage(image)); });
         });
 
         return router;

@@ -2,28 +2,23 @@ import * as http from "http";
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import * as socketIo from "socket.io";
-import {MessageType} from "../../../common/communication/messageType";
+import { MessageType } from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
-// import { runInThisContext } from "vm";
-// import {BitmapDecoderService} from "../../../client/src/app/game-card-form-2d/bitmap-decoder.service";
-
 @injectable()
 export class WebsocketService {
 
-    private io: socketIo.Server;
+    private _io: socketIo.Server;
 
-    public constructor( @inject(Types.LoginService) private loginService: LoginService,
-                        /*@inject(Types.BitmapDecoderService) private bitmapDecoderService: BitmapDecoderService,*/
-                      ) {}
+    public constructor(@inject(Types.LoginService) private loginService: LoginService) { }
 
     public init(server: http.Server): void {
-        this.io = socketIo(server);
+        this._io = socketIo(server);
         this.listen();
     }
 
     public listen(): void {
-        this.io.on("connection", (socket: socketIo.Server) => {
+        this._io.on("connection", (socket: socketIo.Server) => {
             let usernameSocket: string;
 
             socket.on(MessageType.VALIDATE_USERNAME, (username: string) => {
@@ -49,5 +44,9 @@ export class WebsocketService {
             });
 
         });
+    }
+
+    public get socket(): socketIo.Server {
+        return this._io;
     }
 }

@@ -13,10 +13,10 @@ export class GameCardsService {
   public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): Promise<BitmapImage> {
     const images: Object = {"originalImage": originalImg,
                             "modifiedImage": modifiedImg};
-    console.log("allo1");
+
     return Axios.post<BitmapImage>("http://localhost:3000/api/differences", images)
     .then((image: AxiosResponse<BitmapImage>) => {
-      console.log("allo2");
+
       return image.data;
     });
   }
