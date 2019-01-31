@@ -1,7 +1,7 @@
-import { BitmapImage } from "./BitmapImage";
+import { IBitmapImage } from "./BitmapImage";
 
 export interface FormInfo{
     gameName: string;
-    originalImage: BitmapImage;
-    modifiedImage: BitmapImage;
+    originalImage: IBitmapImage;
+    modifiedImage: IBitmapImage;
 }

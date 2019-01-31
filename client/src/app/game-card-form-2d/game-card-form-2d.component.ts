@@ -1,10 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { IBitmapImage } from "../../../../common/communication/BitmapImage";
 import { FormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
-import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -25,6 +23,7 @@ export class GameCardFormComponent implements OnInit {
     modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
   };
   public isFilesWith7Differences: boolean = true;
+  public errorMessage: string = "";
 
   private readonly BASE_URL: string = "http://localhost:3000/";
 
@@ -104,7 +103,9 @@ export class GameCardFormComponent implements OnInit {
         (res) => { this.isFilesWith7Differences = true;
                    this.closeForm2D();
                  },
-        (res) => { this.isFilesWith7Differences = false; },
+        (res) => { this.isFilesWith7Differences = false;
+                   this.errorMessage = res.error;
+                 },
       )
       .catch(
         (err) => {console.error("erreur :", err); },

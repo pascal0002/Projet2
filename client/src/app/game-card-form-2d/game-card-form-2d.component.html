@@ -85,7 +85,7 @@
         Soumettre
       </button>
       <div [class.invisible] = "this.isFilesWith7Differences" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
-        Les deux images sélectionnées doivent avoir exactement 7 différences
+        {{errorMessage}}
       </div>
   </div>
 
