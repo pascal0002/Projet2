@@ -68,13 +68,13 @@ describe("game-cards-service", () => {
                 bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
                 bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard()).to.deep.equal(expectedGameCard);
             done();
         });
 
         it("should return maximal value when Math.random return 1", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(1);
-            console.log(gameCardsServiceStub.getRandomRange(3, 10));
+
             const expectedGameCard: GameCard = {
                 title: "",
                 imageName: "",
@@ -82,12 +82,14 @@ describe("game-cards-service", () => {
                 bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
                 bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).equal(expectedGameCard);
+            const resultGameCard: GameCard = gameCardsServiceStub.generateGameCard();
+            expect(resultGameCard).to.deep.equal(expectedGameCard);
             done();
         });
 
         it("should return expected value when Math.random return 0.11", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(0.11);
+
             const expectedGameCard: GameCard = {
                 title: "",
                 imageName: "",
@@ -95,7 +97,7 @@ describe("game-cards-service", () => {
                 bestTimeSolo: ["3:46 user109", "3:46 user109", "3:46 user109"],
                 bestTime1v1: ["2:46 user109", "2:46 user109", "2:46 user109"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard()).to.deep.equal(expectedGameCard);
             done();
         });
     });
