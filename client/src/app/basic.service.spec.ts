@@ -1,4 +1,4 @@
-import { Message } from "../../../common/communication/message";
+import { IMessage } from "../../../common/communication/message";
 import { TestHelper } from "../test.helper";
 import { BasicService } from "./basic.service";
 
@@ -13,13 +13,13 @@ describe("BasicService", () => {
   });
 
   it("should return expected message (HttpClient called once)", () => {
-    const expectedMessage: Message = { body: "Hello", title: "World" };
+    const expectedMessage: IMessage = { body: "Hello", title: "World" };
 
     httpClientSpy.get.and.returnValue(TestHelper.asyncData(expectedMessage));
 
         // check the content of the mocked call
     basicService.basicGet().subscribe(
-        (response: Message) => {
+        (response: IMessage) => {
             expect(response.title).toEqual(expectedMessage.title, "Title check");
             expect(response.body).toEqual(expectedMessage.body, "body check");
         },

@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import "reflect-metadata";
-import { BitmapImage } from "../../../common/communication/BitmapImage";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { DifferencesGeneratorService } from "./differences-generator.service";
 
 const WHITE_PIXEL_PARAMETER: number = 255;
@@ -12,14 +12,14 @@ const BOTTOM: number = 76;
 const TOP: number = 4;
 const LEFT: number = 36;
 const RIGHT: number = 44;
-const originalTestImg: BitmapImage = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
+const originalTestImg: IBitmapImage = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
 for (let i: number = 0; i < PIXEL_NB * PIXEL_PARAMETERS_NB; i++) {
     originalTestImg.pixels.push(BLACK_PIXEL_PARAMETER);
 }
 
 let differencesGeneratorService: DifferencesGeneratorService;
-let modifiedTestImg: BitmapImage;
-let differenceTestImg: BitmapImage;
+let modifiedTestImg: IBitmapImage;
+let differenceTestImg: IBitmapImage;
 let verificationArray: number[] = [];
 
 describe("DifferenceGeneratorService", () => {

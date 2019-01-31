@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { IBitmapImage } from "../../../../common/communication/BitmapImage";
 import { GameCard } from "../../../../common/communication/game-card";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
@@ -16,8 +16,8 @@ const MAX_LENGTH_TITLE: number = 15;
 })
 export class GameCardFormComponent implements OnInit {
   public title: string;
-  public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
-  public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+  public originalBitmap: IBitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
+  public modifiedBitmap: IBitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   public form2DGroup: FormGroup;
   public isFilesWith7Differences: boolean = true;
 
@@ -102,7 +102,7 @@ export class GameCardFormComponent implements OnInit {
     this.generateGameCard(this.originalBitmap, this.modifiedBitmap);
   }
 
-  public generateGameCard(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<GameCard> {
+  public generateGameCard(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 

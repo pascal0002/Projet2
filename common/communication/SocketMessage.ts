@@ -1,3 +1,3 @@
-export interface SocketMessage{
+export interface ISocketMessage {
     content: any;
 }

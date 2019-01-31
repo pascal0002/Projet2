@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import {ISocketMessage} from "../../../common/communication/SocketMessage";
 import { MessageType } from "../../../common/communication/messageType";
-import {SocketMessage} from "../../../common/communication/SocketMessage";
 
 import * as socketIo from "socket.io-client";
 
@@ -18,7 +18,7 @@ export class WebsocketService {
         this.socket.emit(messageType, message);
     }
 
-    public sendMessagePAM(messageType: MessageType, message: SocketMessage ): void {
+    public sendMessagePAM(messageType: MessageType, message: ISocketMessage ): void {
         this.socket.emit(messageType, message.content);
     }
 
