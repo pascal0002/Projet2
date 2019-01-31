@@ -99,10 +99,13 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.generateGameCard(this.originalBitmap, this.modifiedBitmap);
+    this.generateGameCard(this.originalBitmap, this.modifiedBitmap)
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
   }
 
-  public generateGameCard(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
+  public async generateGameCard(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 
