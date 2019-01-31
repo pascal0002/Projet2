@@ -45,15 +45,39 @@ describe("form-validator-service", () => {
 
     });
 
-    /*describe("validateImage", () => {
-
-    });
-
     describe("validateImageDimensions", () => {
+        it("should return true if dimensions are 480 x 640", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(480, 640)).equal(true);
+            done();
+        });
 
+        it("should return false if dimensions are 480 x 720", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(480, 720)).equal(false);
+            done();
+        });
+
+        it("should return false if dimensions are 348 x 640", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(348, 640)).equal(false);
+            done();
+        });
+
+        it("should return false if dimensions are 348 x 720", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(348, 720)).equal(false);
+            done();
+        });
+
+        it("should return false if dimensions are 768 x 1024", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(768, 1024)).equal(false);
+            done();
+        });
+
+        it("should return false if dimensions are 0 x 0", (done: Function) => {
+            expect(formValidatorService.validateImageDimensions(0, 0)).equal(false);
+            done();
+        });
     });
 
-    describe("validateBitDepth", () => {
+    /*describe("validateBitDepth", () => {
 
     });
 

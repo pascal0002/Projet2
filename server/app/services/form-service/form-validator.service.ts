@@ -8,7 +8,7 @@ const MINIMUM_NAME_LENGTH: number = 3;
 const MAXIMUM_NAME_LENGTH: number = 15;
 const ACCEPTED_HEIGHT: number = 480;
 const ACCEPTED_WIDTH: number = 640;
-const ACCEPTED_DEPTH: number = 24;
+const ACCEPTED_BIT_DEPTH: number = 24;
 
 @injectable()
 export class FormValidatorService {
@@ -41,7 +41,7 @@ export class FormValidatorService {
 
     public validateBitDepth(bitDepth: number): boolean {
 
-        return (bitDepth === ACCEPTED_DEPTH);
+        return (bitDepth === ACCEPTED_BIT_DEPTH);
     }
 
     public validateImageExtenstion(extension: string): boolean {

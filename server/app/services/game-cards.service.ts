@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { FormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
-import { TWO_DIMENSION_GAME_CARD_LIST } from "../../public/mock/2d-game-card-mock-list";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
 
