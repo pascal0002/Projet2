@@ -14,8 +14,7 @@ export class WebsocketService {
   }
 
   public sendMessage(messageType: MessageType, message: string): void {
-    // WATCH OUT .IO ADDED FOR TESTS
-    this.socket.io.emit(messageType, message);
+    this.socket.emit(messageType, message);
   }
 
   public listenForUsernameValidation(): Observable<boolean> {
