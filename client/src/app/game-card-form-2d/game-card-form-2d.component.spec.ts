@@ -1,5 +1,8 @@
+ // tslint:disable:no-any
+
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { AppModule } from "../app.module";
 import { GameCardFormComponent } from "./game-card-form-2d.component";
 
 describe("GameCardFormComponent", () => {
@@ -8,10 +11,11 @@ describe("GameCardFormComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameCardFormComponent ],
+      imports: [AppModule],
+      declarations: [  ],
     })
-    .catch((err) => new ErrorHandler())
-    .compileComponents();
+    .compileComponents()
+    .catch((err: any) => new ErrorHandler());
   }));
 
   beforeEach(() => {

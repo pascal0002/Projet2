@@ -1,12 +1,11 @@
+// tslint:disable:no-any
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import * as sinon from "ts-sinon";
 import { GameCard } from "../../../common/communication/game-card";
 import { whiteBitmap } from "../../images/bitmap_mock";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { GameCardsService } from "./game-cards.service";
-
-// tslint:disable:no-any
-// tslint:disable:no-magic-numbers
 
 let gameCardsService: GameCardsService;
 

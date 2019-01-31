@@ -1,6 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
-import { BitmapImage } from "../../../common/communication/BitmapImage";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
@@ -24,20 +24,20 @@ export class GameCardsService {
 
   public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService) {/**/ }
 
-  public generateDifferences(originalImg: BitmapImage, modifiedImg: BitmapImage): Promise<BitmapImage> {
+  public generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
       "originalImage": originalImg,
-      "modifiedImage": modifiedImg,
+      "modifiedImage": modifiedImg
     };
 
-    return Axios.post<BitmapImage>("http://localhost:3000/api/differences", images)
-      .then((image: AxiosResponse<BitmapImage>) => {
+    return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
+      .then((image: AxiosResponse<IBitmapImage>) => {
 
         return image.data;
       });
   }
 
-  public validateDifferencesImage(differencesImage: BitmapImage): boolean {
+  public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === VALID_NUMBER_OF_DIFFERENCES);
   }
 

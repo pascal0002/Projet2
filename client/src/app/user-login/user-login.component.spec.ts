@@ -1,3 +1,5 @@
+// tslint:disable:no-any
+
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
@@ -11,8 +13,8 @@ describe("UserLoginComponent", () => {
     TestBed.configureTestingModule({
       imports: [AppModule],
     })
-    .catch((err) => new ErrorHandler())
-    .compileComponents();
+    .compileComponents()
+    .catch((err: any) => new ErrorHandler());
   }));
 
   beforeEach(() => {

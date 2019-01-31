@@ -1,11 +1,12 @@
-import { BitmapImage } from "../../common/communication/BitmapImage";
+// tslint:disable:no-magic-numbers
+import { IBitmapImage } from "../../common/communication/BitmapImage";
 
 const whiteArray: number[] = [];
 for (let i: number = 0; i < 921600; i++) {
     whiteArray.push(255);
 }
 
-export const whiteBitmap: BitmapImage  = {
+export const whiteBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -18,7 +19,7 @@ for (let i: number = 0; i < 921600; i++) {
     blackArray.push(0);
 }
 
-export const blackBitmap: BitmapImage  = {
+export const blackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -34,7 +35,7 @@ leftTopBlackArray[919680] = 0;
 leftTopBlackArray[919681] = 0;
 leftTopBlackArray[919682] = 0;
 
-export const leftTopBlackBitmap: BitmapImage  = {
+export const leftTopBlackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -50,7 +51,7 @@ rightTopBlackArray[921597] = 0;
 rightTopBlackArray[921598] = 0;
 rightTopBlackArray[921599] = 0;
 
-export const rightTopBlackBitmap: BitmapImage  = {
+export const rightTopBlackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -66,7 +67,7 @@ leftBottomBlackArray[0] = 0;
 leftBottomBlackArray[1] = 0;
 leftBottomBlackArray[2] = 0;
 
-export const leftBottomBlackBitmap: BitmapImage  = {
+export const leftBottomBlackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -82,7 +83,7 @@ rightBottomBlackArray[1917] = 0;
 rightBottomBlackArray[1918] = 0;
 rightBottomBlackArray[1919] = 0;
 
-export const rightBottomBlackBitmap: BitmapImage  = {
+export const rightBottomBlackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -107,7 +108,7 @@ fourCornerBlackArray[921597] = 0;
 fourCornerBlackArray[921598] = 0;
 fourCornerBlackArray[921599] = 0;
 
-export const fourCornerBlackBitmap: BitmapImage  = {
+export const fourCornerBlackBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
@@ -129,7 +130,7 @@ diagonalDifferenceArray[1923] = 0;
 diagonalDifferenceArray[1924] = 0;
 diagonalDifferenceArray[1925] = 0;
 
-export const diagonalDifferenceBitmap: BitmapImage  = {
+export const diagonalDifferenceBitmap: IBitmapImage  = {
     height : 640,
     width : 480,
     bitDepth: 24,
