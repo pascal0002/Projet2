@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
 
 const WIDTH_OFFSET: number = 18;
@@ -7,7 +7,7 @@ const BITS_PER_PIXEL_OFFSET: number = 28;
 const PIXEL_OFFSET: number = 10;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class BitmapReaderService {
 
@@ -37,7 +37,3 @@ export class BitmapReaderService {
     return bitmapImage;
   }
 }
-
-
-
-

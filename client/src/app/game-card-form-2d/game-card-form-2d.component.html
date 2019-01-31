@@ -8,15 +8,15 @@
   <div id="content">
     <div class="contentLeft"> Nom du jeu </div>
     <form [formGroup]="form2DGroup" >
-      <div class="contentRight"><input id="gameName" type="text" formControlName="title" [(ngModel)]="this.formInfo.gameName" required></div>
-      <div *ngIf="titleName.invalid && (titleName.dirty || titleName.touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
-        <div *ngIf="titleName.errors.required">
+      <div class="contentRight"><input id="gameName" type="text" formControlName="title" [(ngModel)]="this.formInfo.gameName" required ></div>
+      <div *ngIf="this.form2DGroup.get('title').invalid && (this.form2DGroup.get('title').dirty || this.form2DGroup.get('title').touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        <div *ngIf="this.form2DGroup.get('title').errors.required">
           Le nom du jeu est requis.
         </div>
-        <div *ngIf="titleName.errors.minlength">
+        <div *ngIf="this.form2DGroup.get('title').errors.minlength">
           Le nom du jeu doit être d'au moins 3 caractères.
         </div>
-        <div *ngIf="titleName.errors.maxlength">
+        <div *ngIf="this.form2DGroup.get('title').errors.maxlength">
           Le nom du jeu doit être d'au plus 15 caractères.
         </div>
       </div>
@@ -25,9 +25,9 @@
     <div class="contentLeft"> Image originale</div>
     <form [formGroup]="form2DGroup">
       <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput"
-          (change)="decodeOriginalBitmap()">
+          (change)="readOriginalBitmap()">
       </div>
-      <div *ngIf="(originalFileInput.dirty) && (!validBMPExtension(this.formInfo.originalImage.fileName)
+      <div *ngIf="(this.form2DGroup.get('originalFileInput').dirty) && (!validBMPExtension(this.formInfo.originalImage.fileName)
                                                 || !validBitDepth(this.formInfo.originalImage.bitDepth)
                                                 || !validImageDimensions(this.formInfo.originalImage.height,this.formInfo.originalImage.width))"
         class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
@@ -50,9 +50,9 @@
     <div class="contentLeft"> Image modifiée</div>
     <form [formGroup]="form2DGroup" >
       <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput"
-          (change)="decodeModifiedBitmap()">
+          (change)="readModifiedBitmap()">
       </div>
-      <div *ngIf="(modifiedFileInput.dirty) && (!validBMPExtension(this.formInfo.modifiedImage.fileName)
+      <div *ngIf="(this.form2DGroup.get('modifiedFileInput').dirty) && (!validBMPExtension(this.formInfo.modifiedImage.fileName)
                                                 || !validBitDepth(this.formInfo.modifiedImage.bitDepth)
                                                 || !validImageDimensions(this.formInfo.modifiedImage.height,this.formInfo.modifiedImage.width))"
         class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">

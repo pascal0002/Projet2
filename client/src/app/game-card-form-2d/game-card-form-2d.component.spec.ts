@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GameCardFormComponent } from "./game-card-form-2d.component";
 import { AppModule } from "../app.module";
+import { GameCardFormComponent } from "./game-card-form-2d.component";
 
 describe("GameCardFormComponent", () => {
   let component: GameCardFormComponent;

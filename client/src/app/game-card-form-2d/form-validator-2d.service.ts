@@ -43,10 +43,7 @@ export class FormValidator2dService {
   }
 
   public validTitle(title: string): boolean {
-    if (title !== undefined) {
       return (title.length >= MIN_TITLE_LENGTH && title.length <= MAX_TITLE_LENGTH);
-    }
-    return false;
   }
 
   public validImageDimensions(height: number, width: number): boolean {
@@ -70,14 +67,13 @@ export class FormValidator2dService {
     };
   }
 
-    public onSubmit(formInfo: FormInfo): Promise<number> {
-  
+  public onSubmit(formInfo: FormInfo): Promise<number> {
+
     this.closeForm();
+
     return this.http.post<number>(`${this.BASE_URL}api/saveImagePair/`, formInfo).pipe(
       catchError(this.handleError<number>("error")),
     ).toPromise();
   }
-
-  
 
 }
