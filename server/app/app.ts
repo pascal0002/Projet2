@@ -8,7 +8,6 @@ import { DateController } from "./controllers/date.controller";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
-import { DifferenceCounterService } from "./services/difference-counter.service";
 import Types from "./types";
 
 @injectable()
@@ -22,7 +21,6 @@ export class Application {
         @inject(Types.DateController) private dateController: DateController,
         @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
         @inject(Types.DifferencesController) private differencesController: DifferencesController,
-        @inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
     ) {
         this.app = express();
 
@@ -53,14 +51,14 @@ export class Application {
 
     private errorHandeling(): void {
         // Gestion des erreurs
-        // this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-        //    const err: Error = new Error("Not Found");
-        //    next(err);
-        // });
+        this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+           const err: Error = new Error("Not Found");
+           next(err);
+        });
 
         // development error handler
         // will print stacktrace
-        if (true) {
+        if (this.app.get("env") === "development") {
             // tslint:disable-next-line:no-any
             this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                 res.status(err.status || this.internalError);
