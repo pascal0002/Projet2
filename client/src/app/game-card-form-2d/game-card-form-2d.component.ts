@@ -1,6 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AbstractControl, FormControl, FormGroup, Validators } from "@angular/forms";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { GameCard } from "../../../../common/communication/game-card";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -17,8 +19,12 @@ export class GameCardFormComponent implements OnInit {
   public originalBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "" , pixels: []};
   public modifiedBitmap: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   public form2DGroup: FormGroup;
+  public isFilesWith7Differences: boolean = true;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService) { }
+  private readonly BASE_URL: string = "http://localhost:3000/";
+
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapDecoderService: BitmapDecoderService,
+                     private http: HttpClient) { }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm();
@@ -93,7 +99,23 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.formValidatorService.onSubmit(this.originalBitmap, this.modifiedBitmap);
+    this.generateGameCard(this.originalBitmap, this.modifiedBitmap);
   }
 
+  public generateGameCard(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<GameCard> {
+    const images: Object = {"originalImage": originalBitmap,
+                            "modifiedImage": modifiedBitmap};
+
+    return new Promise<GameCard>(() => {
+      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, images)
+      .toPromise()
+      .then(
+        (res) => { this.isFilesWith7Differences = true; },
+        (res) => { this.isFilesWith7Differences = false; },
+      )
+      .catch(
+        (err) => {console.error("erreur :", err); },
+      );
+    });
+  }
 }

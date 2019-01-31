@@ -58,7 +58,11 @@
 }
 
 .error{
-    width: 181px; 
+    width: 181px;
     height: 28px;
     padding-top: 4px;
+}
+
+.invisible{
+    visibility: hidden;
 }

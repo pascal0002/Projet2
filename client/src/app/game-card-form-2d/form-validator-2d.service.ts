@@ -1,7 +1,4 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
-import { GameCard } from "../../../../common/communication/game-card";
 
 const MIN_TITLE_LENGTH: number = 3;
 const MAX_TITLE_LENGTH: number = 15;
@@ -14,9 +11,6 @@ const VALID_BITS_PER_PIXEL: number = 24;
 })
 
 export class FormValidator2dService {
-  private readonly BASE_URL: string = "http://localhost:3000/";
-
-  public constructor(private http: HttpClient) { }
 
   public openForm(): void {
 
@@ -57,20 +51,4 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<GameCard> {
-    const images: Object = {"originalImage": originalBitmap,
-                            "modifiedImage": modifiedBitmap};
-
-    return new Promise<GameCard>(() => {
-      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, images)
-      .toPromise()
-      .then(
-        (res) => { console.log("succes :", res); },
-        (res) => { console.log("erreur :", res); },
-      )
-      .catch(
-        (err) => {console.error("erreur :", err); },
-      );
-    });
-  }
 }
