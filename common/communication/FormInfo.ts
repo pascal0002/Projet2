@@ -1,6 +1,6 @@
 import { IBitmapImage } from "./BitmapImage";
 
-export interface FormInfo{
+export interface IFormInfo {
     gameName: string;
     originalImage: IBitmapImage;
     modifiedImage: IBitmapImage;
