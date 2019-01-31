@@ -93,7 +93,6 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    // tslint:disable-next-line:no-console
     this.formValidatorService.onSubmit(this.originalBitmap, this.modifiedBitmap);
   }
 

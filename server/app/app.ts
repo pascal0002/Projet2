@@ -8,6 +8,7 @@ import { DateController } from "./controllers/date.controller";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
+import { DifferenceCounterService } from "./services/difference-counter.service";
 import Types from "./types";
 
 @injectable()
@@ -21,6 +22,7 @@ export class Application {
         @inject(Types.DateController) private dateController: DateController,
         @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
         @inject(Types.DifferencesController) private differencesController: DifferencesController,
+        @inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
     ) {
         this.app = express();
 
@@ -36,6 +38,7 @@ export class Application {
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use(cookieParser());
         this.app.use(cors());
+
     }
 
     public bindRoutes(): void {
@@ -44,14 +47,15 @@ export class Application {
         this.app.use("/api/date", this.dateController.router);
         this.app.use("/api/game_cards", this.gameCardsController.router);
         this.app.use("/api/differences", this.differencesController.router);
+        this.app.use(express.static("./public"));
         this.errorHandeling();
     }
 
     private errorHandeling(): void {
         // Gestion des erreurs
         // this.app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
-        //     const err: Error = new Error("Not Found");
-        //     next(err);
+        //    const err: Error = new Error("Not Found");
+        //    next(err);
         // });
 
         // development error handler
