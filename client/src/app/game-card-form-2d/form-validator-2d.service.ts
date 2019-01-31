@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { FormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
+import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
 
 const MIN_TITLE_LENGTH: number = 3;
 const MAX_TITLE_LENGTH: number = 15;
@@ -63,7 +64,8 @@ export class FormValidator2dService {
       this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
       .then(
-        (res) => { this.closeForm2D(); },
+        (res) => { TWO_DIMENSION_GAME_CARD_LIST.push(res);
+                   this.closeForm2D(); },
         (res) => { alert(res.error); },
       )
       .catch(

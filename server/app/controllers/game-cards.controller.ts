@@ -20,7 +20,7 @@ export class GameCardsController {
             this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
             .then((image: IBitmapImage) => {
                 this.gameCardsService.validateDifferencesImage(image) ?
-                res.json(this.gameCardsService.generateGameCard()) :
+                res.json(this.gameCardsService.generateGameCard(req.body)) :
                 res.status(ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
             })
             .catch((err: Error) => console.error(err)) :
