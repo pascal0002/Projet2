@@ -4,6 +4,12 @@ import "reflect-metadata";
 import { IBitmapImage } from "../../../../common/communication/BitmapImage";
 import { FormInfo } from "../../../../common/communication/FormInfo";
 
+const MINIMUM_NAME_LENGTH: number = 3;
+const MAXIMUM_NAME_LENGTH: number = 15;
+const ACCEPTED_HEIGHT: number = 480;
+const ACCEPTED_WIDTH: number = 640;
+const ACCEPTED_DEPTH: number = 24;
+
 @injectable()
 export class FormValidatorService {
     public validateForm(formInfo: FormInfo): boolean {
@@ -15,19 +21,11 @@ export class FormValidatorService {
     }
 
     public validateGameName(gameName: string): boolean {
-        const result = (gameName.length >= 3 && gameName.length <= 15);
-        console.log("Validate game name : " + result);
 
-        return (gameName.length >= 3 && gameName.length <= 15);
+        return (gameName.length >= MINIMUM_NAME_LENGTH && gameName.length <= MAXIMUM_NAME_LENGTH);
     }
 
     public validateImage(image: IBitmapImage): boolean {
-        const result = (
-            this.validateImageDimensions(image.height, image.width) &&
-            this.validateImageExtenstion(image.fileName) &&
-            this.validateBitDepth(image.bitDepth)
-         );
-        console.log("Validate image : " + result );
 
         return (
                    this.validateImageDimensions(image.height, image.width) &&
@@ -37,25 +35,18 @@ export class FormValidatorService {
     }
 
     public validateImageDimensions(height: number, width: number): boolean {
-        const result = (height === 480 && width === 640);
-        console.log("Validate image Dimensions : " + result);
 
-        return (height === 480 && width === 640);
+        return (height === ACCEPTED_HEIGHT && width === ACCEPTED_WIDTH);
     }
 
     public validateBitDepth(bitDepth: number): boolean {
-        const result = (bitDepth === 24);
-        console.log("Validate image bit depth : " + result);
 
-        return (bitDepth === 24);
+        return (bitDepth === ACCEPTED_DEPTH);
     }
 
     public validateImageExtenstion(extension: string): boolean {
-        const result = (extension.split(".").pop() === "bmp");
-        console.log("Validate image extension : " + result);
 
         return (extension.split(".").pop() === "bmp");
-
     }
 
 }
