@@ -2,7 +2,7 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../../common/communication/BitmapImage";
-import { FormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo } from "../../../../common/communication/FormInfo";
 
 const MINIMUM_NAME_LENGTH: number = 3;
 const MAXIMUM_NAME_LENGTH: number = 15;
@@ -12,7 +12,7 @@ const ACCEPTED_BIT_DEPTH: number = 24;
 
 @injectable()
 export class FormValidatorService {
-    public validateForm(formInfo: FormInfo): boolean {
+    public validateForm(formInfo: IFormInfo): boolean {
         return (
                    this.validateGameName(formInfo.gameName)   &&
                    this.validateImage(formInfo.originalImage) &&
