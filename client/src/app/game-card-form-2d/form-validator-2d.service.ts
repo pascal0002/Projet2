@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { of, Observable } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { GameCard } from "../../../../common/communication/game-card";
 
 const MIN_TITLE_LENGTH: number = 3;
 const MAX_TITLE_LENGTH: number = 15;
@@ -58,25 +59,20 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<string> {
+  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<GameCard> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 
-    return new Promise<string>(() => {
-      this.http.post<string>(`${this.BASE_URL}api/game_cards/image_pair`, images)
-      .pipe( catchError(this.handleError<string>("error")), )
+    return new Promise<GameCard>(() => {
+      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, images)
       .toPromise()
-      .then((res) => { console.log(res); });
+      .then(
+        (res) => { console.log("succes :", res); },
+        (res) => { console.log("erreur :", res); },
+      )
+      .catch(
+        (err) => {console.error("erreur :", err); },
+      );
     });
-}
-
-  private handleError<T>(
-    request: string,
-    result?: T,
-    ): (error: Error) => Observable<T> {
-    return (error: Error): Observable<T> => {
-      return of(result as T);
-    };
   }
-
 }
