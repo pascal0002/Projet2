@@ -1,3 +1,4 @@
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
