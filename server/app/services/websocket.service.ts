@@ -33,16 +33,6 @@ export class WebsocketService {
             socket.on("disconnect", () => {
                 this.loginService.disconnect(usernameSocket);
             });
-
-            socket.on(MessageType.DECODE_BITMAP_FILE, (file: File) => {
-                // tslint:disable-next-line:no-console
-                console.log(file.name);
-                // this.bitmapDecoderService.decodeBitmapFile(file);
-              //  console.log(this.bitmapDecoderService.decodeBitmapFile(file).fileName);
-                // tslint:disable-next-line:no-console
-                console.log("Trying to decode file");
-            });
-
         });
     }
 

@@ -74,7 +74,6 @@ describe("game-cards-service", () => {
 
         it("should return maximal value when Math.random return 1", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(1);
-            console.log(gameCardsServiceStub.getRandomRange(3, 10));
             const expectedGameCard: GameCard = {
                 title: "",
                 imageName: "",
