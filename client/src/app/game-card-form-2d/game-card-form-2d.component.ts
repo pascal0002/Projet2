@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { FormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -15,7 +15,7 @@ const MAX_LENGTH_TITLE: number = 15;
 export class GameCardFormComponent implements OnInit {
 
   public form2DGroup: FormGroup;
-  private formInfo: FormInfo = {
+  private formInfo: IFormInfo = {
     gameName: "",
     originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
     modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
