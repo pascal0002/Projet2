@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { IBitmapImage } from "../../../../common/communication/BitmapImage";
 import { GameCard } from "../../../../common/communication/game-card";
 
 const MIN_TITLE_LENGTH: number = 3;
@@ -57,7 +57,7 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: BitmapImage, modifiedBitmap: BitmapImage): Promise<GameCard> {
+  public onSubmit(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 

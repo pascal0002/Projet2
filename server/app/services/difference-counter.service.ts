@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
-import {BitmapImage} from "../../../common/communication/BitmapImage";
+import {IBitmapImage} from "../../../common/communication/BitmapImage";
 
 const IMAGE_HEIGHT: number = 480;
 const IMAGE_WIDTH: number = 640;
@@ -20,13 +20,13 @@ const BOTTOM_RIGHT: number = -IMAGE_WIDTH + 1;
 @injectable()
 export class DifferenceCounterService {
 
-  public getNumberOfDifferences(differencesImage: BitmapImage): number {
+  public getNumberOfDifferences(differencesImage: IBitmapImage): number {
     const pixelMap: PixelMap = {value : this.getPixelMap(differencesImage)};
 
     return this.travelAndCountDifference(pixelMap);
   }
 
-  private getPixelMap(differencesImage: BitmapImage): [number, boolean][] {
+  private getPixelMap(differencesImage: IBitmapImage): [number, boolean][] {
     const pixelMap: [number, boolean][] = [];
     let counter: number = 0;
     differencesImage.pixels.forEach((pixel: number) => {

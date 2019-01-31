@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BitmapImage } from "../../../../common/communication/BitmapImage";
+import { IBitmapImage } from "../../../../common/communication/BitmapImage";
 
 const WIDTH_OFFSET: number = 18;
 const HEIGHT_OFFSET: number = 22;
@@ -9,9 +9,9 @@ const PIXEL_OFFSET: number = 10;
 @Injectable()
 export class BitmapDecoderService {
 
-  public decodeBitmapFile(file: File): BitmapImage {
+  public decodeBitmapFile(file: File): IBitmapImage {
 
-    const bitmapImage: BitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+    const bitmapImage: IBitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     bitmapImage.fileName = file.name;
     let bmpPixelsBuffer: ArrayBuffer = new ArrayBuffer(file.size);
     const fileReader: FileReader = new FileReader();
