@@ -1,7 +1,7 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
-import {IBitmapImage} from "../../../common/communication/BitmapImage";
-import {GameCard} from "../../../common/communication/game-card";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
 
@@ -22,17 +22,19 @@ const TWO_DIGIT: number = -2;
 @injectable()
 export class GameCardsService {
 
-  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService) {/**/}
+  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService) {/**/ }
 
   public generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
-    const images: Object = {"originalImage": originalImg,
-                            "modifiedImage": modifiedImg};
+    const images: Object = {
+      "originalImage": originalImg,
+      "modifiedImage": modifiedImg
+    };
 
     return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
-    .then((image: AxiosResponse<IBitmapImage>) => {
+      .then((image: AxiosResponse<IBitmapImage>) => {
 
-      return image.data;
-    });
+        return image.data;
+      });
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
@@ -40,27 +42,32 @@ export class GameCardsService {
   }
 
   public generateGameCard(): GameCard {
-    return { title: "",
-             imageName: "",
-             modifiedImageName: "",
-             bestTimeSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
-             bestTime1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
-           };
+    return {
+      title: "",
+      imageName: "",
+      modifiedImageName: "",
+      bestTimeSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
+    };
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): string[] {
     const highScore: string[] = [];
     for (let i: number = 0; i < NUMBER_HIGH_SCORE; i++) {
-      const time: string = this.convertTimeToMSSFormat(this.getRandomNumber(minimalTime, maximalTime));
-      const userID: number = this.getRandomNumber(0, MAXIMAL_USER_ID);
+      const time: string = this.convertTimeToMSSFormat(this.getRandomRange(minimalTime, maximalTime));
+      const userID: number = this.getRandomRange(0, MAXIMAL_USER_ID);
       highScore.push(`${time} user${userID}`);
     }
 
     return highScore;
   }
 
-  private getRandomNumber(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min) + min);
+  public getRandomRange(min: number, max: number): number {
+    return Math.floor(this.getRandomNumber() * (max - min) + min);
+  }
+
+  public getRandomNumber(): number {
+    return Math.random();
   }
 
   private convertTimeToMSSFormat(time: number): string {

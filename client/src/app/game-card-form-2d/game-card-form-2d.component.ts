@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { IBitmapImage } from "../../../../common/communication/BitmapImage";
+import { FormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
 import { BitmapDecoderService } from "./bitmap-decoder.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { FormInfo } from "../../../../common/communication/FormInfo";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 

@@ -9,7 +9,6 @@ import {THREE_DIMENSION_GAME_CARD_LIST} from "../3d-game-card-mock-list";
   styleUrls: ["./parts-list-view.component.css"],
 })
 
-
 export class PartsListViewComponent implements OnInit {
 
   @Input() public isInAdminView: boolean = false;
