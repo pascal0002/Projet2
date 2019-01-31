@@ -13,7 +13,7 @@ export class Server {
     private server: http.Server;
 
     public constructor(@inject(Types.Application) private application: Application,
-        @inject(Types.WebsocketService) private websocketService: WebsocketService) { }
+                       @inject(Types.WebsocketService) private websocketService: WebsocketService) { }
 
     public init(): void {
         this.application.app.set("port", this.appPort);
