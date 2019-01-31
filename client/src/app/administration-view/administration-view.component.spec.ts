@@ -2,6 +2,7 @@
 
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { AppModule } from "../app.module";
 import { AdministrationViewComponent } from "./administration-view.component";
 
 describe("AdministrationViewComponent", () => {
@@ -10,7 +11,8 @@ describe("AdministrationViewComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdministrationViewComponent ],
+      imports: [AppModule],
+      declarations: [  ],
     })
     .compileComponents()
     .catch((err: any) => new ErrorHandler());

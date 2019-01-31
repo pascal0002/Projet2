@@ -13,8 +13,6 @@ const SURFACE_RADIUS: number = 3;
 @injectable()
 export class DifferencesGeneratorService {
 
-  public constructor() {/**/}
-
   public generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): IBitmapImage {
 
     let differenceImg: IBitmapImage = this.fillDifferenceImage(originalImg, modifiedImg);
