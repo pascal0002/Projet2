@@ -1,7 +1,9 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import { FormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
+import { TWO_DIMENSION_GAME_CARD_LIST } from "../../public/mock/2d-game-card-mock-list";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
 
@@ -19,6 +21,9 @@ const SECOND_PER_MINUTE: number = 60;
 const MAXIMAL_USER_ID: number = 999;
 
 const TWO_DIGIT: number = -2;
+
+const ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
+const MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
 @injectable()
 export class GameCardsService {
 
@@ -27,7 +32,7 @@ export class GameCardsService {
   public generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
       "originalImage": originalImg,
-      "modifiedImage": modifiedImg
+      "modifiedImage": modifiedImg,
     };
 
     return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
@@ -41,14 +46,25 @@ export class GameCardsService {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public generateGameCard(): GameCard {
+  public generateGameCard(formInfo: FormInfo): GameCard {
+
     return {
-      title: "",
-      imageName: "",
-      modifiedImageName: "",
+      title: formInfo.gameName,
+      imageName: this.generateOriginalImagePath(formInfo.originalImage.fileName),
+      modifiedImageName: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
       bestTimeSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
     };
+  }
+
+  private generateOriginalImagePath(imageName: string): string {
+
+    return ORIGINAL_IMAGE_FOLDER + imageName;
+  }
+
+  private generateModifiedImagePath(imageName: string): string {
+
+    return MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): string[] {

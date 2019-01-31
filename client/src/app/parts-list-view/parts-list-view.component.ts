@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import {GameCard} from "../../../../common/communication/game-card";
-import {TWO_DIMENSION_GAME_CARD_LIST} from "../2d-game-card-mock-list";
-import {THREE_DIMENSION_GAME_CARD_LIST} from "../3d-game-card-mock-list";
+import {TWO_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/2d-game-card-mock-list";
+import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-game-card-mock-list";
 
 @Component({
   selector: "app-parts-list-view",
