@@ -4,11 +4,11 @@ import * as cors from "cors";
 import * as express from "express";
 import { inject, injectable } from "inversify";
 import * as logger from "morgan";
-//import { DateController } from "./controllers/date.controller";
-//import { IndexController } from "./controllers/index.controller";
-import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
+// import { DateController } from "./controllers/date.controller";
+// import { IndexController } from "./controllers/index.controller";
+import {SubmitGameCardController} from "./controllers/submitGameCard.controller";
 import Types from "./types";
 
 @injectable()
@@ -19,10 +19,10 @@ export class Application {
 
     public constructor(
        // @inject(Types.IndexController) private indexController: IndexController,
-        //@inject(Types.DateController) private dateController: DateController,
+        // @inject(Types.DateController) private dateController: DateController,
         @inject(Types.SubmitGameCardController) private subitGameCardController: SubmitGameCardController,
-        //@inject(Types.IndexController) private indexController: IndexController,
-        //@inject(Types.DateController) private dateController: DateController,
+        // @inject(Types.IndexController) private indexController: IndexController,
+        // @inject(Types.DateController) private dateController: DateController,
         @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
         @inject(Types.DifferencesController) private differencesController: DifferencesController,
     ) {

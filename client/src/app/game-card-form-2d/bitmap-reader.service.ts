@@ -11,7 +11,7 @@ const PIXEL_OFFSET: number = 10;
 })
 export class BitmapReaderService {
 
-  public constructor() { }
+  public constructor() {/**/}
 
   public decodeBitmapFile(file: File): IBitmapImage {
 

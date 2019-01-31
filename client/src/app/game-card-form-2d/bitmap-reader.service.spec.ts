@@ -1,5 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-
 import { BitmapReaderService } from "./bitmap-reader.service";
 
 describe("BitmapReaderService", () => {
@@ -9,8 +8,5 @@ describe("BitmapReaderService", () => {
     const service: BitmapReaderService = TestBed.get(BitmapReaderService);
     expect(service).toBeTruthy();
   });
-
-
-  
 
 });
