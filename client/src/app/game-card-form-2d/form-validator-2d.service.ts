@@ -63,11 +63,8 @@ export class FormValidator2dService {
       this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
       .then(
-        (res) => { this.closeForm2D();
-                 },
-        (res) => { this.clearInputFields();
-                   alert(res.error);
-                 },
+        (res) => { this.closeForm2D(); },
+        (res) => { alert(res.error); },
       )
       .catch(
         (err) => {console.error("erreur :", err); },

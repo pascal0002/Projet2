@@ -20,10 +20,12 @@ export class GameCardFormComponent implements OnInit {
     originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
     modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
   };
-  public isFilesWith7Differences: boolean = true;
-  public errorMessage: string = "";
 
   public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
+
+  public closeForm2D(): void {
+    this.formValidatorService.closeForm2D();
+  }
 
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
@@ -82,12 +84,18 @@ export class GameCardFormComponent implements OnInit {
     .catch(
       (err) => {console.error("erreur :", err); },
     );
-    this.clearFormInfo();
   }
 
   public clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+  }
+
+  public clearInputFields(): void {
+    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
+    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+    orignialImageInput.value = "";
+    modifiedImageInput.value = "";
   }
 }
