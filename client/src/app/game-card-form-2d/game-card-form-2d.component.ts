@@ -1,8 +1,6 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { FormInfo } from "../../../../common/communication/FormInfo";
-import { GameCard } from "../../../../common/communication/game-card";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -25,16 +23,7 @@ export class GameCardFormComponent implements OnInit {
   public isFilesWith7Differences: boolean = true;
   public errorMessage: string = "";
 
-  private readonly BASE_URL: string = "http://localhost:3000/";
-
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService,
-                     private http: HttpClient) { }
-
-  public closeForm2D(): void {
-    this.clearFormInfo();
-    this.clearInputFields();
-    this.formValidatorService.closeForm();
-  }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
 
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
@@ -89,40 +78,16 @@ export class GameCardFormComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.generateGameCard(this.formInfo)
+    this.formValidatorService.generateGameCard(this.formInfo)
     .catch(
       (err) => {console.error("erreur :", err); },
     );
-  }
-
-  public async generateGameCard(formInfo: FormInfo): Promise<GameCard> {
-    return new Promise<GameCard>(() => {
-      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
-      .toPromise()
-      .then(
-        (res) => { this.isFilesWith7Differences = true;
-                   this.closeForm2D();
-                 },
-        (res) => { this.isFilesWith7Differences = false;
-                   this.errorMessage = res.error;
-                 },
-      )
-      .catch(
-        (err) => {console.error("erreur :", err); },
-      );
-    });
+    this.clearFormInfo();
   }
 
   public clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
-  }
-
-  public clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    orignialImageInput.value = "";
-    modifiedImageInput.value = "";
   }
 }

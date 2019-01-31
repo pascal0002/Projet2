@@ -1,4 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { FormInfo } from "../../../../common/communication/FormInfo";
+import { GameCard } from "../../../../common/communication/game-card";
 
 const MIN_TITLE_LENGTH: number = 3;
 const MAX_TITLE_LENGTH: number = 15;
@@ -11,6 +14,10 @@ const VALID_BITS_PER_PIXEL: number = 24;
 })
 
 export class FormValidator2dService {
+
+  private readonly BASE_URL: string = "http://localhost:3000/";
+
+  public constructor(private http: HttpClient) { }
 
   public openForm(): void {
 
@@ -51,4 +58,32 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
+  public async generateGameCard(formInfo: FormInfo): Promise<GameCard> {
+    return new Promise<GameCard>(() => {
+      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
+      .toPromise()
+      .then(
+        (res) => { this.closeForm2D();
+                 },
+        (res) => { this.clearInputFields();
+                   alert(res.error);
+                 },
+      )
+      .catch(
+        (err) => {console.error("erreur :", err); },
+      );
+    });
+  }
+
+  public closeForm2D(): void {
+    this.clearInputFields();
+    this.closeForm();
+  }
+
+  public clearInputFields(): void {
+    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
+    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+    orignialImageInput.value = "";
+    modifiedImageInput.value = "";
+  }
 }
