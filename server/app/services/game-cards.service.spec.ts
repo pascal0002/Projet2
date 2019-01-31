@@ -1,3 +1,5 @@
+// tslint:disable:no-any
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import { stubObject } from "ts-sinon";
 import { GameCard } from "../../../common/communication/game-card";
@@ -5,9 +7,7 @@ import { whiteBitmap } from "../../images/bitmap_mock";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { GameCardsService } from "./game-cards.service";
 
-// tslint:disable-next-line:no-any
 let mathStub: any;
-// tslint:disable-next-line:no-any
 let differenceCounterServiceStub: any;
 let gameCardsService: GameCardsService;
 let differenceCounterService: DifferenceCounterService;

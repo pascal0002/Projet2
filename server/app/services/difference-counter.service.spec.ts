@@ -1,3 +1,4 @@
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import { blackBitmap, diagonalDifferenceBitmap, fourCornerBlackBitmap, leftBottomBlackBitmap, leftTopBlackBitmap,
          rightBottomBlackBitmap, rightTopBlackBitmap, whiteBitmap } from "../../images/bitmap_mock";
