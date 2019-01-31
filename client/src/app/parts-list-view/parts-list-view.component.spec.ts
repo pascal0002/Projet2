@@ -1,3 +1,6 @@
+ // tslint:disable:no-any
+ // tslint:disable:no-any
+
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { PartsListViewComponent } from "./parts-list-view.component";
@@ -10,8 +13,8 @@ describe("PartsListViewComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ PartsListViewComponent ],
     })
-    .catch((err) => new ErrorHandler())
-    .compileComponents();
+    .compileComponents()
+    .catch((err) => new ErrorHandler());
   }));
 
   beforeEach(() => {
