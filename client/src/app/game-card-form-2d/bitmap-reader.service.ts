@@ -11,8 +11,7 @@ const PIXEL_OFFSET: number = 10;
 })
 export class BitmapReaderService {
 
-  public constructor() {/**/}
-
+  // Dylan nous as dit que ce n'était pas nécéssaire de tester cette fonction
   public decodeBitmapFile(file: File): IBitmapImage {
 
     const bitmapImage: IBitmapImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
@@ -21,7 +20,6 @@ export class BitmapReaderService {
     const fileReader: FileReader = new FileReader();
 
     fileReader.onload = () => {
-
       bmpPixelsBuffer = fileReader.result as ArrayBuffer;
       const dataView: DataView = new DataView(bmpPixelsBuffer);
       const pixelsPosition: number = dataView.getUint32(PIXEL_OFFSET, true);
