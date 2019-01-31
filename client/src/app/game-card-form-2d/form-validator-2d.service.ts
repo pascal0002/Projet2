@@ -57,7 +57,7 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public onSubmit(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
+  public async onSubmit(originalBitmap: IBitmapImage, modifiedBitmap: IBitmapImage): Promise<GameCard> {
     const images: Object = {"originalImage": originalBitmap,
                             "modifiedImage": modifiedBitmap};
 
