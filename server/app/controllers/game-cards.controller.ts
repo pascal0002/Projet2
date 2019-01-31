@@ -16,10 +16,9 @@ export class GameCardsController {
         router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
             .then((image: BitmapImage) => {
-                if (this.gameCardsService.validateDifferencesImage(image)) {
-                    res.json(this.gameCardsService.generateGameCard());
-                }
-                res.status(ERROR).json("error: these files do not include 7 differences");
+                this.gameCardsService.validateDifferencesImage(image) ?
+                res.json(this.gameCardsService.generateGameCard()) :
+                res.status(ERROR).send("error: these files do not include 7 differences");
             })
             .catch((err: Error) => console.error(err));
         });

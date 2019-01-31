@@ -1,7 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { of, Observable } from "rxjs";
-import { catchError } from "rxjs/operators";
 import { BitmapImage } from "../../../../common/communication/BitmapImage";
 import { GameCard } from "../../../../common/communication/game-card";
 
