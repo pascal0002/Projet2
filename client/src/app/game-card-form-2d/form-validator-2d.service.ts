@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { FormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
 
@@ -59,7 +59,7 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public async generateGameCard(formInfo: FormInfo): Promise<GameCard> {
+  public async generateGameCard(formInfo: IFormInfo): Promise<GameCard> {
     return new Promise<GameCard>(() => {
       this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
