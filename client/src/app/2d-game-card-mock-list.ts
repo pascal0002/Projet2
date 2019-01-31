@@ -1,9 +1,11 @@
 import {GameCard} from "../../../common/communication/game-card";
 
+const serverAccessPath: string = "http://localhost:3000/";
+
 export const TWO_DIMENSION_GAME_CARD_LIST: GameCard[] = [
     {   title: "Chat",
-        imageName: "assets/images/cat.bmp",
-        modifiedImageName: "assets/images/catModified.bmp",
+        imageName: serverAccessPath + "originalImages/cat.bmp",
+        modifiedImageName: serverAccessPath + "modifiedImages/catModified.bmp",
         bestTimeSolo: ["1:21 Paul", "1:34 AAA", "1:45 OOO"],
         bestTime1v1: ["0:58 Ko", "1:13 frew1", "1:21 frew2"],
     },
