@@ -6,6 +6,7 @@ const BLACK_PIXEL_PARAMETER: number = 0;
 const WIDTH: number = 640;
 const HEIGHT: number = 480;
 const PIXEL_PARAMETERS_NB: number = 3;
+const MAX_PIXEL_REACH: number = 4;
 
 @injectable()
 export class DifferencesGeneratorService {
@@ -74,7 +75,7 @@ export class DifferencesGeneratorService {
     const neighbors: number[] = [];
     for (let i: number = -3; i <= 3; i++) {
       for (let j: number = -3; j <= 3; j++) {
-        if ((Math.abs(i) + Math.abs(j) < 5)
+        if ((Math.abs(i) + Math.abs(j) <= MAX_PIXEL_REACH)
             && (index / PIXEL_PARAMETERS_NB + j * width >= 0)
             && (index / PIXEL_PARAMETERS_NB + j * width < height * width)
             && (((index / PIXEL_PARAMETERS_NB) % width) + i < width)
