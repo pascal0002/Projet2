@@ -1,7 +1,7 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import { blackBitmap, diagonalDifferenceBitmap, fourCornerBlackBitmap, leftBottomBlackBitmap, leftTopBlackBitmap,
-         rightBottomBlackBitmap, rightTopBlackBitmap, whiteBitmap } from "../../images/bitmap_mock";
+         rightBottomBlackBitmap, rightTopBlackBitmap, whiteBitmap } from "../../mock/bitmapImage-mock";
 import { DifferenceCounterService } from "./difference-counter.service";
 
 let differenceCounterService: DifferenceCounterService;
