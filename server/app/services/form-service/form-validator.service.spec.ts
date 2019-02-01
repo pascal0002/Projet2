@@ -7,11 +7,11 @@ let formValidatorService: FormValidatorService;
 
 describe("form-validator-service", () => {
 
-    describe("validateGameName", () => {
+    beforeEach( () => {
+        formValidatorService = new FormValidatorService();
+    });
 
-        beforeEach( () => {
-            formValidatorService = new FormValidatorService();
-        });
+    describe("validateGameName", () => {
 
         it("should return true if length is 3", (done: Function) => {
             expect(formValidatorService.validateGameName("bob")).equal(true);
@@ -77,11 +77,47 @@ describe("form-validator-service", () => {
         });
     });
 
-    /*describe("validateBitDepth", () => {
+    describe("validateBitDepth", () => {
+        it("should return true if bit depth is 24", (done: Function) => {
+            expect(formValidatorService.validateBitDepth(24)).equal(true);
+            done();
+        });
 
+        it("should return false if bit depth is 16", (done: Function) => {
+            expect(formValidatorService.validateBitDepth(16)).equal(false);
+            done();
+        });
+
+        it("should return false if bit depth is 0", (done: Function) => {
+            expect(formValidatorService.validateBitDepth(0)).equal(false);
+            done();
+        });
+
+        it("should return false if bit depth is 1", (done: Function) => {
+            expect(formValidatorService.validateBitDepth(1)).equal(false);
+            done();
+        });
     });
 
     describe("validateImageExtenstion", () => {
+        it("should return true if extension is bmp", (done: Function) => {
+            expect(formValidatorService.validateImageExtension("bmp")).equal(true);
+            done();
+        });
 
-    });*/
+        it("should return false if extension is png", (done: Function) => {
+            expect(formValidatorService.validateImageExtension("png")).equal(false);
+            done();
+        });
+
+        it("should return false if extension is jpeg", (done: Function) => {
+            expect(formValidatorService.validateImageExtension("jpeg")).equal(false);
+            done();
+        });
+
+        it("should return false if no extension is specified", (done: Function) => {
+            expect(formValidatorService.validateImageExtension("")).equal(false);
+            done();
+        });
+    });
 });

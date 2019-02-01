@@ -29,7 +29,7 @@ export class FormValidatorService {
 
         return (
                    this.validateImageDimensions(image.height, image.width) &&
-                   this.validateImageExtenstion(image.fileName) &&
+                   this.validateImageExtension(image.fileName) &&
                    this.validateBitDepth(image.bitDepth)
                 );
     }
@@ -44,7 +44,7 @@ export class FormValidatorService {
         return (bitDepth === ACCEPTED_BIT_DEPTH);
     }
 
-    public validateImageExtenstion(extension: string): boolean {
+    public validateImageExtension(extension: string): boolean {
 
         return (extension.split(".").pop() === "bmp");
     }
