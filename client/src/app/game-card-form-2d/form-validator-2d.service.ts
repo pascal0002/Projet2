@@ -27,12 +27,10 @@ export class FormValidator2dService {
   public closeForm(): void {
     const form2D: HTMLElement | null = document.getElementById("formWindow");
     const pageMask: HTMLElement | null = document.getElementById("pageMask");
-    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
 
-    if (form2D && pageMask && gameName) {
+    if (form2D && pageMask) {
       form2D.style.display = "none";
       pageMask.style.display = "none";
-      gameName.value = "";
     }
   }
 
@@ -75,7 +73,9 @@ export class FormValidator2dService {
   public clearInputFields(): void {
     const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
     const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
     orignialImageInput.value = "";
     modifiedImageInput.value = "";
+    gameName.value = "";
   }
 }
