@@ -6,87 +6,66 @@ const FOUR_BYTES: number = 4;
 const TWO_BYTES: number = 2;
 const BYTES_PER_PIXEL: number = 3;
 const DUMMY_VALUE: number = 0;
+const OFFSET_SIZE: number = 54;
+const HEADER_SIZE: number = 40;
+const FLAG: string = "BM";
+const PLANES: number = 1;
+const BITS_PER_PIXEL: number = 24;
+const IMAGE_HEIGHT: number = 480;
+const IMAGE_WIDTH: number = 640;
+const EXTRA_BYTES: number = IMAGE_WIDTH % FOUR_BYTES;
+const RGB_SIZE: number = IMAGE_HEIGHT * ((IMAGE_WIDTH * BYTES_PER_PIXEL) + EXTRA_BYTES);
+const FILE_SIZE: number = RGB_SIZE + OFFSET_SIZE;
 
 @injectable()
 export class BitmapEncoder {
-    public pixels: number[];
-    public width: number;
-    public height: number;
-    public extraBytes: number;
-    public rgbSize: number;
-    public headerInfoSize: number = 40;
-    public flag: string = "BM";
-    public reserved: number = DUMMY_VALUE;
-    public offset: number = 54;
-    public fileSize: number;
-    public planes: number = 1;
-    public bitPerPixel: number = 24;
-    public compress: number = DUMMY_VALUE;
-    public horizontalResolution: number = DUMMY_VALUE;
-    public verticalResolution: number = DUMMY_VALUE;
-    public colors: number = DUMMY_VALUE;
-    public importantColors: number = DUMMY_VALUE;
     public pos: number;
 
     public encodeBitmap(image: IBitmapImage): Buffer {
         this.pos = 0;
-        this.pixels = image.pixels;
-        this.width = image.width;
-        this.height = image.height;
-        this.extraBytes = this.width % FOUR_BYTES;
-        this.rgbSize = this.height * ((this.width * BYTES_PER_PIXEL) + this.extraBytes);
-        this.fileSize = this.rgbSize + this.offset;
+        const PIXELS: number[] = image.pixels;
 
-        let tempBuffer: Buffer = Buffer.alloc(this.offset + this.rgbSize);
+        let tempBuffer: Buffer = Buffer.alloc(FILE_SIZE);
 
         tempBuffer = this.writeHeader(tempBuffer);
-        tempBuffer = this.writePixels(tempBuffer);
+        tempBuffer = this.writePixels(tempBuffer, PIXELS);
 
         return tempBuffer;
-    }
-
-    public setEncoderInfo(image: IBitmapImage): void {
-        this.pixels = image.pixels;
-        this.width = image.width;
-        this.height = image.height;
     }
 
     public writeHeader(tempBuffer: Buffer): Buffer {
-
-        tempBuffer.write(this.flag, this.pos, TWO_BYTES); this.pos += TWO_BYTES;
-        tempBuffer.writeUInt32LE(this.fileSize, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.reserved, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.offset, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.headerInfoSize, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.width, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeInt32LE(-this.height, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt16LE(this.planes, this.pos); this.pos += TWO_BYTES;
-        tempBuffer.writeUInt16LE(this.bitPerPixel, this.pos); this.pos += TWO_BYTES;
-        tempBuffer.writeUInt32LE(this.compress, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.rgbSize, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.horizontalResolution, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.verticalResolution, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.colors, this.pos); this.pos += FOUR_BYTES;
-        tempBuffer.writeUInt32LE(this.importantColors, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.write(FLAG, this.pos, TWO_BYTES); this.pos += TWO_BYTES;
+        tempBuffer.writeUInt32LE(FILE_SIZE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(OFFSET_SIZE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(HEADER_SIZE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(IMAGE_WIDTH, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeInt32LE(-IMAGE_HEIGHT, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt16LE(PLANES, this.pos); this.pos += TWO_BYTES;
+        tempBuffer.writeUInt16LE(BITS_PER_PIXEL, this.pos); this.pos += TWO_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(RGB_SIZE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
+        tempBuffer.writeUInt32LE(DUMMY_VALUE, this.pos); this.pos += FOUR_BYTES;
 
         return tempBuffer;
     }
 
-    public writePixels(tempBuffer: Buffer): Buffer {
+    public writePixels(tempBuffer: Buffer, pixels: number[]): Buffer {
         let i: number = 0;
-        const ROW_BYTES: number = (this.width * BYTES_PER_PIXEL) + this.extraBytes;
+        const ROW_BYTES: number = (IMAGE_WIDTH * BYTES_PER_PIXEL) + EXTRA_BYTES;
 
-        for (let y: number = this.height - 1; y >= 0; y--) {
-            for (let x: number = 0; x < this.width; x++) {
+        for (let y: number = IMAGE_HEIGHT - 1; y >= 0; y--) {
+            for (let x: number = 0; x < IMAGE_WIDTH; x++) {
                 const PIXEL_POS: number = this.pos + y * ROW_BYTES + x * BYTES_PER_PIXEL;
-                tempBuffer[PIXEL_POS] = this.pixels[i++];
-                tempBuffer[PIXEL_POS + 1] = this.pixels[i++];
-                tempBuffer[PIXEL_POS + 1 + 1] = this.pixels[i++];
+                tempBuffer[PIXEL_POS] = pixels[i++];
+                tempBuffer[PIXEL_POS + 1] = pixels[i++];
+                tempBuffer[PIXEL_POS + 1 + 1] = pixels[i++];
             }
-            if (this.extraBytes > 0) {
-                const FILL_OFFSET: number = this.pos + y * ROW_BYTES + this.width * BYTES_PER_PIXEL;
-                tempBuffer.fill(0, FILL_OFFSET, FILL_OFFSET + this.extraBytes);
-            }
+            const FILL_OFFSET: number = this.pos + y * ROW_BYTES + IMAGE_WIDTH * BYTES_PER_PIXEL;
+            tempBuffer.fill(0, FILL_OFFSET, FILL_OFFSET + EXTRA_BYTES);
         }
 
         return tempBuffer;

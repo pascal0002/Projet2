@@ -11,27 +11,26 @@ const ERROR: number = 400;
 export class GameCardsController {
 
     public constructor(@inject(Types.FormValidatorService) private formValidatorService: FormValidatorService,
-                       @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
-                       @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
+        @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
+        @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
 
     public get router(): Router {
         const router: Router = Router();
 
         router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
             this.formValidatorService.validateForm(req.body) ?
-            this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
-            .then((image: IBitmapImage) => {
-                if(this.gameCardsService.validateDifferencesImage(image)){
-                    this.bmpFileGeneratorService.generateBMPFile(req.body.originalImage);
-                }
-                /*
-                this.gameCardsService.validateDifferencesImage(image) ?
-                res.json(this.gameCardsService.generateGameCard(req.body)) :
-                res.status(ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");*/
-
-            })
-            .catch((err: Error) => console.error(err)) :
-            res.status(ERROR).send("Les champs du formulaires doivent être valides");
+                this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
+                    .then((image: IBitmapImage) => {
+                        if (this.gameCardsService.validateDifferencesImage(image)) {
+                            this.bmpFileGeneratorService.generateBMPFiles(req.body, image);
+                            res.json(this.gameCardsService.generateGameCard(req.body));
+                        }
+                        else {
+                            res.status(ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
+                        }
+                    })
+                    .catch((err: Error) => console.error(err)) :
+                res.status(ERROR).send("Les champs du formulaires doivent être valides");
         });
 
         return router;
