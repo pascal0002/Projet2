@@ -28,7 +28,7 @@ describe("DifferenceGeneratorService", () => {
         verificationArray = [];
     });
 
-    it("des pixels identiques devraient créer des pixels blancs", (done: Mocha.Done) => {
+    it("fillDifferenceImage, identical pixels should create white pixels", (done: Mocha.Done) => {
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(0);
@@ -38,7 +38,8 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("un pixel noir devrait être créé lorsque le paramètre rouge de deux pixels correspondants est différent", (done: Mocha.Done) => {
+    it("fillDifferenceImage, a black pixel should be created when the red parameter of two corresponding pixels is different",
+       (done: Mocha.Done) => {
         modifiedTestImg.pixels.push(255);
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(0);
@@ -48,7 +49,8 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("un pixel noir devrait être créé lorsque le paramètre vert de deux pixels correspondants est différent", (done: Mocha.Done) => {
+    it("fillDifferenceImage, a black pixel should be created when the green parameter of two corresponding pixels is different",
+       (done: Mocha.Done) => {
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(255);
         modifiedTestImg.pixels.push(0);
@@ -58,7 +60,8 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("un pixel noir devrait être créé lorsque le paramètre bleu de deux pixels correspondants est différent", (done: Mocha.Done) => {
+    it("fillDifferenceImage, a black pixel should be created when the blue parameter of two corresponding pixels is different",
+       (done: Mocha.Done) => {
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(0);
         modifiedTestImg.pixels.push(255);
@@ -68,7 +71,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("Un pixel est élargis de 36 pixels autour de lui", (done: Mocha.Done) => {
+    it("enlargeBlackPixels, a pixel should be widened by 36 pixels around him", (done: Mocha.Done) => {
         differenceTestImg.pixels[40 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[36], pixelsArray[39], pixelsArray[42], pixelsArray[60], pixelsArray[63],
@@ -86,7 +89,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("Un pixel n'est pas élargis plus que la région de 36 pixels", (done: Mocha.Done) => {
+    it("enlargeBlackPixels, a pixel should not be widened by more than the region of 36 pixels", (done: Mocha.Done) => {
         differenceTestImg.pixels[40 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
         const pixelsToVerify: number[] = [pixelsArray[9], pixelsArray[12], pixelsArray[15], pixelsArray[33], pixelsArray[45],
@@ -100,7 +103,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("L'élargissement d'un pixel ne devrait pas dépasser la bordure inférieure de l'image bitmap (pas de bits noirs en haut)",
+    it("enlargeBlackPixels, The widening of a pixel should not exceed the bottom border of the bitmap (no black bits on the top)",
        (done: Mocha.Done) => {
         differenceTestImg.pixels[76 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
@@ -113,7 +116,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("L'élargissement d'un pixel ne devrait pas dépasser la bordure supérieure de l'image bitmap (pas de bits noirs en bas)",
+    it("enlargeBlackPixels, The widening of a pixel should not exceed the top border of the bitmap (no black bits on the bottom)",
        (done: Mocha.Done) => {
         differenceTestImg.pixels[4 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
@@ -126,7 +129,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("L'élargissement d'un pixel ne devrait pas dépasser la bordure gauche de l'image bitmap (pas de bits noirs a droite)",
+    it("enlargeBlackPixels, the widening of a pixel should not exceed the left border of the bitmap (no black bits on the right)",
        (done: Mocha.Done) => {
         differenceTestImg.pixels[36 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;
@@ -139,7 +142,7 @@ describe("DifferenceGeneratorService", () => {
         done();
     });
 
-    it("L'élargissement d'un pixel ne devrait pas dépasser la bordure droite de l'image bitmap (pas de bits noirs a gauche)",
+    it("enlargeBlackPixels, The widening of a pixel should not exceed the right border of the bitmap (no black bits on the left)",
        (done: Mocha.Done) => {
         differenceTestImg.pixels[44 * 3] = 0;
         const pixelsArray: number[] = differencesGeneratorService.enlargeBlackPixels(differenceTestImg).pixels;

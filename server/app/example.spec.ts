@@ -1,4 +1,4 @@
-import { assert, expect } from "chai";
+import { expect } from "chai";
 
 const TWO: number = 2;
 const FOUR: number = 4;
@@ -48,11 +48,6 @@ beforeEach(() => {
     console.log("================");
 });
 
-it("should complete a 100% sure test with done called", (done: Function) => {
-    assert.ok(true);
-    done();
-});
-
 it("should complete an async test by returning a promise and NOT SPECIFYING A DONE FUNCTION", async () => {
    return getPromise().then((v: {}) => {
        // tslint:disable-next-line:no-console
@@ -69,8 +64,4 @@ it("should complete the ", (done: Mocha.Done) => {
         console.log(`Got ${v} from promise`);
         done();
     });
- });
-
-it("a rejected promise will not fail", () => {
-    Promise.reject("Simply to test a wrong value");
  });

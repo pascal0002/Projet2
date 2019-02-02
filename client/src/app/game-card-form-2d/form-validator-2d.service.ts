@@ -11,8 +11,6 @@ import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-
 
 export class FormValidator2dService {
 
-  private readonly BASE_URL: string = "http://localhost:3000/";
-
   public constructor(private http: HttpClient) { }
 
   public openForm(): void {
@@ -56,7 +54,7 @@ export class FormValidator2dService {
 
   public async generateGameCard(formInfo: IFormInfo): Promise<GameCard> {
     return new Promise<GameCard>(() => {
-      this.http.post<GameCard>(`${this.BASE_URL}api/game_cards/image_pair`, formInfo)
+      this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
       .then(
         (res) => { TWO_DIMENSION_GAME_CARD_LIST.push(res);

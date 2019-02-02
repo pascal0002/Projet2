@@ -68,7 +68,7 @@ describe("game-cards-service", () => {
                 bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
                 bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).to.deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard()).deep.equal(expectedGameCard);
             done();
         });
 
@@ -82,7 +82,7 @@ describe("game-cards-service", () => {
                 bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
             };
             const resultGameCard: GameCard = gameCardsServiceStub.generateGameCard();
-            expect(resultGameCard).to.deep.equal(expectedGameCard);
+            expect(resultGameCard).deep.equal(expectedGameCard);
             done();
         });
 
@@ -96,9 +96,96 @@ describe("game-cards-service", () => {
                 bestTimeSolo: ["3:46 user109", "3:46 user109", "3:46 user109"],
                 bestTime1v1: ["2:46 user109", "2:46 user109", "2:46 user109"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).to.deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard()).deep.equal(expectedGameCard);
             done();
         });
     });
 
+    describe("getRandomRange", () => {
+
+        beforeEach(init);
+
+        it("should return minimal value when Math.random return 0", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(0);
+
+            expect(gameCardsServiceStub.getRandomRange(100, 200)).to.equal(100);
+            done();
+        });
+
+        it("should return maximal value when Math.random return 1", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(1);
+
+            expect(gameCardsServiceStub.getRandomRange(100, 200)).to.equal(200);
+            done();
+        });
+
+        it("should return expected value when Math.random return between 0 and 1 (0.5 in this test)", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(0.5);
+
+            expect(gameCardsServiceStub.getRandomRange(100, 200)).to.equal(150);
+            done();
+        });
+    });
+
+    describe("convertTimeToMSSFormat", () => {
+
+        beforeEach(init);
+
+        it("should convert the amount of seconds given to the right time display in MSS format", (done: Function) => {
+
+            expect(gameCardsServiceStub.convertTimeToMSSFormat(263)).to.equal("4:23");
+            done();
+        });
+    });
+
+    describe("generateBestTime", () => {
+
+        beforeEach(init);
+
+        it("should return minimal time value and user number when Math.random always return 0", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(0);
+
+            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["1:40 user0", "1:40 user0", "1:40 user0"]);
+            done();
+        });
+
+        it("should return maximal time value and user number when Math.random always return 1", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(1);
+
+            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["3:20 user999", "3:20 user999", "3:20 user999"]);
+            done();
+        });
+
+        it("should return expected time value and user number when Math.random return between 0 and 1 (always 0.5 in this test)",
+           (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(0.5);
+
+            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["2:30 user499", "2:55 user499", "3:07 user499"]);
+            done();
+        });
+    });
+
+    describe("generateOriginalImagePath", () => {
+
+        beforeEach(init);
+
+        it("should return the right path to the original image", (done: Function) => {
+
+            expect(gameCardsServiceStub.generateOriginalImagePath("originalImage.bmp"))
+            .to.equal("http://localhost:3000/originalImages/originalImage.bmp");
+            done();
+        });
+    });
+
+    describe("generateModifiedImagePath", () => {
+
+        beforeEach(init);
+
+        it("should return the right path to the modified image", (done: Function) => {
+
+            expect(gameCardsServiceStub.generateModifiedImagePath("modifiedImage.bmp"))
+            .to.equal("http://localhost:3000/modifiedImages/modifiedImage.bmp");
+            done();
+        });
+    });
 });
