@@ -13,4 +13,6 @@ export default {
         DifferencesController: Symbol("DifferencesController"),
         DifferenceCounterService: Symbol("DifferenceCounterService"),
         FormValidatorService: Symbol("FormValidatorService"),
+        BmpFileGenerator: Symbol("BmpFileGenerator"),
+        BitmapEncoder: Symbol("BitmapEncoder"),
 };

@@ -13,7 +13,9 @@ import { GameCardsService } from "./services/game-cards.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
+import {BmpFileGenerator} from "./services/bmp-file-generator.service";
 import Types from "./types";
+import { BitmapEncoder } from "./services/bitmap-encoder.service";
 
 const container: Container = new Container();
 
@@ -31,4 +33,6 @@ container.bind(Types.DifferencesController).to(DifferencesController);
 container.bind(Types.DifferenceCounterService).to(DifferenceCounterService);
 container.bind(Types.FormValidatorService).to(FormValidatorService);
 container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService);
+container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
+container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 export { container };
