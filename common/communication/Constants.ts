@@ -39,6 +39,18 @@ export class ServerConstants {
     static BOTTOM: number = -ServerConstants.ACCEPTED_WIDTH ;
     static BOTTOM_RIGHT: number = -ServerConstants.ACCEPTED_WIDTH + 1;
 
+    static FOUR_BYTES: number = 4;
+    static TWO_BYTES: number = 2;
+    static BYTES_PER_PIXEL: number = 3;
+    static DUMMY_VALUE: number = 0;
+    static OFFSET_SIZE: number = 54;
+    static HEADER_SIZE: number = 40;
+    static FLAG: string = "BM";
+    static PLANES: number = 1;
+    static EXTRA_BYTES: number = ServerConstants.ACCEPTED_WIDTH % ServerConstants.FOUR_BYTES;
+    static RGB_SIZE: number = ServerConstants.ACCEPTED_HEIGHT * ((ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.EXTRA_BYTES);
+    static FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
+
     static ERROR: number = 400;
 }
 
