@@ -1,28 +1,12 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import {ServerConstants} from "../../../common/communication/Constants";
 import { IFormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
 
-const VALID_NUMBER_OF_DIFFERENCES: number = 7;
-
-const MINIMAL_TIME_DUO: number = 150;
-const MAXIMAL_TIME_DUO: number = 300;
-const MINIMAL_TIME_SOLO: number = 210;
-const MAXIMAL_TIME_SOLO: number = 360;
-
-const NUMBER_HIGH_SCORE: number = 3;
-
-const SECOND_PER_MINUTE: number = 60;
-
-const MAXIMAL_USER_ID: number = 999;
-
-const TWO_DIGIT: number = -2;
-
-const ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
-const MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
 @injectable()
 export class GameCardsService {
 
@@ -42,7 +26,7 @@ export class GameCardsService {
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
-    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === VALID_NUMBER_OF_DIFFERENCES);
+    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
   public generateGameCard(formInfo: IFormInfo): GameCard {
@@ -51,26 +35,27 @@ export class GameCardsService {
       title: formInfo.gameName,
       imageName: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       modifiedImageName: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
-      bestTimeSolo: this.generateBestTime(MINIMAL_TIME_SOLO, MAXIMAL_TIME_SOLO),
-      bestTime1v1: this.generateBestTime(MINIMAL_TIME_DUO, MAXIMAL_TIME_DUO),
+      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
     };
   }
 
   private generateOriginalImagePath(imageName: string): string {
 
-    return ORIGINAL_IMAGE_FOLDER + imageName;
+    return ServerConstants.ORIGINAL_IMAGE_FOLDER + imageName;
   }
 
   private generateModifiedImagePath(imageName: string): string {
 
-    return MODIFIED_IMAGE_FOLDER + imageName;
+    return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): string[] {
     const highScore: string[] = [];
-    for (let i: number = 0; i < NUMBER_HIGH_SCORE; i++) {
-      const time: string = this.convertTimeToMSSFormat(this.getRandomRange(minimalTime, maximalTime));
-      const userID: number = this.getRandomRange(0, MAXIMAL_USER_ID);
+    for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
+      minimalTime = this.getRandomRange(minimalTime, maximalTime);
+      const time: string = this.convertTimeToMSSFormat(minimalTime);
+      const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
       highScore.push(`${time} user${userID}`);
     }
 
@@ -86,13 +71,13 @@ export class GameCardsService {
   }
 
   private convertTimeToMSSFormat(time: number): string {
-    const seconde: number = time % SECOND_PER_MINUTE;
-    const minute: number = (time - seconde) / SECOND_PER_MINUTE;
+    const seconde: number = time % ServerConstants.SECOND_PER_MINUTE;
+    const minute: number = (time - seconde) / ServerConstants.SECOND_PER_MINUTE;
 
     return `${minute}:${this.totwoDigitString(seconde)}`;
   }
 
   private totwoDigitString(initialNumber: number): string {
-    return ("0" + initialNumber).slice(TWO_DIGIT);
+    return ("0" + initialNumber).slice(ServerConstants.TWO_DIGIT);
   }
 }

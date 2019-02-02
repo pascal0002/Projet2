@@ -1,16 +1,16 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import {ClientConstants} from "../../../common/communication/Constants";
 import { MessageType } from "../../../common/communication/messageType";
 
 import * as socketIo from "socket.io-client";
 
 @Injectable()
 export class WebsocketService {
-  private readonly BASE_URL: string = "http://localhost:3000/";
   private socket: SocketIOClient.Socket;
 
   public initSocket(): void {
-    this.socket = socketIo(this.BASE_URL);
+    this.socket = socketIo(ClientConstants.SERVER_BASE_URL);
   }
 
   public sendMessage(messageType: MessageType, message: string): void {

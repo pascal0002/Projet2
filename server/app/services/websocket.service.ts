@@ -5,6 +5,7 @@ import * as socketIo from "socket.io";
 import { MessageType } from "../../../common/communication/messageType";
 import Types from "../types";
 import { LoginService } from "./login.service";
+
 @injectable()
 export class WebsocketService {
 

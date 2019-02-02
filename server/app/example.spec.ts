@@ -6,7 +6,9 @@ const HUNDRED: number = 100;
 const TWOHUNDRED: number = 200;
 const THOUSAND: number = 1000;
 
+// tslint:disable-next-line:only-arrow-functions
 function getPromise(): Promise<{}> {
+    // tslint:disable-next-line:typedef
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve("Hi");
@@ -16,6 +18,7 @@ function getPromise(): Promise<{}> {
 
 function* promiseGenerator(): IterableIterator<Promise<{}>> {
     for (;;) {
+        // tslint:disable-next-line:typedef
         yield new Promise((res, rej) => {
             res(Math.random() * HUNDRED);
         });

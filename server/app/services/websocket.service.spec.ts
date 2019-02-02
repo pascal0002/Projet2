@@ -8,7 +8,6 @@ import { WebsocketService } from "./websocket.service";
 
 let mockLoginService: LoginService;
 let service: WebsocketService;
-
 let fakeServer: http.Server;
 
 describe("socket.io mock", () => {
