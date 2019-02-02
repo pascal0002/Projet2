@@ -2,6 +2,8 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import * as sinon from "ts-sinon";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import { IFormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
 import { whiteBitmap } from "../../images/bitmap_mock";
 import { DifferenceCounterService } from "./difference-counter.service";
@@ -60,43 +62,65 @@ describe("game-cards-service", () => {
         it("should return minimal value when Math.random return 0", (done: Function) => {
 
             gameCardsServiceStub.getRandomNumber.returns(0);
+            const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
+            const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
+            const formInfo: IFormInfo = {
+                gameName: "",
+                originalImage: originalImg,
+                modifiedImage: modifiedImg,
+            };
 
             const expectedGameCard: GameCard = {
                 title: "",
-                imageName: "",
-                modifiedImageName: "",
+                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
                 bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
         });
 
         it("should return maximal value when Math.random return 1", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(1);
+            const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
+            const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
+            const formInfo: IFormInfo = {
+                gameName: "",
+                originalImage: originalImg,
+                modifiedImage: modifiedImg,
+            };
+
             const expectedGameCard: GameCard = {
                 title: "",
-                imageName: "",
-                modifiedImageName: "",
+                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
                 bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
             };
-            const resultGameCard: GameCard = gameCardsServiceStub.generateGameCard();
-            expect(resultGameCard).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
         });
 
         it("should return expected value when Math.random return 0.11", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(0.11);
 
+            const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
+            const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
+            const formInfo: IFormInfo = {
+                gameName: "",
+                originalImage: originalImg,
+                modifiedImage: modifiedImg,
+            };
+
             const expectedGameCard: GameCard = {
                 title: "",
-                imageName: "",
-                modifiedImageName: "",
-                bestTimeSolo: ["3:46 user109", "3:46 user109", "3:46 user109"],
-                bestTime1v1: ["2:46 user109", "2:46 user109", "2:46 user109"],
+                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                bestTimeSolo: ["3:46 user109", "4:00 user109", "4:13 user109"],
+                bestTime1v1: ["2:46 user109", "3:00 user109", "3:13 user109"],
             };
-            expect(gameCardsServiceStub.generateGameCard()).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
         });
     });
