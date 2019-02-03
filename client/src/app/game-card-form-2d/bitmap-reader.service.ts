@@ -1,10 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IBitmapImage } from "../../../../common/communication/BitmapImage";
-
-const WIDTH_OFFSET: number = 18;
-const HEIGHT_OFFSET: number = 22;
-const BITS_PER_PIXEL_OFFSET: number = 28;
-const PIXEL_OFFSET: number = 10;
+import {ClientConstants} from "../../../../common/communication/Constants";
 
 @Injectable({
   providedIn: "root",
@@ -22,11 +18,11 @@ export class BitmapReaderService {
     fileReader.onload = () => {
       bmpPixelsBuffer = fileReader.result as ArrayBuffer;
       const dataView: DataView = new DataView(bmpPixelsBuffer);
-      const pixelsPosition: number = dataView.getUint32(PIXEL_OFFSET, true);
+      const pixelsPosition: number = dataView.getUint32(ClientConstants.PIXEL_OFFSET, true);
 
-      bitmapImage.width = dataView.getUint32(WIDTH_OFFSET, true);
-      bitmapImage.height = dataView.getUint32(HEIGHT_OFFSET, true);
-      bitmapImage.bitDepth = dataView.getUint32(BITS_PER_PIXEL_OFFSET, true);
+      bitmapImage.width = dataView.getUint32(ClientConstants.WIDTH_OFFSET, true);
+      bitmapImage.height = dataView.getUint32(ClientConstants.HEIGHT_OFFSET, true);
+      bitmapImage.bitDepth = dataView.getUint32(ClientConstants.BITS_PER_PIXEL_OFFSET, true);
       bitmapImage.pixels = Array.from(new Uint8Array(bmpPixelsBuffer, pixelsPosition));
     };
 

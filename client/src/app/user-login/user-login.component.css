@@ -28,7 +28,7 @@
   height: 25%;
   padding: 15px;
   margin-bottom: 40px;
-  box-sizing: border-box; /*Fix padding*/
+  box-sizing: border-box; 
 
   font-size: 300%;
   vertical-align: middle;
@@ -62,7 +62,6 @@
 
   border-radius: 0px;
   border: 0;
-  /*border: 2px solid;*/
 
   transition: all 0.3s;
 }

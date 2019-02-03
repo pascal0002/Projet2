@@ -9,15 +9,17 @@ import {FormValidator2dService} from "../game-card-form-2d/form-validator-2d.ser
   templateUrl: "./administration-view.component.html",
   styleUrls: [
               "./administration-view.component.css",
-              "../parts-list-view/parts-list-view.component.css",
-              "../parts-list-view/parts-list-view.component.css",
+              "../list-of-games-view/list-of-games-view.component.css",
+              "../list-of-games-view/list-of-games-view.component.css",
              ],
 })
 export class AdministrationViewComponent implements OnInit {
 
-  public constructor(private formValidator2D: FormValidator2dService) { }
+  public constructor(private formValidator2D: FormValidator2dService) {
+    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
+  }
 
-  public listes: GameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
+  public listes: GameCard[][];
 
   public openForm2D(): void {
     this.formValidator2D.openForm();

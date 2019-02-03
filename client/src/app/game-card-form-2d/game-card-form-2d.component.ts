@@ -1,11 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {ClientConstants} from "../../../../common/communication/Constants";
 import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
-
-const MIN_LENGTH_TITLE: number = 3;
-const MAX_LENGTH_TITLE: number = 15;
 
 @Component({
   selector: "app-game-card-form-2d",
@@ -15,13 +13,15 @@ const MAX_LENGTH_TITLE: number = 15;
 export class GameCardFormComponent implements OnInit {
 
   public form2DGroup: FormGroup;
-  private formInfo: IFormInfo = {
-    gameName: "",
-    originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-    modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-  };
+  private formInfo: IFormInfo;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
+    this.formInfo = {
+      gameName: "",
+      originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+      modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+    };
+  }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm2D();
@@ -31,8 +31,8 @@ export class GameCardFormComponent implements OnInit {
     this.form2DGroup = new FormGroup({
       title: new FormControl("", [
         Validators.required,
-        Validators.minLength(MIN_LENGTH_TITLE),
-        Validators.maxLength(MAX_LENGTH_TITLE),
+        Validators.minLength(ClientConstants.MIN_TITLE_LENGTH),
+        Validators.maxLength(ClientConstants.MAX_TITLE_LENGTH),
       ]),
       originalFileInput: new FormControl("", []),
       modifiedFileInput: new FormControl("", []),
@@ -86,16 +86,14 @@ export class GameCardFormComponent implements OnInit {
     );
   }
 
+  public updateGameName(): void {
+    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
+    this.formInfo.gameName = gameNameInput.value;
+  }
+
   public clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
-  }
-
-  public clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    orignialImageInput.value = "";
-    modifiedImageInput.value = "";
   }
 }

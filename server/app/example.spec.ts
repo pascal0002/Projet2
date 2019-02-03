@@ -1,4 +1,4 @@
-import { assert, expect } from "chai";
+import { expect } from "chai";
 
 const TWO: number = 2;
 const FOUR: number = 4;
@@ -6,7 +6,9 @@ const HUNDRED: number = 100;
 const TWOHUNDRED: number = 200;
 const THOUSAND: number = 1000;
 
+// tslint:disable-next-line:only-arrow-functions
 function getPromise(): Promise<{}> {
+    // tslint:disable-next-line:typedef
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve("Hi");
@@ -16,6 +18,7 @@ function getPromise(): Promise<{}> {
 
 function* promiseGenerator(): IterableIterator<Promise<{}>> {
     for (;;) {
+        // tslint:disable-next-line:typedef
         yield new Promise((res, rej) => {
             res(Math.random() * HUNDRED);
         });
@@ -45,11 +48,6 @@ beforeEach(() => {
     console.log("================");
 });
 
-it("should complete a 100% sure test with done called", (done: Function) => {
-    assert.ok(true);
-    done();
-});
-
 it("should complete an async test by returning a promise and NOT SPECIFYING A DONE FUNCTION", async () => {
    return getPromise().then((v: {}) => {
        // tslint:disable-next-line:no-console
@@ -66,8 +64,4 @@ it("should complete the ", (done: Mocha.Done) => {
         console.log(`Got ${v} from promise`);
         done();
     });
- });
-
-it("a rejected promise will not fail", () => {
-    Promise.reject("Simply to test a wrong value");
  });
