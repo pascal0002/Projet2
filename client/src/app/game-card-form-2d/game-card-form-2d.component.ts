@@ -96,4 +96,33 @@ export class GameCardFormComponent implements OnInit {
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   }
+
+  public canSubmit(): boolean {
+
+    return (
+             this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+             this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+             this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+             this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+             this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
+             this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
+             this.validTitle()
+           );
+  }
+
+  public isAValidOriginalImage(): boolean {
+      return (
+               this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+               this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+               this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
+             );
+  }
+
+  public isAValidModifiedImage(): boolean {
+      return (
+               this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+               this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+               this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
+             );
+  }
 }
