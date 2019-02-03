@@ -3,22 +3,22 @@
 
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { PartsListViewComponent } from "./parts-list-view.component";
+import { ListOfGamesViewComponent } from "./list-of-games-view.component";
 
 describe("PartsListViewComponent", () => {
-  let component: PartsListViewComponent;
-  let fixture: ComponentFixture<PartsListViewComponent>;
+  let component: ListOfGamesViewComponent;
+  let fixture: ComponentFixture<ListOfGamesViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PartsListViewComponent ],
+      declarations: [ ListOfGamesViewComponent ],
     })
     .compileComponents()
     .catch((err) => new ErrorHandler());
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PartsListViewComponent);
+    fixture = TestBed.createComponent(ListOfGamesViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
