@@ -1,8 +1,8 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { IBitmapImage } from "../../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../../common/communication/Constants";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import {ServerConstants} from "../../../common/communication/Constants";
+import { IFormInfo } from "../../../common/communication/FormInfo";
 
 @injectable()
 export class FormValidatorService {

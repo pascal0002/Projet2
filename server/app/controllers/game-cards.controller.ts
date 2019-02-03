@@ -3,7 +3,7 @@ import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
-import { FormValidatorService } from "../services/form-service/form-validator.service";
+import { FormValidatorService } from "../services/form-validator.service";
 import { GameCardsService } from "../services/game-cards.service";
 import Types from "../types";
 

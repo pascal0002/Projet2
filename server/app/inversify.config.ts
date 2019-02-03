@@ -10,7 +10,7 @@ import {BmpFileGenerator} from "./services/bmp-file-generator.service";
 import { DateService } from "./services/date.service";
 import { DifferenceCounterService } from "./services/difference-counter.service";
 import { DifferencesGeneratorService } from "./services/differences-generator.service";
-import { FormValidatorService } from "./services/form-service/form-validator.service";
+import { FormValidatorService } from "./services/form-validator.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
