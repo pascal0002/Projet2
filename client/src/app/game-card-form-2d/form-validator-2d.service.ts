@@ -74,8 +74,10 @@ export class FormValidator2dService {
     const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
     const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
     const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    orignialImageInput.value = "";
-    modifiedImageInput.value = "";
-    gameName.value = "";
+    if (modifiedImageInput && orignialImageInput && gameName) {
+      orignialImageInput.value = "";
+      modifiedImageInput.value = "";
+      gameName.value = "";
+    }
   }
 }
