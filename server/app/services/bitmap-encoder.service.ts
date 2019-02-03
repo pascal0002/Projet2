@@ -7,6 +7,8 @@ import {ServerConstants} from "../../../common/communication/Constants";
 export class BitmapEncoder {
     public pos: number = 0;
 
+    public constructor(/**/) {/**/}
+
     public encodeBitmap(image: IBitmapImage): Buffer {
         this.pos = 0;
         const PIXELS: number[] = image.pixels;

@@ -13,13 +13,15 @@ import { FormValidator2dService } from "./form-validator-2d.service";
 export class GameCardFormComponent implements OnInit {
 
   public form2DGroup: FormGroup;
-  private formInfo: IFormInfo = {
-    gameName: "",
-    originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-    modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-  };
+  private formInfo: IFormInfo;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
+    this.formInfo = {
+      gameName: "",
+      originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+      modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+    };
+  }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm2D();

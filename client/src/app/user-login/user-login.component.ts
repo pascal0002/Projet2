@@ -8,9 +8,11 @@ import { UserLoginService } from "../user-login.service";
 })
 export class UserLoginComponent {
   public username: string;
-  public isUsernameValid: boolean = false;
+  public isUsernameValid: boolean;
 
-  public constructor(private userLoginService: UserLoginService) { }
+  public constructor(private userLoginService: UserLoginService) {
+    this.isUsernameValid = false;
+  }
 
   public validateUsername(username: string): void {
     this.username = username;
