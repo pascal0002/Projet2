@@ -108,14 +108,10 @@ describe("FormValidator2dService", () => {
     // tslint:disable-next-line:no-any Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
     const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
-    const WHITE_PIXEL_PARAMETER: number = 255;
-    const BLACK_PIXEL_PARAMETER: number = 0;
-    const WHITE_PIXEL: number[] = [WHITE_PIXEL_PARAMETER, WHITE_PIXEL_PARAMETER, WHITE_PIXEL_PARAMETER];
-    const BLACK_PIXEL: number[] = [BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER, BLACK_PIXEL_PARAMETER];
     const formSent: FormInfo = {
       gameName: "Test",
-      originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: WHITE_PIXEL },
-      modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: BLACK_PIXEL },
+      originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: [255, 255, 255] },
+      modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: [0, 0, 0] },
     };
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
     formValidatorService.onSubmit(formSent).then((value: number) => {

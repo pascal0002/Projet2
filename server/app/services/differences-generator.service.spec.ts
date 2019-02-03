@@ -18,7 +18,7 @@ describe("DifferenceGeneratorService", () => {
     beforeEach(() => {
         differencesGeneratorService = new DifferencesGeneratorService();
         modifiedTestImg = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
-        for (let i: number = 0; i < (81 - 1) * 3; i++) {
+        for (let i: number = 0; i < 81 * 3; i++) {
             modifiedTestImg.pixels.push(0);
         }
         differenceTestImg = {height: 9, width: 9, bitDepth: 24, fileName: "", pixels: []};
@@ -29,20 +29,14 @@ describe("DifferenceGeneratorService", () => {
     });
 
     it("fillDifferenceImage, identical pixels should create white pixels", (done: Mocha.Done) => {
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(0);
         expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg)
-        .pixels[81 * 3 - 1])
-        .to.equal(255);
+        .pixels[81 * 3 - 1]).to.equal(255);
         done();
     });
 
     it("fillDifferenceImage, a black pixel should be created when the red parameter of two corresponding pixels is different",
        (done: Mocha.Done) => {
-        modifiedTestImg.pixels.push(255);
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(0);
+        modifiedTestImg.pixels[81 * 3 - 3] = 255;
         expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg)
         .pixels[81 * 3 - 1])
         .to.equal(0);
@@ -51,9 +45,7 @@ describe("DifferenceGeneratorService", () => {
 
     it("fillDifferenceImage, a black pixel should be created when the green parameter of two corresponding pixels is different",
        (done: Mocha.Done) => {
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(255);
-        modifiedTestImg.pixels.push(0);
+        modifiedTestImg.pixels[81 * 3 - 2] = 255;
         expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg)
         .pixels[81 * 3 - 1])
         .to.equal(0);
@@ -62,9 +54,7 @@ describe("DifferenceGeneratorService", () => {
 
     it("fillDifferenceImage, a black pixel should be created when the blue parameter of two corresponding pixels is different",
        (done: Mocha.Done) => {
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(0);
-        modifiedTestImg.pixels.push(255);
+        modifiedTestImg.pixels[81 * 3 - 1] = 255;
         expect(differencesGeneratorService.fillDifferenceImage(originalTestImg, modifiedTestImg)
         .pixels[81 * 3 - 1])
         .to.equal(0);
@@ -150,6 +140,25 @@ describe("DifferenceGeneratorService", () => {
                                           pixelsArray[135], pixelsArray[162], pixelsArray[189], pixelsArray[216]];
         for (let i: number = 0; i < 9; i++) {
             verificationArray.push(255);
+        }
+        expect(pixelsToVerify).deep.equal(verificationArray);
+        done();
+    });
+
+    it("generateDifferences, Two images with only 1 different pixel should return an image with the expected pixel widened",
+       (done: Mocha.Done) => {
+        modifiedTestImg.pixels[40 * 3] = 255;
+        const pixelsArray: number[] = differencesGeneratorService.generateDifferences(originalTestImg, modifiedTestImg).pixels;
+        const pixelsToVerify: number[] = [pixelsArray[36], pixelsArray[39], pixelsArray[42], pixelsArray[60], pixelsArray[63],
+                                          pixelsArray[66], pixelsArray[69], pixelsArray[72], pixelsArray[84], pixelsArray[87],
+                                          pixelsArray[90], pixelsArray[93], pixelsArray[96], pixelsArray[99], pixelsArray[102],
+                                          pixelsArray[111], pixelsArray[114], pixelsArray[117], pixelsArray[123],
+                                          pixelsArray[126], pixelsArray[129], pixelsArray[138], pixelsArray[141], pixelsArray[144],
+                                          pixelsArray[147], pixelsArray[150], pixelsArray[153], pixelsArray[156], pixelsArray[168],
+                                          pixelsArray[171], pixelsArray[174], pixelsArray[177], pixelsArray[180], pixelsArray[198],
+                                          pixelsArray[201], pixelsArray[204]];
+        for (let i: number = 0; i < 36; i++) {
+            verificationArray.push(0);
         }
         expect(pixelsToVerify).deep.equal(verificationArray);
         done();
