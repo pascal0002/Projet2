@@ -8,7 +8,6 @@ import { BitmapReaderService } from "../app/game-card-form-2d/bitmap-reader.serv
 import { FormValidator2dService } from "../app/game-card-form-2d/form-validator-2d.service";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
-import { BasicService } from "./basic.service";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
 import { UserLoginService } from "./user-login.service";
@@ -37,7 +36,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
-  providers: [BasicService, UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService],
+  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
