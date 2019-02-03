@@ -84,6 +84,11 @@ export class GameCardFormComponent implements OnInit {
     );
   }
 
+  public updateGameName(): void {
+    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
+    this.formInfo.gameName = gameNameInput.value;
+  }
+
   public clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
