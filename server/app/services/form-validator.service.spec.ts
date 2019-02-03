@@ -1,9 +1,15 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import { IFormInfo } from "../../../common/communication/FormInfo";
 import { FormValidatorService } from "./form-validator.service";
 
 let formValidatorService: FormValidatorService;
+
+const TEST_VALID_IMAGE: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "bmp", pixels: []};
+let testInvalidImage: IBitmapImage = {height: 0, width: 0, bitDepth: 0, fileName: "", pixels: []};
+let testFormInfo: IFormInfo = {gameName: "", originalImage: testInvalidImage, modifiedImage: testInvalidImage};
 
 describe("form-validator-service", () => {
 
@@ -117,6 +123,67 @@ describe("form-validator-service", () => {
 
         it("should return false if no extension is specified", (done: Function) => {
             expect(formValidatorService.validateImageExtension("")).equal(false);
+            done();
+        });
+    });
+
+    describe("validateImage", () => {
+
+        it("should return true if image has valid attributes", (done: Function) => {
+            expect(formValidatorService.validateImage(TEST_VALID_IMAGE)).equal(true);
+            done();
+        });
+
+        it("should return false if image has invalid attributes", (done: Function) => {
+            testInvalidImage = {height: 348, width: 720, bitDepth: 16, fileName: "png", pixels: []};
+            expect(formValidatorService.validateImage(testInvalidImage)).equal(false);
+            done();
+        });
+
+        it("should return false if image has partially valid attributes (incorrect height and width)", (done: Function) => {
+            testInvalidImage = {height: 348, width: 720, bitDepth: 24, fileName: "bmp", pixels: []};
+            expect(formValidatorService.validateImage(testInvalidImage)).equal(false);
+            done();
+        });
+
+        it("should return false if image has partially valid attributes (incorrect extension)", (done: Function) => {
+            testInvalidImage = {height: 480, width: 640, bitDepth: 24, fileName: "png", pixels: []};
+            expect(formValidatorService.validateImage(testInvalidImage)).equal(false);
+            done();
+        });
+
+        it("should return false if image has partially valid attributes (incorrect bit depth)", (done: Function) => {
+            testInvalidImage = {height: 480, width: 640, bitDepth: 16, fileName: "bmp", pixels: []};
+            expect(formValidatorService.validateImage(testInvalidImage)).equal(false);
+            done();
+        });
+    });
+
+    describe("validateForm", () => {
+
+        it("should return true if formInfo has valid attributes", (done: Function) => {
+            testFormInfo = {gameName: "Nature", originalImage: TEST_VALID_IMAGE, modifiedImage: TEST_VALID_IMAGE};
+            expect(formValidatorService.validateForm(testFormInfo)).equal(true);
+            done();
+        });
+
+        it("should return false if formInfo has invalid attributes (incorrect name)", (done: Function) => {
+            testFormInfo = {gameName: "Jo", originalImage: TEST_VALID_IMAGE, modifiedImage: TEST_VALID_IMAGE};
+            expect(formValidatorService.validateForm(testFormInfo)).equal(false);
+            done();
+        });
+
+        it("should return false if formInfo has invalid attributes (invalid images)", (done: Function) => {
+            testInvalidImage = {height: 348, width: 720, bitDepth: 24, fileName: "bmp", pixels: []};
+            testFormInfo = {gameName: "Nature", originalImage: testInvalidImage, modifiedImage: testInvalidImage};
+            expect(formValidatorService.validateForm(testFormInfo)).equal(false);
+            done();
+        });
+
+        it("should return false if formInfo has invalid attributes (one invalid image)", (done: Function) => {
+            testInvalidImage = {height: 348, width: 720, bitDepth: 16, fileName: "bmp", pixels: []} as IBitmapImage;
+            testFormInfo = {gameName: "Nature", originalImage: TEST_VALID_IMAGE, modifiedImage: testInvalidImage};
+            expect(formValidatorService.validateForm(testFormInfo)).equal(false);
             done();
         });
     });
