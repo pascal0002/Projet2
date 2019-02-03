@@ -5,6 +5,8 @@ import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
 import { IndexController } from "./controllers/index.controller";
 import { Server } from "./server";
+import { BitmapEncoder } from "./services/bitmap-encoder.service";
+import {BmpFileGenerator} from "./services/bmp-file-generator.service";
 import { DateService } from "./services/date.service";
 import { DifferenceCounterService } from "./services/difference-counter.service";
 import { DifferencesGeneratorService } from "./services/differences-generator.service";
@@ -13,9 +15,7 @@ import { GameCardsService } from "./services/game-cards.service";
 import { IndexService } from "./services/index.service";
 import { LoginService } from "./services/login.service";
 import { WebsocketService } from "./services/websocket.service";
-import {BmpFileGenerator} from "./services/bmp-file-generator.service";
 import Types from "./types";
-import { BitmapEncoder } from "./services/bitmap-encoder.service";
 
 const container: Container = new Container();
 

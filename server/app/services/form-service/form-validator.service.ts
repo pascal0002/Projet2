@@ -1,4 +1,3 @@
-// import Axios, { AxiosResponse } from "axios";
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../../common/communication/BitmapImage";

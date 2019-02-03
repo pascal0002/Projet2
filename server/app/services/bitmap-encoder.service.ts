@@ -5,7 +5,7 @@ import {ServerConstants} from "../../../common/communication/Constants";
 
 @injectable()
 export class BitmapEncoder {
-    public pos: number;
+    public pos: number = 0;
 
     public encodeBitmap(image: IBitmapImage): Buffer {
         this.pos = 0;
