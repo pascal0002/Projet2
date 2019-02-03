@@ -1,4 +1,6 @@
 // tslint:disable:no-magic-numbers
+// tslint:disable:no-any
+import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
@@ -108,7 +110,7 @@ describe("FormValidator2dService", () => {
   });
 
   it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
-    // tslint:disable-next-line:no-any Used to mock the http call
+    // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
     const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
     const formSent: IFormInfo = {
@@ -121,7 +123,7 @@ describe("FormValidator2dService", () => {
       expect(res.title).toEqual(formSent.gameName);
       expect(res.imageName).toEqual(formSent.originalImage.fileName);
       expect(res.modifiedImageName).toEqual(formSent.modifiedImage.fileName);
-    });
+    }).catch((err) => new ErrorHandler());
 
     expect(httpClientSpy.post.calls.count()).toBe(1, "one call");
   });
