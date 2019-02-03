@@ -89,11 +89,4 @@ export class GameCardFormComponent implements OnInit {
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
   }
-
-  public clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    orignialImageInput.value = "";
-    modifiedImageInput.value = "";
-  }
 }
