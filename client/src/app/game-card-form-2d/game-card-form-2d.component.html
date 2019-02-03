@@ -9,7 +9,7 @@
     <div class="contentLeft"> Nom du jeu </div>
     <form [formGroup]="form2DGroup" >
       <div class="contentRight"><input id="gameName" type="text" formControlName="title" (change)="updateGameName()" required ></div>
-      <div *ngIf="this.form2DGroup.get('title').invalid && (this.form2DGroup.get('title').dirty || this.form2DGroup.get('title').touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+      <div *ngIf="this.form2DGroup.get('title').invalid && (this.form2DGroup.get('title').dirty || this.form2DGroup.get('title').touched)" class="alert alert-danger">
         <div *ngIf="this.form2DGroup.get('title').errors.required">
           Le nom du jeu est requis.
         </div>
@@ -30,7 +30,7 @@
       <div *ngIf="(this.form2DGroup.get('originalFileInput').dirty) && (!validBMPExtension(this.formInfo.originalImage.fileName)
                                                 || !validBitDepth(this.formInfo.originalImage.bitDepth)
                                                 || !validImageDimensions(this.formInfo.originalImage.height,this.formInfo.originalImage.width))"
-        class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        class="alert alert-danger">
         <div *ngIf="!validBMPExtension(this.formInfo.originalImage.fileName); else elseBlock1">
           Le fichier doit être un .bmp
         </div>
@@ -55,7 +55,7 @@
       <div *ngIf="(this.form2DGroup.get('modifiedFileInput').dirty) && (!validBMPExtension(this.formInfo.modifiedImage.fileName)
                                                 || !validBitDepth(this.formInfo.modifiedImage.bitDepth)
                                                 || !validImageDimensions(this.formInfo.modifiedImage.height,this.formInfo.modifiedImage.width))"
-        class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+        class="alert alert-danger">
         <div *ngIf="!validBMPExtension(this.formInfo.modifiedImage.fileName); else elseBlock3">
           Le fichier doit être un .bmp
         </div>
