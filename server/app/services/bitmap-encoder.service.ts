@@ -1,3 +1,13 @@
+/***************************************************************************************
+*    Code qui référence un encodeur en ligne.
+*    Title: encoder.js
+*    Author: Shaozilee
+*    Date: 23 avril 2018
+*    Code version: 0.1.0
+*    Availability: https://github.com/shaozilee/bmp-js/blob/master/lib/encoder.js
+*
+***************************************************************************************/
+
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
