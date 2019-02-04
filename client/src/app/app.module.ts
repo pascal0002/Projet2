@@ -1,7 +1,6 @@
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 import { BitmapReaderService } from "../app/game-card-form-2d/bitmap-reader.service";
@@ -30,7 +29,6 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),
