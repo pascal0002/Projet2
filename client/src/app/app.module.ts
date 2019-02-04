@@ -10,8 +10,8 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
-import { UserLoginService } from "./user-login.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
+import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [

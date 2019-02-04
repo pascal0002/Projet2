@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { instance, mock, when } from "ts-mockito";
+import { WebsocketService } from "../websocket.service";
 import { UserLoginService } from "./user-login.service";
-import { WebsocketService } from "./websocket.service";
 
 let service: UserLoginService;
 let mockWebsocketService: WebsocketService;
