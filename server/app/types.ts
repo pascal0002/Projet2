@@ -11,4 +11,5 @@ export default {
         FormValidatorService: Symbol("FormValidatorService"),
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
+        DatabaseService: Symbol("DatabaseService"),
 };

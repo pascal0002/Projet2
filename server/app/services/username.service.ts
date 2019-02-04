@@ -1,17 +1,23 @@
-import { injectable } from "inversify";
-import * as mongoose from "mongoose";
+import { inject, injectable } from "inversify";
 import "reflect-metadata";
-
-const DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
-mongoose.connect(DB_URL);
-
+import Types from "../types";
+import { DatabaseService } from "./database.service";
+import { username } from "./usernameSchema";
 @injectable()
 export class UsernameService {
-    public getAll(): string[] {
-        return [];
+
+    public constructor(@inject(Types.DatabaseService) private databaseService: DatabaseService) {
     }
 
-    public add(): void {}
+    public getAllUsername(): string[] {
+        return this.databaseService.getAll(username);
+    }
 
-    public remove(): void {}
+    public addUsername(newUser: string): void {
+        this.databaseService.add(username, newUser);
+    }
+
+    public removeUsername(newUser: string): void {
+        this.databaseService.remove(username, newUser);
+    }
 }

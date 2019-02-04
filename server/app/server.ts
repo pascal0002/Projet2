@@ -2,6 +2,7 @@ import * as http from "http";
 import { inject, injectable } from "inversify";
 import { AddressInfo } from "net";
 import { Application } from "./app";
+import { DatabaseService } from "./services/database.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -13,13 +14,15 @@ export class Server {
     private server: http.Server;
 
     public constructor(@inject(Types.Application) private application: Application,
-                       @inject(Types.WebsocketService) private websocketService: WebsocketService) { }
+                       @inject(Types.WebsocketService) private websocketService: WebsocketService,
+                       @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
     public init(): void {
         this.application.app.set("port", this.appPort);
 
         this.server = http.createServer(this.application.app);
         this.websocketService.init(this.server);
+        this.databaseService.connect();
 
         this.server.listen(this.appPort);
         this.server.on("error", (error: NodeJS.ErrnoException) => this.onError(error));
