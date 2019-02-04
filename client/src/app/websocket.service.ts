@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import {ClientConstants} from "../../../common/communication/Constants";
-import { MessageType } from "../../../common/communication/messageType";
-
 import * as socketIo from "socket.io-client";
+import { ClientConstants } from "../../../common/communication/Constants";
+import { MessageType } from "../../../common/communication/messageType";
 
 @Injectable()
 export class WebsocketService {
