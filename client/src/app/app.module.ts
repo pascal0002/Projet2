@@ -8,6 +8,7 @@ import { FormValidator2dService } from "../app/game-card-form-2d/form-validator-
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
+import { GameView2DComponent } from "./game-view-2d/game-view-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
+  { path: "game_view_2d", component: GameView2DComponent },
 ];
 
 @NgModule({
@@ -26,6 +28,7 @@ const appRoutes: Routes = [
     AdministrationViewComponent,
     UserLoginComponent,
     GameCardFormComponent,
+    GameView2DComponent,
   ],
   imports: [
     BrowserModule,

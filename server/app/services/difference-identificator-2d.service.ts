@@ -1,5 +1,4 @@
 import { injectable } from "inversify";
-
 import {IBitmapImage} from "../../../common/communication/BitmapImage";
 
 @injectable()

@@ -50,7 +50,7 @@
 
                         <ng-template #elseBlock>
                             <div>
-                                <div class="gameCardButton button">Jouer</div>
+                                <div (click)="connect()" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button">Jouer</div>
                             </div>
                             <div>
                                 <div class="gameCardButton button">Créer</div>
