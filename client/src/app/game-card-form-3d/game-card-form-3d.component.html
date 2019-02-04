@@ -1,0 +1,20 @@
+<div id=formWindow3D>
+  <div id="header">
+    <h1 id="title">Créer un jeu point de vue libre</h1>
+    <p id="format">Format d'image: bitmap 24-bit (640x480)</p>
+  </div>
+
+  <form [formGroup]="form3DGroup" (ngSubmit)="sendFormInfo()">
+    <div class="formElementContainer">
+      <label class="elementTitle">Nom du jeu</label>
+      <input formControlName="cardName" type="text" class="textInput">
+      <small class="alert alert-danger" [hidden]="form3DGroup.controls.cardName.valid || !(form3DGroup.controls.cardName.dirty)">
+          Nom requis et de 3 à 15 caractères.
+      </small>
+      <label class="elementTitle">Types d'objets</label>
+    </div>
+    <button type="submit">Soumettre</button>
+    <button>Annuler</button>
+
+  </form>
+</div>

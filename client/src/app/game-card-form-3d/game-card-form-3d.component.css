@@ -1,0 +1,33 @@
+#formWindow3D {
+    margin-left: 25%;
+    margin-top: 2%;
+    width: 500px;
+    display: flex;
+    grid-gap: 10px;
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+    border: 2px solid #ddd;
+    z-index:1;
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    display: inline-block;
+}
+
+.formElementContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.elementTitle {
+    margin-top: 20px;
+}
+
+.textInput {
+    width: 50%;
+}
+
+.alert {
+    width: 230px;
+    margin-bottom: 0px;
+}

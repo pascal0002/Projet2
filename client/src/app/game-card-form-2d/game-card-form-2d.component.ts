@@ -10,7 +10,7 @@ import { FormValidator2dService } from "./form-validator-2d.service";
   templateUrl: "./game-card-form-2d.component.html",
   styleUrls: ["./game-card-form-2d.component.css"],
 })
-export class GameCardFormComponent implements OnInit {
+export class GameCardForm2DComponent implements OnInit {
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo;
