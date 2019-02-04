@@ -15,7 +15,7 @@ import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
-  { path: "part", component: ListOfGamesViewComponent },
+  { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
 ];
 
