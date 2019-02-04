@@ -55,6 +55,8 @@ export class ServerConstants {
     static FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
 
     static ERROR: number = 400;
+
+    static DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
 }
 
 export class ClientConstants {
