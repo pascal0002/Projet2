@@ -2,10 +2,10 @@
   <div id="logo"><img src="../../assets/logo.png" /> <span>PolyDiff</span></div>
 
   <div id="login-form">
-    <h3>Login <i class="fas fa-key"></i></h3>
+    <h3>Se connecter <i class="fas fa-key"></i></h3>
 
-    <div class="field" [class.unvalidated]="!isUsernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Username" [maxlength]="20" /></div>
+    <div class="field" [class.unvalidated]="!isUsernameValid"><i class="fas fa-user"></i> <input [ngModel]="username" (input)="validateUsername($event.target.value)" placeholder="Nom d'utilisateur" [maxlength]="20" /></div>
 
-    <button (click)="connect()" [disabled]="!isUsernameValid" routerLink="/games_list" routerLinkActive="active">Play</button>
+    <button (click)="connect()" [disabled]="!isUsernameValid" routerLink="/games_list" routerLinkActive="active">Jouer</button>
   </div>
 </main>
