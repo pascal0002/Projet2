@@ -1,18 +1,20 @@
 import { expect } from "chai";
+import { DatabaseService } from "./database.service";
 import { UsernameService } from "./username.service";
 
-let service: UsernameService;
+let usernameService: UsernameService;
+const databaseService: DatabaseService = new DatabaseService();
 
 describe("username-service", () => {
     describe("getAll", () => {
 
         beforeEach((done: Mocha.Done) => {
-            service = new UsernameService();
+            usernameService = new UsernameService(databaseService);
             done();
         });
 
         it("template", (done: Mocha.Done) => {
-            service.getAll();
+            usernameService.getAllUsername();
             expect("something").to.equal("something");
             done();
         });

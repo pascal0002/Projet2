@@ -1,8 +1,9 @@
 import { inject, injectable } from "inversify";
+import * as mongoose from "mongoose";
 import "reflect-metadata";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
-import { username } from "./usernameSchema";
+import { user } from "./usernameSchema";
 @injectable()
 export class UsernameService {
 
@@ -10,14 +11,16 @@ export class UsernameService {
     }
 
     public getAllUsername(): string[] {
-        return this.databaseService.getAll(username);
+        return this.databaseService.getAll(user);
     }
 
-    public addUsername(newUser: string): void {
-        this.databaseService.add(username, newUser);
+    public addUsername(username: string): void {
+        const newUser: mongoose.Document = new user({ name: username });
+        console.log(newUser);
+        this.databaseService.add(newUser);
     }
 
-    public removeUsername(newUser: string): void {
-        this.databaseService.remove(username, newUser);
+    public removeUsername(username: string): void {
+        this.databaseService.remove(user, username);
     }
 }

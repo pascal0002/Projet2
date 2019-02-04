@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
-const usernameSchema: mongoose.Schema = new mongoose.Schema({
+const userSchema: mongoose.Schema = new mongoose.Schema({
     username: String,
 });
 
-export const username: mongoose.Model<mongoose.Document, {}> = mongoose.model("username", usernameSchema);
+export const user: mongoose.Model<mongoose.Document> = mongoose.model("username", userSchema, "usernames");

@@ -1,19 +1,21 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import {ServerConstants} from "../../../common/communication/Constants";
-
+import Types from "../types";
+import {UsernameService} from "./username.service";
 @injectable()
 export class LoginService {
 
     private usersConnected: string[];
 
-    public constructor() {
+    public constructor(@inject(Types.UsernameService) private usernameService: UsernameService) {
         this.usersConnected = [];
     }
 
     public connectUser(username: string): void {
         if (this.validateUsername(username)) {
             this.usersConnected.push(username);
+            this.usernameService.addUsername(username);
         }
     }
 

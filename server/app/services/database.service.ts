@@ -13,11 +13,17 @@ export class DatabaseService {
         this.db.on("error", console.error.bind(console, "connection error:"));
     }
 
-    public getAll(model: mongoose.Model): any[] {
+    public getAll(model: mongoose.Model<mongoose.Document>): any[] {
         return [];
     }
 
-    public add(model: mongoose.Model, item: any): void { }
+    public add(item: mongoose.Document): void {
+        console.log("allo");
+        item.save((err: any) => {
+            if (err) { return console.error(err); }
+            console.log(item);
+          });
+    }
 
-    public remove(model: mongoose.Model, id: string): void {}
+    public remove(model: mongoose.Model<mongoose.Document>, id: string): void {}
 }
