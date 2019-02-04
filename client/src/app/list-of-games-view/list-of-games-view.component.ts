@@ -12,10 +12,10 @@ import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-
 export class ListOfGamesViewComponent implements OnInit {
 
   @Input() public isInAdminView: boolean = false;
-  public listes: GameCard[][] = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
+  public listes: GameCard[][];
 
   public constructor(/**/) {
-    /**/
+    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
   }
 
   public ngOnInit(): void {

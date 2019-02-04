@@ -15,11 +15,13 @@ export class ServerConstants {
 
     static MINIMUM_NAME_LENGTH: number = 3;
     static MAXIMUM_NAME_LENGTH: number = 15;
+    static MINIMUM_USERNAME_LENGTH: number = 3;
+    static MAXIMUM_USERNAME_LENGTH: number = 20;
 
     static ACCEPTED_HEIGHT: number = 480;
     static ACCEPTED_WIDTH: number = 640;
     static ACCEPTED_BIT_DEPTH: number = 24;
-    
+
     static WHITE_PIXEL_PARAMETER: number = 255;
     static BLACK_PIXEL_PARAMETER: number = 0;
     static PIXEL_PARAMETERS_NB: number = 3;
@@ -48,7 +50,8 @@ export class ServerConstants {
     static FLAG: string = "BM";
     static PLANES: number = 1;
     static EXTRA_BYTES: number = ServerConstants.ACCEPTED_WIDTH % ServerConstants.FOUR_BYTES;
-    static RGB_SIZE: number = ServerConstants.ACCEPTED_HEIGHT * ((ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.EXTRA_BYTES);
+    static LINE_BYTE_SIZE: number = (ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.EXTRA_BYTES;
+    static RGB_SIZE: number = ServerConstants.ACCEPTED_HEIGHT * ServerConstants.LINE_BYTE_SIZE;
     static FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
 
     static ERROR: number = 400;

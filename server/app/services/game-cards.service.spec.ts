@@ -5,7 +5,7 @@ import * as sinon from "ts-sinon";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IFormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
-import { whiteBitmap } from "../../images/bitmap_mock";
+import { whiteBitmap } from "../../mock/bitmapImage-mock";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { GameCardsService } from "./game-cards.service";
 
@@ -65,13 +65,13 @@ describe("game-cards-service", () => {
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
             const formInfo: IFormInfo = {
-                gameName: "",
+                gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
             };
 
             const expectedGameCard: GameCard = {
-                title: "",
+                title: "game",
                 imageName: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
@@ -86,13 +86,13 @@ describe("game-cards-service", () => {
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
             const formInfo: IFormInfo = {
-                gameName: "",
+                gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
             };
 
             const expectedGameCard: GameCard = {
-                title: "",
+                title: "game",
                 imageName: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
@@ -108,13 +108,13 @@ describe("game-cards-service", () => {
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
             const formInfo: IFormInfo = {
-                gameName: "",
+                gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
             };
 
             const expectedGameCard: GameCard = {
-                title: "",
+                title: "game",
                 imageName: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["3:46 user109", "4:00 user109", "4:13 user109"],

@@ -9,7 +9,7 @@
     <div class="contentLeft"> Nom du jeu </div>
     <form [formGroup]="form2DGroup" >
       <div class="contentRight"><input id="gameName" type="text" formControlName="title" (change)="updateGameName()" required ></div>
-      <div *ngIf="this.form2DGroup.get('title').invalid && (this.form2DGroup.get('title').dirty || this.form2DGroup.get('title').touched)" class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+      <div *ngIf="this.form2DGroup.get('title').invalid && (this.form2DGroup.get('title').dirty || this.form2DGroup.get('title').touched)" class="alert alert-danger">
         <div *ngIf="this.form2DGroup.get('title').errors.required">
           Le nom du jeu est requis.
         </div>
@@ -27,10 +27,8 @@
       <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput"
           (change)="readOriginalBitmap()">
       </div>
-      <div *ngIf="(this.form2DGroup.get('originalFileInput').dirty) && (!validBMPExtension(this.formInfo.originalImage.fileName)
-                                                || !validBitDepth(this.formInfo.originalImage.bitDepth)
-                                                || !validImageDimensions(this.formInfo.originalImage.height,this.formInfo.originalImage.width))"
-        class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+      <div *ngIf="(this.form2DGroup.get('originalFileInput').dirty) && !(this.isAValidOriginalImage())"
+        class="alert alert-danger">
         <div *ngIf="!validBMPExtension(this.formInfo.originalImage.fileName); else elseBlock1">
           Le fichier doit être un .bmp
         </div>
@@ -52,10 +50,8 @@
       <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput"
           (change)="readModifiedBitmap()">
       </div>
-      <div *ngIf="(this.form2DGroup.get('modifiedFileInput').dirty) && (!validBMPExtension(this.formInfo.modifiedImage.fileName)
-                                                || !validBitDepth(this.formInfo.modifiedImage.bitDepth)
-                                                || !validImageDimensions(this.formInfo.modifiedImage.height,this.formInfo.modifiedImage.width))"
-        class="alert alert-danger" style="width: 180px; font-size: 12px; padding-top: 5px; padding-bottom: 5px;">
+      <div *ngIf="(this.form2DGroup.get('modifiedFileInput').dirty) && !(this.isAValidModifiedImage())"
+        class="alert alert-danger">
         <div *ngIf="!validBMPExtension(this.formInfo.modifiedImage.fileName); else elseBlock3">
           Le fichier doit être un .bmp
         </div>
@@ -74,14 +70,7 @@
 
     <div class="contentLeft">
       <button type="submit" class="btn btn-default" (click)="onSubmit()"
-       [disabled]="!(this.validBMPExtension(this.formInfo.originalImage.fileName)
-                     && this.validBMPExtension(this.formInfo.modifiedImage.fileName)
-                     && this.validBitDepth(this.formInfo.originalImage.bitDepth)
-                     && this.validBitDepth(this.formInfo.modifiedImage.bitDepth)
-                     && this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
-                     && this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
-                     && this.validTitle()
-                    )">
+       [disabled]="!canSubmit()">
         Soumettre
       </button>
   </div>
@@ -89,6 +78,5 @@
     <div class="contentLeft">
       <button class="btn btn-default" (click)="closeForm2D()">Annuler</button>
     </div>
-
   </div>
 </div>

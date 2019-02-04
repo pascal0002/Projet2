@@ -1,7 +1,6 @@
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpModule } from "@angular/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 import { BitmapReaderService } from "../app/game-card-form-2d/bitmap-reader.service";
@@ -10,13 +9,13 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
-import { UserLoginService } from "./user-login.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
+import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
 
 const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
-  { path: "part", component: ListOfGamesViewComponent },
+  { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
 ];
 
@@ -30,7 +29,6 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
-    HttpModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot(appRoutes),

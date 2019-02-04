@@ -1,12 +1,15 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
+import {ServerConstants} from "../../../common/communication/Constants";
 
 @injectable()
 export class LoginService {
 
-    private usersConnected: string[] = [];
-    public readonly usernameMinLength: number = 3;
-    public readonly usernameMaxLenghth: number = 20;
+    private usersConnected: string[];
+
+    public constructor() {
+        this.usersConnected = [];
+    }
 
     public connectUser(username: string): void {
         if (this.validateUsername(username)) {
@@ -18,8 +21,8 @@ export class LoginService {
         const alphanumericCharacters: RegExp = /^[0-9a-z]+$/i;
 
         return alphanumericCharacters.test(username)
-            && username.length >= this.usernameMinLength
-            && username.length <= this.usernameMaxLenghth
+            && username.length >= ServerConstants.MINIMUM_USERNAME_LENGTH
+            && username.length <= ServerConstants.MAXIMUM_USERNAME_LENGTH
             && this.isUsernameUnique(username);
     }
 

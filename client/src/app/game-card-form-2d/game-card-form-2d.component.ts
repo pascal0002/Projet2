@@ -13,16 +13,19 @@ import { FormValidator2dService } from "./form-validator-2d.service";
 export class GameCardFormComponent implements OnInit {
 
   public form2DGroup: FormGroup;
-  private formInfo: IFormInfo = {
-    gameName: "",
-    originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-    modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
-  };
+  private formInfo: IFormInfo;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) { }
+  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
+    this.formInfo = {
+      gameName: "",
+      originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+      modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
+    };
+  }
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm2D();
+    this.form2DGroup.reset();
   }
 
   public ngOnInit(): void {
@@ -93,5 +96,34 @@ export class GameCardFormComponent implements OnInit {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+  }
+
+  public canSubmit(): boolean {
+
+    return (
+             this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+             this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+             this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+             this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+             this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
+             this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
+             this.validTitle()
+           );
+  }
+
+  public isAValidOriginalImage(): boolean {
+      return (
+               this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+               this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+               this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
+             );
+  }
+
+  public isAValidModifiedImage(): boolean {
+      return (
+               this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+               this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+               this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
+             );
   }
 }

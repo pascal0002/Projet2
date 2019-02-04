@@ -1,26 +1,22 @@
- // tslint:disable:no-any
- // tslint:disable:no-any
-
 import { ErrorHandler } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, TestBed } from "@angular/core/testing";
+import { AppModule } from "../app.module";
 import { ListOfGamesViewComponent } from "./list-of-games-view.component";
 
-describe("PartsListViewComponent", () => {
+describe("ListOfGamesViewComponent", () => {
   let component: ListOfGamesViewComponent;
-  let fixture: ComponentFixture<ListOfGamesViewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListOfGamesViewComponent ],
+      imports: [AppModule],
+      declarations: [ ],
     })
     .compileComponents()
     .catch((err) => new ErrorHandler());
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListOfGamesViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new ListOfGamesViewComponent();
   });
 
   it("should create", () => {

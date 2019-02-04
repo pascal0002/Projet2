@@ -66,3 +66,10 @@
 .invisible{
     visibility: hidden;
 }
+
+.alert{
+    width: 181px; 
+    font-size: 12px; 
+    padding-top: 5px; 
+    padding-bottom: 5px;
+}

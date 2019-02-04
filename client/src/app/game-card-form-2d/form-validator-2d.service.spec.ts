@@ -1,5 +1,10 @@
 // tslint:disable:no-magic-numbers
+// tslint:disable:no-any
+import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
+import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { GameCard } from "../../../../common/communication/game-card";
+import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -104,30 +109,22 @@ describe("FormValidator2dService", () => {
     expect(service.validBMPExtension("extension.bmp")).toBeTruthy();
   });
 
-  /*it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
-    // tslint:disable-next-line:no-any Used to mock the http call
+  it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
+    // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
     const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
-    const formSent: FormInfo = {
+    const formSent: IFormInfo = {
       gameName: "Test",
       originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: [255, 255, 255] },
       modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: [0, 0, 0] },
     };
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.onSubmit(formSent).then((value: number) => {
-      const formReceived: FormInfo = (value as unknown) as FormInfo;
-      expect(formReceived.originalImage.height).toEqual(formSent.originalImage.height);
-      expect(formReceived.originalImage.width).toEqual(formSent.originalImage.width);
-      expect(formReceived.originalImage.bitDepth).toEqual(formSent.originalImage.bitDepth);
-      expect(formReceived.originalImage.fileName).toEqual(formSent.originalImage.fileName);
-      expect(formReceived.originalImage.pixels).toEqual(formSent.originalImage.pixels);
-      expect(formReceived.modifiedImage.height).toEqual(formSent.modifiedImage.height);
-      expect(formReceived.modifiedImage.width).toEqual(formSent.modifiedImage.width);
-      expect(formReceived.modifiedImage.bitDepth).toEqual(formSent.modifiedImage.bitDepth);
-      expect(formReceived.modifiedImage.fileName).toEqual(formSent.modifiedImage.fileName);
-      expect(formReceived.modifiedImage.pixels).toEqual(formSent.modifiedImage.pixels);
-      expect(formReceived.gameName).toEqual(formSent.gameName);
-    });
+    formValidatorService.generateGameCard(formSent).then((res: GameCard) => {
+      expect(res.title).toEqual(formSent.gameName);
+      expect(res.imageName).toEqual(formSent.originalImage.fileName);
+      expect(res.modifiedImageName).toEqual(formSent.modifiedImage.fileName);
+    }).catch((err) => new ErrorHandler());
+
     expect(httpClientSpy.post.calls.count()).toBe(1, "one call");
-  });*/
+  });
 });
