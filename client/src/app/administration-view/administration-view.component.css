@@ -1,0 +1,19 @@
+.adminMenu{
+    color: white;
+    background-color: #13315C;
+    font-family: 'Poppins';
+    text-align: center;
+    height: 85px;
+    width: 100%;
+    position: fixed;
+    padding-top: 15px;
+}
+
+.createCardButton{
+    max-width: 300px;
+    height: 40px;
+    padding-top: 9px;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-left: 10px;
+}

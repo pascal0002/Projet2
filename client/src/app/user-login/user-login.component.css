@@ -1,0 +1,135 @@
+#login-container {
+  background-color: #f7f7f7;
+
+  /*fix size for 1080p*/
+  height: 440px;
+  width: 440px;
+
+  border-radius: 10px;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  box-shadow: 28px -15px 83px 0px rgba(0, 0, 0, 0.75);
+}
+
+#logo {
+  color: white;
+  background-color: #13315c;
+  background-clip: padding-box;
+
+  border-bottom: solid 14px white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  width: 100%;
+  height: 25%;
+  padding: 15px;
+  margin-bottom: 40px;
+  box-sizing: border-box; 
+
+  font-size: 300%;
+  vertical-align: middle;
+}
+
+#logo img {
+  height: 70px;
+
+  vertical-align: middle;
+}
+
+#logo span {
+  vertical-align: middle;
+  margin-left: 10px;
+
+  font-weight: bold;
+}
+
+#login-form {
+  text-align: left;
+}
+
+#login-form input {
+  width: 80%;
+  height: 45px;
+
+  padding-left: 15px;
+  margin: 5px 0 5px 0;
+
+  font-size: 130%;
+
+  border-radius: 0px;
+  border: 0;
+
+  transition: all 0.3s;
+}
+
+#login-form input:focus {
+  outline: none;
+  border-left: #7acbcf solid 5px;
+}
+
+#login-form .field i {
+  color: #475260;
+
+  margin: 0 15px 0 8px;
+
+  font-size: 200%;
+
+  text-align: left;
+  vertical-align: middle;
+}
+
+#login-form .field {
+  background-color: white;
+  border-top: 3px solid #13315c;
+  border-bottom: 3px solid #13315c;
+  margin-bottom: 30px;
+}
+
+#login-form .field.unvalidated {
+  border-top: 3px solid red;
+  border-bottom: 3px solid red;
+}
+
+#login-form .field.unvalidated input:focus {
+  border-left: #cf7a7a solid 5px;
+}
+
+#login-form h3 {
+  font-size: 240%;
+  text-align: center;
+
+  border-top: 3px double #13315c;
+  border-bottom: 3px double #13315c;
+}
+
+#login-form h3 i {
+  font-size: 80%;
+}
+
+#login-form button {
+  background-color: #13315c;
+  color: white;
+
+  width: 100%;
+  padding: 10px;
+
+  font-size: 240%;
+
+  border: none;
+  border-top: 6px solid white;
+  border-bottom: 6px solid white;
+
+  transition: background-color 0.3s;
+}
+
+#login-form button:hover {
+  background-color: #7acbcf;
+}
+
+#login-form button:focus {
+  outline: none;
+}
