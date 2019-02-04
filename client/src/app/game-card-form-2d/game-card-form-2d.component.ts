@@ -25,6 +25,7 @@ export class GameCardFormComponent implements OnInit {
 
   public closeForm2D(): void {
     this.formValidatorService.closeForm2D();
+    this.form2DGroup.reset();
   }
 
   public ngOnInit(): void {
