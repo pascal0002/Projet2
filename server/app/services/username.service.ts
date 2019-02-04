@@ -1,9 +1,9 @@
 import { injectable } from "inversify";
 import * as mongoose from "mongoose";
 import "reflect-metadata";
+import {ServerConstants} from "../../../common/communication/Constants";
 
-const DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
-mongoose.connect(DB_URL);
+mongoose.connect(ServerConstants.DB_URL);
 
 @injectable()
 export class UsernameService {
