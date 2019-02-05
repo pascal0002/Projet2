@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { UserLoginService } from "./user-login.service";
 
 @Component({
@@ -9,9 +10,11 @@ import { UserLoginService } from "./user-login.service";
 export class UserLoginComponent {
   public username: string;
   public isUsernameValid: boolean;
+  public errorMessage: string;
 
-  public constructor(private userLoginService: UserLoginService) {
+  public constructor(private userLoginService: UserLoginService, private router: Router) {
     this.isUsernameValid = false;
+    this.errorMessage = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
   }
 
   public validateUsername(username: string): void {
@@ -19,13 +22,24 @@ export class UserLoginComponent {
     this.userLoginService
       .validateUsername(this.username)
       .subscribe(
-        (validity: boolean) => {this.isUsernameValid = validity; },
+        (isValid: boolean) => {
+          this.isUsernameValid = isValid;
+          this.errorMessage = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+        },
       );
   }
 
   public connect(): void {
-    if (this.isUsernameValid) {
-      this.userLoginService.connect(this.username);
-    }
+    this.userLoginService
+      .connect(this.username)
+      .subscribe(
+        (isValid: boolean) => {
+          this.isUsernameValid = isValid;
+          this.errorMessage = "Ce nom d'utilisateur est déjà utilisé";
+          if (isValid) {
+            this.router.navigate(["/games_list"]);
+          }
+        },
+      );
   }
 }

@@ -12,5 +12,4 @@ export default {
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
         DatabaseService: Symbol("DatabaseService"),
-        UsernameService: Symbol("UsernameService"),
 };

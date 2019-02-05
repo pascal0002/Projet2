@@ -11,7 +11,6 @@ import { DifferencesGeneratorService } from "./services/differences-generator.se
 import { FormValidatorService } from "./services/form-validator.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { LoginService } from "./services/login.service";
-import { UsernameService } from "./services/username.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -30,5 +29,4 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 container.bind(Types.DatabaseService).to(DatabaseService);
-container.bind(Types.UsernameService).to(UsernameService);
 export { container };

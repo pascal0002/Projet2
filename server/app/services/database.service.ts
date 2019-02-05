@@ -18,12 +18,26 @@ export class DatabaseService {
     }
 
     public add(item: mongoose.Document): void {
-        console.log("allo");
-        item.save((err: any) => {
-            if (err) { return console.error(err); }
-            console.log(item);
-          });
+        item.save((err: Error) => {
+            if (err) {
+                return console.error(err);
+            }
+        });
     }
 
-    public remove(model: mongoose.Model<mongoose.Document>, id: string): void {}
+    public remove(model: mongoose.Model<mongoose.Document>, condition: Object): void {
+        model.deleteOne(condition, (err: Error) => {
+            if (err) {
+                return console.error(err);
+            }
+        });
+    }
+
+    public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
+        return model.countDocuments(condition, (err: Error, val: number) => {
+            if (err) {
+                console.error(err);
+            }
+        });
+    }
 }
