@@ -20,6 +20,15 @@ export class GameCardForm3DComponent implements OnInit {
         Validators.minLength(ClientConstants.MIN_TITLE_LENGTH),
         Validators.maxLength(ClientConstants.MAX_TITLE_LENGTH),
       ]),
+      optionMenu: new FormControl("", [
+        Validators.required,
+      ]),
+      numberOfObjets: new FormControl("", [
+        Validators.required,
+        Validators.max(200),
+        Validators.min(10),
+      ]),
+     
 
     });
 
@@ -36,5 +45,11 @@ export class GameCardForm3DComponent implements OnInit {
 
   public sendFormInfo(): void {
     console.log("Submit clicked.");
+    console.log(this.form3DGroup.controls.cardName.value);
+    console.log(this.form3DGroup.controls.optionMenu.value);
+    console.log(this.form3DGroup.controls.radio1.value);
+    console.log(this.form3DGroup.controls.radio2.value);
+    console.log(this.form3DGroup.controls.radio3.value);
+
   }
 }
