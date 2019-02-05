@@ -21,4 +21,5 @@ export class ListOfGamesViewComponent implements OnInit {
   public ngOnInit(): void {
     /**/
   }
+
 }

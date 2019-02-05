@@ -12,6 +12,7 @@ import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-vie
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
+import { OpenSceneComponent } from './open-scene/open-scene.component';
 
 const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
     AdministrationViewComponent,
     UserLoginComponent,
     GameCardFormComponent,
+    OpenSceneComponent,
   ],
   imports: [
     BrowserModule,
