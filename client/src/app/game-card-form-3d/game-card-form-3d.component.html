@@ -16,6 +16,7 @@
         <option value="" [disabled]="true"></option>
         <option value="option-1">Option 1</option>
         <option value="option-2">Option 2</option>
+        <option *ngFor="let objectType of objectTypes">{{objectType}}</option>    
       </select>
       <label class="elementTitle">Quantité d'objets</label>
       <input formControlName="numberOfObjets" type="number" class="numberInput">
@@ -23,25 +24,21 @@
         Nombre min: 10 ; Nombre max: 200
       </small>
       <label class="elementTitle">Types de modifications</label>
-      <div class="checkBoxContainer">
-        <input type="checkbox" value="Ajout">
-        <div class="checkBoxText">Ajout</div>
-      </div>
-      <div class="checkBoxContainer">
-        <input type="checkbox" value="Suppression">
-        <div class="checkBoxText">Suppression</div>
-      </div>
-      <div class="checkBoxContainer" style="margin-bottom:7px;">
-        <input type="checkbox" value="Changement de couleur">
-        <div class="checkBoxText">Changement de couleur</div>
-      </div>
 
-
-      <!--
-      <input type="radio" formControlName="radio1" value="Ajout">
-      <input type="radio" formControlName="radio2" value="Suppression">
-      <input type="radio" formControlName="radio3" value="Changement de couleur">-->
-
+      <div formGroupName="checkBoxGroup">
+        <div class="checkBoxContainer">
+          <input type="checkbox" formControlName="addCheckBox" value="Ajout">
+          <div class="checkBoxText">Ajout</div>
+        </div>
+        <div class="checkBoxContainer">
+          <input type="checkbox" formControlName="deleteCheckBox" value="Suppression">
+          <div class="checkBoxText">Suppression</div>
+        </div>
+        <div class="checkBoxContainer" style="margin-bottom:7px;">
+          <input type="checkbox" formControlName="modifyCheckBox" value="Changement de couleur">
+          <div class="checkBoxText">Changement de couleur</div>
+        </div>
+      </div>
     </div>
     <button type="submit" class="btn btn-default" [disabled]="form3DGroup.invalid">Soumettre</button>
     <button class="btn btn-default">Annuler</button>

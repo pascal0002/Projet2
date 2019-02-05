@@ -1,6 +1,6 @@
 #formWindow3D {
-    margin-left: 25%;
-    margin-top: 2%;
+    margin-left: 30%;
+    margin-top: 7px;
     width: 500px;
     display: flex;
     grid-gap: 10px;
@@ -12,6 +12,14 @@
     background-color: rgb(255, 255, 255);
     position: fixed;
     display: inline-block;
+}
+
+#title {
+    font-size: 30px;
+}
+
+#header {
+    height: 90px;
 }
 
 .formElementContainer {

@@ -60,14 +60,25 @@ export class ServerConstants {
 export class ClientConstants {
     static SERVER_BASE_URL: string = "http://localhost:3000/";
 
+    // For the 2D form validator
     static MIN_TITLE_LENGTH: number = 3;
     static MAX_TITLE_LENGTH: number = 15;
     static VALID_BMP_HEIGHT: number = 480;
     static VALID_BMP_WIDTH: number = 640;
     static VALID_BITS_PER_PIXEL: number = 24;
 
+    // For the bitmap reader
     static WIDTH_OFFSET: number = 18;
     static HEIGHT_OFFSET: number = 22;
     static BITS_PER_PIXEL_OFFSET: number = 28;
     static PIXEL_OFFSET: number = 10;
-}
+
+    //For the 3D form 
+    static MAX_NUMBER_OF_OBJECTS: number = 200;
+    static MIN_NUMBER_OF_OBJECTS: number = 10;
+    static OBJECT_TYPES: string[] = [
+        "Formes géométriques",
+        "Forêt",
+        "Océan"
+    ];
+ }
