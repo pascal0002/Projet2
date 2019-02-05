@@ -1,16 +1,14 @@
 import { expect } from "chai";
 import { DatabaseService } from "./database.service";
 import { LoginService } from "./login.service";
-import { UsernameService } from "./username.service";
 
 let service: LoginService;
 const databaseService: DatabaseService = new DatabaseService();
-const usernameService: UsernameService = new UsernameService(databaseService);
 
 describe("Validate username", () => {
 
     beforeEach((done: Mocha.Done) => {
-        service = new LoginService(usernameService);
+        service = new LoginService(databaseService);
         done();
     });
 
