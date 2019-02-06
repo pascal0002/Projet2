@@ -55,6 +55,7 @@
     "reflect-metadata": "^0.1.13",
     "serve-favicon": "~2.5.0",
     "socket.io": "^2.2.0",
+    "three": "^0.101.1",
     "ts-mockito": "^2.3.1",
     "ts-node": "^7.0.1",
     "ts-sinon": "^1.0.12"
@@ -72,6 +73,7 @@
     "@types/node-uuid": "0.0.28",
     "@types/sinon": "^7.0.3",
     "@types/socket.io": "1.4.38",
+    "@types/three": "^0.93.19",
     "chai": "~4.1.0",
     "concurrently": "^4.0.1",
     "mocha": "~5.2.0",

@@ -9,15 +9,16 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
+import { OpenSceneConstructorComponent } from "./open-scene-constructor/open-scene-constructor.component";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
-import { OpenSceneComponent } from './open-scene/open-scene.component';
 
 const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
+  { path: "3d_edit", component: OpenSceneConstructorComponent },
 ];
 
 @NgModule({
@@ -27,7 +28,7 @@ const appRoutes: Routes = [
     AdministrationViewComponent,
     UserLoginComponent,
     GameCardFormComponent,
-    OpenSceneComponent,
+    OpenSceneConstructorComponent,
   ],
   imports: [
     BrowserModule,
