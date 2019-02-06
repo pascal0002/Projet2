@@ -3,7 +3,7 @@
 import { expect } from "chai";
 import * as sinon from "ts-sinon";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import { whiteBitmap } from "../../mock/bitmapImage-mock";
 import { DifferenceCounterService } from "./difference-counter.service";
@@ -64,7 +64,7 @@ describe("game-cards-service", () => {
             gameCardsServiceStub.getRandomNumber.returns(0);
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
@@ -85,7 +85,7 @@ describe("game-cards-service", () => {
             gameCardsServiceStub.getRandomNumber.returns(1);
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
@@ -107,7 +107,7 @@ describe("game-cards-service", () => {
 
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,

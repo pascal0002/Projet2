@@ -32,6 +32,10 @@ export class GameCardsController {
                 res.status(ServerConstants.ERROR).send("Les champs du formulaires doivent être valides");
         });
 
+        router.post("/info_3D_game", (req: Request, res: Response, next: NextFunction) => {
+            console.log(req.body); // Containes the 3D form info.
+         });
+
         return router;
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import {ClientConstants} from "../../../../common/communication/Constants";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
@@ -13,7 +13,7 @@ import { FormValidator2dService } from "./form-validator-2d.service";
 export class GameCardForm2DComponent implements OnInit {
 
   public form2DGroup: FormGroup;
-  private formInfo: IFormInfo;
+  private formInfo: IFormInfo2D;
 
   public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {

@@ -14,13 +14,11 @@
       <label class="elementTitle">Types d'objets</label>
       <select class="optionMenu" formControlName="optionMenu">
         <option value="" [disabled]="true"></option>
-        <option value="option-1">Option 1</option>
-        <option value="option-2">Option 2</option>
         <option *ngFor="let objectType of objectTypes">{{objectType}}</option>    
       </select>
       <label class="elementTitle">Quantité d'objets</label>
-      <input formControlName="numberOfObjets" type="number" class="numberInput">
-      <small class="alert alert-danger" [hidden]="form3DGroup.controls.numberOfObjets.valid || form3DGroup.controls.numberOfObjets.pristine">
+      <input formControlName="numberOfObjects" type="number" class="numberInput">
+      <small class="alert alert-danger" [hidden]="form3DGroup.controls.numberOfObjects.valid || form3DGroup.controls.numberOfObjects.pristine">
         Nombre min: 10 ; Nombre max: 200
       </small>
       <label class="elementTitle">Types de modifications</label>
@@ -41,6 +39,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-default" [disabled]="form3DGroup.invalid">Soumettre</button>
-    <button class="btn btn-default">Annuler</button>
+    <button type="button" class="btn btn-default" (click)="closeForm()">Annuler</button>
   </form>
+
 </div>

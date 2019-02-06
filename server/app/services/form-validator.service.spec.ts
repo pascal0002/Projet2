@@ -2,14 +2,14 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { FormValidatorService } from "./form-validator.service";
 
 let formValidatorService: FormValidatorService;
 
 const TEST_VALID_IMAGE: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "bmp", pixels: []};
 let testInvalidImage: IBitmapImage = {height: 0, width: 0, bitDepth: 0, fileName: "", pixels: []};
-let testFormInfo: IFormInfo = {gameName: "", originalImage: testInvalidImage, modifiedImage: testInvalidImage};
+let testFormInfo: IFormInfo2D = {gameName: "", originalImage: testInvalidImage, modifiedImage: testInvalidImage};
 
 describe("form-validator-service", () => {
 
