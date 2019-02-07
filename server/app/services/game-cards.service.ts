@@ -33,8 +33,8 @@ export class GameCardsService {
 
     return {
       title: formInfo.gameName,
-      imageName: this.generateOriginalImagePath(formInfo.originalImage.fileName),
-      modifiedImageName: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
+      originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
+      modifiedImagePath: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
     };

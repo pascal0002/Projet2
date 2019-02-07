@@ -3,9 +3,9 @@ import {ServerConstants} from "../../../common/communication/Constants";
 
 const gamecardSchema: mongoose.Schema = new mongoose.Schema({
     title: String,
-    imageName: String,
-    modifiedImageName: String,
-    differenceImageName: String,
+    originalImagePath: String,
+    modifiedImagePath: String,
+    differenceImagePath: String,
     bestTimeSolo: String[ServerConstants.NUMBER_HIGH_SCORE],
     bestTime1v1: String[ServerConstants.NUMBER_HIGH_SCORE],
 });

@@ -72,8 +72,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
                 bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
             };
@@ -93,8 +93,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
                 bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
             };
@@ -115,8 +115,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: ["3:46 user109", "4:00 user109", "4:13 user109"],
                 bestTime1v1: ["2:46 user109", "3:00 user109", "3:13 user109"],
             };
