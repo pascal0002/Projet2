@@ -11,3 +11,12 @@
     display: grid;
     grid-template-rows: 50px 400px;
 }
+
+#box {
+    height: 200px;
+    width: 300px;
+    background-color: brown;
+    z-index: 1;
+    margin-left: 80px;
+    margin-top: 50px;
+}
