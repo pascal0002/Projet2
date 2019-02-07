@@ -27,6 +27,7 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
 
   public makeScene(): void {
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0xe8ffff);
     this.camera = new THREE.PerspectiveCamera(70, this.canvas.clientWidth / this.canvas.clientHeight, 1, 1000);
     this.camera.position.x = 0;
     this.camera.position.y = 0;
@@ -36,18 +37,30 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
 
   public makeCube(): void {
 
-    const numberOfShapes: number = 10; // Math.round(this.getRandomNumber() * 190) + 10;
+    const numberOfShapes: number = Math.round(this.getRandomNumber() * 190) + 10;
 
     for (let i: number = 0; i < numberOfShapes; i++) {
-      const material: THREE.MeshBasicMaterial = this.makeRandomColors();
+      const material: THREE.MeshStandardMaterial = this.makeRandomColors();
       this.createObject(material);
       this.translateObject();
       this.rotateObject();
       this.scene.add(this.object);
     }
+    const bulbLight: THREE.Light = new THREE.PointLight(0xffffff, 6);
+    bulbLight.position.set(0, 150, 0);
+    this.scene.add(bulbLight);
+    const bulbLight2: THREE.Light = new THREE.Light(0xffffff, 6);
+    bulbLight2.position.set(0, -150, 0);
+    this.scene.add(bulbLight2);
+    const bulbLight3: THREE.Light = new THREE.Light(0xffffff, 6);
+    bulbLight3.position.set(0, 0, 150);
+    this.scene.add(bulbLight3);
+    const bulbLight4: THREE.Light = new THREE.Light(0xffffff, 6);
+    bulbLight4.position.set(150, 0, 0);
+    this.scene.add(bulbLight4);
   }
 
-  public createObject(material: THREE.MeshBasicMaterial): void {
+  public createObject(material: THREE.MeshStandardMaterial): void {
 
     const referenceSize: number = 10;
     const objectSize: number = (this.getRandomNumber() + 0.5) * referenceSize;
@@ -76,7 +89,7 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
     this.object = new THREE.Mesh(geometry, material);
   }
 
-  private makeRandomColors(): THREE.MeshBasicMaterial {
+  private makeRandomColors(): THREE.MeshStandardMaterial {
 
     const red: number = Math.round(this.getRandomNumber() * 255);
     const green: number = Math.round(this.getRandomNumber() * 255);
@@ -84,12 +97,12 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
     const colorsGenerated: string = "rgb(" + red + "," + green + "," + blue + ")";
     const color: THREE.Color = new THREE.Color(colorsGenerated);
 
-    return new THREE.MeshBasicMaterial( { color: color, wireframe: true } );
+    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.5} );
   }
 
   public translateObject(): void {
-    const xPosition: number = Math.round(this.getRandomNumber() * 160) - 80;
-    const yPosition: number = Math.round(this.getRandomNumber() * 70) - 35;
+    const xPosition: number = Math.round(this.getRandomNumber() * 180) - 90;
+    const yPosition: number = Math.round(this.getRandomNumber() * 80) - 40;
     const zPosition: number = Math.round(this.getRandomNumber() * 60) - 30;
     this.object.position.set(xPosition, yPosition, zPosition);
   }
