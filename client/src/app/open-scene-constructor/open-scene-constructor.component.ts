@@ -46,18 +46,10 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
       this.rotateObject();
       this.scene.add(this.object);
     }
-    const bulbLight: THREE.Light = new THREE.PointLight(0xffffff, 6);
-    bulbLight.position.set(0, 150, 0);
-    this.scene.add(bulbLight);
-    const bulbLight2: THREE.Light = new THREE.Light(0xffffff, 6);
-    bulbLight2.position.set(0, -150, 0);
-    this.scene.add(bulbLight2);
-    const bulbLight3: THREE.Light = new THREE.Light(0xffffff, 6);
-    bulbLight3.position.set(0, 0, 150);
-    this.scene.add(bulbLight3);
-    const bulbLight4: THREE.Light = new THREE.Light(0xffffff, 6);
-    bulbLight4.position.set(150, 0, 0);
-    this.scene.add(bulbLight4);
+    const light: THREE.AmbientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    this.scene.add(light);
+    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0xffffff, 1.4);
+    this.scene.add(directionalLight);
   }
 
   public createObject(material: THREE.MeshStandardMaterial): void {
@@ -97,7 +89,7 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
     const colorsGenerated: string = "rgb(" + red + "," + green + "," + blue + ")";
     const color: THREE.Color = new THREE.Color(colorsGenerated);
 
-    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.5} );
+    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.5, roughness: 0.5} );
   }
 
   public translateObject(): void {
