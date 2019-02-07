@@ -3,7 +3,7 @@ import "reflect-metadata";
 import {ServerConstants} from "../../../common/communication/Constants";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
-import { user } from "./usernameSchema";
+import { user } from "./userSchema";
 @injectable()
 export class LoginService {
 
