@@ -10,6 +10,7 @@ import { AppComponent } from "./app.component";
 import { GameCardFormComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
 import { OpenSceneConstructorComponent } from "./open-scene-constructor/open-scene-constructor.component";
+import { OpenSceneConstructorService } from "./open-scene-constructor/open-scene-constructor.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
@@ -37,7 +38,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
-  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService],
+  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService, OpenSceneConstructorService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
