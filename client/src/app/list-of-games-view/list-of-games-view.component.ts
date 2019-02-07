@@ -26,7 +26,7 @@ export class ListOfGamesViewComponent {
   public getGamesList2D(): void {
     this.listOfGamesService.getGamesLists2D()
     .then(
-      (res) => { this.listes.push(res); },
+      (gameCards) => { this.listes.push(gameCards); },
     )
     .catch(
       (err) => {console.error("erreur :", err); },

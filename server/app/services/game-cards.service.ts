@@ -9,6 +9,7 @@ import Types from "../types";
 import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
+import { gameCard3D } from "./game-card-3D-schema";
 
 @injectable()
 export class GameCardsService {
@@ -45,7 +46,7 @@ export class GameCardsService {
 
   public async getGameCards3D(): Promise<GameCard[]> {
     return new Promise((resolve: Function) => {
-      resolve(this.databaseService.getAll(gameCard2D)
+      resolve(this.databaseService.getAll(gameCard3D)
         .then((gameCardsDB: mongoose.Document[]) => {
           const gameCards: GameCard[] = [];
           gameCardsDB.forEach((gameCard: mongoose.Document) => {
