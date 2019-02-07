@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import {GameCard} from "../../../../common/communication/game-card";
-import {TWO_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/2d-game-card-mock-list";
-import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-game-card-mock-list";
+import { ListOfGamesService } from "./list-of-games.service";
 
 @Component({
   selector: "app-list-of-games-view",
@@ -9,16 +8,38 @@ import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-
   styleUrls: ["./list-of-games-view.component.css"],
 })
 
-export class ListOfGamesViewComponent implements OnInit {
+export class ListOfGamesViewComponent {
 
   @Input() public isInAdminView: boolean = false;
   public listes: GameCard[][];
 
-  public constructor(/**/) {
-    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
+  public constructor(private listOfGamesService: ListOfGamesService) {
+    this.listes = [];
+    this.getGamesLists();
   }
 
-  public ngOnInit(): void {
-    /**/
+  public getGamesLists(): void {
+    this.getGamesList2D();
+    this.getGamesList3D();
+  }
+
+  public getGamesList2D(): void {
+    this.listOfGamesService.getGamesLists2D()
+    .then(
+      (res) => { this.listes.push(res); },
+    )
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
+  }
+
+  public getGamesList3D(): void {
+    this.listOfGamesService.getGamesLists3D()
+    .then(
+      (gameCards) => { this.listes.push(gameCards); },
+    )
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
   }
 }

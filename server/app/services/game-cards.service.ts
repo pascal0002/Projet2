@@ -1,5 +1,6 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
+import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
 import { IFormInfo } from "../../../common/communication/FormInfo";
@@ -7,13 +8,14 @@ import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
-import { gameCardDB } from "./game-card-2D-schema";
+import { gameCard2D } from "./game-card-2D-schema";
+import { gameCard3D } from "./game-card-3D-schema";
 
 @injectable()
 export class GameCardsService {
 
   public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
-                     @inject(Types.DatabaseService) private databaseService: DatabaseService) {/**/ }
+                     @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
   public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
@@ -28,13 +30,49 @@ export class GameCardsService {
       });
   }
 
+  public async getGameCards2D(): Promise<GameCard[]> {
+    return new Promise((resolve: Function) => {
+      resolve(this.databaseService.getAll(gameCard2D)
+        .then((gameCardsDB: mongoose.Document[]) => {
+          const gameCards: GameCard[] = [];
+          gameCardsDB.forEach((gameCard: mongoose.Document) => {
+            gameCards.push(this.convertDBGameCard(gameCard));
+          });
+
+          return gameCards;
+        }));
+    });
+  }
+
+  public async getGameCards3D(): Promise<GameCard[]> {
+    return new Promise((resolve: Function) => {
+      resolve(this.databaseService.getAll(gameCard3D)
+        .then((gameCardsDB: mongoose.Document[]) => {
+          const gameCards: GameCard[] = [];
+          gameCardsDB.forEach((gameCard: mongoose.Document) => {
+            gameCards.push(this.convertDBGameCard(gameCard));
+          });
+
+          return gameCards;
+        }));
+    });
+  }
+
+  private convertDBGameCard(gameCard: mongoose.Document): GameCard {
+    return { title: gameCard.toJSON().title,
+             originalImagePath: gameCard.toJSON().originalImagePath,
+             modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
+             bestTimeSolo: gameCard.toJSON().bestTimeSolo,
+             bestTime1v1: gameCard.toJSON().bestTime1v1, };
+  }
+
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
   public addGameCard(formInfo: IFormInfo, differenceImageFileName: string): GameCard {
     const gameCard: GameCard = this.generateGameCard(formInfo);
-    this.databaseService.add(new gameCardDB({
+    this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       originalImagePath: gameCard.originalImagePath,
       modifiedImagePath: gameCard.modifiedImagePath,

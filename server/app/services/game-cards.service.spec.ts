@@ -6,6 +6,7 @@ import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IFormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
 import { whiteBitmap } from "../../mock/bitmapImage-mock";
+import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { GameCardsService } from "./game-cards.service";
 
@@ -15,6 +16,7 @@ let differenceCounterService: DifferenceCounterService;
 let differenceCounterServiceStub: any;
 
 let gameCardsServiceStub: any;
+const databaseService: DatabaseService = new DatabaseService();
 
 describe("game-cards-service", () => {
 
@@ -22,7 +24,7 @@ describe("game-cards-service", () => {
         differenceCounterService = new DifferenceCounterService();
         differenceCounterServiceStub = sinon.stubObject<DifferenceCounterService>(differenceCounterService, ["getNumberOfDifferences"]);
 
-        gameCardsService = new GameCardsService(differenceCounterServiceStub);
+        gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
         gameCardsServiceStub = sinon.stubObject<GameCardsService>(gameCardsService, ["getRandomNumber"]);
     };
 

@@ -13,8 +13,12 @@ export class DatabaseService {
         this.db.on("error", console.error.bind(console, "connection error:"));
     }
 
-    public getAll(model: mongoose.Model<mongoose.Document>): any[] {
-        return [];
+    public async getAll(model: mongoose.Model<mongoose.Document>): Promise<mongoose.Document[]> {
+        return model.find((err: Error) => {
+            if (err) {
+                return console.error(err);
+            }
+        });
     }
 
     public add(item: mongoose.Document): void {
