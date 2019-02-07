@@ -8,7 +8,7 @@ export class DatabaseService {
     private db: mongoose.Connection;
 
     public connect(): void {
-        mongoose.connect(ServerConstants.DB_URL);
+        mongoose.connect(ServerConstants.DB_URL, { useNewUrlParser: true });
         this.db = mongoose.connection;
         this.db.on("error", console.error.bind(console, "connection error:"));
     }

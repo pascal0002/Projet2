@@ -3,7 +3,7 @@ import "reflect-metadata";
 import {ServerConstants} from "../../../common/communication/Constants";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
-import { user } from "./userSchema";
+import { userDB } from "./user-schema";
 @injectable()
 export class LoginService {
 
@@ -11,7 +11,7 @@ export class LoginService {
 
     public connectUser(username: string): void {
         if (this.validateUsername(username)) {
-            this.databaseService.add(new user({ name: username }));
+            this.databaseService.add(new userDB({ name: username }));
         }
     }
 
@@ -24,13 +24,13 @@ export class LoginService {
     }
 
     public disconnect(username: string): void {
-        this.databaseService.remove(user, { name: username });
+        this.databaseService.remove(userDB, { name: username });
     }
 
     public isUsernameUnique(username: string): Promise<boolean> {
 
         return new Promise((resolve: Function) => {
-            resolve(this.databaseService.countDocuments(user, {name: username})
+            resolve(this.databaseService.countDocuments(userDB, {name: username})
                 .then((val: number) => {
                     return (val === 0);
                 }));

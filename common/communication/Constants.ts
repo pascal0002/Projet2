@@ -12,6 +12,7 @@ export class ServerConstants {
 
     static ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
     static MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
+    static DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/";
 
     static MINIMUM_NAME_LENGTH: number = 3;
     static MAXIMUM_NAME_LENGTH: number = 15;

@@ -5,12 +5,15 @@ import {ServerConstants} from "../../../common/communication/Constants";
 import { IFormInfo } from "../../../common/communication/FormInfo";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
+import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
+import { gameCardDB } from "./game-card-2D-schema";
 
 @injectable()
 export class GameCardsService {
 
-  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService) {/**/ }
+  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
+                     @inject(Types.DatabaseService) private databaseService: DatabaseService) {/**/ }
 
   public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
@@ -27,6 +30,20 @@ export class GameCardsService {
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
+  }
+
+  public addGameCard(formInfo: IFormInfo, differenceImageFileName: string): GameCard {
+    const gameCard: GameCard = this.generateGameCard(formInfo);
+    this.databaseService.add(new gameCardDB({
+      title: gameCard.title,
+      originalImagePath: gameCard.originalImagePath,
+      modifiedImagePath: gameCard.modifiedImagePath,
+      differenceImagePath: this.generateDifferenceImagePath(differenceImageFileName),
+      bestTimeSolo: gameCard.bestTimeSolo,
+      bestTime1v1: gameCard.bestTime1v1,
+    }));
+
+    return gameCard;
   }
 
   public generateGameCard(formInfo: IFormInfo): GameCard {
@@ -48,6 +65,11 @@ export class GameCardsService {
   private generateModifiedImagePath(imageName: string): string {
 
     return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
+  }
+
+  private generateDifferenceImagePath(imageName: string): string {
+
+    return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): string[] {
