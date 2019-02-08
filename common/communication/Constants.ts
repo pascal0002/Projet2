@@ -70,4 +70,7 @@ export class ClientConstants {
     static HEIGHT_OFFSET: number = 22;
     static BITS_PER_PIXEL_OFFSET: number = 28;
     static PIXEL_OFFSET: number = 10;
+
+    static CIRCLE_DEGREES_NB: number = 360;
+    static COLOR_PARAMETER_MAX_VALUE: number = 255;
 }
