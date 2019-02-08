@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core";
 import * as THREE from "three";
+import {ClientConstants} from "../../../../common/communication/Constants";
 import { OpenSceneConstructorService } from "./open-scene-constructor.service";
 
 @Component({
@@ -24,11 +25,10 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
 
   public makeScene(): void {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xe8ffff);
-    this.camera = new THREE.PerspectiveCamera(70, this.canvas.clientWidth / this.canvas.clientHeight, 1, 1000);
-    this.camera.position.x = 0;
-    this.camera.position.y = 0;
-    this.camera.position.z = 100;
+    this.scene.background = new THREE.Color(ClientConstants.BACKGROUND_COLOR);
+    this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, this.canvas.clientWidth / this.canvas.clientHeight,
+                                              1, ClientConstants.CAMERA_RENDER_DISTANCE);
+    this.camera.position.z = ClientConstants.Z_CAMERA_POSITION;
     this.glRenderer = new THREE.WebGLRenderer({canvas: this.canvas, antialias: true});
   }
 

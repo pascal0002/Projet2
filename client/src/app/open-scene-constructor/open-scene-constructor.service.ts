@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import * as THREE from "three";
 import {ClientConstants} from "../../../../common/communication/Constants";
 
@@ -11,7 +11,8 @@ export class OpenSceneConstructorService {
 
   public makeObjects(scene: THREE.Scene): void {
 
-    const numberOfObjects: number = 1; // Math.round(this.getRandomNumber() * 190) + 10;
+    const numberOfObjects: number = Math.round(this.getRandomNumber() * (ClientConstants.MAX_OBJECTS_NB - ClientConstants.MIN_OBJECTS_NB))
+    + ClientConstants.MIN_OBJECTS_NB;
 
     for (let i: number = 0; i < numberOfObjects; i++) {
       const material: THREE.MeshStandardMaterial = this.makeRandomColors();
@@ -31,44 +32,54 @@ export class OpenSceneConstructorService {
     const colorsGenerated: string = "rgb(" + red + "," + green + "," + blue + ")";
     const color: THREE.Color = new THREE.Color(colorsGenerated);
 
-    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.4, roughness: 0.5} );
+    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.1} );
   }
 
   private createObject(material: THREE.MeshStandardMaterial): THREE.Mesh {
-
     const referenceSize: number = 12;
-    const objectSize: number = (this.getRandomNumber() + 0.5) * referenceSize;
-    const objectToChoose: number = 2; // Math.floor(this.getRandomNumber() * 5);
-    let geometry: THREE.Geometry;
-
-    switch (objectToChoose) {
-        case 0:
-        geometry = new THREE.SphereGeometry(objectSize / 2, 15, 15);
-        break;
-        case 1:
-        geometry = new THREE.BoxGeometry(objectSize, objectSize, objectSize);
-        break;
-        // je suis rendu ici
-        case 2:
-        geometry = new THREE.ConeGeometry(objectSize, objectSize, 20);
-        break;
-        case 3:
-        geometry = new THREE.CylinderGeometry(objectSize, objectSize, objectSize, 20);
-        break;
-        case 4:
-        geometry = new THREE.ConeGeometry(objectSize, objectSize, 3);
-        break;
-        default:
-        geometry = new THREE.ConeGeometry(objectSize, objectSize, 3);
-    }
+    const objectDiameter: number = (this.getRandomNumber() + ClientConstants.HALF_VALUE) * referenceSize;
+    const objectHeight: number = (this.getRandomNumber() + ClientConstants.HALF_VALUE) * referenceSize;
+    const objectToChoose: number = Math.floor(this.getRandomNumber() * ClientConstants.OBJECT_TYPES_NB);
+    const geometry: THREE.Geometry = this.chooseObject(objectDiameter, objectHeight, objectToChoose);
 
     return new THREE.Mesh(geometry, material);
   }
 
+  private chooseObject(diameter: number, height: number, choice: number): THREE.Geometry {
+    let geometry: THREE.Geometry;
+    switch (choice) {
+        case ClientConstants.SPHERE:
+          geometry = new THREE.SphereGeometry(diameter * ClientConstants.HALF_VALUE,
+                                              ClientConstants.RADIAL_PRECISION, ClientConstants.RADIAL_PRECISION);
+          break;
+        case ClientConstants.CUBE:
+          geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
+          break;
+        case ClientConstants.CYLINDER:
+          geometry = new THREE.CylinderGeometry(diameter * ClientConstants.HALF_VALUE, diameter * ClientConstants.HALF_VALUE,
+                                                height, ClientConstants.RADIAL_PRECISION);
+          break;
+        case ClientConstants.CONE:
+          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.RADIAL_PRECISION);
+          break;
+        case ClientConstants.PYRAMID:
+          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.PYRAMID_BASE_SIDES_NB);
+          break;
+        default:
+          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.PYRAMID_BASE_SIDES_NB);
+    }
+
+    return geometry;
+  }
+
   private translateObject(object: THREE.Mesh): void {
-    const xPosition: number = Math.round(this.getRandomNumber() * 180) - 90;
-    const yPosition: number = Math.round(this.getRandomNumber() * 80) - 40;
-    const zPosition: number = Math.round(this.getRandomNumber() * 60) - 30;
+    const xPosition: number = Math.round(this.getRandomNumber() * ClientConstants.X_OBJECT_DISPERSION)
+                              - ClientConstants.X_OBJECT_DISPERSION * ClientConstants.HALF_VALUE;
+    const yPosition: number = Math.round(this.getRandomNumber() * ClientConstants.Y_OBJECT_DISPERSION)
+                              - ClientConstants.Y_OBJECT_DISPERSION * ClientConstants.HALF_VALUE;
+    const zPosition: number = Math.round(this.getRandomNumber() * ClientConstants.Z_OBJECT_DISPERSION)
+                              - ClientConstants.Z_OBJECT_DISPERSION * ClientConstants.HALF_VALUE;
+
     object.position.set(xPosition, yPosition, zPosition);
   }
 
@@ -79,9 +90,12 @@ export class OpenSceneConstructorService {
   }
 
   private addLighting(scene: THREE.Scene): void {
-    const light: THREE.AmbientLight = new THREE.AmbientLight(0xffffff, 0.75);
+    const light: THREE.AmbientLight
+    = new THREE.AmbientLight(ClientConstants.AMBIENT_LIGHT_COLOR, ClientConstants.AMBIENT_LIGHT_INTENSITY);
+    const directionalLight: THREE.DirectionalLight
+    = new THREE.DirectionalLight(ClientConstants.DIRECTIONAL_LIGHT_COLOR, ClientConstants.DIRECTIONAL_LIGHT_INTENSITY);
+
     scene.add(light);
-    const directionalLight: THREE.DirectionalLight = new THREE.DirectionalLight(0x333333, 5);
     scene.add(directionalLight);
   }
 

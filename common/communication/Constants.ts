@@ -71,6 +71,34 @@ export class ClientConstants {
     static BITS_PER_PIXEL_OFFSET: number = 28;
     static PIXEL_OFFSET: number = 10;
 
-    static CIRCLE_DEGREES_NB: number = 360;
+    static CAMERA_FIELD_OF_VIEW: number = 85;
+    static CAMERA_RENDER_DISTANCE: number = 500;
+    static Z_CAMERA_POSITION: number = 100;
+    static BACKGROUND_COLOR: number = 0xe8ffff;
+
+    static MIN_OBJECTS_NB: number = 10;
+    static MAX_OBJECTS_NB: number = 200;
+
     static COLOR_PARAMETER_MAX_VALUE: number = 255;
+    static RADIAL_PRECISION: number = 20;
+    static REFERENCE_SIZE: number = 12;
+    static HALF_VALUE: number = 0.5;
+
+    static OBJECT_TYPES_NB: number = 5;
+    static SPHERE: number = 0;
+    static CUBE: number = 1;
+    static CYLINDER: number = 2;
+    static CONE: number = 3;
+    static PYRAMID: number = 4;
+    static PYRAMID_BASE_SIDES_NB: number = 3;
+
+    static X_OBJECT_DISPERSION: number = 240;
+    static Y_OBJECT_DISPERSION: number = 120;
+    static Z_OBJECT_DISPERSION: number = 60;
+    static CIRCLE_DEGREES_NB: number = 360;
+    
+    static AMBIENT_LIGHT_INTENSITY: number = 0.75;
+    static DIRECTIONAL_LIGHT_INTENSITY: number = 5;
+    static AMBIENT_LIGHT_COLOR: number = 0xffffff;
+    static DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
 }
