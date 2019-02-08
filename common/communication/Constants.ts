@@ -96,7 +96,7 @@ export class ClientConstants {
     static Y_OBJECT_DISPERSION: number = 120;
     static Z_OBJECT_DISPERSION: number = 60;
     static CIRCLE_DEGREES_NB: number = 360;
-    
+
     static AMBIENT_LIGHT_INTENSITY: number = 0.75;
     static DIRECTIONAL_LIGHT_INTENSITY: number = 5;
     static AMBIENT_LIGHT_COLOR: number = 0xffffff;

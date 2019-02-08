@@ -1,5 +1,6 @@
+// tslint:disable:no-any
+import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { OpenSceneConstructorComponent } from "./open-scene-constructor.component";
 
 describe("OpenSceneConstructorComponent", () => {
@@ -10,7 +11,8 @@ describe("OpenSceneConstructorComponent", () => {
     TestBed.configureTestingModule({
       declarations: [ OpenSceneConstructorComponent ],
     })
-    .compileComponents();
+    .compileComponents()
+    .catch((err: any) => new ErrorHandler());
   }));
 
   beforeEach(() => {
