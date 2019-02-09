@@ -3,14 +3,14 @@ import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
-import { FormValidatorService } from "../services/form-validator.service";
+import { FormValidatorService2D } from "../services/form-validator-2D.service";
 import { GameCardsService } from "../services/game-cards.service";
 import Types from "../types";
 
 @injectable()
 export class GameCardsController {
 
-    public constructor(@inject(Types.FormValidatorService) private formValidatorService: FormValidatorService,
+    public constructor(@inject(Types.FormValidator2DService) private formValidator2DService: FormValidatorService2D,
                        @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
                        @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
 
@@ -18,7 +18,7 @@ export class GameCardsController {
         const router: Router = Router();
 
         router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
-            this.formValidatorService.validateForm(req.body) ?
+            this.formValidator2DService.validateForm(req.body) ?
                 this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
                     .then((image: IBitmapImage) => {
                         if (this.gameCardsService.validateDifferencesImage(image)) {
