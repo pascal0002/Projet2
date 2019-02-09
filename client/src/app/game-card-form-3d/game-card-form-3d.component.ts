@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { AbstractControl, FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
+import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
+import { FormHandler3DService } from "./form-handler-3d.service";
 
 @Component({
   selector: "app-game-card-form-3d",
@@ -14,7 +14,7 @@ export class GameCardForm3DComponent implements OnInit {
   public form3DGroup: FormGroup;
   public objectTypes: string[];
 
-  public constructor(private http: HttpClient) {
+  public constructor(private formHandler3DService: FormHandler3DService) {
     this.objectTypes = ClientConstants.OBJECT_TYPES;
   }
 
@@ -42,26 +42,8 @@ export class GameCardForm3DComponent implements OnInit {
     });
   }
 
-  public requireCheckboxesToBeCheckedValidator(minChecked: number = 1): ValidatorFn {
-    return (formGroup: FormGroup) => {
-      let checked: number = 0;
-
-      Object.keys(formGroup.controls).forEach((key) => {
-        const control: AbstractControl = formGroup.controls[key];
-
-        if (control.value === true) {
-          checked++;
-        }
-      });
-
-      if (checked < minChecked) {
-        return {
-          requireCheckboxesToBeChecked: true,
-        };
-      }
-
-      return null;
-    };
+  public requireCheckboxesToBeCheckedValidator(): ValidatorFn {
+    return this.formHandler3DService.getValidatorFunction();
   }
 
   public get3DFormInfo(): IFormInfo3D {
@@ -82,9 +64,7 @@ export class GameCardForm3DComponent implements OnInit {
 
     this.closeForm();
 
-    return new Promise<IFormInfo3D>(() => {
-      this.http.post<IFormInfo3D>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, FORM_INFO).toPromise();
-    });
+    return this.formHandler3DService.send3DFormInfo(FORM_INFO);
   }
 
   public resetInputValues(): void {

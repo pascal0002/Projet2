@@ -76,6 +76,7 @@ export class ClientConstants {
     //For the 3D form 
     static MAX_NUMBER_OF_OBJECTS: number = 200;
     static MIN_NUMBER_OF_OBJECTS: number = 10;
+    static MIN_NUMBER_OF_CHECKED_CHECKBOXES: number = 1;
     static OBJECT_TYPES: string[] = [
         "Formes géométriques",
         "Forêt",
