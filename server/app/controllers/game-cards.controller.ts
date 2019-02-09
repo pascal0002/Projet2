@@ -3,14 +3,16 @@ import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
-import { FormValidatorService2D } from "../services/form-validator-2D.service";
+import { FormValidator2DService } from "../services/form-validator-2D.service";
+import { FormValidator3DService } from "../services/form-validator-3D.service";
 import { GameCardsService } from "../services/game-cards.service";
 import Types from "../types";
 
 @injectable()
 export class GameCardsController {
 
-    public constructor(@inject(Types.FormValidator2DService) private formValidator2DService: FormValidatorService2D,
+    public constructor(@inject(Types.FormValidator2DService) private formValidator2DService: FormValidator2DService,
+                       @inject(Types.FormValidator3DService) private formValidator3DService: FormValidator3DService,
                        @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
                        @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
 
@@ -33,7 +35,10 @@ export class GameCardsController {
         });
 
         router.post("/info_3D_game", (req: Request, res: Response, next: NextFunction) => {
-            console.log(req.body); // Containes the 3D form info.
+            this.formValidator3DService.validateForm(req.body) ?
+            console.log(req.body)
+            :
+            res.status(ServerConstants.ERROR).send("Les informations envoyées ne sont pas valides!");
          });
 
         return router;

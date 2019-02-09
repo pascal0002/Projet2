@@ -52,9 +52,9 @@ export class GameCardForm3DComponent implements OnInit {
       gameName: this.form3DGroup.controls.cardName.value,
       objectType: this.form3DGroup.controls.optionMenu.value,
       numberOfObjects: this.form3DGroup.controls.numberOfObjects.value,
-      addObjects: this.form3DGroup.controls.checkBoxGroup.value.addCheckBox,
-      deleteObjects: this.form3DGroup.controls.checkBoxGroup.value.deleteCheckBox,
-      modifyObjects: this.form3DGroup.controls.checkBoxGroup.value.modifyCheckBox,
+      addObjects: (this.form3DGroup.controls.checkBoxGroup.value.addCheckBox) ? true : false,
+      deleteObjects: (this.form3DGroup.controls.checkBoxGroup.value.deleteCheckBox) ? true : false,
+      modifyObjects: (this.form3DGroup.controls.checkBoxGroup.value.modifyCheckBox) ? true : false,
     };
   }
 

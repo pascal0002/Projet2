@@ -4,7 +4,7 @@ import {ClientConstants, ServerConstants, } from "../../../common/communication/
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 
 @injectable()
-export class FormValidatorService3D {
+export class FormValidator3DService {
     public validateForm(formInfo: IFormInfo3D): boolean {
         return (
                    this.validateGameName(formInfo.gameName)   &&

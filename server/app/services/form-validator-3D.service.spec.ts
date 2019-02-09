@@ -2,14 +2,14 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
-import { FormValidatorService3D } from "./form-validator-3D.service";
+import { FormValidator3DService } from "./form-validator-3D.service";
 
-let formValidatorService: FormValidatorService3D;
+let formValidatorService: FormValidator3DService;
 
 describe("form-validator-service-3D", () => {
 
     beforeEach( () => {
-        formValidatorService = new FormValidatorService3D();
+        formValidatorService = new FormValidator3DService();
     });
 
     it("should return false if the length of the game name is 0", (done: Function) => {

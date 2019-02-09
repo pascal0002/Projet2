@@ -5,7 +5,7 @@ import {ServerConstants} from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 
 @injectable()
-export class FormValidatorService2D {
+export class FormValidator2DService {
     public validateForm(formInfo: IFormInfo2D): boolean {
         return (
                    this.validateGameName(formInfo.gameName)   &&

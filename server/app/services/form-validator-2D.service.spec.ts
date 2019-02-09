@@ -3,9 +3,9 @@
 import { expect } from "chai";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
-import { FormValidatorService2D } from "./form-validator-2D.service";
+import { FormValidator2DService } from "./form-validator-2D.service";
 
-let formValidatorService: FormValidatorService2D;
+let formValidatorService: FormValidator2DService;
 
 const TEST_VALID_IMAGE: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "bmp", pixels: []};
 let testInvalidImage: IBitmapImage = {height: 0, width: 0, bitDepth: 0, fileName: "", pixels: []};
@@ -14,7 +14,7 @@ let testFormInfo: IFormInfo2D = {gameName: "", originalImage: testInvalidImage, 
 describe("form-validator-service-2D", () => {
 
     beforeEach( () => {
-        formValidatorService = new FormValidatorService2D();
+        formValidatorService = new FormValidator2DService();
     });
 
     describe("validateGameName", () => {
