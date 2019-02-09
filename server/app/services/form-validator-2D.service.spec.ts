@@ -11,7 +11,7 @@ const TEST_VALID_IMAGE: IBitmapImage = {height: 480, width: 640, bitDepth: 24, f
 let testInvalidImage: IBitmapImage = {height: 0, width: 0, bitDepth: 0, fileName: "", pixels: []};
 let testFormInfo: IFormInfo2D = {gameName: "", originalImage: testInvalidImage, modifiedImage: testInvalidImage};
 
-describe("form-validator-service", () => {
+describe("form-validator-service-2D", () => {
 
     beforeEach( () => {
         formValidatorService = new FormValidatorService2D();
