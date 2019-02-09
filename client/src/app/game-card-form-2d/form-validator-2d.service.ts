@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import {ClientConstants} from "../../../../common/communication/Constants";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
 
@@ -14,18 +14,20 @@ export class FormValidator2dService {
   public constructor(private http: HttpClient) { }
 
   public openForm(): void {
-
-    const form2D: HTMLElement | null = document.getElementById("formWindow");
+/*
+    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
     const pageMask: HTMLElement | null = document.getElementById("pageMask");
 
     if (form2D && pageMask) {
+      console.log("test");
+
       form2D.style.display = "block";
       pageMask.style.display = "block";
-    }
+    }*/
   }
 
   public closeForm(): void {
-    const form2D: HTMLElement | null = document.getElementById("formWindow");
+    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
     const pageMask: HTMLElement | null = document.getElementById("pageMask");
 
     if (form2D && pageMask) {
@@ -50,7 +52,7 @@ export class FormValidator2dService {
     return (extension.split(".").pop() === "bmp");
   }
 
-  public async generateGameCard(formInfo: IFormInfo): Promise<GameCard> {
+  public async generateGameCard(formInfo: IFormInfo2D): Promise<GameCard> {
     return new Promise<GameCard>(() => {
       this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()

@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DifferenceCounterService } from "./difference-counter.service";
@@ -29,7 +29,7 @@ export class GameCardsService {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public generateGameCard(formInfo: IFormInfo): GameCard {
+  public generateGameCard(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
