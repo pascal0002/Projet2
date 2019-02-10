@@ -1,4 +1,5 @@
 import { Container } from "inversify";
+import { ModifiedImg, OriginalImg } from "../mock/image-mock";
 import { Application } from "./app";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
@@ -29,4 +30,8 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 container.bind(Types.DifferenceIdentificator2DService).to(DifferenceIdentificator2DService);
+
+container.bind(Types.OriginalImg).to(OriginalImg);
+container.bind(Types.ModifiedImg).to(ModifiedImg);
+
 export { container };

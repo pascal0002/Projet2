@@ -12,4 +12,7 @@ export default {
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
         DifferenceIdentificator2DService: Symbol("DifferenceIdentificator2DService"),
+
+        OriginalImg: Symbol("OriginalImg"),
+        ModifiedImg: Symbol("ModifiedImg"),
 };

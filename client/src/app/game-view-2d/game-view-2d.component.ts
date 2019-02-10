@@ -46,14 +46,6 @@ export class GameView2DComponent implements AfterViewInit {
   public clickImage(event: MouseEvent): void {
     this.clickPosition = [event.offsetX, event.offsetY];
     this.sendClickPosition(this.clickPosition);
-   /* console.log("----Click event!----");
-    console.log("Client coordinates: ");
-    console.log(event.clientX);
-    console.log(event.clientY);
-    console.log("Offset coordinates: ");
-    console.log(event.offsetX);
-    console.log(event.offsetY);
-    console.log("---------------------");*/
   }
 
   public sendClickPosition(mousePos: Array<number>): void {
