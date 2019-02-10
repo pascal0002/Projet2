@@ -22,11 +22,15 @@ export class ModifiedImg {
     public constructor() {
         for (let i: number = 0; i < (480); i++) {
             for (let j: number = 0; j < 640; j++) {
-                if (i < 100 && j < 100 ) {
+                if ( i > 100 && i < 150 && j > 100 && j < 150 ) {
                     this.pixels.push(0);
                     this.pixels.push(0);
                     this.pixels.push(0);
-                }  else {
+                } else if ( i > 200 && i < 350 && j > 200 && j < 350) {
+                    this.pixels.push(0);
+                    this.pixels.push(0);
+                    this.pixels.push(0);
+                } else {
                     this.pixels.push(255);
                     this.pixels.push(255);
                     this.pixels.push(255);
