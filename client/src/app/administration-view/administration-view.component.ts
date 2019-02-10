@@ -1,8 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import {GameCard} from "../../../../common/communication/game-card";
-import {TWO_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/2d-game-card-mock-list";
-import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-game-card-mock-list";
 import {FormValidator2dService} from "../game-card-form-2d/form-validator-2d.service";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Component({
   selector: "app-administration-view",
@@ -13,16 +12,42 @@ import {FormValidator2dService} from "../game-card-form-2d/form-validator-2d.ser
               "../list-of-games-view/list-of-games-view.component.css",
              ],
 })
-export class AdministrationViewComponent implements OnInit {
 
-  public constructor(private formValidator2D: FormValidator2dService) {
-    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
-  }
+export class AdministrationViewComponent {
 
   public listes: GameCard[][];
+
+  public constructor(private formValidator2D: FormValidator2dService, private listOfGamesService: ListOfGamesService) {
+    this.listes = [];
+    this.getGamesLists();
+  }
+
+  private getGamesLists(): void {
+    this.getGamesList2D();
+    this.getGamesList3D();
+  }
+
+  private getGamesList2D(): void {
+    this.listOfGamesService.getGamesLists2D()
+    .then(
+      (gameCards) => { this.listes.push(gameCards); },
+    )
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
+  }
+
+  private getGamesList3D(): void {
+    this.listOfGamesService.getGamesLists3D()
+    .then(
+      (gameCards) => { this.listes.push(gameCards); },
+    )
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
+  }
 
   public openForm2D(): void {
     this.formValidator2D.openForm();
   }
-  public ngOnInit(): void {/**/}
 }

@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import {GameCard} from "../../../../common/communication/game-card";
+import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "./list-of-games.service";
 
 @Component({
