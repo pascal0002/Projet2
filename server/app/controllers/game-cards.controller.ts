@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
+import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
-import { GameCard } from "../../../common/communication/game-card";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { FormValidatorService } from "../services/form-validator.service";
 import { GameCardsService } from "../services/game-cards.service";
@@ -20,16 +20,16 @@ export class GameCardsController {
 
         router.get("/2D_cards", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards2D()
-                .then((gameCards: GameCard[]) => {
-                    res.json(gameCards);
+                .then((gameCardsDB: mongoose.Document[]) => {
+                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB));
                 })
                 .catch((err: Error) => console.error(err));
         });
 
         router.get("/3D_cards", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards3D()
-                .then((gameCards: GameCard[]) => {
-                    res.json(gameCards);
+                .then((gameCardsDB: mongoose.Document[]) => {
+                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB));
                 })
                 .catch((err: Error) => console.error(err));
         });

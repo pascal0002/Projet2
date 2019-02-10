@@ -30,39 +30,29 @@ export class GameCardsService {
       });
   }
 
-  public async getGameCards2D(): Promise<GameCard[]> {
-    return new Promise((resolve: Function) => {
-      resolve(this.databaseService.getAll(gameCard2D)
-        .then((gameCardsDB: mongoose.Document[]) => {
-          return this.convertDBGameCards(gameCardsDB);
-        }));
-    });
+  public async getGameCards2D(): Promise<mongoose.Document[]> {
+    return this.databaseService.getAll(gameCard2D);
   }
 
-  public async getGameCards3D(): Promise<GameCard[]> {
-    return new Promise((resolve: Function) => {
-      resolve(this.databaseService.getAll(gameCard3D)
-        .then((gameCardsDB: mongoose.Document[]) => {
-          return this.convertDBGameCards(gameCardsDB);
-        }));
-    });
+  public async getGameCards3D(): Promise<mongoose.Document[]> {
+    return this.databaseService.getAll(gameCard3D);
   }
 
-  private convertDBGameCards(gameCardsDB: mongoose.Document[]): GameCard[] {
+  public convertDBGameCards(gameCardsDB: mongoose.Document[]): GameCard[] {
     const gameCards: GameCard[] = [];
     gameCardsDB.forEach((gameCard: mongoose.Document) => {
       gameCards.push(this.convertDBGameCard(gameCard));
     });
 
     return gameCards;
-  }
+  } 
 
   private convertDBGameCard(gameCard: mongoose.Document): GameCard {
     return { title: gameCard.toJSON().title,
              originalImagePath: gameCard.toJSON().originalImagePath,
              modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
              bestTimeSolo: gameCard.toJSON().bestTimeSolo,
-             bestTime1v1: gameCard.toJSON().bestTime1v1, };
+             bestTime1v1: gameCard.toJSON().bestTime1v1, }; 
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
