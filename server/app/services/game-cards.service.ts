@@ -34,12 +34,7 @@ export class GameCardsService {
     return new Promise((resolve: Function) => {
       resolve(this.databaseService.getAll(gameCard2D)
         .then((gameCardsDB: mongoose.Document[]) => {
-          const gameCards: GameCard[] = [];
-          gameCardsDB.forEach((gameCard: mongoose.Document) => {
-            gameCards.push(this.convertDBGameCard(gameCard));
-          });
-
-          return gameCards;
+          return this.convertDBGameCards(gameCardsDB);
         }));
     });
   }
@@ -48,14 +43,18 @@ export class GameCardsService {
     return new Promise((resolve: Function) => {
       resolve(this.databaseService.getAll(gameCard3D)
         .then((gameCardsDB: mongoose.Document[]) => {
-          const gameCards: GameCard[] = [];
-          gameCardsDB.forEach((gameCard: mongoose.Document) => {
-            gameCards.push(this.convertDBGameCard(gameCard));
-          });
-
-          return gameCards;
+          return this.convertDBGameCards(gameCardsDB);
         }));
     });
+  }
+
+  private convertDBGameCards(gameCardsDB: mongoose.Document[]): GameCard[] {
+    const gameCards: GameCard[] = [];
+    gameCardsDB.forEach((gameCard: mongoose.Document) => {
+      gameCards.push(this.convertDBGameCard(gameCard));
+    });
+
+    return gameCards;
   }
 
   private convertDBGameCard(gameCard: mongoose.Document): GameCard {
