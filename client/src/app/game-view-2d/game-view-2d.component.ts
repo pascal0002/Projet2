@@ -93,7 +93,7 @@ export class GameView2DComponent implements OnInit, AfterViewInit {
       return;
     }
     this.timeProgressView["applyOptions"]();
-    this.targetTime = this.miscStringToTime(this.originalImage.bestTimeSolo[this.cycle]);
+    this.targetTime = this.miscStringToTime(this.originalImage.bestTimeSolo[this.cycle]) - this.timer;
     this.bestScoreTimerLoopSub = this.startBestScoreTimer();
   }
 
@@ -109,8 +109,9 @@ export class GameView2DComponent implements OnInit, AfterViewInit {
   }
 
   public miscStringToTime(time: string): number {
-    const seconds: number = parseInt(time.substring(3, 5), 10);
-    const minutes: number = parseInt(time.substring(0, 2), 10);
+    const i: number = time.indexOf(":");
+    const seconds: number = parseInt(time.substring(i + 1, i + 3), 10);
+    const minutes: number = parseInt(time.substring(0, i), 10);
     return seconds + minutes * 60;
   }
 

@@ -122,6 +122,54 @@ header #chrono-container #hourglass{
 }
 
 footer{
-  background-color: white;
+  margin-top: 20px;
   height: 20%;
+}
+
+footer #console-header{
+  width: 100%;
+  background-color: white;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+footer #console{
+  width: 100%;
+  height: 100%;
+
+  color: white;
+  font-size: 16px;
+  background-color: #0c1e36;
+
+  overflow-y: scroll;
+
+  border: none;
+  border-radius: 10px;
+  border-top: #13315c solid 2px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  resize: none;
+}
+
+/*Scrollbar*/
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f138;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
