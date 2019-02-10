@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, Component } from "@angular/core";
+import { IClickCoordinates } from "../../../../common/communication/ClickCoordinates";
 import {ClientConstants} from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
@@ -14,10 +15,9 @@ export class GameView2DComponent implements AfterViewInit {
 
   public game2d: GameCard;
   public ctx: CanvasRenderingContext2D | null;
-  public clickPosition: Array<number>;
 
   public constructor(private http: HttpClient) {
-    this.game2d = TWO_DIMENSION_GAME_CARD_LIST[0];
+    this.game2d = TWO_DIMENSION_GAME_CARD_LIST[3];
   }
 
   public ngAfterViewInit(): void {
@@ -43,13 +43,22 @@ export class GameView2DComponent implements AfterViewInit {
  //   });
   }
 
-  public clickImage(event: MouseEvent): void {
-    this.clickPosition = [event.offsetX, event.offsetY];
-    this.sendClickPosition(this.clickPosition);
+  public getClickCoordinates(event: MouseEvent): void {
+    const clickCoordinates: IClickCoordinates = {
+      xPos: event.offsetX,
+      yPos: this.getCorrectYPos(event.offsetY),
+    };
+    this.sendClickPosition(clickCoordinates);
+    console.log("xPos : " + clickCoordinates.xPos + ", yPos : " + clickCoordinates.yPos);
+
   }
 
-  public sendClickPosition(mousePos: Array<number>): void {
-    this.http.post<Array<number>>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
+  public getCorrectYPos(yPos: number): number {
+    return Math.abs(yPos - ClientConstants.VALID_BMP_HEIGHT);
+  }
+
+  public sendClickPosition(mousePos: IClickCoordinates): void {
+    this.http.post<IClickCoordinates>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
     .toPromise()
     .then()
     .catch(

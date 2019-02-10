@@ -1,7 +1,15 @@
-<div class="gameCardInfo" >
+<div class="gameCardInfo">
     <!--<div class=gameCard>
         <img src="{{game2d.imageName}}" id="myImage" (click)="clickImage()" height="480px" width="640px">
     </div>-->
 
-    <div id="box" (click)="clickImage($event)"></div>
+    <div class="imageContainer">
+        <div id="box" style="transform: translate(-50px,43px);" >
+            <img src="{{game2d.imageName}}" (click)="getClickCoordinates($event)" id="myImage" height="480px" width="640px">
+        </div>
+
+        <div id="box" style="transform: translate(240px,43px);">
+            <img src="{{game2d.modifiedImageName}}" (click)="getClickCoordinates($event)" id="myImage" height="480px" width="640px">
+        </div>
+    </div>
 </div>

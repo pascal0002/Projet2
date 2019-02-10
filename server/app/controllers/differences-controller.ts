@@ -18,7 +18,7 @@ export class DifferencesController {
         });
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
             this.differenceIdentificator2DService.clickPosition = req.body;
-            this.differenceIdentificator2DService.confirmIdentification (
+            this.differenceIdentificator2DService.confirmDifference (
                 this.differenceIdentificator2DService.clickPosition,
                 this.differenceIdentificator2DService.differenceImgTest,
                 this.differenceIdentificator2DService.differenceImgTest,

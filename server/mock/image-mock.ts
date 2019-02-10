@@ -27,9 +27,9 @@ export class ModifiedImg {
                     this.pixels.push(0);
                     this.pixels.push(0);
                 }  else {
-                    this.pixels.push(50);
-                    this.pixels.push(205);
-                    this.pixels.push(50);
+                    this.pixels.push(255);
+                    this.pixels.push(255);
+                    this.pixels.push(255);
                 }
             }
         }
