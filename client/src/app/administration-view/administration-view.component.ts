@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import {GameCard} from "../../../../common/communication/game-card";
-import {FormValidator2dService} from "../game-card-form-2d/form-validator-2d.service";
+import { ClientConstants } from "../../../../common/communication/Constants";
+import { GameCard } from "../../../../common/communication/game-card";
+import { FormValidator2dService } from "../game-card-form-2d/form-validator-2d.service";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Component({
@@ -18,7 +19,7 @@ export class AdministrationViewComponent {
   public listes: GameCard[][];
 
   public constructor(private formValidator2D: FormValidator2dService, private listOfGamesService: ListOfGamesService) {
-    this.listes = [];
+    this.listes = [[], []];
     this.getGamesLists();
   }
 
@@ -29,20 +30,16 @@ export class AdministrationViewComponent {
 
   private getGamesList2D(): void {
     this.listOfGamesService.getGamesLists2D()
-    .then(
-      (gameCards) => { this.listes.push(gameCards); },
-    )
-    .catch(
+    .subscribe(
+      (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
       (err) => {console.error("erreur :", err); },
     );
   }
 
   private getGamesList3D(): void {
     this.listOfGamesService.getGamesLists3D()
-    .then(
-      (gameCards) => { this.listes.push(gameCards); },
-    )
-    .catch(
+    .subscribe(
+      (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
       (err) => {console.error("erreur :", err); },
     );
   }

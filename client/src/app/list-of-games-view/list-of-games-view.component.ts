@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "./list-of-games.service";
 
@@ -14,7 +15,7 @@ export class ListOfGamesViewComponent {
   public listes: GameCard[][];
 
   public constructor(private listOfGamesService: ListOfGamesService) {
-    this.listes = [];
+    this.listes = [[], []];
     this.getGamesLists();
   }
 
@@ -25,20 +26,16 @@ export class ListOfGamesViewComponent {
 
   private getGamesList2D(): void {
     this.listOfGamesService.getGamesLists2D()
-    .then(
-      (gameCards) => { this.listes.push(gameCards); },
-    )
-    .catch(
+    .subscribe(
+      (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
       (err) => {console.error("erreur :", err); },
     );
   }
 
   private getGamesList3D(): void {
     this.listOfGamesService.getGamesLists3D()
-    .then(
-      (gameCards) => { this.listes.push(gameCards); },
-    )
-    .catch(
+    .subscribe(
+      (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
       (err) => {console.error("erreur :", err); },
     );
   }

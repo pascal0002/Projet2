@@ -55,7 +55,7 @@ export class FormValidator2dService {
       .toPromise()
       .then(
         () => { this.closeForm2D(); },
-        (res) => { alert(res.error); },
+        (gameCard) => { alert(gameCard.error); },
       )
       .catch(
         (err) => {console.error("erreur :", err); },
