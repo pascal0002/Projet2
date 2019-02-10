@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
+import { NgCircleProgressModule } from "ng-circle-progress";
 import { BitmapReaderService } from "../app/game-card-form-2d/bitmap-reader.service";
 import { FormValidator2dService } from "../app/game-card-form-2d/form-validator-2d.service";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
+    NgCircleProgressModule.forRoot(),
   ],
   providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService],
   bootstrap: [AppComponent],

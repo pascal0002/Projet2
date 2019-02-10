@@ -1,9 +1,10 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <div id="pageMask"></div>
 
 <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
-<ng-template #thenBlock><div style="height: 120px;"></div></ng-template>
+<ng-template #thenBlock>
+  <div style="height: 120px;"></div>
+</ng-template>
 <div class="gameCardsWindowWrapper">
   <div class="gameCardsWindow">
     <div class="titleWrapper">
@@ -11,57 +12,56 @@
       <div class="title">Point de vue libre (3D)</div>
     </div>
     <div class="gameCardsWrapper">
-        <div class="gameCardsContainer" *ngFor="let string of listes; let i = index">
-            <div *ngFor="let gameCard of listes[i]">
-                <div class="gameCard">
-                    <div class="gameCardTitle"> {{gameCard.title}}</div>
-                    <div class="gameCardInfo">
-                        <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
-                        <div class="gameCardMode">Solo</div>
-                        <div class="gameCardMode">1VS1</div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: gold;"></i>
-                            {{gameCard.bestTimeSolo[0]}}
-                        </div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: gold;"></i>
-                            {{gameCard.bestTime1v1[0]}}</div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: silver;"></i>
-                            {{gameCard.bestTimeSolo[1]}}</div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: silver;"></i>
-                            {{gameCard.bestTime1v1[1]}}</div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{gameCard.bestTimeSolo[2]}}</div>
-                        <div class="gameCardScore">
-                            <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{gameCard.bestTime1v1[2]}}</div>
-                        <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
-                        <ng-template #thenBlock>
-                            <div>
-                                <div class="adminGameCardButton button">Supprimer</div>
-                            </div>
-                            <div>
-                                <div class="adminGameCardButton button">Réinitialiser</div>
-                            </div>
-                        </ng-template>
-
-                        <ng-template #elseBlock>
-                            <div>
-                                <div (click)="connect()" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button">Jouer</div>
-                            </div>
-                            <div>
-                                <div class="gameCardButton button">Créer</div>
-                            </div>
-                        </ng-template>
-                        
-                    </div>
+      <div class="gameCardsContainer" *ngFor="let string of listes; let i = index">
+        <div *ngFor="let gameCard of listes[i]">
+          <div class="gameCard">
+            <div class="gameCardTitle"> {{gameCard.title}}</div>
+            <div class="gameCardInfo">
+              <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
+              <div class="gameCardMode">Solo</div>
+              <div class="gameCardMode">1VS1</div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: gold;"></i>
+                {{gameCard.bestTimeSolo[0]}}
+              </div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: gold;"></i>
+                {{gameCard.bestTime1v1[0]}}</div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: silver;"></i>
+                {{gameCard.bestTimeSolo[1]}}</div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: silver;"></i>
+                {{gameCard.bestTime1v1[1]}}</div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                {{gameCard.bestTimeSolo[2]}}</div>
+              <div class="gameCardScore">
+                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                {{gameCard.bestTime1v1[2]}}</div>
+              <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
+              <ng-template #thenBlock>
+                <div>
+                  <div class="adminGameCardButton button">Supprimer</div>
                 </div>
+                <div>
+                  <div class="adminGameCardButton button">Réinitialiser</div>
+                </div>
+              </ng-template>
+
+              <ng-template #elseBlock>
+                <div>
+                  <div (click)="connect()" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button"><i class="fas fa-user"></i> Jouer</div>
+                </div>
+                <div>
+                  <div class="gameCardButton button"><i class="fas fa-globe"></i> Créer</div>
+                </div>
+              </ng-template>
+
             </div>
+          </div>
         </div>
+      </div>
     </div>
   </div>
 </div>
-
