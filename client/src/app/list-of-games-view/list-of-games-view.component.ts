@@ -18,12 +18,12 @@ export class ListOfGamesViewComponent {
     this.getGamesLists();
   }
 
-  public getGamesLists(): void {
+  private getGamesLists(): void {
     this.getGamesList2D();
     this.getGamesList3D();
   }
 
-  public getGamesList2D(): void {
+  private getGamesList2D(): void {
     this.listOfGamesService.getGamesLists2D()
     .then(
       (gameCards) => { this.listes.push(gameCards); },
@@ -33,7 +33,7 @@ export class ListOfGamesViewComponent {
     );
   }
 
-  public getGamesList3D(): void {
+  private getGamesList3D(): void {
     this.listOfGamesService.getGamesLists3D()
     .then(
       (gameCards) => { this.listes.push(gameCards); },
