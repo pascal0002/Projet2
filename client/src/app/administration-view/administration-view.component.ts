@@ -19,29 +19,7 @@ export class AdministrationViewComponent {
   public listes: GameCard[][];
 
   public constructor(private formValidator2D: FormValidator2dService, private listOfGamesService: ListOfGamesService) {
-    this.listes = [[], []];
-    this.getGamesLists();
-  }
-
-  private getGamesLists(): void {
-    this.getGamesList2D();
-    this.getGamesList3D();
-  }
-
-  private getGamesList2D(): void {
-    this.listOfGamesService.getGamesLists2D()
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
-  }
-
-  private getGamesList3D(): void {
-    this.listOfGamesService.getGamesLists3D()
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
+    this.listes = listOfGamesService.listes;
   }
 
   public openForm2D(): void {

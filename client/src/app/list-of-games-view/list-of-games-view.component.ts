@@ -15,28 +15,7 @@ export class ListOfGamesViewComponent {
   public listes: GameCard[][];
 
   public constructor(private listOfGamesService: ListOfGamesService) {
-    this.listes = [[], []];
-    this.getGamesLists();
+    this.listes = this.listOfGamesService.listes;
   }
 
-  private getGamesLists(): void {
-    this.getGamesList2D();
-    this.getGamesList3D();
-  }
-
-  private getGamesList2D(): void {
-    this.listOfGamesService.getGamesLists2D()
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
-  }
-
-  private getGamesList3D(): void {
-    this.listOfGamesService.getGamesLists3D()
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
-  }
 }
