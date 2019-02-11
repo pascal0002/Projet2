@@ -51,7 +51,6 @@ export class GameCardsService {
     return { title: gameCard.toJSON().title,
              originalImagePath: gameCard.toJSON().originalImagePath,
              modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
-             differenceImagePixel: gameCard.toJSON().differenceImagePixel,
              bestTimeSolo: gameCard.toJSON().bestTimeSolo,
              bestTime1v1: gameCard.toJSON().bestTime1v1, };
   }
@@ -61,7 +60,7 @@ export class GameCardsService {
   }
 
   public addGameCard(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
-    const gameCard: GameCard = this.generateGameCard(formInfo, differenceImage);
+    const gameCard: GameCard = this.generateGameCard(formInfo);
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       originalImagePath: gameCard.originalImagePath,
@@ -75,13 +74,12 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public generateGameCard(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
+  public generateGameCard(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
       originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       modifiedImagePath: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
-      differenceImagePixel: differenceImage.pixels,
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
     };

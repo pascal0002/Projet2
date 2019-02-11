@@ -5,9 +5,7 @@ const gamecard2DSchema: mongoose.Schema = new mongoose.Schema({
 
     originalImagePath: String,
     modifiedImagePath: String,
-
     differenceImagePath: String,
-    differenceImagePixel: [Number],
 
     bestScoreSolo: [String, Number],
     bestScore1v1: [String, Number],

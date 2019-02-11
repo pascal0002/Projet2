@@ -76,7 +76,6 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                differenceImagePixel: [],
                 bestTimeSolo: [["user0", 210], ["user0", 210], ["user0", 210]],
                 bestTime1v1: [["user0", 150], ["user0", 150], ["user0", 150]],
             };
@@ -98,7 +97,6 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                differenceImagePixel: [],
                 bestTimeSolo: [["user999", 360], ["user999", 360], ["user999", 360]],
                 bestTime1v1: [["user999", 300], ["user999", 300], ["user999", 300]],
             };
@@ -121,7 +119,6 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                differenceImagePixel: [],
                 bestTimeSolo: [["user109", 226], ["user109", 240], ["user109", 253]],
                 bestTime1v1: [["user109", 286], ["user109", 300], ["user109", 313]],
             };
