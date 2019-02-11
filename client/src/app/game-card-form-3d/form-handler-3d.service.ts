@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 import { GameCard } from "../../../../common/communication/game-card";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Injectable({
   providedIn: "root",

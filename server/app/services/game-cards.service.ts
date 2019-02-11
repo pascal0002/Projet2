@@ -4,13 +4,13 @@ import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
+import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
-import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 
 @injectable()
 export class GameCardsService {
