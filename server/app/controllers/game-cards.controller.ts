@@ -42,20 +42,19 @@ export class GameCardsController {
                     .then((image: IBitmapImage) => {
                         if (this.gameCardsService.validateDifferencesImage(image)) {
                             this.bmpFileGeneratorService.generateBMPFiles(req.body, image);
-                            res.json(this.gameCardsService.addGameCard(req.body, image));
+                            res.json(this.gameCardsService.addGameCard2D(req.body, image));
                         } else {
                             res.status(ServerConstants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
                         }
                     })
                     .catch((err: Error) => console.error(err)) :
-                res.status(ServerConstants.ERROR).send("Les champs du formulaires doivent être valides");
+                res.status(ServerConstants.ERROR).send("Les informations envoyées ne sont pas valides!");
         });
 
         router.post("/info_3D_game", (req: Request, res: Response, next: NextFunction) => {
             this.formValidator3DService.validateForm(req.body) ?
-            console.log(req.body)
-            :
-            res.status(ServerConstants.ERROR).send("Les informations envoyées ne sont pas valides!");
+                res.json(this.gameCardsService.addGameCard3D(req.body)) :
+                res.status(ServerConstants.ERROR).send("Les informations envoyées ne sont pas valides!");
          });
 
         return router;

@@ -3,13 +3,15 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
+import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormHandler3DService {
 
-  public constructor(private http: HttpClient) { /**/}
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { /**/}
 
   public getValidatorFunction(): ValidatorFn {
     return (formGroup: FormGroup) => {
@@ -33,9 +35,17 @@ export class FormHandler3DService {
     };
   }
 
-  public send3DFormInfo(formInfo: IFormInfo3D): Promise<IFormInfo3D> {
-    return new Promise<IFormInfo3D>((resolve: Function) => {
-      resolve(this.http.post<IFormInfo3D>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo).toPromise());
+  public send3DFormInfo(formInfo: IFormInfo3D): Promise<GameCard> {
+    return new Promise<GameCard>(() => {
+      this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
+      .toPromise()
+      .then(
+        (gamecard) => { this.listOfGameService.addGameCard3D(gamecard); },
+        (gameCard) => { alert(gameCard.error); },
+      )
+      .catch(
+        (err) => {console.error("erreur :", err); },
+      );
     });
   }
 

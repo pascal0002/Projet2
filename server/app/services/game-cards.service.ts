@@ -10,6 +10,7 @@ import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
+import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 
 @injectable()
 export class GameCardsService {
@@ -59,14 +60,13 @@ export class GameCardsService {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public addGameCard(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
-    const gameCard: GameCard = this.generateGameCard(formInfo);
+  public addGameCard2D(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
+    const gameCard: GameCard = this.generateGameCard2D(formInfo);
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       originalImagePath: gameCard.originalImagePath,
       modifiedImagePath: gameCard.modifiedImagePath,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
-      differenceImagePixel: differenceImage.pixels,
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
     }));
@@ -74,7 +74,30 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public generateGameCard(formInfo: IFormInfo2D): GameCard {
+  public addGameCard3D(formInfo: IFormInfo3D): GameCard {
+    const gameCard: GameCard = this.generateGameCard3D(formInfo);
+    this.databaseService.add(new gameCard3D({
+      title: gameCard.title,
+      originalImagePath: gameCard.originalImagePath,
+      bestScoreSolo: gameCard.bestTimeSolo,
+      bestScore1v1: gameCard.bestTime1v1,
+    }));
+
+    return gameCard;
+  }
+
+  public generateGameCard3D(formInfo: IFormInfo3D): GameCard {
+
+    return {
+      title: formInfo.gameName,
+      originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
+      modifiedImagePath: "",
+      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+    };
+  }
+
+  public generateGameCard2D(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
