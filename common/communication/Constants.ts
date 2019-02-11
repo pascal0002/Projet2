@@ -6,9 +6,7 @@ export class ServerConstants {
     static MINIMAL_TIME_SOLO: number = 210;
     static MAXIMAL_TIME_SOLO: number = 360;
     static NUMBER_HIGH_SCORE: number = 3;
-    static SECOND_PER_MINUTE: number = 60;
     static MAXIMAL_USER_ID: number = 999;
-    static TWO_DIGIT: number = -2;
 
     static ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
     static MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
@@ -78,6 +76,11 @@ export class ClientConstants {
 
     static LIST_2D: number = 0;
     static LIST_3D: number = 1;
+
+    static SECOND_PER_MINUTE: number = 60;
+    static TWO_DIGIT: number = -2;
+    static USERNAME: number = 0;
+    static TIME: number = 1;
     
     //For the 3D form 
     static MAX_NUMBER_OF_OBJECTS: number = 200;

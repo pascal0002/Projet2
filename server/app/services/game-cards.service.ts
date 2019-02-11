@@ -119,16 +119,4 @@ export class GameCardsService {
   public getRandomNumber(): number {
     return Math.random();
   }
-
-  // TODO: deplacer cote client
-  // private convertTimeToMSSFormat(time: number): string {
-  //   const seconde: number = time % ServerConstants.SECOND_PER_MINUTE;
-  //   const minute: number = (time - seconde) / ServerConstants.SECOND_PER_MINUTE;
-
-  //   return `${minute}:${this.totwoDigitString(seconde)}`;
-  // }
-
-  // private totwoDigitString(initialNumber: number): string {
-  //   return ("0" + initialNumber).slice(ServerConstants.TWO_DIGIT);
-  // }
 }
