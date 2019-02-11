@@ -51,6 +51,7 @@ export class GameCardsService {
     return { title: gameCard.toJSON().title,
              originalImagePath: gameCard.toJSON().originalImagePath,
              modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
+             differenceImagePixel: gameCard.toJSON().differenceImagePixel,
              bestTimeSolo: gameCard.toJSON().bestTimeSolo,
              bestTime1v1: gameCard.toJSON().bestTime1v1, };
   }
@@ -59,13 +60,14 @@ export class GameCardsService {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public addGameCard(formInfo: IFormInfo2D, differenceImageFileName: string): GameCard {
-    const gameCard: GameCard = this.generateGameCard(formInfo);
+  public addGameCard(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
+    const gameCard: GameCard = this.generateGameCard(formInfo, differenceImage);
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       originalImagePath: gameCard.originalImagePath,
       modifiedImagePath: gameCard.modifiedImagePath,
-      differenceImagePath: this.generateDifferenceImagePath(differenceImageFileName),
+      differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
+      differenceImagePixel: differenceImage.pixels,
       bestTimeSolo: gameCard.bestTimeSolo,
       bestTime1v1: gameCard.bestTime1v1,
     }));
@@ -73,12 +75,13 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public generateGameCard(formInfo: IFormInfo2D): GameCard {
+  public generateGameCard(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
 
     return {
       title: formInfo.gameName,
       originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       modifiedImagePath: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
+      differenceImagePixel: differenceImage.pixels,
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
     };
@@ -99,16 +102,16 @@ export class GameCardsService {
     return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
   }
 
-  private generateBestTime(minimalTime: number, maximalTime: number): string[] {
-    const highScore: string[] = [];
+  private generateBestTime(minimalTime: number, maximalTime: number): [string, number][] {
+    const highScores: [string, number][] = [];
     for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
-      minimalTime = this.getRandomRange(minimalTime, maximalTime);
-      const time: string = this.convertTimeToMSSFormat(minimalTime);
+      const highScore: number = this.getRandomRange(minimalTime, maximalTime);
       const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
-      highScore.push(`${time} user${userID}`);
+      highScores.push([`user${userID}`, highScore]);
+      minimalTime = highScore;
     }
 
-    return highScore;
+    return highScores;
   }
 
   public getRandomRange(min: number, max: number): number {
@@ -119,14 +122,15 @@ export class GameCardsService {
     return Math.random();
   }
 
-  private convertTimeToMSSFormat(time: number): string {
-    const seconde: number = time % ServerConstants.SECOND_PER_MINUTE;
-    const minute: number = (time - seconde) / ServerConstants.SECOND_PER_MINUTE;
+  // TODO: deplacer cote client
+  // private convertTimeToMSSFormat(time: number): string {
+  //   const seconde: number = time % ServerConstants.SECOND_PER_MINUTE;
+  //   const minute: number = (time - seconde) / ServerConstants.SECOND_PER_MINUTE;
 
-    return `${minute}:${this.totwoDigitString(seconde)}`;
-  }
+  //   return `${minute}:${this.totwoDigitString(seconde)}`;
+  // }
 
-  private totwoDigitString(initialNumber: number): string {
-    return ("0" + initialNumber).slice(ServerConstants.TWO_DIGIT);
-  }
+  // private totwoDigitString(initialNumber: number): string {
+  //   return ("0" + initialNumber).slice(ServerConstants.TWO_DIGIT);
+  // }
 }

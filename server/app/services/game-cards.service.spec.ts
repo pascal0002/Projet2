@@ -76,8 +76,9 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
-                bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
+                differenceImagePixel: [],
+                bestTimeSolo: [["user0", 210], ["user0", 210], ["user0", 210]],
+                bestTime1v1: [["user0", 150], ["user0", 150], ["user0", 150]],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -97,8 +98,9 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
-                bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
+                differenceImagePixel: [],
+                bestTimeSolo: [["user999", 360], ["user999", 360], ["user999", 360]],
+                bestTime1v1: [["user999", 300], ["user999", 300], ["user999", 300]],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -119,8 +121,9 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["3:46 user109", "4:00 user109", "4:13 user109"],
-                bestTime1v1: ["2:46 user109", "3:00 user109", "3:13 user109"],
+                differenceImagePixel: [],
+                bestTimeSolo: [["user109", 226], ["user109", 240], ["user109", 253]],
+                bestTime1v1: [["user109", 286], ["user109", 300], ["user109", 313]],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
