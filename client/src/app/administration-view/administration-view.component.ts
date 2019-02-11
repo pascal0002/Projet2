@@ -29,4 +29,14 @@ export class AdministrationViewComponent {
       pageMask.style.display = "block";
     }
   }
+
+  public openForm3D(): void {
+    const form3D: HTMLElement | null = document.getElementById("formWindow3D");
+    const pageMask: HTMLElement | null = document.getElementById("pageMask");
+
+    if (form3D && pageMask) {
+      form3D.style.display = "block";
+      pageMask.style.display = "block";
+    }
+  }
 }

@@ -13,19 +13,6 @@ export class FormValidator2dService {
 
   public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { }
 
-  public openForm(): void {
-/*
-    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form2D && pageMask) {
-      console.log("test");
-
-      form2D.style.display = "block";
-      pageMask.style.display = "block";
-    }*/
-  }
-
   public closeForm(): void {
     const form2D: HTMLElement | null = document.getElementById("formWindow2D");
     const pageMask: HTMLElement | null = document.getElementById("pageMask");
