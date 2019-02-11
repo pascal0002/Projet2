@@ -125,5 +125,6 @@ export class ClientConstants {
     static DOWN_KEY: number = 83;
     static LEFT_KEY: number = 65;
     static RIGHT_KEY: number = 68;
+    static SAVE_KEY: number = 13;
     static MOVING_FACTOR: number = 2;
 }

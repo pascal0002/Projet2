@@ -135,7 +135,6 @@ export class OpenSceneConstructorService {
 
   public goUp(): void {
     this.camera.position.y += ClientConstants.MOVING_FACTOR;
-    this.saveAsImage();
   }
 
   public goDown(): void {
@@ -151,7 +150,7 @@ export class OpenSceneConstructorService {
     this.camera.position.x += ClientConstants.MOVING_FACTOR;
   }
 
-  private saveAsImage(): void {
+  public saveAsImage(): void {
     let imgData: string;
     try {
         const strMime: string = "image/jpeg";

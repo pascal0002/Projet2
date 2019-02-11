@@ -62,6 +62,9 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
       case ClientConstants.RIGHT_KEY:
         this.openSceneConstructorService.goRight();
         break;
+      case ClientConstants.SAVE_KEY:
+        this.openSceneConstructorService.saveAsImage();
+        break;
       default :
         break;
     }
