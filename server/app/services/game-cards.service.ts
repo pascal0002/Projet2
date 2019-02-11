@@ -51,8 +51,8 @@ export class GameCardsService {
     return { title: gameCard.toJSON().title,
              originalImagePath: gameCard.toJSON().originalImagePath,
              modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
-             bestTimeSolo: gameCard.toJSON().bestTimeSolo,
-             bestTime1v1: gameCard.toJSON().bestTime1v1, };
+             bestTimeSolo: gameCard.toJSON().bestScoreSolo,
+             bestTime1v1: gameCard.toJSON().bestScore1v1, };
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
@@ -67,8 +67,8 @@ export class GameCardsService {
       modifiedImagePath: gameCard.modifiedImagePath,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
       differenceImagePixel: differenceImage.pixels,
-      bestTimeSolo: gameCard.bestTimeSolo,
-      bestTime1v1: gameCard.bestTime1v1,
+      bestScoreSolo: gameCard.bestTimeSolo,
+      bestScore1v1: gameCard.bestTime1v1,
     }));
 
     return gameCard;
@@ -100,12 +100,13 @@ export class GameCardsService {
     return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
   }
 
-  private generateBestTime(minimalTime: number, maximalTime: number): [string, number][] {
-    const highScores: [string, number][] = [];
+  private generateBestTime(minimalTime: number, maximalTime: number): {user: string, time: number}[] {
+    const highScores: {user: string, time: number}[] = [];
     for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
       const highScore: number = this.getRandomRange(minimalTime, maximalTime);
       const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
-      highScores.push([`user${userID}`, highScore]);
+      highScores.push({user: `user${userID}`,
+                       time: highScore});
       minimalTime = highScore;
     }
 

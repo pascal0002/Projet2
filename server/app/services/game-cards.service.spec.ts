@@ -76,8 +76,8 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: [["user0", 210], ["user0", 210], ["user0", 210]],
-                bestTime1v1: [["user0", 150], ["user0", 150], ["user0", 150]],
+                bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -97,8 +97,8 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: [["user999", 360], ["user999", 360], ["user999", 360]],
-                bestTime1v1: [["user999", 300], ["user999", 300], ["user999", 300]],
+                bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
+                bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -119,8 +119,8 @@ describe("game-cards-service", () => {
                 title: "game",
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: [["user109", 226], ["user109", 240], ["user109", 253]],
-                bestTime1v1: [["user109", 286], ["user109", 300], ["user109", 313]],
+                bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
+                bestTime1v1: [{user : "user109", time : 286}, {user : "user109", time : 300}, {user : "user109", time : 313}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();

@@ -19,15 +19,15 @@ export class ListOfGamesViewComponent {
   }
 
   public getBestTimeSolo(gameCard: GameCard, position: number): string {
-    const user: string = gameCard.bestTimeSolo[position][0];
-    const time: number = gameCard.bestTimeSolo[position][1];
+    const user: string = gameCard.bestTimeSolo[position].user;
+    const time: number = gameCard.bestTimeSolo[position].time;
 
     return `${user} : ${this.convertTimeToMSSFormat(time)}`;
   }
 
   public getBestTime1v1(gameCard: GameCard, position: number): string {
-    const user: string = gameCard.bestTime1v1[position][0];
-    const time: number = gameCard.bestTime1v1[position][1];
+    const user: string = gameCard.bestTime1v1[position].user;
+    const time: number = gameCard.bestTime1v1[position].time;
 
     return `${user} : ${this.convertTimeToMSSFormat(time)}`;
   }
