@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import {ClientConstants} from "../../../../common/communication/Constants";
 import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { GameCard } from "../../../../common/communication/game-card";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +11,7 @@ import { GameCard } from "../../../../common/communication/game-card";
 
 export class FormValidator2dService {
 
-  public constructor(private http: HttpClient) { }
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { }
 
   public openForm(): void {
 
@@ -54,7 +55,8 @@ export class FormValidator2dService {
       this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
       .then(
-        () => { this.closeForm2D(); },
+        (gamecard) => { this.listOfGameService.addGameCard2D(gamecard);
+                        this.closeForm2D(); },
         (gameCard) => { alert(gameCard.error); },
       )
       .catch(

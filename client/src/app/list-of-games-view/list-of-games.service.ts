@@ -36,4 +36,8 @@ export class ListOfGamesService {
     this.getGamesLists2D();
     this.getGamesLists3D();
   }
+
+  public addGameCard2D(gamecard: GameCard): void {
+    this.listes[ClientConstants.LIST_2D].push(gamecard);
+  }
 }
