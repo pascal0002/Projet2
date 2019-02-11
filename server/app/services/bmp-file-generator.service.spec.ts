@@ -2,7 +2,7 @@
 import { expect } from "chai";
 import * as fs from "fs";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { BitmapEncoder } from "./bitmap-encoder.service";
 import { BmpFileGenerator } from "./bmp-file-generator.service";
 
@@ -13,7 +13,7 @@ for (let i: number = 0; i < ((TEST_IMAGE.height * TEST_IMAGE.width) * 3); i++) {
     TEST_IMAGE.pixels.push(0);
 }
 
-const TEST_FORM: IFormInfo = {
+const TEST_FORM: IFormInfo2D = {
     originalImage: TEST_IMAGE,
     modifiedImage: TEST_IMAGE,
     gameName: "",

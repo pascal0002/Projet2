@@ -9,17 +9,17 @@ import { LoginService } from "./login.service";
 @injectable()
 export class WebsocketService {
 
-    private _io: socketIo.Server;
+    private socket: socketIo.Server;
 
     public constructor(@inject(Types.LoginService) private loginService: LoginService) { }
 
     public init(server: http.Server): void {
-        this._io = socketIo(server);
+        this.socket = socketIo(server);
         this.listen();
     }
 
     public listen(): void {
-        this._io.on("connection", (socket: socketIo.Server) => {
+        this.socket.on("connection", (socket: socketIo.Server) => {
             let usernameSocket: string;
 
             socket.on(MessageType.VALIDATE_USERNAME, (username: string) => {
@@ -43,9 +43,5 @@ export class WebsocketService {
                 this.loginService.disconnect(usernameSocket);
             });
         });
-    }
-
-    public get socket(): socketIo.Server {
-        return this._io;
     }
 }

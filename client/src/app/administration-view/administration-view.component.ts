@@ -1,27 +1,32 @@
 import { Component } from "@angular/core";
 import { GameCard } from "../../../../common/communication/game-card";
-import { FormValidator2dService } from "../game-card-form-2d/form-validator-2d.service";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Component({
   selector: "app-administration-view",
   templateUrl: "./administration-view.component.html",
   styleUrls: [
-              "./administration-view.component.css",
-              "../list-of-games-view/list-of-games-view.component.css",
-              "../list-of-games-view/list-of-games-view.component.css",
-             ],
+    "./administration-view.component.css",
+    "../list-of-games-view/list-of-games-view.component.css",
+    "../list-of-games-view/list-of-games-view.component.css",
+  ],
 })
 
 export class AdministrationViewComponent {
 
   public listes: GameCard[][];
 
-  public constructor(private formValidator2D: FormValidator2dService, private listOfGamesService: ListOfGamesService) {
+  public constructor(private listOfGamesService: ListOfGamesService) {
     this.listes = this.listOfGamesService.listes;
   }
 
   public openForm2D(): void {
-    this.formValidator2D.openForm();
+    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
+    const pageMask: HTMLElement | null = document.getElementById("pageMask");
+
+    if (form2D && pageMask) {
+      form2D.style.display = "block";
+      pageMask.style.display = "block";
+    }
   }
 }

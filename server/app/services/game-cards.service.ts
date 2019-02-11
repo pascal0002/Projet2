@@ -3,7 +3,7 @@ import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
@@ -52,14 +52,14 @@ export class GameCardsService {
              originalImagePath: gameCard.toJSON().originalImagePath,
              modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
              bestTimeSolo: gameCard.toJSON().bestTimeSolo,
-             bestTime1v1: gameCard.toJSON().bestTime1v1, }; 
+             bestTime1v1: gameCard.toJSON().bestTime1v1, };
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public addGameCard(formInfo: IFormInfo, differenceImageFileName: string): GameCard {
+  public addGameCard(formInfo: IFormInfo2D, differenceImageFileName: string): GameCard {
     const gameCard: GameCard = this.generateGameCard(formInfo);
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
@@ -73,7 +73,7 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public generateGameCard(formInfo: IFormInfo): GameCard {
+  public generateGameCard(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
