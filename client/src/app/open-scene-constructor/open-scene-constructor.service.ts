@@ -7,6 +7,8 @@ import {ClientConstants} from "../../../../common/communication/Constants";
 })
 export class OpenSceneConstructorService {
 
+  public strDownloadMime: string = "image/octet-stream";
+
   public scene: THREE.Scene;
   public camera: THREE.PerspectiveCamera;
   public glRenderer: THREE.WebGLRenderer;
@@ -17,9 +19,9 @@ export class OpenSceneConstructorService {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-                                         1, ClientConstants.CAMERA_RENDER_DISTANCE);
+                                              1, ClientConstants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = ClientConstants.Z_CAMERA_POSITION;
-    this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+    this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
   }
 
   public makeObjects(): void {
@@ -116,7 +118,7 @@ export class OpenSceneConstructorService {
   }
 
   public render(canvas: HTMLCanvasElement): void {
-    this.glRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    this.glRenderer.setSize(window.innerWidth, window.innerHeight);
     requestAnimationFrame(() => {
       this.render(canvas);
     });
@@ -133,6 +135,7 @@ export class OpenSceneConstructorService {
 
   public goUp(): void {
     this.camera.position.y += ClientConstants.MOVING_FACTOR;
+    this.saveAsImage();
   }
 
   public goDown(): void {
@@ -144,6 +147,32 @@ export class OpenSceneConstructorService {
   }
 
   public goRight(): void {
+    this.saveAsImage();
     this.camera.position.x += ClientConstants.MOVING_FACTOR;
   }
+
+  private saveAsImage(): void {
+    let imgData: string;
+    try {
+        const strMime: string = "image/jpeg";
+        imgData = this.glRenderer.domElement.toDataURL(strMime);
+        this.saveFile(imgData.replace(strMime, this.strDownloadMime), "test.jpg");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  private saveFile(strData: string, filename: string): void {
+    const link: HTMLAnchorElement = document.createElement("a");
+    if (typeof link.download === "string") {
+        document.body.appendChild(link); // Firefox requires the link to be in the body
+        link.download = filename;
+        link.href = strData;
+        link.click();
+        document.body.removeChild(link); // remove the link when done
+    } else {
+        location.replace(uri);
+    }
+  }
+  // JSON.stringify(this.scene.toJSON());
 }
