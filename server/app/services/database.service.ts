@@ -7,7 +7,11 @@ import {ServerConstants} from "../../../common/communication/Constants";
 export class DatabaseService {
     private db: mongoose.Connection;
 
-    public connect(): void {
+    public constructor() {
+        this.connect();
+    }
+
+    private connect(): void {
         mongoose.connect(ServerConstants.DB_URL, { useNewUrlParser: true });
         this.db = mongoose.connection;
         this.db.on("error", console.error.bind(console, "connection error:"));

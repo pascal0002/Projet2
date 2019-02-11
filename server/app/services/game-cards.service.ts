@@ -45,7 +45,7 @@ export class GameCardsService {
     });
 
     return gameCards;
-  } 
+  }
 
   private convertDBGameCard(gameCard: mongoose.Document): GameCard {
     return { title: gameCard.toJSON().title,

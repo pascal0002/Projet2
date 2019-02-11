@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { FormValidator2dService } from "../game-card-form-2d/form-validator-2d.service";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
@@ -19,7 +18,7 @@ export class AdministrationViewComponent {
   public listes: GameCard[][];
 
   public constructor(private formValidator2D: FormValidator2dService, private listOfGamesService: ListOfGamesService) {
-    this.listes = listOfGamesService.listes;
+    this.listes = this.listOfGamesService.listes;
   }
 
   public openForm2D(): void {

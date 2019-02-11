@@ -1,5 +1,4 @@
 import { Component, Input } from "@angular/core";
-import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "./list-of-games.service";
 
