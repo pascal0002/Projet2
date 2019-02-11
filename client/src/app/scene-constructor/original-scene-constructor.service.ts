@@ -5,7 +5,7 @@ import {ClientConstants} from "../../../../common/communication/Constants";
 @Injectable({
   providedIn: "root",
 })
-export class OpenSceneConstructorService {
+export class OriginalSceneConstructorService {
 
   public strDownloadMime: string = "image/octet-stream";
 
@@ -15,7 +15,13 @@ export class OpenSceneConstructorService {
 
   public constructor() {/**/}
 
-  public makeScene(canvas: HTMLCanvasElement): void {
+  public createOriginalCanvas(canvas: HTMLCanvasElement): void {
+    this.makeScene(canvas);
+    this.makeObjects();
+    this.addLighting();
+  }
+
+  private makeScene(canvas: HTMLCanvasElement): void {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
@@ -24,7 +30,7 @@ export class OpenSceneConstructorService {
     this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
   }
 
-  public makeObjects(): void {
+  private makeObjects(): void {
 
     const numberOfObjects: number = Math.round(this.getRandomNumber() * (ClientConstants.MAX_OBJECTS_NB - ClientConstants.MIN_OBJECTS_NB))
     + ClientConstants.MIN_OBJECTS_NB;
@@ -36,6 +42,24 @@ export class OpenSceneConstructorService {
       this.rotateObject(object);
       this.scene.add(object);
     }
+  }
+
+  private addLighting(): void {
+    const light: THREE.AmbientLight
+    = new THREE.AmbientLight(ClientConstants.AMBIENT_LIGHT_COLOR, ClientConstants.AMBIENT_LIGHT_INTENSITY);
+    const directionalLight: THREE.DirectionalLight
+    = new THREE.DirectionalLight(ClientConstants.DIRECTIONAL_LIGHT_COLOR, ClientConstants.DIRECTIONAL_LIGHT_INTENSITY);
+
+    this.scene.add(light);
+    this.scene.add(directionalLight);
+  }
+
+  public render(canvas: HTMLCanvasElement): void {
+    this.glRenderer.setSize(window.innerWidth, window.innerHeight);
+    requestAnimationFrame(() => {
+      this.render(canvas);
+    });
+    this.glRenderer.render(this.scene, this.camera);
   }
 
   private makeRandomColors(): THREE.MeshStandardMaterial {
@@ -103,26 +127,8 @@ export class OpenSceneConstructorService {
     object.rotateZ(this.getRandomNumber() * ClientConstants.CIRCLE_DEGREES_NB);
   }
 
-  public addLighting(): void {
-    const light: THREE.AmbientLight
-    = new THREE.AmbientLight(ClientConstants.AMBIENT_LIGHT_COLOR, ClientConstants.AMBIENT_LIGHT_INTENSITY);
-    const directionalLight: THREE.DirectionalLight
-    = new THREE.DirectionalLight(ClientConstants.DIRECTIONAL_LIGHT_COLOR, ClientConstants.DIRECTIONAL_LIGHT_INTENSITY);
-
-    this.scene.add(light);
-    this.scene.add(directionalLight);
-  }
-
   private getRandomNumber(): number {
     return Math.random();
-  }
-
-  public render(canvas: HTMLCanvasElement): void {
-    this.glRenderer.setSize(window.innerWidth, window.innerHeight);
-    requestAnimationFrame(() => {
-      this.render(canvas);
-    });
-    this.glRenderer.render(this.scene, this.camera);
   }
 
   public goForward(): void {
@@ -164,12 +170,12 @@ export class OpenSceneConstructorService {
   private saveFile(strData: string, filename: string): void {
     const link: HTMLAnchorElement = document.createElement("a");
     if (typeof link.download === "string") {
-        document.body.appendChild(link); // Firefox requires the link to be in the body
+        document.body.appendChild(link);
         link.download = filename;
         link.href = strData;
         link.click();
         document.body.removeChild(link); // remove the link when done
+        // JSON.stringify(this.scene.toJSON());
     }
   }
-  // JSON.stringify(this.scene.toJSON());
 }
