@@ -66,21 +66,19 @@ export class DifferenceIdentificator2DService {
         }
     }
 
-    public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, bytesPerPixel: number): number[] {
+    public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, pixels: number[]): number[] {
         const blackPixelNeighbours: number[] = [];
-        blackPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
-        blackPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
-        blackPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
-        blackPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
-        blackPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
-        blackPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
-        blackPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
-        blackPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+        const allPixelNeighbours: number [] = this.getPixelNeighbours(clickedPixelPos, imageWidth);
+        allPixelNeighbours.forEach((pixelPosition: number) => {
+            if (pixels[pixelPosition] === ServerConstants.BLACK_PIXEL_PARAMETER) {
+                blackPixelNeighbours.push(pixelPosition);
+            }
+        });
 
         return blackPixelNeighbours;
     }
 
-    /*public getPixelNeighbours(): number {
+    public getPixelNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
         const allPixelNeighbours: number[] = [];
         allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
@@ -90,7 +88,9 @@ export class DifferenceIdentificator2DService {
         allPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
-    }*/
+
+        return allPixelNeighbours;
+    }
 
 
     public getRightPixelNeighbour(clickedPixelPos: number): number {
