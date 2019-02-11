@@ -12,6 +12,7 @@ import { FormValidator2DService } from "./services/form-validator-2D.service";
 import { FormValidator3DService } from "./services/form-validator-3D.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { LoginService } from "./services/login.service";
+import { OpenSceneGenerator } from "./services/open-scene-generator.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -31,4 +32,5 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 container.bind(Types.DatabaseService).to(DatabaseService);
+container.bind(Types.OpenSceneGenerator).to(OpenSceneGenerator);
 export { container };
