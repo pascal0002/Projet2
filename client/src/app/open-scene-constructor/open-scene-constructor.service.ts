@@ -156,8 +156,8 @@ export class OpenSceneConstructorService {
         const strMime: string = "image/jpeg";
         imgData = this.glRenderer.domElement.toDataURL(strMime);
         this.saveFile(imgData.replace(strMime, this.strDownloadMime), "test.jpg");
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      throw(error);
     }
   }
 
