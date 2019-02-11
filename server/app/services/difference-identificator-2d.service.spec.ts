@@ -1,11 +1,10 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import "reflect-metadata";
-import { testImage } from "../../mock/image-mock";
+import { testImage, testImageGetNeighbours } from "../../mock/image-mock";
 import { DifferenceIdentificator2DService } from "./difference-identificator-2d.service";
 
 let differenceIdentificatorService: DifferenceIdentificator2DService;
-
 //  Test image gives:
 //  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
 //  255, 255, 255,  16,  17,  18,  19,  20,  21,  22,  23,  24, 255, 255, 255,
@@ -18,11 +17,25 @@ let differenceIdentificatorService: DifferenceIdentificator2DService;
 //                                    BL = [1,2,3]   , B = [4,5,6]   , BR = [7,8,9]
 
 // [2,2] -> middle of 5px by 5px image, gives pos 36 in array.
+
+
+
+//  Gives:
+//  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+//  255, 255, 255, 255, 255, 255,   0,   0,   0, 255, 255, 255, 255, 255, 255,
+//  255, 255, 255, 255, 255, 255,   0,   0,   0,   0,   0,   0, 255, 255, 255,
+//  255, 255, 255,   0,   0,   0, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+//  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+
+//  If pixel clicked is [0,0,0], then TL = [255,255,255], T = [0,0,0]      , TR = [255,255,255]
+//                                    L  = [255,255,255],                  , R  = [0,0,0]
+//                                    BL = [0,0,0]      , B = [255,255,255], BR = [255,255,255]
+
 const clickedPixelPos: number = 36;
 
 describe("DifferenceIdentificator2DService", () => {
     beforeEach(() => {
-        differenceIdentificatorService = new DifferenceIdentificator2DService();
+       // differenceIdentificatorService = new DifferenceIdentificator2DService();
     });
 
     it("should return the correct bottom pixel position in the test array", (done: Mocha.Done) => {
@@ -64,4 +77,13 @@ describe("DifferenceIdentificator2DService", () => {
         expect(testImage[rightPixel + 2]).to.equal(15);
         done();
     });
+
+    it("BlaBlaBla", (done: Mocha.Done) => {
+        console.log("Direct neighbours : " + differenceIdentificatorService.getBlackPixelNeighbours(36, 5, testImageGetNeighbours));
+        differenceIdentificatorService.getPixelsToTurnWhite(36, testImageGetNeighbours, 5);
+        console.log(differenceIdentificatorService.modifiedPixelsPosition);
+        expect(testImage[3 + 2]).to.equal(15);
+        done();
+    });
+
 });

@@ -5,8 +5,8 @@ import { ServerConstants } from "../../../common/communication/Constants";
 import { IPixel } from "../../../common/communication/Pixel";
 import { ModifiedImg } from "../../mock/image-mock";
 import Types from "../types";
-//import { BmpFileGenerator } from "./bmp-file-generator.service";
-import { DifferenceCounterService } from "./difference-counter.service";
+import { BmpFileGenerator } from "./bmp-file-generator.service";
+//import { DifferenceCounterService } from "./difference-counter.service";
 
 @injectable()
 export class DifferenceIdentificator2DService {
@@ -14,9 +14,10 @@ export class DifferenceIdentificator2DService {
     public differenceImgTest: IBitmapImage;
     public clickPosition: IClickCoordinates;
 
+    public modifiedPixelsPosition: number[] = [];
 
-    public constructor(/*@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator*/
-                         @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService) {/**/}
+    public constructor(@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator
+                        /* @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService*/) {/**/ }
 
     public confirmDifference(clickPosition: IClickCoordinates, differenceImage: IBitmapImage, modifiedImage: IBitmapImage): boolean {
 
@@ -30,16 +31,37 @@ export class DifferenceIdentificator2DService {
             pixels: imgOfDifference.pixels,
         };*/
 
-       // this.bmpFileGeneratorService.generateModifedBMPFile(test);
+        // this.bmpFileGeneratorService.generateModifedBMPFile(test);
 
         console.log("Pos X: " + clickPosition.xPos);
         console.log("Pos Y: " + clickPosition.yPos);
 
         console.log(this.getPixelAtPos(clickPosition, imgOfDifference.pixels));
 
-        console.log("Neighbours PS: " + this.diffCounterService.getNeighbors(this.getPositionInArray(clickPosition)));
-        console.log("Neighbours PAM: " + this.getBlackPixelNeighbours(this.getPositionInArray(clickPosition), 640, 3));
+        console.log("Neighbours PAM: " + this.getBlackPixelNeighbours(this.getPositionInArray(clickPosition), 640, imgOfDifference.pixels));
+        this.getPixelsToTurnWhite(this.getPositionInArray(clickPosition),
+            imgOfDifference.pixels,
+            ServerConstants.ACCEPTED_WIDTH);
 
+        console.log("did it go in get pixels to turn white?");
+
+        /*console.log(this.modifiedPixelsPosition);
+
+        this.modifiedPixelsPosition.forEach((position: number) => {
+            imgOfDifference.pixels[position] = ServerConstants.WHITE_PIXEL_PARAMETER;
+            imgOfDifference.pixels[position + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+            imgOfDifference.pixels[position + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+        });*/
+
+        const test: IBitmapImage = {
+            fileName: "MY_TEST_BMP_MODIF.bmp",
+            height: 480,
+            width: 640,
+            bitDepth: 24,
+            pixels: imgOfDifference.pixels,
+        };
+
+        this.bmpFileGeneratorService.generateModifedBMPFile(test);
 
         return true;
     }
@@ -57,18 +79,42 @@ export class DifferenceIdentificator2DService {
 
     public getPositionInArray(clickPosition: IClickCoordinates): number {
         return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * 3)
-                + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
+            + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }
 
-    public getPixelsToTurnWhite(listOfPixelsPos: number[], currentPixelPos: number): void {
-        if (!listOfPixelsPos.includes(currentPixelPos)) {
-            listOfPixelsPos.push(currentPixelPos);
+    public getPixelsToTurnWhite(currentPixelPos: number, pixels: number[], imageWidth: number): void {
+        const pixelStack: number[] = [currentPixelPos];
+        pixels[currentPixelPos] = ServerConstants.WHITE_PIXEL_PARAMETER;
+        pixels[currentPixelPos + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+        pixels[currentPixelPos + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+
+        while (pixelStack.length > 0) {
+            const pixelIndexNumber: number | undefined = pixelStack.shift();
+            if (pixelIndexNumber !== undefined) {
+                const neighbours: number[] = this.getBlackPixelNeighbours(pixelIndexNumber, 640, pixels);
+                neighbours.forEach((neighbour: number) => {
+                    pixelStack.push(neighbour);
+                    pixels[neighbour] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                    pixels[neighbour + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                    pixels[neighbour + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                });
+            }
         }
+
+
+        /*
+        if (!this.modifiedPixelsPosition.includes(currentPixelPos)) {
+            this.modifiedPixelsPosition.push(currentPixelPos);
+            const neighbours: number[] = this.getBlackPixelNeighbours(currentPixelPos, imageWidth, pixels);
+            neighbours.forEach((neighbour: number) => {
+                this.getPixelsToTurnWhite(neighbour, pixels, imageWidth);
+            });
+        }*/
     }
 
     public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, pixels: number[]): number[] {
         const blackPixelNeighbours: number[] = [];
-        const allPixelNeighbours: number [] = this.getPixelNeighbours(clickedPixelPos, imageWidth);
+        const allPixelNeighbours: number[] = this.getPixelNeighbours(clickedPixelPos, imageWidth);
         allPixelNeighbours.forEach((pixelPosition: number) => {
             if (pixels[pixelPosition] === ServerConstants.BLACK_PIXEL_PARAMETER) {
                 blackPixelNeighbours.push(pixelPosition);
@@ -124,19 +170,4 @@ export class DifferenceIdentificator2DService {
     public getBottomLeftPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos - (imageWidth * ServerConstants.BYTES_PER_PIXEL) - ServerConstants.BYTES_PER_PIXEL;
     }
-
-
-    private findZone(pixelMap: PixelMap, pixelIndex: number): void {
-        const pixelStack: number[] = [pixelIndex];
-        while (pixelStack.length > 0) {
-          const neighbors: number[] = this.getNeighbors(pixelStack.shift());
-          neighbors.forEach((neighbor: number) => {
-            if (pixelMap.value[neighbor][ServerConstants.COLOR] === ServerConstants.BLACK_PIXEL_PARAMETER
-              && pixelMap.value[neighbor][ServerConstants.IS_VISITED] === false) {
-              pixelMap.value[neighbor][ServerConstants.IS_VISITED] = true;
-              pixelStack.push(neighbor);
-            }
-          });
-        }
-      }
 }
