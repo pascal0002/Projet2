@@ -21,7 +21,6 @@ export class BitmapReaderService {
       const pixelsPosition: number = dataView.getUint32(ClientConstants.PIXEL_OFFSET, true);
 
       bitmapImage.width = dataView.getUint32(ClientConstants.WIDTH_OFFSET, true);
-     // bitmapImage.height = dataView.getUint32(ClientConstants.HEIGHT_OFFSET, true);
       (dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true) < 0)
       ?
       bitmapImage.height = -dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true) :
@@ -33,7 +32,6 @@ export class BitmapReaderService {
 
     fileReader.readAsArrayBuffer(file);
 
-    console.log(bitmapImage);
     return bitmapImage;
   }
 }

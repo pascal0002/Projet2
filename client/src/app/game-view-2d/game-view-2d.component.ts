@@ -15,6 +15,7 @@ export class GameView2DComponent implements AfterViewInit {
 
   public game2d: GameCard;
   public ctx: CanvasRenderingContext2D | null;
+  public pixelsDecoded: number[] = [];
 
   public constructor(private http: HttpClient) {
     this.game2d = TWO_DIMENSION_GAME_CARD_LIST[3];
