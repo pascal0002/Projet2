@@ -13,11 +13,13 @@ export class DifferenceIdentificator2DService {
 
     public differenceImgTest: IBitmapImage;
     public clickPosition: IClickCoordinates;
+    public imageOfDifferencePixels: number[];
 
-    public modifiedPixelsPosition: number[] = [];
-
-    public constructor(@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator
-                        /* @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService*/) {/**/ }
+    public constructor(@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator,
+                        /* @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService*/) {
+                            const imgOfDifference: ModifiedImg = new ModifiedImg();
+                            this.imageOfDifferencePixels = imgOfDifference.pixels;
+                         }
 
     public confirmDifference(clickPosition: IClickCoordinates, differenceImage: IBitmapImage, modifiedImage: IBitmapImage): boolean {
 
@@ -58,7 +60,7 @@ export class DifferenceIdentificator2DService {
             height: 480,
             width: 640,
             bitDepth: 24,
-            pixels: imgOfDifference.pixels,
+            pixels: this.imageOfDifferencePixels,
         };
 
         this.bmpFileGeneratorService.generateModifedBMPFile(test);
