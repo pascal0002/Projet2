@@ -170,8 +170,6 @@ export class OpenSceneConstructorService {
         link.href = strData;
         link.click();
         document.body.removeChild(link); // remove the link when done
-    } else {
-        location.replace(uri);
     }
   }
   // JSON.stringify(this.scene.toJSON());
