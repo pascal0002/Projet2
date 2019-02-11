@@ -1,11 +1,12 @@
-import { /*inject,*/ injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IClickCoordinates } from "../../../common/communication/ClickCoordinates";
 import { ServerConstants } from "../../../common/communication/Constants";
 import { IPixel } from "../../../common/communication/Pixel";
 import { ModifiedImg } from "../../mock/image-mock";
-//import Types from "../types";
+import Types from "../types";
 //import { BmpFileGenerator } from "./bmp-file-generator.service";
+import { DifferenceCounterService } from "./difference-counter.service";
 
 @injectable()
 export class DifferenceIdentificator2DService {
@@ -13,7 +14,9 @@ export class DifferenceIdentificator2DService {
     public differenceImgTest: IBitmapImage;
     public clickPosition: IClickCoordinates;
 
-    public constructor(/*@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator*/) {/**/}
+
+    public constructor(/*@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator*/
+                         @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService) {/**/}
 
     public confirmDifference(clickPosition: IClickCoordinates, differenceImage: IBitmapImage, modifiedImage: IBitmapImage): boolean {
 
@@ -34,12 +37,16 @@ export class DifferenceIdentificator2DService {
 
         console.log(this.getPixelAtPos(clickPosition, imgOfDifference.pixels));
 
+        console.log("Neighbours PS: " + this.diffCounterService.getNeighbors(this.getPositionInArray(clickPosition)));
+        console.log("Neighbours PAM: " + this.getBlackPixelNeighbours(this.getPositionInArray(clickPosition), 640, 3));
+
+
         return true;
     }
 
     public getPixelAtPos(clickPosition: IClickCoordinates, pixelArray: number[]): IPixel {
         const POS_IN_ARRAY: number = this.getPositionInArray(clickPosition);
-        console.log(POS_IN_ARRAY);
+        console.log("Pos of pixel clicked : " + POS_IN_ARRAY);
 
         return {
             red: pixelArray[POS_IN_ARRAY],
@@ -59,16 +66,38 @@ export class DifferenceIdentificator2DService {
         }
     }
 
-    public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, bytesPerPixel: number): void {
-        // let blackPixelNeighbours: number[] = [];
+    public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, bytesPerPixel: number): number[] {
+        const blackPixelNeighbours: number[] = [];
+        blackPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        blackPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        blackPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
+        blackPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
+        blackPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
+        blackPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        blackPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
+        blackPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
 
+        return blackPixelNeighbours;
     }
+
+    /*public getPixelNeighbours(): number {
+        const allPixelNeighbours: number[] = [];
+        allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
+        allPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
+        allPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+    }*/
+
 
     public getRightPixelNeighbour(clickedPixelPos: number): number {
         return clickedPixelPos + ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getLeftPixelNeighBour(clickedPixelPos: number): number {
+    public getLeftPixelNeighbour(clickedPixelPos: number): number {
         return clickedPixelPos - ServerConstants.BYTES_PER_PIXEL;
     }
 
@@ -96,4 +125,18 @@ export class DifferenceIdentificator2DService {
         return clickedPixelPos - (imageWidth * ServerConstants.BYTES_PER_PIXEL) - ServerConstants.BYTES_PER_PIXEL;
     }
 
+
+    private findZone(pixelMap: PixelMap, pixelIndex: number): void {
+        const pixelStack: number[] = [pixelIndex];
+        while (pixelStack.length > 0) {
+          const neighbors: number[] = this.getNeighbors(pixelStack.shift());
+          neighbors.forEach((neighbor: number) => {
+            if (pixelMap.value[neighbor][ServerConstants.COLOR] === ServerConstants.BLACK_PIXEL_PARAMETER
+              && pixelMap.value[neighbor][ServerConstants.IS_VISITED] === false) {
+              pixelMap.value[neighbor][ServerConstants.IS_VISITED] = true;
+              pixelStack.push(neighbor);
+            }
+          });
+        }
+      }
 }

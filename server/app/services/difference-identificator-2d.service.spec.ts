@@ -50,7 +50,7 @@ describe("DifferenceIdentificator2DService", () => {
     });
 
     it("should return the correct left pixel position in the test array", (done: Mocha.Done) => {
-        const leftPixel: number = differenceIdentificatorService.getLeftPixelNeighBour(clickedPixelPos);
+        const leftPixel: number = differenceIdentificatorService.getLeftPixelNeighbour(clickedPixelPos);
         expect(testImage[leftPixel]).to.equal(10);
         expect(testImage[leftPixel + 1]).to.equal(11);
         expect(testImage[leftPixel + 2]).to.equal(12);
