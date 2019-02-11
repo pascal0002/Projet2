@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core";
-import * as THREE from "three";
+import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from "@angular/core";
 import {ClientConstants} from "../../../../common/communication/Constants";
 import { OpenSceneConstructorService } from "./open-scene-constructor.service";
 
@@ -11,10 +10,6 @@ import { OpenSceneConstructorService } from "./open-scene-constructor.service";
 
 export class OpenSceneConstructorComponent implements AfterViewInit {
 
-  public scene: THREE.Scene;
-  public camera: THREE.PerspectiveCamera;
-  public glRenderer: THREE.WebGLRenderer;
-
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
   }
@@ -24,26 +19,51 @@ export class OpenSceneConstructorComponent implements AfterViewInit {
   public constructor(private ngZone: NgZone, private openSceneConstructorService: OpenSceneConstructorService) {/**/}
 
   public makeScene(): void {
-    this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(ClientConstants.BACKGROUND_COLOR);
-    this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, this.canvas.clientWidth / this.canvas.clientHeight,
-                                              1, ClientConstants.CAMERA_RENDER_DISTANCE);
-    this.camera.position.z = ClientConstants.Z_CAMERA_POSITION;
-    this.glRenderer = new THREE.WebGLRenderer({canvas: this.canvas, antialias: true});
+    this.openSceneConstructorService.makeScene(this.canvas);
   }
 
   public makeObjects(): void {
-    this.openSceneConstructorService.makeObjects(this.scene);
+    this.openSceneConstructorService.makeObjects();
+  }
+
+  public createLight(): void {
+    this.openSceneConstructorService.addLighting();
   }
 
   public ngAfterViewInit(): void {
     this.makeScene();
     this.makeObjects();
+    this.createLight();
     this.ngZone.runOutsideAngular(() => this.render());
   }
 
   public render(): void {
-    this.glRenderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-    this.glRenderer.render(this.scene, this.camera);
+    this.openSceneConstructorService.render(this.canvas);
+  }
+
+  @HostListener("window:keydown", ["$event"])
+  public KeyEvent(event: KeyboardEvent): void {
+    switch (event.keyCode) {
+      case ClientConstants.FORWARD_KEY:
+        this.openSceneConstructorService.goForward();
+        break;
+      case ClientConstants.BACKWARD_KEY:
+        this.openSceneConstructorService.goBackward();
+        break;
+      case ClientConstants.UP_KEY:
+        this.openSceneConstructorService.goUp();
+        break;
+      case ClientConstants.DOWN_KEY:
+        this.openSceneConstructorService.goDown();
+        break;
+      case ClientConstants.LEFT_KEY:
+        this.openSceneConstructorService.goLeft();
+        break;
+      case ClientConstants.RIGHT_KEY:
+        this.openSceneConstructorService.goRight();
+        break;
+      default :
+        break;
+    }
   }
 }

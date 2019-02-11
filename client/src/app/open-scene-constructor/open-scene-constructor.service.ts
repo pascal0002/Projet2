@@ -7,9 +7,22 @@ import {ClientConstants} from "../../../../common/communication/Constants";
 })
 export class OpenSceneConstructorService {
 
+  public scene: THREE.Scene;
+  public camera: THREE.PerspectiveCamera;
+  public glRenderer: THREE.WebGLRenderer;
+
   public constructor() {/**/}
 
-  public makeObjects(scene: THREE.Scene): void {
+  public makeScene(canvas: HTMLCanvasElement): void {
+    this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color("skyblue");
+    this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
+                                         1, ClientConstants.CAMERA_RENDER_DISTANCE);
+    this.camera.position.z = ClientConstants.Z_CAMERA_POSITION;
+    this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true});
+  }
+
+  public makeObjects(): void {
 
     const numberOfObjects: number = Math.round(this.getRandomNumber() * (ClientConstants.MAX_OBJECTS_NB - ClientConstants.MIN_OBJECTS_NB))
     + ClientConstants.MIN_OBJECTS_NB;
@@ -19,9 +32,8 @@ export class OpenSceneConstructorService {
       const object: THREE.Mesh = this.createObject(material);
       this.translateObject(object);
       this.rotateObject(object);
-      scene.add(object);
+      this.scene.add(object);
     }
-    this.addLighting(scene);
   }
 
   private makeRandomColors(): THREE.MeshStandardMaterial {
@@ -89,17 +101,49 @@ export class OpenSceneConstructorService {
     object.rotateZ(this.getRandomNumber() * ClientConstants.CIRCLE_DEGREES_NB);
   }
 
-  private addLighting(scene: THREE.Scene): void {
+  public addLighting(): void {
     const light: THREE.AmbientLight
     = new THREE.AmbientLight(ClientConstants.AMBIENT_LIGHT_COLOR, ClientConstants.AMBIENT_LIGHT_INTENSITY);
     const directionalLight: THREE.DirectionalLight
     = new THREE.DirectionalLight(ClientConstants.DIRECTIONAL_LIGHT_COLOR, ClientConstants.DIRECTIONAL_LIGHT_INTENSITY);
 
-    scene.add(light);
-    scene.add(directionalLight);
+    this.scene.add(light);
+    this.scene.add(directionalLight);
   }
 
   private getRandomNumber(): number {
     return Math.random();
+  }
+
+  public render(canvas: HTMLCanvasElement): void {
+    this.glRenderer.setSize(canvas.clientWidth, canvas.clientHeight);
+    requestAnimationFrame(() => {
+      this.render(canvas);
+    });
+    this.glRenderer.render(this.scene, this.camera);
+  }
+
+  public goForward(): void {
+    this.camera.position.z -= ClientConstants.MOVING_FACTOR;
+  }
+
+  public goBackward(): void {
+    this.camera.position.z += ClientConstants.MOVING_FACTOR;
+  }
+
+  public goUp(): void {
+    this.camera.position.y += ClientConstants.MOVING_FACTOR;
+  }
+
+  public goDown(): void {
+    this.camera.position.y -= ClientConstants.MOVING_FACTOR;
+  }
+
+  public goLeft(): void {
+    this.camera.position.x -= ClientConstants.MOVING_FACTOR;
+  }
+
+  public goRight(): void {
+    this.camera.position.x += ClientConstants.MOVING_FACTOR;
   }
 }
