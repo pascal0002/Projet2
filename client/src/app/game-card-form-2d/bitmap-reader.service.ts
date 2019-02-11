@@ -21,11 +21,7 @@ export class BitmapReaderService {
       const pixelsPosition: number = dataView.getUint32(ClientConstants.PIXEL_OFFSET, true);
 
       bitmapImage.width = dataView.getUint32(ClientConstants.WIDTH_OFFSET, true);
-      (dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true) < 0)
-      ?
-      bitmapImage.height = -dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true) :
-      bitmapImage.height = dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true);
-
+      bitmapImage.height = Math.abs(dataView.getInt32(ClientConstants.HEIGHT_OFFSET, true));
       bitmapImage.bitDepth = dataView.getUint32(ClientConstants.BITS_PER_PIXEL_OFFSET, true);
       bitmapImage.pixels = Array.from(new Uint8Array(bmpPixelsBuffer, pixelsPosition));
     };
