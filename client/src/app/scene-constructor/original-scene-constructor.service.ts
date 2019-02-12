@@ -1,6 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import * as THREE from "three";
 import {ClientConstants} from "../../../../common/communication/Constants";
+import {ISnapshot} from "../../../../common/communication/Snapshot";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +15,7 @@ export class OriginalSceneConstructorService {
   public camera: THREE.PerspectiveCamera;
   public glRenderer: THREE.WebGLRenderer;
 
-  public constructor() {/**/}
+  public constructor(private http: HttpClient) {/**/}
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
@@ -157,25 +159,32 @@ export class OriginalSceneConstructorService {
   }
 
   public saveAsImage(): void {
-    let imgData: string;
     try {
         const strMime: string = "image/jpeg";
-        imgData = this.glRenderer.domElement.toDataURL(strMime);
-        this.saveFile(imgData.replace(strMime, this.strDownloadMime), "test.jpg");
+        const imgData: string = this.glRenderer.domElement.toDataURL(strMime);
+        this.saveFile(imgData, "test.jpg");
     } catch (error) {
       throw(error);
     }
   }
 
-  private saveFile(strData: string, filename: string): void {
+  private saveFile(data: string, filename: string): void {
     const link: HTMLAnchorElement = document.createElement("a");
     if (typeof link.download === "string") {
         document.body.appendChild(link);
         link.download = filename;
-        link.href = strData;
+        link.href = data;
         link.click();
         document.body.removeChild(link); // remove the link when done
         // JSON.stringify(this.scene.toJSON());
     }
+    const snapshot: ISnapshot = {
+      imageData: data,
+      fileName: filename,
+    };
+    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene`, snapshot)
+    .toPromise()
+    .catch((error: Error) => {console.error(error.message);
+    });
   }
 }
