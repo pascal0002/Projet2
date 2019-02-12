@@ -107,6 +107,33 @@ describe("loginService", () => {
 
     describe("Is username unique", () => {
 
-        // TODO
+        beforeEach((done: Mocha.Done) => {
+            databaseServiceStub = sinon.stub(databaseService, "countDocuments");
+            service = new LoginService(databaseService);
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should return true if countDocument return 0", (done: Mocha.Done) => {
+            databaseServiceStub.resolves(0);
+            service.isUsernameUnique("test")
+            .then((isUnique: boolean) => {
+                expect(isUnique);
+            });
+            done();
+        });
+
+        it("should return true if countDocument return 1", (done: Mocha.Done) => {
+            databaseServiceStub.resolves(1);
+            service.isUsernameUnique("test")
+            .then((isUnique: boolean) => {
+                expect(!isUnique);
+            });
+            done();
+        });
     });
 });
