@@ -1,14 +1,50 @@
+// tslint:disable:no-any
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import * as sinon from "sinon";
-// import * as sinonts from "ts-sinon";
+import * as sinonts from "ts-sinon";
 import { DatabaseService } from "./database.service";
 import { LoginService } from "./login.service";
 
 let service: LoginService;
 const databaseService: DatabaseService = new DatabaseService();
-// let databaseServiceStub: sinon.SinonStubStatic;
+let databaseServiceStub: sinon.SinonStub;
 
-describe("loginSrvice", () => {
+describe("loginService", () => {
+
+    describe("Connect user", () => {
+
+        beforeEach((done: Mocha.Done) => {
+            databaseServiceStub = sinon.stub(databaseService, "add");
+            service = new LoginService(databaseService);
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should call add from database service if the username is valid ", (done: Mocha.Done) => {
+            const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
+            serviceStub.validateUsername.returns(true);
+
+            serviceStub.connectUser("test");
+
+            expect(databaseServiceStub.calledOnce);
+            done();
+        });
+
+        it("should not call add from database service if the username is not valid ", (done: Mocha.Done) => {
+            const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
+            serviceStub.validateUsername.returns(false);
+
+            serviceStub.connectUser("test");
+
+            expect(databaseServiceStub.notCalled);
+            done();
+        });
+    });
 
     describe("Validate username", () => {
 
@@ -48,38 +84,29 @@ describe("loginSrvice", () => {
         });
     });
 
-    describe("Is username unique", () => {
+    describe("Disconnect user", () => {
 
         beforeEach((done: Mocha.Done) => {
-            sinon.stub(databaseService, "countDocuments").resolves(0);
+            databaseServiceStub = sinon.stub(databaseService, "remove");
             service = new LoginService(databaseService);
             done();
         });
 
-        it("should return true if countDocuments return 0", (done: Mocha.Done) => {
-            expect(service.isUsernameUnique("Michel")).to.equal(true);
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
             done();
         });
 
-    // it("should return false if countDocuments return 1", (done: Mocha.Done) => {
-    //     service.connectUser("Michel");
-    //     service.isUsernameUnique("Michel");
-    //     expect(service.isUsernameUnique("Michel")).to.equal(false);
-    //     done();
-    // });
+        it("should call remove from database service", (done: Mocha.Done) => {
+            service.disconnect("test");
 
-    // it("should return false if name is already used", (done: Mocha.Done) => {
-    //     service.connectUser("Michel");
-    //     const result: boolean = service.validateUsername("Michel");
-    //     expect(result).to.equal(false);
-    //     done();
-    // });
+            expect(databaseServiceStub.calledOnce);
+            done();
+        });
+    });
 
-    // it("should disconnect user if it is connected", (done: Mocha.Done) => {
-    //     service.connectUser("Michel");
-    //     service.disconnect("Michel");
-    //     expect(service.isUsernameUnique("Michel")).to.equal(true);
-    //     done();
-    // });
+    describe("Is username unique", () => {
+
+        // TODO
     });
 });

@@ -22,7 +22,7 @@ describe("game-cards-service", () => {
 
     const init: Mocha.Func = () => {
         differenceCounterService = new DifferenceCounterService();
-        differenceCounterServiceStub = sinon.stubObject<DifferenceCounterService>(differenceCounterService, ["getNumberOfDifferences"]);
+        differenceCounterServiceStub = sinon.stubObject(differenceCounterService, ["getNumberOfDifferences"]);
 
         gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
         gameCardsServiceStub = sinon.stubObject<GameCardsService>(gameCardsService, ["getRandomNumber"]);
