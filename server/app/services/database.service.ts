@@ -5,7 +5,6 @@ import {ServerConstants} from "../../../common/communication/Constants";
 
 @injectable()
 export class DatabaseService {
-    private db: mongoose.Connection;
 
     public constructor() {
         this.connect();
@@ -13,8 +12,6 @@ export class DatabaseService {
 
     private connect(): void {
         mongoose.connect(ServerConstants.DB_URL, { useNewUrlParser: true });
-        this.db = mongoose.connection;
-        this.db.on("error", console.error.bind(console, "connection error:"));
     }
 
     public async getAll(model: mongoose.Model<mongoose.Document>): Promise<mongoose.Document[]> {

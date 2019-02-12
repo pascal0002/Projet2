@@ -21,27 +21,27 @@
                         <div class="gameCardMode">1VS1</div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: gold;"></i>
-                            {{getBestTimeSolo(gameCard, 0)}}
+                            {{listOfGamesService.getBestTimeSolo(gameCard, 0)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: gold;"></i>
-                            {{getBestTime1v1(gameCard, 0)}}
+                            {{listOfGamesService.getBestTime1v1(gameCard, 0)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: silver;"></i>
-                            {{getBestTimeSolo(gameCard, 1)}}
+                            {{listOfGamesService.getBestTimeSolo(gameCard, 1)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: silver;"></i>
-                            {{getBestTime1v1(gameCard, 1)}}
+                            {{listOfGamesService.getBestTime1v1(gameCard, 1)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{getBestTimeSolo(gameCard, 2)}}
+                            {{listOfGamesService.getBestTimeSolo(gameCard, 2)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{getBestTime1v1(gameCard, 2)}}
+                            {{listOfGamesService.getBestTime1v1(gameCard, 2)}}
                         </div>
                         <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
                         <ng-template #thenBlock>

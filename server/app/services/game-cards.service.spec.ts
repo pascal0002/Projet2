@@ -57,7 +57,7 @@ describe("game-cards-service", () => {
         });
     });
 
-    describe("generateGameCard", () => {
+    describe("generateGameCard2D", () => {
 
         beforeEach(init);
 
@@ -77,9 +77,9 @@ describe("game-cards-service", () => {
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
-                bestTime1v1: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
             };
-            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard2D(formInfo)).deep.equal(expectedGameCard);
             done();
         });
 
@@ -100,7 +100,7 @@ describe("game-cards-service", () => {
                 bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
                 bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
             };
-            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard2D(formInfo)).deep.equal(expectedGameCard);
             done();
         });
 
@@ -120,9 +120,9 @@ describe("game-cards-service", () => {
                 originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
                 modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
-                bestTime1v1: [{user : "user109", time : 286}, {user : "user109", time : 300}, {user : "user109", time : 313}],
+                bestTime1v1: [{user : "user109", time : 166}, {user : "user109", time : 180}, {user : "user109", time : 193}],
             };
-            expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
+            expect(gameCardsServiceStub.generateGameCard2D(formInfo)).deep.equal(expectedGameCard);
             done();
         });
     });
@@ -153,17 +153,6 @@ describe("game-cards-service", () => {
         });
     });
 
-    describe("convertTimeToMSSFormat", () => {
-
-        beforeEach(init);
-
-        it("should convert the amount of seconds given to the right time display in MSS format", (done: Function) => {
-
-            expect(gameCardsServiceStub.convertTimeToMSSFormat(263)).to.equal("4:23");
-            done();
-        });
-    });
-
     describe("generateBestTime", () => {
 
         beforeEach(init);
@@ -171,14 +160,16 @@ describe("game-cards-service", () => {
         it("should return minimal time value and user number when Math.random always return 0", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(0);
 
-            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["1:40 user0", "1:40 user0", "1:40 user0"]);
+            expect(gameCardsServiceStub.generateBestTime(100, 200))
+            .deep.equal([{user : "user0", time : 100}, {user : "user0", time : 100}, {user : "user0", time : 100}]);
             done();
         });
 
         it("should return maximal time value and user number when Math.random always return 1", (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(1);
 
-            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["3:20 user999", "3:20 user999", "3:20 user999"]);
+            expect(gameCardsServiceStub.generateBestTime(100, 200))
+            .deep.equal([{user : "user999", time : 200}, {user : "user999", time : 200}, {user : "user999", time : 200}]);
             done();
         });
 
@@ -186,7 +177,8 @@ describe("game-cards-service", () => {
            (done: Function) => {
             gameCardsServiceStub.getRandomNumber.returns(0.5);
 
-            expect(gameCardsServiceStub.generateBestTime(100, 200)).deep.equal(["2:30 user499", "2:55 user499", "3:07 user499"]);
+            expect(gameCardsServiceStub.generateBestTime(100, 200))
+            .deep.equal([{user : "user499", time : 150}, {user : "user499", time : 175}, {user : "user499", time : 187}]);
             done();
         });
     });
