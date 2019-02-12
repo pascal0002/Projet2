@@ -2,10 +2,11 @@
 // tslint:disable:no-any
 import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
 
 describe("FormValidator2dService", () => {
@@ -112,8 +113,9 @@ describe("FormValidator2dService", () => {
   it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
     // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-    const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
-    const formSent: IFormInfo = {
+    const listOfGameService: ListOfGamesService = new ListOfGamesService(httpClientSpy);
+    const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy, listOfGameService);
+    const formSent: IFormInfo2D = {
       gameName: "Test",
       originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: [255, 255, 255] },
       modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: [0, 0, 0] },
@@ -121,8 +123,8 @@ describe("FormValidator2dService", () => {
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
     formValidatorService.generateGameCard(formSent).then((res: GameCard) => {
       expect(res.title).toEqual(formSent.gameName);
-      expect(res.imageName).toEqual(formSent.originalImage.fileName);
-      expect(res.modifiedImageName).toEqual(formSent.modifiedImage.fileName);
+      expect(res.originalImagePath).toEqual(formSent.originalImage.fileName);
+      expect(res.modifiedImagePath).toEqual(formSent.modifiedImage.fileName);
     }).catch((err) => new ErrorHandler());
 
     expect(httpClientSpy.post.calls.count()).toBe(1, "one call");

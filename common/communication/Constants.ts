@@ -6,12 +6,11 @@ export class ServerConstants {
     static MINIMAL_TIME_SOLO: number = 210;
     static MAXIMAL_TIME_SOLO: number = 360;
     static NUMBER_HIGH_SCORE: number = 3;
-    static SECOND_PER_MINUTE: number = 60;
     static MAXIMAL_USER_ID: number = 999;
-    static TWO_DIGIT: number = -2;
 
     static ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
     static MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
+    static DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/";
 
     static MINIMUM_NAME_LENGTH: number = 3;
     static MAXIMUM_NAME_LENGTH: number = 15;
@@ -55,19 +54,41 @@ export class ServerConstants {
     static FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
 
     static ERROR: number = 400;
+
+    static DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
 }
 
 export class ClientConstants {
     static SERVER_BASE_URL: string = "http://localhost:3000/";
 
+    // For the 2D form validator
     static MIN_TITLE_LENGTH: number = 3;
     static MAX_TITLE_LENGTH: number = 15;
     static VALID_BMP_HEIGHT: number = 480;
     static VALID_BMP_WIDTH: number = 640;
     static VALID_BITS_PER_PIXEL: number = 24;
 
+    // For the bitmap reader
     static WIDTH_OFFSET: number = 18;
     static HEIGHT_OFFSET: number = 22;
     static BITS_PER_PIXEL_OFFSET: number = 28;
     static PIXEL_OFFSET: number = 10;
-}
+
+    static LIST_2D: number = 0;
+    static LIST_3D: number = 1;
+
+    static SECOND_PER_MINUTE: number = 60;
+    static TWO_DIGIT: number = -2;
+    static USERNAME: number = 0;
+    static TIME: number = 1;
+    
+    //For the 3D form 
+    static MAX_NUMBER_OF_OBJECTS: number = 200;
+    static MIN_NUMBER_OF_OBJECTS: number = 10;
+    static MIN_NUMBER_OF_CHECKED_CHECKBOXES: number = 1;
+    static OBJECT_TYPES: string[] = [
+        "Formes géométriques",
+        "Forêt",
+        "Océan"
+    ];
+ }

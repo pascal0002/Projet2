@@ -3,9 +3,10 @@
 import { expect } from "chai";
 import * as sinon from "ts-sinon";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import { whiteBitmap } from "../../mock/bitmapImage-mock";
+import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { GameCardsService } from "./game-cards.service";
 
@@ -15,6 +16,7 @@ let differenceCounterService: DifferenceCounterService;
 let differenceCounterServiceStub: any;
 
 let gameCardsServiceStub: any;
+const databaseService: DatabaseService = new DatabaseService();
 
 describe("game-cards-service", () => {
 
@@ -22,7 +24,7 @@ describe("game-cards-service", () => {
         differenceCounterService = new DifferenceCounterService();
         differenceCounterServiceStub = sinon.stubObject<DifferenceCounterService>(differenceCounterService, ["getNumberOfDifferences"]);
 
-        gameCardsService = new GameCardsService(differenceCounterServiceStub);
+        gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
         gameCardsServiceStub = sinon.stubObject<GameCardsService>(gameCardsService, ["getRandomNumber"]);
     };
 
@@ -64,7 +66,7 @@ describe("game-cards-service", () => {
             gameCardsServiceStub.getRandomNumber.returns(0);
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
@@ -72,10 +74,10 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["3:30 user0", "3:30 user0", "3:30 user0"],
-                bestTime1v1: ["2:30 user0", "2:30 user0", "2:30 user0"],
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -85,7 +87,7 @@ describe("game-cards-service", () => {
             gameCardsServiceStub.getRandomNumber.returns(1);
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
@@ -93,10 +95,10 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["6:00 user999", "6:00 user999", "6:00 user999"],
-                bestTime1v1: ["5:00 user999", "5:00 user999", "5:00 user999"],
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
+                bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();
@@ -107,7 +109,7 @@ describe("game-cards-service", () => {
 
             const originalImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "originalImage.bmp", pixels: []};
             const modifiedImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "modifiedImage.bmp", pixels: []};
-            const formInfo: IFormInfo = {
+            const formInfo: IFormInfo2D = {
                 gameName: "game",
                 originalImage: originalImg,
                 modifiedImage: modifiedImg,
@@ -115,10 +117,10 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                imageName: "http://localhost:3000/originalImages/originalImage.bmp",
-                modifiedImageName: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
-                bestTimeSolo: ["3:46 user109", "4:00 user109", "4:13 user109"],
-                bestTime1v1: ["2:46 user109", "3:00 user109", "3:13 user109"],
+                originalImagePath: "http://localhost:3000/originalImages/originalImage.bmp",
+                modifiedImagePath: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
+                bestTime1v1: [{user : "user109", time : 286}, {user : "user109", time : 300}, {user : "user109", time : 313}],
             };
             expect(gameCardsServiceStub.generateGameCard(formInfo)).deep.equal(expectedGameCard);
             done();

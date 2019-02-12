@@ -21,4 +21,10 @@ export class WebsocketService {
       this.socket.on(MessageType.VALIDATE_USERNAME, (data: boolean) => observer.next(data));
     });
   }
+
+  public listenForConnectionValidation(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.socket.on(MessageType.CONNECT, (data: boolean) => observer.next(data));
+    });
+  }
 }

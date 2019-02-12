@@ -2,11 +2,11 @@ import { injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import {ServerConstants} from "../../../common/communication/Constants";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 
 @injectable()
-export class FormValidatorService {
-    public validateForm(formInfo: IFormInfo): boolean {
+export class FormValidator2DService {
+    public validateForm(formInfo: IFormInfo2D): boolean {
         return (
                    this.validateGameName(formInfo.gameName)   &&
                    this.validateImage(formInfo.originalImage) &&

@@ -1,7 +1,7 @@
 export class GameCard {
     public title: string;
-    public imageName: string;
-    public modifiedImageName: string;
-    public bestTimeSolo: string[];
-    public bestTime1v1: string[];
+    public originalImagePath: string;
+    public modifiedImagePath: string;
+    public bestTimeSolo: {user: string, time: number}[];
+    public bestTime1v1: {user: string, time: number}[];
 }

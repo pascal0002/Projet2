@@ -28,7 +28,15 @@ export class WebsocketService {
 
             socket.on(MessageType.CONNECT, (username: string) => {
                 usernameSocket = username;
-                this.loginService.connectUser(username);
+                this.loginService.isUsernameUnique(username)
+                .then((isUnique: boolean) => {
+                    if (isUnique) {
+                        this.loginService.connectUser(username);
+                        socket.emit(MessageType.CONNECT, true);
+                    } else {
+                        socket.emit(MessageType.CONNECT, false);
+                    }
+                });
             });
 
             socket.on("disconnect", () => {

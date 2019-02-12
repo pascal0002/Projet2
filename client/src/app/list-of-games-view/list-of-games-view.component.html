@@ -16,28 +16,33 @@
                 <div class="gameCard">
                     <div class="gameCardTitle"> {{gameCard.title}}</div>
                     <div class="gameCardInfo">
-                        <div class="gameCardImage"><img src="{{gameCard.imageName}}" height="210px" width="280px"></div>
+                        <div class="gameCardImage"><img src="{{gameCard.originalImagePath}}" height="210px" width="280px"></div>
                         <div class="gameCardMode">Solo</div>
                         <div class="gameCardMode">1VS1</div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: gold;"></i>
-                            {{gameCard.bestTimeSolo[0]}}
+                            {{getBestTimeSolo(gameCard, 0)}}
                         </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: gold;"></i>
-                            {{gameCard.bestTime1v1[0]}}</div>
+                            {{getBestTime1v1(gameCard, 0)}}
+                        </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: silver;"></i>
-                            {{gameCard.bestTimeSolo[1]}}</div>
+                            {{getBestTimeSolo(gameCard, 1)}}
+                        </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: silver;"></i>
-                            {{gameCard.bestTime1v1[1]}}</div>
+                            {{getBestTime1v1(gameCard, 1)}}
+                        </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{gameCard.bestTimeSolo[2]}}</div>
+                            {{getBestTimeSolo(gameCard, 2)}}
+                        </div>
                         <div class="gameCardScore">
                             <i class="fas fa-medal" style="color: #cd7f32;"></i>
-                            {{gameCard.bestTime1v1[2]}}</div>
+                            {{getBestTime1v1(gameCard, 2)}}
+                        </div>
                         <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
                         <ng-template #thenBlock>
                             <div>
@@ -56,7 +61,7 @@
                                 <div class="gameCardButton button">Créer</div>
                             </div>
                         </ng-template>
-                        
+
                     </div>
                 </div>
             </div>

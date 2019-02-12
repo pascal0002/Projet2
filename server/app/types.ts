@@ -8,11 +8,13 @@ export default {
         GameCardsService: Symbol("GameCardsService"),
         DifferencesController: Symbol("DifferencesController"),
         DifferenceCounterService: Symbol("DifferenceCounterService"),
-        FormValidatorService: Symbol("FormValidatorService"),
+        FormValidator2DService: Symbol("FormValidator2DService"),
+        FormValidator3DService: Symbol("FormValidator3DService"),
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
         DifferenceIdentificator2DService: Symbol("DifferenceIdentificator2DService"),
 
         OriginalImg: Symbol("OriginalImg"),
         ModifiedImg: Symbol("ModifiedImg"),
+        DatabaseService: Symbol("DatabaseService"),
 };
