@@ -32,14 +32,15 @@ export class UserLoginComponent {
   public connect(): void {
     this.userLoginService
       .connect(this.username)
-      .subscribe(
-        (isValid: boolean) => {
-          this.isUsernameValid = isValid;
-          this.errorMessage = "Ce nom d'utilisateur est déjà utilisé";
-          if (isValid) {
-            this.router.navigate(["/games_list"]);
-          }
-        },
-      );
+      .toPromise()
+      .then((isValid: boolean) => {
+        this.isUsernameValid = isValid;
+        this.errorMessage = "Ce nom d'utilisateur est déjà utilisé";
+        if (isValid) {
+          this.router.navigate(["/games_list"])
+          .catch((err) => console.error(err));
+        }
+      })
+      .catch((err) => console.error(err));
   }
 }

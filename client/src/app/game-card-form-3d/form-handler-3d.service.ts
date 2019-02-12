@@ -35,7 +35,7 @@ export class FormHandler3DService {
     };
   }
 
-  public send3DFormInfo(formInfo: IFormInfo3D): Promise<GameCard> {
+  public async send3DFormInfo(formInfo: IFormInfo3D): Promise<GameCard> {
     return new Promise<GameCard>(() => {
       this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
       .toPromise()
