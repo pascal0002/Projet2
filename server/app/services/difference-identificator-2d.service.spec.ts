@@ -80,8 +80,7 @@ describe("DifferenceIdentificator2DService", () => {
 
     it("BlaBlaBla", (done: Mocha.Done) => {
         console.log("Direct neighbours : " + differenceIdentificatorService.getBlackPixelNeighbours(36, 5, testImageGetNeighbours));
-        differenceIdentificatorService.getPixelsToTurnWhite(36, testImageGetNeighbours, 5);
-        console.log(differenceIdentificatorService.modifiedPixelsPosition);
+       // differenceIdentificatorService.getPixelsToTurnWhite(36, testImageGetNeighbours, 5);
         expect(testImage[3 + 2]).to.equal(15);
         done();
     });

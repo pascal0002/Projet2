@@ -1,11 +1,11 @@
-import { inject, injectable } from "inversify";
+import { /*inject,*/ injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IClickCoordinates } from "../../../common/communication/ClickCoordinates";
 import { ServerConstants } from "../../../common/communication/Constants";
 import { IPixel } from "../../../common/communication/Pixel";
 import { ModifiedImg } from "../../mock/image-mock";
-import Types from "../types";
-import { BmpFileGenerator } from "./bmp-file-generator.service";
+//import Types from "../types";
+//import { BmpFileGenerator } from "./bmp-file-generator.service";
 //import { DifferenceCounterService } from "./difference-counter.service";
 
 @injectable()
@@ -15,25 +15,20 @@ export class DifferenceIdentificator2DService {
     public clickPosition: IClickCoordinates;
     public imageOfDifferencePixels: number[];
 
-    public constructor(@inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator,
+    public constructor(
                         /* @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService*/) {
                             const imgOfDifference: ModifiedImg = new ModifiedImg();
                             this.imageOfDifferencePixels = imgOfDifference.pixels;
                          }
 
-    public confirmDifference(clickPosition: IClickCoordinates, differenceImage: IBitmapImage, modifiedImage: IBitmapImage): boolean {
+    public confirmDifference(clickPosition: IClickCoordinates, imgOfDifferencePixels: number[]): boolean {
+        const pixelAtPos: IPixel = this.getPixelAtPos(clickPosition, imgOfDifferencePixels);
 
+        return (pixelAtPos.red === ServerConstants.BLACK_PIXEL_PARAMETER &&
+                pixelAtPos.blue === ServerConstants.BLACK_PIXEL_PARAMETER &&
+                pixelAtPos.green === ServerConstants.BLACK_PIXEL_PARAMETER);
         // Where the pixels of the image of differences are
-        const imgOfDifference: ModifiedImg = new ModifiedImg();
-        /*const test: IBitmapImage = {
-            fileName: "MY_TEST_BMP_MODIF.bmp",
-            height: 480,
-            width: 640,
-            bitDepth: 24,
-            pixels: imgOfDifference.pixels,
-        };*/
-
-        // this.bmpFileGeneratorService.generateModifedBMPFile(test);
+        /*const imgOfDifference: ModifiedImg = new ModifiedImg();
 
         console.log("Pos X: " + clickPosition.xPos);
         console.log("Pos Y: " + clickPosition.yPos);
@@ -47,13 +42,6 @@ export class DifferenceIdentificator2DService {
 
         console.log("did it go in get pixels to turn white?");
 
-        /*console.log(this.modifiedPixelsPosition);
-
-        this.modifiedPixelsPosition.forEach((position: number) => {
-            imgOfDifference.pixels[position] = ServerConstants.WHITE_PIXEL_PARAMETER;
-            imgOfDifference.pixels[position + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
-            imgOfDifference.pixels[position + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
-        });*/
 
         const test: IBitmapImage = {
             fileName: "MY_TEST_BMP_MODIF.bmp",
@@ -64,8 +52,8 @@ export class DifferenceIdentificator2DService {
         };
 
         this.bmpFileGeneratorService.generateModifedBMPFile(test);
-
-        return true;
+        */
+        //return true;
     }
 
     public getPixelAtPos(clickPosition: IClickCoordinates, pixelArray: number[]): IPixel {
@@ -84,7 +72,8 @@ export class DifferenceIdentificator2DService {
             + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }
 
-    public getPixelsToTurnWhite(currentPixelPos: number, pixels: number[], imageWidth: number): void {
+    public eraseDifference(currentPixelPos: number, pixels: number[], imageWidth: number): number[] {
+        console.log("is trying to erase the difference.");
         const pixelStack: number[] = [currentPixelPos];
         pixels[currentPixelPos] = ServerConstants.WHITE_PIXEL_PARAMETER;
         pixels[currentPixelPos + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
@@ -93,25 +82,18 @@ export class DifferenceIdentificator2DService {
         while (pixelStack.length > 0) {
             const pixelIndexNumber: number | undefined = pixelStack.shift();
             if (pixelIndexNumber !== undefined) {
-                const neighbours: number[] = this.getBlackPixelNeighbours(pixelIndexNumber, 640, pixels);
+                const neighbours: number[] = this.getBlackPixelNeighbours(pixelIndexNumber, imageWidth, pixels);
                 neighbours.forEach((neighbour: number) => {
                     pixelStack.push(neighbour);
                     pixels[neighbour] = ServerConstants.WHITE_PIXEL_PARAMETER;
                     pixels[neighbour + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
                     pixels[neighbour + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
                 });
+
             }
         }
 
-
-        /*
-        if (!this.modifiedPixelsPosition.includes(currentPixelPos)) {
-            this.modifiedPixelsPosition.push(currentPixelPos);
-            const neighbours: number[] = this.getBlackPixelNeighbours(currentPixelPos, imageWidth, pixels);
-            neighbours.forEach((neighbour: number) => {
-                this.getPixelsToTurnWhite(neighbour, pixels, imageWidth);
-            });
-        }*/
+        return pixels;
     }
 
     public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, pixels: number[]): number[] {
