@@ -1,6 +1,5 @@
 import * as mongoose from "mongoose";
-
-const scoreSchema: mongoose.Schema = new mongoose.Schema({ user: String, time: Number }, {_id: false});
+import { scoreSchema } from "./score-schema";
 
 const gamecard2DSchema: mongoose.Schema = new mongoose.Schema({
     title: String,

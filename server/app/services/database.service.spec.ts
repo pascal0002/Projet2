@@ -4,12 +4,9 @@ import * as mongoose from "mongoose";
 import "reflect-metadata";
 import * as sinon from "sinon";
 import { DatabaseService } from "./database.service";
+import { test } from "./test-schema";
 
 let databaseService: DatabaseService;
-const testSchema: mongoose.Schema = new mongoose.Schema({
-    test: String,
-});
-const test: mongoose.Model<mongoose.Document> = mongoose.model("test", testSchema, "tests");
 
 describe("DatabaseService", () => {
     beforeEach(() => {

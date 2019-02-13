@@ -118,7 +118,7 @@ describe("loginService", () => {
             done();
         });
 
-        it("should return true if countDocument return 0", (done: Mocha.Done) => {
+        it("should return 0 if countDocument return 0", (done: Mocha.Done) => {
             databaseServiceStub.resolves(0);
             service.countUsernameOccurence("test")
             .then((occurence: number) => {
@@ -128,11 +128,11 @@ describe("loginService", () => {
             done();
         });
 
-        it("should return true if countDocument return 1", (done: Mocha.Done) => {
+        it("should return 1 if countDocument return 1", (done: Mocha.Done) => {
             databaseServiceStub.resolves(1);
             service.countUsernameOccurence("test")
             .then((occurence: number) => {
-                expect(occurence).to.equal(0);
+                expect(occurence).to.equal(1);
             })
             .catch((err: Error) => console.error(err));
             done();

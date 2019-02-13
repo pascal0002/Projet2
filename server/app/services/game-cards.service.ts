@@ -26,9 +26,12 @@ export class GameCardsService {
 
     return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
       .then((image: AxiosResponse<IBitmapImage>) => {
-
         return image.data;
       });
+  }
+
+  public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
+    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
   public async getGameCards2D(): Promise<mongoose.Document[]> {
@@ -46,18 +49,6 @@ export class GameCardsService {
     });
 
     return gameCards;
-  }
-
-  private convertDBGameCard(gameCard: mongoose.Document): GameCard {
-    return { title: gameCard.toJSON().title,
-             originalImagePath: gameCard.toJSON().originalImagePath,
-             modifiedImagePath:  gameCard.toJSON().modifiedImagePath,
-             bestTimeSolo: gameCard.toJSON().bestScoreSolo,
-             bestTime1v1: gameCard.toJSON().bestScore1v1, };
-  }
-
-  public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
-    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
   public addGameCard2D(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
@@ -86,23 +77,31 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public generateGameCard3D(formInfo: IFormInfo3D): GameCard {
-
-    return {
-      title: formInfo.gameName,
-      originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
-      modifiedImagePath: "",
-      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
-      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
-    };
+  private convertDBGameCard(gameCard: mongoose.Document): GameCard {
+    return { title: gameCard.toJSON().title,
+             originalImagePath: gameCard.toJSON().originalImagePath,
+             modifiedImagePath:  (gameCard.toJSON().modifiedImagePath) ? gameCard.toJSON().modifiedImagePath : "",
+             bestTimeSolo: gameCard.toJSON().bestScoreSolo,
+             bestTime1v1: gameCard.toJSON().bestScore1v1, };
   }
 
-  public generateGameCard2D(formInfo: IFormInfo2D): GameCard {
+  private generateGameCard2D(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
       originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       modifiedImagePath: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
+      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+    };
+  }
+
+  private generateGameCard3D(formInfo: IFormInfo3D): GameCard {
+
+    return {
+      title: formInfo.gameName,
+      originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
+      modifiedImagePath: "",
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
     };
@@ -136,11 +135,11 @@ export class GameCardsService {
     return highScores;
   }
 
-  public getRandomRange(min: number, max: number): number {
+  private getRandomRange(min: number, max: number): number {
     return Math.floor(this.getRandomNumber() * (max - min) + min);
   }
 
-  public getRandomNumber(): number {
+  private getRandomNumber(): number {
     return Math.random();
   }
 }
