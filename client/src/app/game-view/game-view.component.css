@@ -1,5 +1,7 @@
 #game-container{
-   background-color: #f7f7f7;
+  background-color: #f7f7f7;
+  background-image: url("../../assets/stripes-light.png");
+  background-repeat: repeat;
 
   /*fix size for 1080p*/
   height: 830px;
@@ -13,6 +15,18 @@
   transform: translate(-50%, -50%);
 
   box-shadow: 28px -15px 83px 0px rgba(0, 0, 0, 0.75);
+  animation: slide linear infinite 100s;
+}
+
+@keyframes slide {
+  0%{
+    background-position-x: 0;
+    background-position-y: 0;
+  }
+  100%{
+    background-position-x: 2000px;
+    background-position-y: 2000px;
+  }
 }
 
 header {
@@ -21,7 +35,7 @@ header {
   background-clip: padding-box;
 
   display: grid;
-  grid-template-columns: 6% 25% 34% 30%;
+  grid-template-columns: 6% 29% 30% 30%;
 
   border-bottom: solid 14px white;
   border-top-left-radius: 5px;
@@ -47,13 +61,53 @@ header {
 }
 
 #diff-counter #diff-count{
-  margin-left: 15px;
+  color: #13315c;
+  position: relative;
+  z-index: 2;
+  font-size: 80%;
+  font-weight: bold;
+  display: inline-block;
+  transform: translate(0, -4px);
+  padding-right: 7px;
+}
+
+
+
+@keyframes fadeIn {
+  0%   { opacity:0; }
+  100%  { opacity:1; }
 }
 
 #diff-counter .fa-search{
   font-size: 65%;
   padding-left: 3px;
-  transform: translate(0, -3px);
+  transform: translate(0, -6px);
+  color:#13315c;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn ease-in-out 1s;
+}
+
+#diff-counter .diff-progress{
+  position: absolute;
+  background-color: white;
+  width: 40px;
+  height: 43px;
+  bottom: 0;
+  top:28px;
+  left: 139px;
+  border-radius:10px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  transition: all ease-in-out 1s;
+}
+
+#diff-counter .diff-progress:hover{
+  width: 290px;
+}
+
+#diff-cout{
+  letter-spacing: 5px;
 }
 
 #game-title{
@@ -109,20 +163,39 @@ header #chrono-container #hourglass{
   right : 2.91%;
 }
 
-#images{
-  text-align: center;
-  vertical-align: middle;
+#game{
   display: grid;
   grid-template-columns: 50% 50%;
+
+  text-align: center;
+  vertical-align: middle;
 }
 
-#images img{
+#game .game-panel{
   border: #13315c solid 5px;
   border-radius: 10px;
+  width: 640px;
+  height: 480px;
+  margin-left: 50px;
 }
 
 footer{
   margin-top: 20px;
+  height: 6%;
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  transition: height 0.5s ease-in-out;
+}
+
+footer.pinned {
+  height: 20% !important;
+}
+
+footer:hover{
   height: 20%;
 }
 
@@ -132,6 +205,23 @@ footer #console-header{
   padding-left: 10px;
   box-sizing: border-box;
 }
+
+footer #console-header .fa-thumbtack{
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  top:0;
+  right: 0;
+  padding: 5px;
+  height: 12px;
+
+  color: rgb(124, 124, 124);
+}
+
+footer #console-header .fa-thumbtack:hover, footer.pinned #console-header .fa-thumbtack {
+  color: black;
+}
+
 
 footer #console{
   width: 100%;
@@ -150,6 +240,7 @@ footer #console{
   border-top-right-radius: 0;
   resize: none;
 }
+
 
 /*Scrollbar*/
 
