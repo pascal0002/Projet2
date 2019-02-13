@@ -6,6 +6,7 @@ import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { DifferenceIdentificator2DService } from "../services/difference-identificator-2d.service";
 import { DifferencesGeneratorService } from "../services/differences-generator.service";
 import Types from "../types";
+import { IClickCoordinates } from "../../../common/communication/ClickCoordinates";
 
 @injectable()
 export class DifferencesController {
@@ -22,26 +23,28 @@ export class DifferencesController {
             res.json(this.differencesGeneratorService.generateDifferences(req.body.originalImage, req.body.modifiedImage));
         });
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
-            const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels("/public/modifiedImages/MY_TEST_BMP_MODIF.bmp");
-            console.log("color at 0 before erase : " + imgOfDifferencePixels[0]);
-            if (this.differenceIdentificator2DService.confirmDifference(req.body, imgOfDifferencePixels)) {
-                if (!this.bitmapGenerator.fileExists("/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp")) {
-                    this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
-                                                             "/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp",
-                                                             "MY_TEST_BMP_MODIF.bmp");
-                }
+            const clickPosition: IClickCoordinates = req.body;
+            const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(clickPosition);
+            let imgOfDifferencePixels: number[];
 
-                //console.log("Color at 0 : " +
-                 //this.differenceIdentificator2DService.eraseDifference(req.body, imgOfDifferencePixels, ServerConstants.ACCEPTED_WIDTH)[0]);
-
-               /* this.bitmapGenerator.createTemporaryFile(
-                    ,
-                    "/public/tempDifferenceImage/resultImg.bmp",
-                    "resultImg.bmp");*/
+            if (!this.bitmapGenerator.fileExists("/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp")) {
+                imgOfDifferencePixels = this.bitmapDecoder.getPixels("/public/modifiedImages/MY_TEST_BMP_MODIF.bmp");
+                this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
+                                                         "/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp",
+                                                         "MY_TEST_BMP_MODIF.bmp");
+            } else {
+                imgOfDifferencePixels = this.bitmapDecoder.getPixels("/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp");
             }
 
-            this.differenceIdentificator2DService.clickPosition = req.body;
-            console.log(this.differenceIdentificator2DService.getPixelAtPos(req.body, imgOfDifferencePixels));
+            if (this.differenceIdentificator2DService.confirmDifference(clickPosition, imgOfDifferencePixels)) {
+                // Overwrite the temp image
+                this.bitmapGenerator.createTemporaryFile(
+                    this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
+                                                                          imgOfDifferencePixels,
+                                                                          ServerConstants.ACCEPTED_WIDTH),
+                    "/public/tempDifferenceImage/MY_TEST_BMP_MODIF.bmp",
+                    "MY_TEST_BMP_MODIF.bmp");
+            }
         });
 
         return router;
