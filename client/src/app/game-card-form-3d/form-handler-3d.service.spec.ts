@@ -4,13 +4,15 @@ import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, FormGroup } from "@angular/forms";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
+import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call
 const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy);
+const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
+const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy);
 
 describe("FormHandler3DService", () => {
   beforeEach(() => {
@@ -39,16 +41,11 @@ describe("FormHandler3DService", () => {
     };
 
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.send3DFormInfo(formSent).then((res: IFormInfo3D) => {
-      expect(res.gameName).toEqual("test1");
-      expect(res.objectType).toEqual("Theme1");
-      expect(res.numberOfObjects).toEqual(23);
-      expect(res.addObjects).toBeTruthy();
-      expect(res.modifyObjects).toBeTruthy();
-      expect(res.deleteObjects).toBeFalsy();
-    }).catch((err) => new ErrorHandler());
-
-    expect(httpClientSpy.post.calls.count()).toBe(1, "one call");
+    formValidatorService.send3DFormInfo(formSent)
+    .then((gameCard: GameCard) => {
+      expect(gameCard.title).toEqual("test1");
+    })
+    .catch((err) => new ErrorHandler());
   });
 
   it("should return null (no errors) if 1 checkbox is checked", () => {
