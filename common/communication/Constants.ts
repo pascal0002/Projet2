@@ -58,19 +58,32 @@ export class ServerConstants {
     static ERROR: number = 400;
 
     static DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
+
+    static X_OBJECT_DISPERSION: number = 200;
+    static Y_OBJECT_DISPERSION: number = 100;
+    static Z_OBJECT_DISPERSION: number = 50;
+    static CIRCLE_DEGREES_NB: number = 360;
+
+    static MIN_OBJECTS_NB: number = 10;
+    static MAX_OBJECTS_NB: number = 200;
+
+    static COLOR_PARAMETER_MAX_VALUE: number = 255;
+    static OBJECT_TYPES_NB: number = 5;
+    static REFERENCE_SIZE: number = 10;
+    static HALF_VALUE: number = 0.5;
 }
 
 export class ClientConstants {
     static SERVER_BASE_URL: string = "http://localhost:3000/";
 
-    // For the 2D form validator
+    // for the 2D form validator
     static MIN_TITLE_LENGTH: number = 3;
     static MAX_TITLE_LENGTH: number = 15;
     static VALID_BMP_HEIGHT: number = 480;
     static VALID_BMP_WIDTH: number = 640;
     static VALID_BITS_PER_PIXEL: number = 24;
 
-    // For the bitmap reader
+    // for the bitmap reader
     static WIDTH_OFFSET: number = 18;
     static HEIGHT_OFFSET: number = 22;
     static BITS_PER_PIXEL_OFFSET: number = 28;
@@ -78,8 +91,8 @@ export class ClientConstants {
 
     static LIST_2D: number = 0;
     static LIST_3D: number = 1;
-    
-    //For the 3D form 
+
+    // for the 3D form
     static MAX_NUMBER_OF_OBJECTS: number = 200;
     static MIN_NUMBER_OF_OBJECTS: number = 10;
     static MIN_NUMBER_OF_CHECKED_CHECKBOXES: number = 1;
@@ -109,9 +122,9 @@ export class ClientConstants {
     static PYRAMID: number = 4;
     static PYRAMID_BASE_SIDES_NB: number = 3;
 
-    static X_OBJECT_DISPERSION: number = 220;
-    static Y_OBJECT_DISPERSION: number = 110;
-    static Z_OBJECT_DISPERSION: number = 55;
+    static X_OBJECT_DISPERSION: number = 200;
+    static Y_OBJECT_DISPERSION: number = 100;
+    static Z_OBJECT_DISPERSION: number = 50;
     static CIRCLE_DEGREES_NB: number = 360;
 
     static AMBIENT_LIGHT_INTENSITY: number = 1;
@@ -119,12 +132,5 @@ export class ClientConstants {
     static AMBIENT_LIGHT_COLOR: number = 0xffffff;
     static DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
 
-    static FORWARD_KEY: number = 32;
-    static BACKWARD_KEY: number = 8;
-    static UP_KEY: number = 87;
-    static DOWN_KEY: number = 83;
-    static LEFT_KEY: number = 65;
-    static RIGHT_KEY: number = 68;
     static SAVE_KEY: number = 13;
-    static MOVING_FACTOR: number = 2;
 }

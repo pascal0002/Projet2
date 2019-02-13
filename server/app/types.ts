@@ -15,4 +15,5 @@ export default {
         DatabaseService: Symbol("DatabaseService"),
         SnapshotWriterService: Symbol("SnapshotWriterService"),
         SceneController: Symbol("SceneController"),
+        OriginalSceneBuilderService: Symbol("OriginalSceneBuilderService"),
 };
