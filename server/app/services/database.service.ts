@@ -16,7 +16,9 @@ export class DatabaseService {
     }
 
     public async getAll(model: mongoose.Model<mongoose.Document>): Promise<mongoose.Document[]> {
-        return model.find();
+        return model.find((err: Error) => {
+            if (err) { console.error(err); }
+        });
     }
 
     public add(item: mongoose.Document): void {
@@ -25,7 +27,9 @@ export class DatabaseService {
     }
 
     public remove(model: mongoose.Model<mongoose.Document>, condition: Object): void {
-        model.deleteOne(condition);
+        model.deleteOne(condition, (err: Error) => {
+            if (err) { console.error(err); }
+        });
     }
 
     public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {

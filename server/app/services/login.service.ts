@@ -24,7 +24,7 @@ export class LoginService {
     }
 
     public disconnect(username: string): void {
-        this.databaseService.remove(userDB, { name: username });
+        this.databaseService.remove(userDB, {name: username});
     }
 
     public async countUsernameOccurence(username: string): Promise<number> {
