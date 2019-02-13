@@ -18,14 +18,16 @@ describe("DatabaseService", () => {
         databaseService = new DatabaseService();
         mockgoose = new Mockgoose(mongoose);
         mockgoose.prepareStorage().then(() => {
-            mongoose.connect("mongodb://example.com/TestingDB", { useNewUrlParser: true });
+            mongoose.connect("mongodb://example.com/TestingDB", { useNewUrlParser: true })
+            .catch((err: Error) => console.error(err));
         });
         test = mongoose.model("test", testSchema, "tests");
     });
 
     it("getAll, find function is call once ", (done: Mocha.Done) => {
         const modelStub: sinon.SinonStub = sinon.stub(test, "find");
-        databaseService.getAll(test);
+        databaseService.getAll(test)
+        .catch((err: Error) => console.error(err));
 
         expect(modelStub.calledOnce);
 
@@ -34,7 +36,7 @@ describe("DatabaseService", () => {
 
     it("add, save function is call once ", (done: Mocha.Done) => {
         const document: mongoose.Document = new test();
-        const documentStub: sinon.SinonStub = sinon.stub(document, "save");
+        const documentStub: sinon.SinonStub = sinon.stub(document, "save").resolves();
         databaseService.add(document);
 
         expect(documentStub.calledOnce);
@@ -53,7 +55,8 @@ describe("DatabaseService", () => {
 
     it("countDocuments, countDocuments function is call once ", (done: Mocha.Done) => {
         const modelStub: sinon.SinonStub = sinon.stub(test, "countDocuments");
-        databaseService.countDocuments(test, {});
+        databaseService.countDocuments(test, {})
+        .catch((err: Error) => console.error(err));
 
         expect(modelStub.calledOnce);
 

@@ -28,15 +28,16 @@ export class WebsocketService {
 
             socket.on(MessageType.CONNECT, (username: string) => {
                 usernameSocket = username;
-                this.loginService.isUsernameUnique(username)
-                .then((isUnique: boolean) => {
-                    if (isUnique) {
+                this.loginService.countUsernameOccurence(username)
+                .then((occurence: number) => {
+                    if (occurence === 0) {
                         this.loginService.connectUser(username);
                         socket.emit(MessageType.CONNECT, true);
                     } else {
                         socket.emit(MessageType.CONNECT, false);
                     }
-                });
+                })
+                .catch((err: Error) => {console.error(err); });
             });
 
             socket.on("disconnect", () => {

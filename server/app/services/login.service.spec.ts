@@ -120,19 +120,21 @@ describe("loginService", () => {
 
         it("should return true if countDocument return 0", (done: Mocha.Done) => {
             databaseServiceStub.resolves(0);
-            service.isUsernameUnique("test")
-            .then((isUnique: boolean) => {
-                expect(isUnique);
-            });
+            service.countUsernameOccurence("test")
+            .then((occurence: number) => {
+                expect(occurence).to.equal(0);
+            })
+            .catch((err: Error) => console.error(err));
             done();
         });
 
         it("should return true if countDocument return 1", (done: Mocha.Done) => {
             databaseServiceStub.resolves(1);
-            service.isUsernameUnique("test")
-            .then((isUnique: boolean) => {
-                expect(!isUnique);
-            });
+            service.countUsernameOccurence("test")
+            .then((occurence: number) => {
+                expect(occurence).to.equal(0);
+            })
+            .catch((err: Error) => console.error(err));
             done();
         });
     });

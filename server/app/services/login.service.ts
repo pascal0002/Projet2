@@ -27,14 +27,9 @@ export class LoginService {
         this.databaseService.remove(userDB, { name: username });
     }
 
-    public isUsernameUnique(username: string): Promise<boolean> {
+    public async countUsernameOccurence(username: string): Promise<number> {
 
-        return new Promise((resolve: Function) => {
-            resolve(this.databaseService.countDocuments(userDB, {name: username})
-                .then((val: number) => {
-                    return (val === 0);
-                }));
-        });
+        return this.databaseService.countDocuments(userDB, {name: username});
     }
 
 }
