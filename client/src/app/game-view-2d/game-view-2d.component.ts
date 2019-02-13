@@ -23,24 +23,25 @@ export class GameView2DComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
 
     // Create img
-//    const img: HTMLImageElement = new Image();
-//    img.src = this.game2d.imageName;
+    const img: HTMLImageElement = new Image();
+    img.src = this.game2d.imageName;
 
-    // Create canvas
-//    const canvas: HTMLCanvasElement = document.createElement("canvas");
-//    canvas.width = img.width;
-//    canvas.height = img.height;
-//    document.body.appendChild(canvas);
-   // const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
-//    this.ctx = canvas.getContext("2d");
-    // Load image and draw
- //   img.onload = (() => {
- //     if (this.ctx && img.complete) {
- //       this.ctx.drawImage(img, 0, 0, 640, 480);
- //     } else {
- //       console.log("Error: context is null");
- //     }
- //   });
+    // Load image, create canvas and draw
+    img.onload = (() => {
+
+        // Create canvas
+        const canvas: HTMLCanvasElement = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        document.body.appendChild(canvas);
+        // const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
+        this.ctx = canvas.getContext("2d");
+
+        if (this.ctx && img.complete) {
+          this.ctx.drawImage(img, 0, 0, img.width, img.height);
+        }
+      });
+
   }
 
   public clickImage(event: MouseEvent): void {
