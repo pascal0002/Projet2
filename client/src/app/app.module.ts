@@ -10,6 +10,8 @@ import { AppComponent } from "./app.component";
 import { GameCardForm2DComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { GameCardForm3DComponent } from "./game-card-form-3d/game-card-form-3d.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
+import { OpenSceneConstructorComponent } from "./open-scene-constructor/open-scene-constructor.component";
+import { OpenSceneConstructorService } from "./open-scene-constructor/open-scene-constructor.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";
@@ -18,6 +20,7 @@ const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
+  { path: "3d_edit", component: OpenSceneConstructorComponent },
 ];
 
 @NgModule({
@@ -28,6 +31,7 @@ const appRoutes: Routes = [
     UserLoginComponent,
     GameCardForm2DComponent,
     GameCardForm3DComponent,
+    OpenSceneConstructorComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +40,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
   ],
-  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService],
+  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService, OpenSceneConstructorService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

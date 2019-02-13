@@ -91,4 +91,43 @@ export class ClientConstants {
         "Forêt",
         "Océan"
     ];
- }
+
+    static CAMERA_FIELD_OF_VIEW: number = 80;
+    static CAMERA_RENDER_DISTANCE: number = 500;
+    static Z_CAMERA_POSITION: number = 90;
+
+    static MIN_OBJECTS_NB: number = 10;
+    static MAX_OBJECTS_NB: number = 200;
+
+    static COLOR_PARAMETER_MAX_VALUE: number = 255;
+    static RADIAL_PRECISION: number = 20;
+    static REFERENCE_SIZE: number = 10;
+    static HALF_VALUE: number = 0.5;
+
+    static OBJECT_TYPES_NB: number = 5;
+    static SPHERE: number = 0;
+    static CUBE: number = 1;
+    static CYLINDER: number = 2;
+    static CONE: number = 3;
+    static PYRAMID: number = 4;
+    static PYRAMID_BASE_SIDES_NB: number = 3;
+
+    static X_OBJECT_DISPERSION: number = 220;
+    static Y_OBJECT_DISPERSION: number = 110;
+    static Z_OBJECT_DISPERSION: number = 55;
+    static CIRCLE_DEGREES_NB: number = 360;
+
+    static AMBIENT_LIGHT_INTENSITY: number = 1;
+    static DIRECTIONAL_LIGHT_INTENSITY: number = 5;
+    static AMBIENT_LIGHT_COLOR: number = 0xffffff;
+    static DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
+
+    static FORWARD_KEY: number = 32;
+    static BACKWARD_KEY: number = 8;
+    static UP_KEY: number = 87;
+    static DOWN_KEY: number = 83;
+    static LEFT_KEY: number = 65;
+    static RIGHT_KEY: number = 68;
+    static SAVE_KEY: number = 13;
+    static MOVING_FACTOR: number = 2;
+}

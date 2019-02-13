@@ -16,5 +16,4 @@ export class ListOfGamesViewComponent {
   public constructor(public listOfGamesService: ListOfGamesService) {
     this.listes = this.listOfGamesService.listes;
   }
-
 }
