@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, NgZone, ViewChild } from "@angular/core";
-import {ClientConstants} from "../../../../common/communication/Constants";
+import { ClientConstants } from "../../../../common/communication/Constants";
 import { OpenSceneConstructorService } from "./open-scene-constructor.service";
 
 @Component({
