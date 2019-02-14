@@ -4,7 +4,6 @@ import { CircleProgressComponent } from "ng-circle-progress";
 import { timer, Observable, Subscription } from "rxjs";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
-import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
 
 @Component({
   selector: "app-game-view",
@@ -39,7 +38,13 @@ export class GameViewComponent implements OnInit, AfterViewInit {
   public readonly magnifierProgress1V1Offset: number = 42;
 
   public constructor() {
-    this.originalImage = TWO_DIMENSION_GAME_CARD_LIST[0];
+    this.originalImage = {
+      title: "Chat",
+      originalImagePath: "../../server/public/originalImages/cat.bmp",
+      modifiedImagePath: "../../server/public/modifiedImages/catModified.bmp",
+      bestTimeSolo: [{ user: "user7", time: 32 }, { user: "user8", time: 49 }, { user: "user9", time: 55 }],
+      bestTime1v1: [{ user: "user10", time: 20 }, { user: "user11", time: 40 }, { user: "user12", time: 41 }],
+    };
   }
 
   public ngOnInit(): void {
@@ -56,7 +61,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.bestScoreTimerLoopSub = this.startBestScoreTimer();
-    this.targetTime = this.miscStringToTime(this.originalImage.bestTimeSolo[0]);
+    this.targetTime = this.originalImage.bestTimeSolo[0].time;
     this.startTimer();
     this.logMessage("Game started");
 
@@ -96,7 +101,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
       this.medalTimeProgressBar.outerStrokeColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle + 1];
 
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
-      this.targetTime = this.miscStringToTime(this.originalImage.bestTimeSolo[this.cycle]) - this.timer;
+      this.targetTime = this.originalImage.bestTimeSolo[this.cycle].time - this.timer;
       this.bestScoreTimer = 0;
       this.bestScoreTimerLoopSub = this.startBestScoreTimer();
     } else {
