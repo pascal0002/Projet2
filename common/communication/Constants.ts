@@ -17,6 +17,7 @@ export class ServerConstants {
 
     static PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
     static PUBLIC_TEMP_FOLDER_PATH: string = "/public/tempDifferenceImage/";
+    static PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
 
     static MINIMUM_NAME_LENGTH: number = 3;
     static MAXIMUM_NAME_LENGTH: number = 15;
