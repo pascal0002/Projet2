@@ -4,23 +4,35 @@ import { expect } from "chai";
 import * as sinon from "ts-sinon";
 import {IThreeObject} from "../../../common/communication/ThreeObject";
 import { OriginalSceneBuilderService } from "./original-scene-builder.service";
+import { ScenesParameterGeneratorService } from "./scenes-parameter-generator.service";
 
 describe("original-scene-builder-service", () => {
 
     let originalSceneBuilderService: OriginalSceneBuilderService;
     let originalSceneBuilderServiceStub: any;
+
+    let scenesParameterGeneratorService: ScenesParameterGeneratorService;
+    let scenesParameterGeneratorServiceStub: any;
+
     let objects: IThreeObject[];
 
     const init: Mocha.Func = () => {
-        originalSceneBuilderService = new OriginalSceneBuilderService();
-        originalSceneBuilderServiceStub = sinon.stubObject<OriginalSceneBuilderService>(originalSceneBuilderService, ["getRandomNumber"]);
+        scenesParameterGeneratorService = new ScenesParameterGeneratorService();
+        scenesParameterGeneratorServiceStub = sinon.stubObject<ScenesParameterGeneratorService>(
+                                            scenesParameterGeneratorService, ["getRandomNumber"]);
+
+        originalSceneBuilderService = new OriginalSceneBuilderService(scenesParameterGeneratorServiceStub);
+        originalSceneBuilderServiceStub = sinon.stubObject<OriginalSceneBuilderService>(
+            originalSceneBuilderService, ["getRandomNumber"]);
+
         objects = [];
     };
 
     describe("createObjects", () => {
         beforeEach(init);
 
-        it("should return an object of type IThreeObject with all the minimal values", (done: Mocha.Done) => {
+        it("should return the minimal amount of objects of type IThreeObject with all the minimal values", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
             originalSceneBuilderServiceStub.getRandomNumber.returns(0);
             for (let i: number = 0; i < 10; i++) {
                 objects.push({color: "rgb(0,0,0)", diameter: 5, height: 5,
@@ -30,7 +42,8 @@ describe("original-scene-builder-service", () => {
             done();
         });
 
-        it("should return an object of type IThreeObject with all the maximal values", (done: Mocha.Done) => {
+        it("should return the maximal amount of objects of type IThreeObject with all the maximal values", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
             originalSceneBuilderServiceStub.getRandomNumber.returns(1);
             for (let i: number = 0; i < 200; i++) {
                 objects.push({color: "rgb(255,255,255)", diameter: 15, height: 15,
@@ -40,7 +53,8 @@ describe("original-scene-builder-service", () => {
             done();
         });
 
-        it("should return an object of type IThreeObject with all the right values", (done: Mocha.Done) => {
+        it("should return the right amount of objects of type IThreeObject with all the right values", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0.6);
             originalSceneBuilderServiceStub.getRandomNumber.returns(0.6);
             for (let i: number = 0; i < 124; i++) {
                 objects.push({color: "rgb(153,153,153)", diameter: 11, height: 11,

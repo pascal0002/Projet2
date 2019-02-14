@@ -108,16 +108,16 @@ export class ClientConstants {
         "Océan"
     ];
 
-    static CAMERA_FIELD_OF_VIEW: number = 80;
+    static CAMERA_FIELD_OF_VIEW: number = 70;
     static CAMERA_RENDER_DISTANCE: number = 500;
-    static Z_CAMERA_POSITION: number = 90;
+    static Z_CAMERA_POSITION: number = 100;
 
     static MIN_OBJECTS_NB: number = 10;
     static MAX_OBJECTS_NB: number = 200;
 
     static COLOR_PARAMETER_MAX_VALUE: number = 255;
     static RADIAL_PRECISION: number = 20;
-    static REFERENCE_SIZE: number = 10;
+    static REFERENCE_SIZE: number = 8;
     static HALF_VALUE: number = 0.5;
 
     static OBJECT_TYPES_NB: number = 5;
