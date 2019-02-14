@@ -4,38 +4,48 @@ import { expect } from "chai";
 import * as mongoose from "mongoose";
 import * as sinon from "sinon";
 import * as sinonts from "ts-sinon";
-import { DatabaseService } from "./database.service";
 import { LoginService } from "./login.service";
 
 let service: LoginService;
-let databaseService: DatabaseService;
 let databaseServiceStub: sinon.SinonStub;
+class MockDatabaseService {
+
+    public constructor() {
+        this.connect();
+    }
+
+    private connect(): void {
+        return;
+    }
+
+    public async getAll(model: mongoose.Model<mongoose.Document>): Promise<number> {
+        return Promise.resolve(0);
+    }
+
+    public add(item: mongoose.Document): void {
+        return;
+    }
+
+    public remove(model: mongoose.Model<mongoose.Document>, condition: Object): void {
+        return;
+    }
+
+    public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
+        return Promise.resolve(0);
+    }
+}
+
+const databaseService: any = new MockDatabaseService();
 
 describe("loginService", () => {
-
-    before((done: Mocha.Done) => {
-        databaseService = new DatabaseService();
-        done();
-    });
-
-    after((done: Mocha.Done) => {
-        mongoose.connection.close()
-        .catch((err: Error) => console.error(err));
-        done();
-    });
 
     describe("Connect user", () => {
 
         beforeEach((done: Mocha.Done) => {
-            databaseServiceStub = sinon.stub(databaseService, "add");
             service = new LoginService(databaseService);
             done();
         });
 
-        afterEach((done: Mocha.Done) => {
-            databaseServiceStub.restore();
-            done();
-        });
 
         it("should call add from database service if the username is valid ", (done: Mocha.Done) => {
             const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
@@ -43,7 +53,7 @@ describe("loginService", () => {
 
             serviceStub.connectUser("test");
 
-            expect(databaseServiceStub.calledOnce);
+            expect(databaseService.calledOnce);
             done();
         });
 
@@ -53,7 +63,7 @@ describe("loginService", () => {
 
             serviceStub.connectUser("test");
 
-            expect(databaseServiceStub.notCalled);
+            expect(databaseService.notCalled);
             done();
         });
     });
@@ -99,24 +109,19 @@ describe("loginService", () => {
     describe("Disconnect user", () => {
 
         beforeEach((done: Mocha.Done) => {
-            databaseServiceStub = sinon.stub(databaseService, "remove");
             service = new LoginService(databaseService);
-            done();
-        });
-
-        afterEach((done: Mocha.Done) => {
-            databaseServiceStub.restore();
             done();
         });
 
         it("should call remove from database service", (done: Mocha.Done) => {
             service.disconnect("test");
 
-            expect(databaseServiceStub.calledOnce);
+            expect(databaseService.calledOnce);
             done();
         });
     });
 
+    
     describe("Is username unique", () => {
 
         beforeEach((done: Mocha.Done) => {
