@@ -1,16 +1,28 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
+import * as mongoose from "mongoose";
 import * as sinon from "sinon";
 import * as sinonts from "ts-sinon";
 import { DatabaseService } from "./database.service";
 import { LoginService } from "./login.service";
 
 let service: LoginService;
-const databaseService: DatabaseService = new DatabaseService();
+let databaseService: DatabaseService;
 let databaseServiceStub: sinon.SinonStub;
 
 describe("loginService", () => {
+
+    before((done: Mocha.Done) => {
+        databaseService = new DatabaseService();
+        done();
+    });
+
+    after((done: Mocha.Done) => {
+        mongoose.connection.close()
+        .catch((err: Error) => console.error(err));
+        done();
+    });
 
     describe("Connect user", () => {
 

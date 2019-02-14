@@ -1,22 +1,22 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
-import { expect } from "chai";
-import { ModifiedSceneBuilderService } from "./modified-scene-builder.service";
+// import { expect } from "chai";
+// import { ModifiedSceneBuilderService } from "./modified-scene-builder.service";
 
-describe("snapshot-writer-service", () => {
+// describe("snapshot-writer-service", () => {
 
-    let modifiedSceneBuilderService: ModifiedSceneBuilderService;
+//     let modifiedSceneBuilderService: ModifiedSceneBuilderService;
 
-    const init: Mocha.Func = () => {
-        modifiedSceneBuilderService = new ModifiedSceneBuilderService();
-    };
+//     const init: Mocha.Func = () => {
+//         modifiedSceneBuilderService = new ModifiedSceneBuilderService();
+//     };
 
-    describe("makeSnapshot", () => {
-        beforeEach(init);
+//     describe("makeSnapshot", () => {
+//         beforeEach(init);
 
-        it("description", (done: Mocha.Done) => {
-            expect("something").deep.equal("something");
-            done();
-        });
-    });
-});
+//         it("description", (done: Mocha.Done) => {
+//             expect("something").deep.equal("something");
+//             done();
+//         });
+//     });
+// });

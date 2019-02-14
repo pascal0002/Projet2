@@ -9,8 +9,15 @@ import { test } from "./test-schema";
 let databaseService: DatabaseService;
 
 describe("DatabaseService", () => {
-    beforeEach(() => {
+    before((done: Mocha.Done) => {
         databaseService = new DatabaseService();
+        done();
+    });
+
+    after((done: Mocha.Done) => {
+        mongoose.connection.close()
+        .catch((err: Error) => console.error(err));
+        done();
     });
 
     it("getAll, find function is call once ", (done: Mocha.Done) => {
@@ -20,6 +27,7 @@ describe("DatabaseService", () => {
 
         expect(modelStub.calledOnce);
 
+        modelStub.restore();
         done();
     });
 
@@ -30,15 +38,18 @@ describe("DatabaseService", () => {
 
         expect(documentStub.calledOnce);
 
+        documentStub.restore();
         done();
     });
 
     it("remove, deleteOne function is call once ", (done: Mocha.Done) => {
         const modelStub: sinon.SinonStub = sinon.stub(test, "deleteOne");
+        modelStub.resolves();
         databaseService.remove(test, {});
 
         expect(modelStub.calledOnce);
 
+        modelStub.restore();
         done();
     });
 
@@ -49,6 +60,7 @@ describe("DatabaseService", () => {
 
         expect(modelStub.calledOnce);
 
+        modelStub.restore();
         done();
     });
 
