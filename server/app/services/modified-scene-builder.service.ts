@@ -1,9 +1,14 @@
-import { injectable } from "inversify";
-import { ServerConstants } from "../../../common/communication/Constants";
-import { IThreeObject } from "../../../common/communication/ThreeObject";
+import { inject, injectable } from "inversify";
+import {ServerConstants} from "../../../common/communication/Constants";
+import {IThreeObject} from "../../../common/communication/ThreeObject";
+import Types from "../types";
+import {ScenesParameterGeneratorService} from "./scenes-parameter-generator.service";
 
 @injectable()
 export class ModifiedSceneBuilderService {
+
+    public constructor(@inject(Types.ScenesParameterGeneratorService)
+                       private scenesParameterGeneratorService: ScenesParameterGeneratorService) {/**/}
 
     public createModifications(scene: IThreeObject[]): IThreeObject[] {
         let deletionNb: number = 0, colorChangeNb: number = 0, addNb: number = 0;
@@ -50,47 +55,13 @@ export class ModifiedSceneBuilderService {
                 objectToChange--;
             }
         }
-        scene[objectToChange].color = this.makeRandomColors();
+        scene[objectToChange].color = this.scenesParameterGeneratorService.makeRandomColors();
         objectsChanged.push(objectToChange);
     }
 
     private addObject(scene: IThreeObject[]): void {
-        const object: IThreeObject = {color: "", diameter: 0, height: 0, position: [], orientation: [], type: -1};
-        object.color = this.makeRandomColors();
-        object.diameter = (this.getRandomNumber() + ServerConstants.HALF_VALUE) * ServerConstants.REFERENCE_SIZE;
-        object.height = (this.getRandomNumber() + ServerConstants.HALF_VALUE) * ServerConstants.REFERENCE_SIZE;
-        object.position = this.translateObject();
-        object.orientation = this.rotateObject();
-        object.type = Math.floor(this.getRandomNumber() * ServerConstants.OBJECT_TYPES_NB);
+        const object: IThreeObject = this.scenesParameterGeneratorService.createObject();
         scene.push(object);
-    }
-
-    private makeRandomColors(): string {
-
-        const red: number = Math.round(this.getRandomNumber() * ServerConstants.COLOR_PARAMETER_MAX_VALUE);
-        const green: number = Math.round(this.getRandomNumber() * ServerConstants.COLOR_PARAMETER_MAX_VALUE);
-        const blue: number = Math.round(this.getRandomNumber() * ServerConstants.COLOR_PARAMETER_MAX_VALUE);
-
-        return "rgb(" + red + "," + green + "," + blue + ")";
-    }
-
-    private translateObject(): number[] {
-        const xPosition: number = Math.round(this.getRandomNumber() * ServerConstants.X_OBJECT_DISPERSION)
-                                  - ServerConstants.X_OBJECT_DISPERSION * ServerConstants.HALF_VALUE;
-        const yPosition: number = Math.round(this.getRandomNumber() * ServerConstants.Y_OBJECT_DISPERSION)
-                                  - ServerConstants.Y_OBJECT_DISPERSION * ServerConstants.HALF_VALUE;
-        const zPosition: number = Math.round(this.getRandomNumber() * ServerConstants.Z_OBJECT_DISPERSION)
-                                  - ServerConstants.Z_OBJECT_DISPERSION * ServerConstants.HALF_VALUE;
-
-        return [xPosition, yPosition, zPosition];
-    }
-
-    private rotateObject(): number[] {
-        const xOrientation: number = this.getRandomNumber() * ServerConstants.CIRCLE_DEGREES_NB;
-        const yOrientation: number = this.getRandomNumber() * ServerConstants.CIRCLE_DEGREES_NB;
-        const zOrientation: number = this.getRandomNumber() * ServerConstants.CIRCLE_DEGREES_NB;
-
-        return [xOrientation, yOrientation, zOrientation];
     }
 
     private getRandomNumber(): number {

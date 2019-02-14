@@ -16,4 +16,5 @@ export default {
         SceneController: Symbol("SceneController"),
         OriginalSceneBuilderService: Symbol("OriginalSceneBuilderService"),
         ModifiedSceneBuilderService: Symbol("ModifiedSceneBuilderService"),
+        ScenesParameterGeneratorService: Symbol("ScenesParameterGeneratorService"),
 };

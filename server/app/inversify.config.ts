@@ -15,6 +15,7 @@ import { GameCardsService } from "./services/game-cards.service";
 import { LoginService } from "./services/login.service";
 import { ModifiedSceneBuilderService } from "./services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "./services/original-scene-builder.service";
+import {ScenesParameterGeneratorService} from "./services/scenes-parameter-generator.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -37,4 +38,5 @@ container.bind(Types.DatabaseService).to(DatabaseService);
 container.bind(Types.SceneController).to(SceneController);
 container.bind(Types.OriginalSceneBuilderService).to(OriginalSceneBuilderService);
 container.bind(Types.ModifiedSceneBuilderService).to(ModifiedSceneBuilderService);
+container.bind(Types.ScenesParameterGeneratorService).to(ScenesParameterGeneratorService);
 export { container };
