@@ -10,7 +10,6 @@ import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import { blackBitmap, whiteBitmap } from "../../mock/bitmapImage-mock";
-import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
@@ -24,21 +23,38 @@ let differenceCounterServiceStub: any;
 
 let axioStub: sinon.SinonStub;
 
-let databaseService: DatabaseService;
 let databaseServiceStub: sinon.SinonStub;
 
+class MockDatabaseService {
+
+    public constructor() {
+        this.connect();
+    }
+
+    private connect(): void {
+        return;
+    }
+
+    public async getAll(model: mongoose.Model<mongoose.Document>): Promise<number> {
+        return Promise.resolve(0);
+    }
+
+    public add(item: mongoose.Document): void {
+        return;
+    }
+
+    public remove(model: mongoose.Model<mongoose.Document>, condition: Object): void {
+        return;
+    }
+
+    public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
+        return Promise.resolve(0);
+    }
+}
+
+const databaseService: any = new MockDatabaseService();
+
 describe("game-cards-service", () => {
-
-    before((done: Mocha.Done) => {
-        databaseService = new DatabaseService();
-        done();
-    });
-
-    after((done: Mocha.Done) => {
-        mongoose.connection.close()
-        .catch((err: Error) => console.error(err));
-        done();
-    });
 
     describe("test", () => {
 
