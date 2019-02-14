@@ -31,4 +31,11 @@ export const TWO_DIMENSION_GAME_CARD_LIST: GameCard[] = [
         bestTime1v1: ["2:08 nick", "2:33 te", "2:48 nice"],
     },
 
+    {   title: "Barbecue",
+        imageName: serverAccessPath + "originalImages/barbecue.bmp",
+        modifiedImageName: serverAccessPath + "modifiedImages/barbecueModified.bmp",
+        bestTimeSolo: ["3:30 blabla", "4:31 user", "4:55 name"],
+        bestTime1v1: ["2:08 nick", "2:33 te", "2:48 nice"],
+    },
+
 ];

@@ -30,8 +30,6 @@ export class BmpFileGenerator {
     }
 
     public fileExists(path: string): boolean {
-        console.log("The file exists : " + fs.existsSync(process.cwd() + path));
-
         return (fs.existsSync(process.cwd() + path));
     }
 

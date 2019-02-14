@@ -1,64 +1,32 @@
-import { /*inject,*/ injectable } from "inversify";
+import { injectable } from "inversify";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IClickCoordinates } from "../../../common/communication/ClickCoordinates";
+import { IClickInfo } from "../../../common/communication/ClickInfo";
 import { ServerConstants } from "../../../common/communication/Constants";
 import { IPixel } from "../../../common/communication/Pixel";
 import { ModifiedImg } from "../../mock/image-mock";
-//import Types from "../types";
-//import { BmpFileGenerator } from "./bmp-file-generator.service";
-//import { DifferenceCounterService } from "./difference-counter.service";
 
 @injectable()
 export class DifferenceIdentificator2DService {
 
     public differenceImgTest: IBitmapImage;
-    public clickPosition: IClickCoordinates;
+    public clickPosition: IClickInfo;
     public imageOfDifferencePixels: number[];
 
-    public constructor(
-                        /* @inject(Types.DifferenceCounterService) private diffCounterService: DifferenceCounterService*/) {
+    public constructor() {
                             const imgOfDifference: ModifiedImg = new ModifiedImg();
                             this.imageOfDifferencePixels = imgOfDifference.pixels;
                          }
 
-    public confirmDifference(clickPosition: IClickCoordinates, imgOfDifferencePixels: number[]): boolean {
+    public confirmDifference(clickPosition: IClickInfo, imgOfDifferencePixels: number[]): boolean {
         const pixelAtPos: IPixel = this.getPixelAtPos(clickPosition, imgOfDifferencePixels);
 
         return (pixelAtPos.red === ServerConstants.BLACK_PIXEL_PARAMETER &&
                 pixelAtPos.blue === ServerConstants.BLACK_PIXEL_PARAMETER &&
                 pixelAtPos.green === ServerConstants.BLACK_PIXEL_PARAMETER);
-        // Where the pixels of the image of differences are
-        /*const imgOfDifference: ModifiedImg = new ModifiedImg();
-
-        console.log("Pos X: " + clickPosition.xPos);
-        console.log("Pos Y: " + clickPosition.yPos);
-
-        console.log(this.getPixelAtPos(clickPosition, imgOfDifference.pixels));
-
-        console.log("Neighbours PAM: " + this.getBlackPixelNeighbours(this.getPositionInArray(clickPosition), 640, imgOfDifference.pixels));
-        this.getPixelsToTurnWhite(this.getPositionInArray(clickPosition),
-            imgOfDifference.pixels,
-            ServerConstants.ACCEPTED_WIDTH);
-
-        console.log("did it go in get pixels to turn white?");
-
-
-        const test: IBitmapImage = {
-            fileName: "MY_TEST_BMP_MODIF.bmp",
-            height: 480,
-            width: 640,
-            bitDepth: 24,
-            pixels: this.imageOfDifferencePixels,
-        };
-
-        this.bmpFileGeneratorService.generateModifedBMPFile(test);
-        */
-        //return true;
     }
 
-    public getPixelAtPos(clickPosition: IClickCoordinates, pixelArray: number[]): IPixel {
+    public getPixelAtPos(clickPosition: IClickInfo, pixelArray: number[]): IPixel {
         const POS_IN_ARRAY: number = this.getPositionInArray(clickPosition);
-        console.log("Pos of pixel clicked : " + POS_IN_ARRAY);
 
         return {
             red: pixelArray[POS_IN_ARRAY],
@@ -67,13 +35,12 @@ export class DifferenceIdentificator2DService {
         };
     }
 
-    public getPositionInArray(clickPosition: IClickCoordinates): number {
-        return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * 3)
+    public getPositionInArray(clickPosition: IClickInfo): number {
+        return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL)
             + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }
 
     public eraseDifference(currentPixelPos: number, pixels: number[], imageWidth: number): number[] {
-        console.log("is trying to erase the difference.");
         const pixelStack: number[] = [currentPixelPos];
         pixels[currentPixelPos] = ServerConstants.WHITE_PIXEL_PARAMETER;
         pixels[currentPixelPos + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
@@ -121,7 +88,6 @@ export class DifferenceIdentificator2DService {
 
         return allPixelNeighbours;
     }
-
 
     public getRightPixelNeighbour(clickedPixelPos: number): number {
         return clickedPixelPos + ServerConstants.BYTES_PER_PIXEL;

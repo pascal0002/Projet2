@@ -1,10 +1,10 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import "reflect-metadata";
-import { testImage, testImageGetNeighbours } from "../../mock/image-mock";
+import { testImage } from "../../mock/image-mock";
 import { DifferenceIdentificator2DService } from "./difference-identificator-2d.service";
 
-let differenceIdentificatorService: DifferenceIdentificator2DService;
+const differenceIdentificatorService: DifferenceIdentificator2DService = new DifferenceIdentificator2DService();
 //  Test image gives:
 //  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
 //  255, 255, 255,  16,  17,  18,  19,  20,  21,  22,  23,  24, 255, 255, 255,
@@ -17,8 +17,6 @@ let differenceIdentificatorService: DifferenceIdentificator2DService;
 //                                    BL = [1,2,3]   , B = [4,5,6]   , BR = [7,8,9]
 
 // [2,2] -> middle of 5px by 5px image, gives pos 36 in array.
-
-
 
 //  Gives:
 //  255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
@@ -77,12 +75,4 @@ describe("DifferenceIdentificator2DService", () => {
         expect(testImage[rightPixel + 2]).to.equal(15);
         done();
     });
-
-    it("BlaBlaBla", (done: Mocha.Done) => {
-        console.log("Direct neighbours : " + differenceIdentificatorService.getBlackPixelNeighbours(36, 5, testImageGetNeighbours));
-       // differenceIdentificatorService.getPixelsToTurnWhite(36, testImageGetNeighbours, 5);
-        expect(testImage[3 + 2]).to.equal(15);
-        done();
-    });
-
 });
