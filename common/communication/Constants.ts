@@ -97,7 +97,7 @@ export class ClientConstants {
     static TWO_DIGIT: number = -2;
     static USERNAME: number = 0;
     static TIME: number = 1;
-    
+
     // for the 3D form
     static MAX_NUMBER_OF_OBJECTS: number = 200;
     static MIN_NUMBER_OF_OBJECTS: number = 10;
