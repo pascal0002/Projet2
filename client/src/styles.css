@@ -15,4 +15,5 @@ body {
   background-image: url('./assets/logo-fade-mosaic.png');
   background-repeat: repeat;
   background-size: 5%;
+  background-position: -25px -25px;
 }

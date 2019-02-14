@@ -12,6 +12,7 @@ export default {
         FormValidator3DService: Symbol("FormValidator3DService"),
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
+        DifferenceIdentificator2DService: Symbol("DifferenceIdentificator2DService"),
         DatabaseService: Symbol("DatabaseService"),
         SceneController: Symbol("SceneController"),
         OriginalSceneBuilderService: Symbol("OriginalSceneBuilderService"),
