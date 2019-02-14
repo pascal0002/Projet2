@@ -6,6 +6,7 @@ import { inject, injectable } from "inversify";
 import * as logger from "morgan";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
+import { SceneController } from "./controllers/scene-controller";
 import Types from "./types";
 
 @injectable()
@@ -17,6 +18,7 @@ export class Application {
     public constructor(
         @inject(Types.GameCardsController) private gameCardsController: GameCardsController,
         @inject(Types.DifferencesController) private differencesController: DifferencesController,
+        @inject(Types.SceneController) private sceneController: SceneController,
     ) {
         this.app = express();
         this.config();
@@ -37,6 +39,7 @@ export class Application {
         // Notre application utilise le routeur de notre API `Index`
         this.app.use("/api/game_cards", this.gameCardsController.router);
         this.app.use("/api/differences", this.differencesController.router);
+        this.app.use("/api/scene", this.sceneController.router);
         this.app.use(express.static("./public"));
         this.errorHandeling();
     }

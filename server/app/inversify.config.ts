@@ -2,6 +2,7 @@ import { Container } from "inversify";
 import { Application } from "./app";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
+import { SceneController } from "./controllers/scene-controller";
 import { Server } from "./server";
 import { BitmapEncoder } from "./services/bitmap-encoder.service";
 import {BmpFileGenerator} from "./services/bmp-file-generator.service";
@@ -12,6 +13,9 @@ import { FormValidator2DService } from "./services/form-validator-2D.service";
 import { FormValidator3DService } from "./services/form-validator-3D.service";
 import { GameCardsService } from "./services/game-cards.service";
 import { LoginService } from "./services/login.service";
+import { ModifiedSceneBuilderService } from "./services/modified-scene-builder.service";
+import { OriginalSceneBuilderService } from "./services/original-scene-builder.service";
+import { SnapshotWriterService } from "./services/snapshot-writer.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -31,4 +35,8 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 container.bind(Types.DatabaseService).to(DatabaseService);
+container.bind(Types.SnapshotWriterService).to(SnapshotWriterService);
+container.bind(Types.SceneController).to(SceneController);
+container.bind(Types.OriginalSceneBuilderService).to(OriginalSceneBuilderService);
+container.bind(Types.ModifiedSceneBuilderService).to(ModifiedSceneBuilderService);
 export { container };
