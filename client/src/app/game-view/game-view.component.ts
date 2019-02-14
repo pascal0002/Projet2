@@ -109,6 +109,10 @@ export class GameViewComponent implements OnInit, AfterViewInit {
     this.diffFoundCount++;
   }
 
+  public onOpponentDiffFound(): void {
+    this.opponentDiffFoundCount++;
+  }
+
   public logMessage(message: string): void {
     const now: number = Date.now();
     this.consoleEL.nativeElement.innerHTML += "<span style='color:yellow;'>[" + formatDate(now, "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>";
