@@ -149,3 +149,8 @@ export abstract class ClientConstants {
     static readonly AMBIENT_LIGHT_COLOR: number = 0xffffff;
     static readonly DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
 }
+
+export enum Dimension {
+    TWO_DIMENSION,
+    THREE_DIMENSION,
+}

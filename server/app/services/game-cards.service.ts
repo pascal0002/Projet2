@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { ServerConstants } from "../../../common/communication/Constants";
+import { Dimension, ServerConstants } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
@@ -16,7 +16,7 @@ import { gameCard3D } from "./game-card-3D-schema";
 export class GameCardsService {
 
   public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
-    @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
+                     @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
   public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
@@ -42,10 +42,10 @@ export class GameCardsService {
     return this.databaseService.getAll(gameCard3D);
   }
 
-  public convertDBGameCards(gameCardsDB: mongoose.Document[]): GameCard[] {
+  public convertDBGameCards(gameCardsDB: mongoose.Document[], dimension: Dimension): GameCard[] {
     const gameCards: GameCard[] = [];
     gameCardsDB.forEach((gameCard: mongoose.Document) => {
-      gameCards.push(this.convertDBGameCard(gameCard));
+      gameCards.push(this.convertDBGameCard(gameCard, dimension));
     });
 
     return gameCards;
@@ -56,7 +56,6 @@ export class GameCardsService {
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       originalImagePath: gameCard.originalImagePath,
-      modifiedImagePath: gameCard.modifiedImagePath,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
@@ -77,13 +76,13 @@ export class GameCardsService {
     return gameCard;
   }
 
-  private convertDBGameCard(gameCard: mongoose.Document): GameCard {
+  private convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
     return {
       title: gameCard.toJSON().title,
       originalImagePath: gameCard.toJSON().originalImagePath,
-      modifiedImagePath: (gameCard.toJSON().modifiedImagePath) ? gameCard.toJSON().modifiedImagePath : "",
       bestTimeSolo: gameCard.toJSON().bestScoreSolo,
       bestTime1v1: gameCard.toJSON().bestScore1v1,
+      dimension: dimension,
     };
   }
 
@@ -92,9 +91,9 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
-      modifiedImagePath: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      dimension: Dimension.TWO_DIMENSION,
     };
   }
 
@@ -103,20 +102,15 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
-      modifiedImagePath: "",
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      dimension: Dimension.THREE_DIMENSION,
     };
   }
 
   private generateOriginalImagePath(imageName: string): string {
 
     return ServerConstants.ORIGINAL_IMAGE_FOLDER + imageName;
-  }
-
-  private generateModifiedImagePath(imageName: string): string {
-
-    return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   private generateDifferenceImagePath(imageName: string): string {
@@ -131,7 +125,7 @@ export class GameCardsService {
       const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
       highScores.push({
         user: `user${userID}`,
-        time: highScore
+        time: highScore,
       });
       minimalTime = highScore;
     }

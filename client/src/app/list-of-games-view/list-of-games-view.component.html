@@ -56,10 +56,10 @@
 
               <ng-template #elseBlock>
                 <div>
-                  <div (click)="connect()" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button"><i class="fas fa-user"></i> Jouer</div>
+                  <div (click)="playSolo(gameCard)" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button"><i class="fas fa-user"></i> Jouer</div>
                 </div>
                 <div>
-                  <div class="gameCardButton button"><i class="fas fa-globe"></i> Créer</div>
+                  <div (click)="play1v1(gameCard)" routerLink="/game_view_2d" routerLinkActive="active" class="gameCardButton button"><i class="fas fa-globe"></i> Créer</div>
                 </div>
               </ng-template>
             </div>

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../common/communication/Constants";
+import {ServerConstants, Dimension} from "../../../common/communication/Constants";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { FormValidator2DService } from "../services/form-validator-2D.service";
 import { FormValidator3DService } from "../services/form-validator-3D.service";
@@ -23,7 +23,7 @@ export class GameCardsController {
         router.get("/2D_cards", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards2D()
                 .then((gameCardsDB: mongoose.Document[]) => {
-                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB));
+                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB, Dimension.TWO_DIMENSION));
                 })
                 .catch((err: Error) => console.error(err));
         });
@@ -31,7 +31,7 @@ export class GameCardsController {
         router.get("/3D_cards", (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards3D()
                 .then((gameCardsDB: mongoose.Document[]) => {
-                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB));
+                    res.json(this.gameCardsService.convertDBGameCards(gameCardsDB, Dimension.THREE_DIMENSION));
                 })
                 .catch((err: Error) => console.error(err));
         });

@@ -2,7 +2,7 @@ import { formatDate } from "@angular/common";
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { timer, Observable, Subscription } from "rxjs";
-import { ClientConstants } from "../../../../common/communication/Constants";
+import { ClientConstants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 
 @Component({
@@ -41,9 +41,9 @@ export class GameViewComponent implements OnInit, AfterViewInit {
     this.originalImage = {
       title: "Chat",
       originalImagePath: "../../server/public/originalImages/cat.bmp",
-      modifiedImagePath: "../../server/public/modifiedImages/catModified.bmp",
       bestTimeSolo: [{ user: "user7", time: 32 }, { user: "user8", time: 49 }, { user: "user9", time: 55 }],
       bestTime1v1: [{ user: "user10", time: 20 }, { user: "user11", time: 40 }, { user: "user12", time: 41 }],
+      dimension: Dimension.TWO_DIMENSION,
     };
   }
 
