@@ -55,21 +55,28 @@ export abstract class ServerConstants {
     static readonly FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
 
     static readonly ERROR: number = 400;
+
+    static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
+
+    static readonly X_OBJECT_DISPERSION: number = 200;
+    static readonly Y_OBJECT_DISPERSION: number = 100;
+    static readonly Z_OBJECT_DISPERSION: number = 50;
+    static readonly CIRCLE_DEGREES_NB: number = 360;
+
+    static readonly MIN_OBJECTS_NB: number = 10;
+    static readonly MAX_OBJECTS_NB: number = 200;
+
+    static readonly COLOR_PARAMETER_MAX_VALUE: number = 255;
+    static readonly OBJECT_TYPES_NB: number = 5;
+    static readonly REFERENCE_SIZE: number = 10;
+    static readonly HALF_VALUE: number = 0.5;
+
+    static readonly MODIFICATION_NB: number = 7;
+    static readonly MODIFICATION_TYPE_NB: number = 3;
 }
 
 export abstract class ClientConstants {
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
-
-    static readonly MIN_TITLE_LENGTH: number = 3;
-    static readonly MAX_TITLE_LENGTH: number = 15;
-    static readonly VALID_BMP_HEIGHT: number = 480;
-    static readonly VALID_BMP_WIDTH: number = 640;
-    static readonly VALID_BITS_PER_PIXEL: number = 24;
-
-    static readonly WIDTH_OFFSET: number = 18;
-    static readonly HEIGHT_OFFSET: number = 22;
-    static readonly BITS_PER_PIXEL_OFFSET: number = 28;
-    static readonly PIXEL_OFFSET: number = 10;
 
     /*Game View*/
     static readonly GOLD_COLOR: string = "#FFD700";
@@ -79,4 +86,65 @@ export abstract class ClientConstants {
 
     static readonly SECOND_TO_MILLISECOND: number = 1000;
     static readonly PERCENT_FACTOR: number = 100;
+
+    // for the 2D form validator
+    static readonly MIN_TITLE_LENGTH: number = 3;
+    static readonly MAX_TITLE_LENGTH: number = 15;
+    static readonly VALID_BMP_HEIGHT: number = 480;
+    static readonly VALID_BMP_WIDTH: number = 640;
+    static readonly VALID_BITS_PER_PIXEL: number = 24;
+
+    // for the bitmap reader
+    static readonly WIDTH_OFFSET: number = 18;
+    static readonly HEIGHT_OFFSET: number = 22;
+    static readonly BITS_PER_PIXEL_OFFSET: number = 28;
+    static readonly PIXEL_OFFSET: number = 10;
+
+    static readonly LIST_2D: number = 0;
+    static readonly LIST_3D: number = 1;
+
+    static readonly SECOND_PER_MINUTE: number = 60;
+    static readonly TWO_DIGIT: number = -2;
+    static readonly USERNAME: number = 0;
+    static readonly TIME: number = 1;
+
+    // for the 3D form
+    static readonly MAX_NUMBER_OF_OBJECTS: number = 200;
+    static readonly MIN_NUMBER_OF_OBJECTS: number = 10;
+    static readonly MIN_NUMBER_OF_CHECKED_CHECKBOXES: number = 1;
+    static readonly OBJECT_TYPES: string[] = [
+        "Formes géométriques",
+        "Forêt",
+        "Océan"
+    ];
+
+    static readonly CAMERA_FIELD_OF_VIEW: number = 80;
+    static readonly CAMERA_RENDER_DISTANCE: number = 500;
+    static readonly Z_CAMERA_POSITION: number = 90;
+
+    static readonly MIN_OBJECTS_NB: number = 10;
+    static readonly MAX_OBJECTS_NB: number = 200;
+
+    static readonly COLOR_PARAMETER_MAX_VALUE: number = 255;
+    static readonly RADIAL_PRECISION: number = 20;
+    static readonly REFERENCE_SIZE: number = 10;
+    static readonly HALF_VALUE: number = 0.5;
+
+    static readonly OBJECT_TYPES_NB: number = 5;
+    static readonly SPHERE: number = 0;
+    static readonly CUBE: number = 1;
+    static readonly CYLINDER: number = 2;
+    static readonly CONE: number = 3;
+    static readonly PYRAMID: number = 4;
+    static readonly PYRAMID_BASE_SIDES_NB: number = 3;
+
+    static readonly X_OBJECT_DISPERSION: number = 200;
+    static readonly Y_OBJECT_DISPERSION: number = 100;
+    static readonly Z_OBJECT_DISPERSION: number = 50;
+    static readonly CIRCLE_DEGREES_NB: number = 360;
+
+    static readonly AMBIENT_LIGHT_INTENSITY: number = 1;
+    static readonly DIRECTIONAL_LIGHT_INTENSITY: number = 5;
+    static readonly AMBIENT_LIGHT_COLOR: number = 0xffffff;
+    static readonly DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
 }
