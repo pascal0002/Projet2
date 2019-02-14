@@ -1,63 +1,153 @@
+// tslint:disable:no-any
+// tslint:disable:no-magic-numbers
 import { expect } from "chai";
+import * as mongoose from "mongoose";
+import * as sinon from "sinon";
+import * as sinonts from "ts-sinon";
+import { DatabaseService } from "./database.service";
 import { LoginService } from "./login.service";
 
 let service: LoginService;
+let databaseService: DatabaseService;
+let databaseServiceStub: sinon.SinonStub;
 
-describe("Validate username", () => {
+describe("loginService", () => {
 
-    beforeEach((done: Mocha.Done) => {
-        service = new LoginService();
+    before((done: Mocha.Done) => {
+        databaseService = new DatabaseService();
         done();
     });
 
-    it("should return false with an empty user name", (done: Mocha.Done) => {
-        const result: boolean = service.validateUsername("");
-        expect(result).to.equal(false);
+    after((done: Mocha.Done) => {
+        mongoose.connection.close()
+        .catch((err: Error) => console.error(err));
         done();
     });
 
-    it("should return false with less than 3 chars", (done: Mocha.Done) => {
-        const result: boolean = service.validateUsername("ab");
-        expect(result).to.equal(false);
-        done();
+    describe("Connect user", () => {
+
+        beforeEach((done: Mocha.Done) => {
+            databaseServiceStub = sinon.stub(databaseService, "add");
+            service = new LoginService(databaseService);
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should call add from database service if the username is valid ", (done: Mocha.Done) => {
+            const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
+            serviceStub.validateUsername.returns(true);
+
+            serviceStub.connectUser("test");
+
+            expect(databaseServiceStub.calledOnce);
+            done();
+        });
+
+        it("should not call add from database service if the username is not valid ", (done: Mocha.Done) => {
+            const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
+            serviceStub.validateUsername.returns(false);
+
+            serviceStub.connectUser("test");
+
+            expect(databaseServiceStub.notCalled);
+            done();
+        });
     });
 
-    it("should return false with more than 20 chars", (done: Mocha.Done) => {
-        const result: boolean = service.validateUsername("abcdefghijklmnopqrstuvwxyz");
-        expect(result).to.equal(false);
-        done();
+    describe("Validate username", () => {
+
+        beforeEach((done: Mocha.Done) => {
+            service = new LoginService(databaseService);
+            done();
+        });
+
+        it("should return false with an empty user name", (done: Mocha.Done) => {
+            const result: boolean = service.validateUsername("");
+            expect(result).to.equal(false);
+            done();
+        });
+
+        it("should return false with less than 3 chars", (done: Mocha.Done) => {
+            const result: boolean = service.validateUsername("ab");
+            expect(result).to.equal(false);
+            done();
+        });
+
+        it("should return false with more than 20 chars", (done: Mocha.Done) => {
+            const result: boolean = service.validateUsername("abcdefghijklmnopqrstuvwxyz");
+            expect(result).to.equal(false);
+            done();
+        });
+
+        it("should return true between 3 and 20 chars", (done: Mocha.Done) => {
+            const result: boolean = service.validateUsername("Michel");
+            expect(result).to.equal(true);
+            done();
+        });
+
+        it("should return false using special chars", (done: Mocha.Done) => {
+            const result: boolean = service.validateUsername("Hello!");
+            expect(result).to.equal(false);
+            done();
+        });
     });
 
-    it("should return true between 3 and 20 chars", (done: Mocha.Done) => {
-        const result: boolean = service.validateUsername("Michel");
-        expect(result).to.equal(true);
-        done();
+    describe("Disconnect user", () => {
+
+        beforeEach((done: Mocha.Done) => {
+            databaseServiceStub = sinon.stub(databaseService, "remove");
+            service = new LoginService(databaseService);
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should call remove from database service", (done: Mocha.Done) => {
+            service.disconnect("test");
+
+            expect(databaseServiceStub.calledOnce);
+            done();
+        });
     });
 
-    it("should return false using special chars", (done: Mocha.Done) => {
-        const result: boolean = service.validateUsername("Hello!");
-        expect(result).to.equal(false);
-        done();
-    });
+    describe("Is username unique", () => {
 
-    it("should connect the user if it is valid", (done: Mocha.Done) => {
-        service.connectUser("Michel");
-        service.isUsernameUnique("Michel");
-        expect(service.isUsernameUnique("Michel")).to.equal(false);
-        done();
-    });
+        beforeEach((done: Mocha.Done) => {
+            databaseServiceStub = sinon.stub(databaseService, "countDocuments");
+            service = new LoginService(databaseService);
+            done();
+        });
 
-    it("should return false if name is already used", (done: Mocha.Done) => {
-        service.connectUser("Michel");
-        const result: boolean = service.validateUsername("Michel");
-        expect(result).to.equal(false);
-        done();
-    });
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
 
-    it("should disconnect user if it is connected", (done: Mocha.Done) => {
-        service.connectUser("Michel");
-        service.disconnect("Michel");
-        expect(service.isUsernameUnique("Michel")).to.equal(true);
-        done();
+        it("should return 0 if countDocument return 0", (done: Mocha.Done) => {
+            databaseServiceStub.resolves(0);
+            service.countUsernameOccurence("test")
+            .then((occurence: number) => {
+                expect(occurence).to.equal(0);
+            })
+            .catch((err: Error) => console.error(err));
+            done();
+        });
+
+        it("should return 1 if countDocument return 1", (done: Mocha.Done) => {
+            databaseServiceStub.resolves(1);
+            service.countUsernameOccurence("test")
+            .then((occurence: number) => {
+                expect(occurence).to.equal(1);
+            })
+            .catch((err: Error) => console.error(err));
+            done();
+        });
     });
 });

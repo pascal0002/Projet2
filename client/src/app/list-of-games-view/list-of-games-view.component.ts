@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
-import {GameCard} from "../../../../common/communication/game-card";
-import {TWO_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/2d-game-card-mock-list";
-import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-game-card-mock-list";
+import { Component, Input } from "@angular/core";
+import { GameCard } from "../../../../common/communication/game-card";
+import { ListOfGamesService } from "./list-of-games.service";
 
 @Component({
   selector: "app-list-of-games-view",
@@ -9,16 +8,12 @@ import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-
   styleUrls: ["./list-of-games-view.component.css"],
 })
 
-export class ListOfGamesViewComponent implements OnInit {
+export class ListOfGamesViewComponent {
 
   @Input() public isInAdminView: boolean = false;
   public listes: GameCard[][];
 
-  public constructor(/**/) {
-    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
-  }
-
-  public ngOnInit(): void {
-    /**/
+  public constructor(public listOfGamesService: ListOfGamesService) {
+    this.listes = this.listOfGamesService.listes;
   }
 }
