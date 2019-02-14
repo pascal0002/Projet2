@@ -16,7 +16,10 @@ export class OriginalSceneBuilderService {
                                         - ServerConstants.MIN_OBJECTS_NB)) + ServerConstants.MIN_OBJECTS_NB;
 
         for (let i: number = 0; i < numberOfObjects; i++) {
-            const object: IThreeObject = this.scenesParameterGeneratorService.createObject();
+            let object: IThreeObject = this.scenesParameterGeneratorService.createObject();
+            while (this.scenesParameterGeneratorService.checkCollisions(object, objects)) {
+                object = this.scenesParameterGeneratorService.createObject();
+            }
             objects.push(object);
         }
 

@@ -47,15 +47,33 @@ export class ScenesParameterGeneratorService {
         return [xOrientation, yOrientation, zOrientation];
     }
 
-    public checkCollision(newObject: IThreeObject, existingObjects: IThreeObject[]): boolean {
+    public checkCollisions(newObject: IThreeObject, existingObjects: IThreeObject[]): boolean {
         for (const obj of existingObjects) {
-            const distance = Math.sqrt(Math.pow(newObject.position[0] - obj.position[0], 2) + Math.pow(newObject.position[1] - obj.position[1], 2) + Math.pow(newObject.position[2] - obj.position[2], 2));
+            const distance: number = Math.sqrt(Math.pow(newObject.position[0] - obj.position[0], ServerConstants.SQUARE_FACTOR)
+                                     + Math.pow(newObject.position[1] - obj.position[1], ServerConstants.SQUARE_FACTOR)
+                                     + Math.pow(newObject.position[1 + 1] - obj.position[1 + 1], ServerConstants.SQUARE_FACTOR));
 
-            if (distance > (newObject.diameter / 2) - (obj.diameter / 2)) {
+            const objRadius: number = this.createSphere(obj);
+            const newObjectRadius: number = this.createSphere(newObject);
+
+            if (objRadius + newObjectRadius > distance) {
                 return true;
             }
         }
+
         return false;
+    }
+
+    private createSphere(object: IThreeObject): number {
+
+        let radius: number;
+        object.type === 0 ? radius = object.diameter * ServerConstants.HALF_VALUE :
+        object.type === 1 ? radius = Math.sqrt(Math.pow(object.diameter * ServerConstants.HALF_VALUE, ServerConstants.SQUARE_FACTOR)
+                                     * ServerConstants.DIMENSIONS_NB) :
+        radius = Math.sqrt(Math.pow(object.diameter * ServerConstants.HALF_VALUE, ServerConstants.SQUARE_FACTOR)
+                 + Math.pow(object.height * ServerConstants.HALF_VALUE, ServerConstants.SQUARE_FACTOR));
+
+        return radius;
     }
 
     private getRandomNumber(): number {

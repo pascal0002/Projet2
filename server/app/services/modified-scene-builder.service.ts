@@ -16,8 +16,8 @@ export class ModifiedSceneBuilderService {
         for (let i: number = 0; i < ServerConstants.MODIFICATION_NB; i++) {
             const modificationCode: number = Math.floor(this.getRandomNumber() * ServerConstants.MODIFICATION_TYPE_NB);
             modificationCode === 0 ? deletionNb++ :
-                modificationCode === 1 ? colorChangeNb++ :
-                    addNb++;
+            modificationCode === 1 ? colorChangeNb++ :
+            addNb++;
         }
 
         for (let i: number = 0; i < deletionNb; i++) {
@@ -60,7 +60,10 @@ export class ModifiedSceneBuilderService {
     }
 
     private addObject(scene: IThreeObject[]): void {
-        const object: IThreeObject = this.scenesParameterGeneratorService.createObject();
+        let object: IThreeObject = this.scenesParameterGeneratorService.createObject();
+        while (this.scenesParameterGeneratorService.checkCollisions(object, scene)) {
+            object = this.scenesParameterGeneratorService.createObject();
+        }
         scene.push(object);
     }
 

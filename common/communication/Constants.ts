@@ -74,6 +74,9 @@ export abstract class ServerConstants {
 
     static readonly MODIFICATION_NB: number = 7;
     static readonly MODIFICATION_TYPE_NB: number = 3;
+
+    static readonly SQUARE_FACTOR: number = 2;
+    static readonly DIMENSIONS_NB: number = 3;
 }
 
 export abstract class ClientConstants {
