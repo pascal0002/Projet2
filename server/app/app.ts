@@ -37,6 +37,7 @@ export class Application {
         // Notre application utilise le routeur de notre API `Index`
         this.app.use("/api/game_cards", this.gameCardsController.router);
         this.app.use("/api/differences", this.differencesController.router);
+        this.app.use("/api/identification", this.differencesController.router);
         this.app.use(express.static("./public"));
         this.errorHandeling();
     }
