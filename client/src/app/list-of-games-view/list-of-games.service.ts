@@ -2,9 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
-import { Utils } from "src/Utils";
-
-
 @Injectable({
   providedIn: "root",
 })
