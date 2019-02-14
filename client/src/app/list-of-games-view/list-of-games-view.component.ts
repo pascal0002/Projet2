@@ -16,4 +16,12 @@ export class ListOfGamesViewComponent {
   public constructor(public listOfGamesService: ListOfGamesService) {
     this.listes = this.listOfGamesService.listes;
   }
+
+  public playSolo(gameCard: GameCard): void {
+    console.log(gameCard);
+  }
+
+  public play1v1(gameCard: GameCard): void {
+    console.log(gameCard);
+  }
 }
