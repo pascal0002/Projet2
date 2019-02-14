@@ -12,6 +12,7 @@ export abstract class ServerConstants {
 
     static readonly ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
     static readonly MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
+    static readonly DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/"
 
     static readonly MINIMUM_NAME_LENGTH: number = 3;
     static readonly MAXIMUM_NAME_LENGTH: number = 15;

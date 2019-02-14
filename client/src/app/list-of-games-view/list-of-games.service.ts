@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
+import { Utils } from "src/Utils";
+
 
 @Injectable({
   providedIn: "root",
@@ -23,18 +25,18 @@ export class ListOfGamesService {
 
   private getGamesLists2D(): void {
     this.http.get<GameCard[]>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/2D_cards`)
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
+      .subscribe(
+        (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
+        (err) => { console.error("erreur :", err); },
+      );
   }
 
   private getGamesLists3D(): void {
     this.http.get<GameCard[]>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/3D_cards`)
-    .subscribe(
-      (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
-      (err) => {console.error("erreur :", err); },
-    );
+      .subscribe(
+        (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
+        (err) => { console.error("erreur :", err); },
+      );
   }
 
   public addGameCard2D(gamecard: GameCard): void {

@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../common/communication/Constants";
+import { ServerConstants } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
@@ -16,7 +16,7 @@ import { gameCard3D } from "./game-card-3D-schema";
 export class GameCardsService {
 
   public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
-                     @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
+    @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
   public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
@@ -78,11 +78,13 @@ export class GameCardsService {
   }
 
   private convertDBGameCard(gameCard: mongoose.Document): GameCard {
-    return { title: gameCard.toJSON().title,
-             originalImagePath: gameCard.toJSON().originalImagePath,
-             modifiedImagePath:  (gameCard.toJSON().modifiedImagePath) ? gameCard.toJSON().modifiedImagePath : "",
-             bestTimeSolo: gameCard.toJSON().bestScoreSolo,
-             bestTime1v1: gameCard.toJSON().bestScore1v1, };
+    return {
+      title: gameCard.toJSON().title,
+      originalImagePath: gameCard.toJSON().originalImagePath,
+      modifiedImagePath: (gameCard.toJSON().modifiedImagePath) ? gameCard.toJSON().modifiedImagePath : "",
+      bestTimeSolo: gameCard.toJSON().bestScoreSolo,
+      bestTime1v1: gameCard.toJSON().bestScore1v1,
+    };
   }
 
   private generateGameCard2D(formInfo: IFormInfo2D): GameCard {
@@ -122,13 +124,15 @@ export class GameCardsService {
     return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
   }
 
-  private generateBestTime(minimalTime: number, maximalTime: number): {user: string, time: number}[] {
-    const highScores: {user: string, time: number}[] = [];
+  private generateBestTime(minimalTime: number, maximalTime: number): { user: string, time: number }[] {
+    const highScores: { user: string, time: number }[] = [];
     for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
       const highScore: number = this.getRandomRange(minimalTime, maximalTime);
       const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
-      highScores.push({user: `user${userID}`,
-                       time: highScore});
+      highScores.push({
+        user: `user${userID}`,
+        time: highScore
+      });
       minimalTime = highScore;
     }
 
