@@ -4,7 +4,7 @@ import { CircleProgressComponent } from "ng-circle-progress";
 import { timer, Observable, Subscription } from "rxjs";
 import { ClientConstants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
-
+import { GameViewService } from "./game-view.service";
 @Component({
   selector: "app-game-view",
   templateUrl: "./game-view.component.html",
@@ -12,11 +12,9 @@ import { GameCard } from "../../../../common/communication/game-card";
 })
 
 export class GameViewComponent implements OnInit, AfterViewInit {
-  public originalImage: GameCard;
+  public gameCard: GameCard;
   public diffFoundCount: number = 0;
   public opponentDiffFoundCount: number = 0;
-  public readonly maxDiffCount: number = 7;
-  public isSolo: boolean = false;
 
   @ViewChild("console")
   private consoleEL: ElementRef;
@@ -37,14 +35,8 @@ export class GameViewComponent implements OnInit, AfterViewInit {
   public readonly magnifierProgressOffset: number = 40;
   public readonly magnifierProgress1V1Offset: number = 42;
 
-  public constructor() {
-    this.originalImage = {
-      title: "Chat",
-      originalImagePath: "../../server/public/originalImages/cat.bmp",
-      bestTimeSolo: [{ user: "user7", time: 32 }, { user: "user8", time: 49 }, { user: "user9", time: 55 }],
-      bestTime1v1: [{ user: "user10", time: 20 }, { user: "user11", time: 40 }, { user: "user12", time: 41 }],
-      dimension: Dimension.TWO_DIMENSION,
-    };
+  public constructor(public gameViewService: GameViewService) {
+    this.gameCard = gameViewService.gamecard;
   }
 
   public ngOnInit(): void {
@@ -61,7 +53,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     this.bestScoreTimerLoopSub = this.startBestScoreTimer();
-    this.targetTime = this.originalImage.bestTimeSolo[0].time;
+    this.targetTime = this.gameCard.bestTimeSolo[0].time;
     this.startTimer();
     this.logMessage("Game started");
 
@@ -96,12 +88,12 @@ export class GameViewComponent implements OnInit, AfterViewInit {
     /*Supprime le callback du timer de médaille*/
     this.bestScoreTimerLoopSub.unsubscribe();
 
-    if (this.cycle < 3) {
+    if (this.cycle < ClientConstants.NUMBER_MEDAL) {
       this.medalTimeProgressBar.backgroundColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle];
       this.medalTimeProgressBar.outerStrokeColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle + 1];
 
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
-      this.targetTime = this.originalImage.bestTimeSolo[this.cycle].time - this.timer;
+      this.targetTime = this.gameCard.bestTimeSolo[this.cycle].time - this.timer;
       this.bestScoreTimer = 0;
       this.bestScoreTimerLoopSub = this.startBestScoreTimer();
     } else {
@@ -125,12 +117,12 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   /*Utilisé pour afficher le nombre de loupes avec ngFor*/
   public miscGetArrayDiffFoundCount(): Array<number> {
-    return Array.apply(null, { length: (this.isSolo ? this.diffFoundCount : this.maxDiffCount) }).map(Number.call, Number);
+    return Array.apply(null, { length: ((this.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB) }).map(Number.call, Number);
   }
 
   public miscGetDiffCounterWidth(): number {
 
-    return this.magnifierProgressOffset + (this.isSolo ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * (this.isSolo ? this.diffFoundCount : this.maxDiffCount));
+    return this.magnifierProgressOffset + ((this.dimension === Dimension.TWO_DIMENSION) ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB));
   }
 
   public miscTimeToString(time: number): string {
@@ -146,7 +138,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
     const seconds: number = parseInt(time.substring(i + 1, i + 3), 10);
     const minutes: number = parseInt(time.substring(0, i), 10);
 
-    return seconds + minutes * 60;
+    return seconds + minutes * ClientConstants.SECOND_PER_MINUTE;
   }
 
 }

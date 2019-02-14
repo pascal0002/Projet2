@@ -83,6 +83,7 @@ export abstract class ClientConstants {
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
 
     /*Game View*/
+    static readonly NUMBER_MEDAL: number = 3;
     static readonly GOLD_COLOR: string = "#FFD700";
     static readonly SILVER_COLOR: string = "#C0C0C0";
     static readonly BRONZE_COLOR: string = "#CD7F32";
@@ -151,9 +152,16 @@ export abstract class ClientConstants {
     static readonly DIRECTIONAL_LIGHT_INTENSITY: number = 5;
     static readonly AMBIENT_LIGHT_COLOR: number = 0xffffff;
     static readonly DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
+
+    static readonly DIFFERENCE_NB: number = 7;
 }
 
 export enum Dimension {
     TWO_DIMENSION,
     THREE_DIMENSION,
+}
+
+export enum Mode {
+    SOLO,
+    ONE_VS_ONE,
 }
