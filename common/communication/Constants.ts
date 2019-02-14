@@ -1,3 +1,5 @@
+import { IPixel } from "./Pixel";
+
 export class ServerConstants {
     static VALID_NUMBER_OF_DIFFERENCES: number = 7;
 
@@ -12,6 +14,9 @@ export class ServerConstants {
 
     static ORIGINAL_IMAGE_FOLDER: string = "http://localhost:3000/originalImages/";
     static MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
+
+    static PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
+    static PUBLIC_TEMP_FOLDER_PATH: string = "/public/tempDifferenceImage/";
 
     static MINIMUM_NAME_LENGTH: number = 3;
     static MAXIMUM_NAME_LENGTH: number = 15;
@@ -53,6 +58,8 @@ export class ServerConstants {
     static LINE_BYTE_SIZE: number = (ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.EXTRA_BYTES;
     static RGB_SIZE: number = ServerConstants.ACCEPTED_HEIGHT * ServerConstants.LINE_BYTE_SIZE;
     static FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
+
+    static BLACK_PIXEL: IPixel = { red: 0, blue: 0, green: 0}
 
     static ERROR: number = 400;
 }

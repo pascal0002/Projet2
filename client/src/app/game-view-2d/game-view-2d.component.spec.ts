@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { GameViewComponent } from "./game-view-2d.component";
+import { GameView2DComponent } from "./game-view-2d.component";
 
 describe("GameView2DComponent", () => {
-  let component: GameViewComponent;
-  let fixture: ComponentFixture<GameViewComponent>;
+  let component: GameView2DComponent;
+  let fixture: ComponentFixture<GameView2DComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameViewComponent ]
+      declarations: [ GameView2DComponent ],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameViewComponent);
+    fixture = TestBed.createComponent(GameView2DComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

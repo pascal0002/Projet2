@@ -3,6 +3,7 @@ import { Application } from "./app";
 import { DifferencesController } from "./controllers/differences-controller";
 import { GameCardsController } from "./controllers/game-cards.controller";
 import { Server } from "./server";
+import { BitmapDecoder } from "./services/bitmap-decoder.service";
 import { BitmapEncoder } from "./services/bitmap-encoder.service";
 import { BmpFileGenerator } from "./services/bmp-file-generator.service";
 import { DifferenceCounterService } from "./services/difference-counter.service";
@@ -28,5 +29,7 @@ container.bind(Types.FormValidatorService).to(FormValidatorService);
 container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService);
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
+container.bind(Types.BitmapDecoder).to(BitmapDecoder);
 container.bind(Types.DifferenceIdentificator2DService).to(DifferenceIdentificator2DService);
+
 export { container };

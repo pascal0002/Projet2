@@ -43,7 +43,7 @@ export class GameView2DComponent implements AfterViewInit {
 
         addEventListener("click", (e) => {
           this.clickImage(e);
-          /*this.getPixel(img, 0, 0);*/ // Erreur d'accès sur la console page web
+          this.getPixel(img, 0, 0); // Erreur d'accès sur la console page web
         });
       });
   }
@@ -68,6 +68,7 @@ export class GameView2DComponent implements AfterViewInit {
 
     if (this.ctx) {
       const imageData: ImageData = this.ctx.getImageData(xPos, yPos, img.width, img.height);
+      console.log(imageData.data.length);
       console.log("First pixel colors: " + imageData.data);
     }
     // L'accès à imageData.data ne semble pas être autorisé

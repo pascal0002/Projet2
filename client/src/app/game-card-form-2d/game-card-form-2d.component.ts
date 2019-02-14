@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import {ClientConstants} from "../../../../common/communication/Constants";
+import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo } from "../../../../common/communication/FormInfo";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
@@ -15,7 +15,8 @@ export class GameCardFormComponent implements OnInit {
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
+  public constructor(private formValidatorService: FormValidator2dService,
+                     private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {
       gameName: "",
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
@@ -82,9 +83,9 @@ export class GameCardFormComponent implements OnInit {
 
   public onSubmit(): void {
     this.formValidatorService.generateGameCard(this.formInfo)
-    .catch(
-      (err) => {console.error("erreur :", err); },
-    );
+      .catch(
+        (err) => { console.error("erreur :", err); },
+      );
   }
 
   public updateGameName(): void {
@@ -101,29 +102,29 @@ export class GameCardFormComponent implements OnInit {
   public canSubmit(): boolean {
 
     return (
-             this.validBMPExtension(this.formInfo.originalImage.fileName) &&
-             this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
-             this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
-             this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
-             this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
-             this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
-             this.validTitle()
-           );
+      this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+      this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+      this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+      this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
+      this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
+      this.validTitle()
+    );
   }
 
   public isAValidOriginalImage(): boolean {
-      return (
-               this.validBMPExtension(this.formInfo.originalImage.fileName) &&
-               this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
-               this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
-             );
+    return (
+      this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+      this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
+    );
   }
 
   public isAValidModifiedImage(): boolean {
-      return (
-               this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
-               this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
-               this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
-             );
+    return (
+      this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+      this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
+    );
   }
 }
