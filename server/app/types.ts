@@ -13,7 +13,6 @@ export default {
         BmpFileGenerator: Symbol("BmpFileGenerator"),
         BitmapEncoder: Symbol("BitmapEncoder"),
         DatabaseService: Symbol("DatabaseService"),
-        SnapshotWriterService: Symbol("SnapshotWriterService"),
         SceneController: Symbol("SceneController"),
         OriginalSceneBuilderService: Symbol("OriginalSceneBuilderService"),
         ModifiedSceneBuilderService: Symbol("ModifiedSceneBuilderService"),

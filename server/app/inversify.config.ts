@@ -15,7 +15,6 @@ import { GameCardsService } from "./services/game-cards.service";
 import { LoginService } from "./services/login.service";
 import { ModifiedSceneBuilderService } from "./services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "./services/original-scene-builder.service";
-import { SnapshotWriterService } from "./services/snapshot-writer.service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -35,7 +34,6 @@ container.bind(Types.DifferencesGeneratorService).to(DifferencesGeneratorService
 container.bind(Types.BmpFileGenerator).to(BmpFileGenerator);
 container.bind(Types.BitmapEncoder).to(BitmapEncoder);
 container.bind(Types.DatabaseService).to(DatabaseService);
-container.bind(Types.SnapshotWriterService).to(SnapshotWriterService);
 container.bind(Types.SceneController).to(SceneController);
 container.bind(Types.OriginalSceneBuilderService).to(OriginalSceneBuilderService);
 container.bind(Types.ModifiedSceneBuilderService).to(ModifiedSceneBuilderService);
