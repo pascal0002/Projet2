@@ -1,14 +1,14 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
-import { SnapshotWriterService } from "./snapshot-writer.service";
+// import { SnapshotWriterService } from "./snapshot-writer.service";
 
 describe("snapshot-writer-service", () => {
 
-    let snapshotWriterService: SnapshotWriterService;
+    // let snapshotWriterService: SnapshotWriterService;
 
     const init: Mocha.Func = () => {
-        snapshotWriterService = new SnapshotWriterService();
+        // snapshotWriterService = new SnapshotWriterService();
     };
 
     describe("makeSnapshot", () => {
