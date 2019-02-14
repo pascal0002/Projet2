@@ -68,7 +68,8 @@ header {
   font-weight: bold;
   display: inline-block;
   transform: translate(0, -4px);
-  padding-right: 7px;
+  padding-right: 10px;
+  width: 20px;
 }
 
 
@@ -86,6 +87,7 @@ header {
   position: relative;
   z-index: 1;
   animation: fadeIn ease-in-out 1s;
+  transition: color ease-in-out 0.7s;
 }
 
 #diff-counter .diff-progress{
@@ -106,8 +108,16 @@ header {
   width: 290px;
 }
 
-#diff-cout{
-  letter-spacing: 5px;
+#diff-count.opponent{
+  margin-left: 10px;
+}
+
+.red{
+  color: red !important;
+}
+
+.blue{
+  color: rgb(0, 153, 94) !important;
 }
 
 #game-title{
@@ -130,7 +140,7 @@ header {
     background-color: white;
     color:#13315c;
 
-    width: 100%;
+    width: 100px;
 
     border-radius: 15px;
 
@@ -138,6 +148,9 @@ header {
     padding-right: 50px;
 
     font-size: 90%;
+
+    position: absolute;
+    transform : translate(-150px, 6px);
 }
 
 header #chrono-container #timer{

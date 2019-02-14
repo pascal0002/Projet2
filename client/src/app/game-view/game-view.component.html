@@ -7,8 +7,10 @@
       <div>
         <i class="fas fa-user-circle user-badge"></i>
         <div id="diff-count">{{diffFoundCount}}</div>
-        <i *ngFor="let number of miscGetArrayDiffFoundCount()" class="fas fa-search"></i>
-        <div class="diff-progress" [style.width]="magnifierProgressOffset + magnifierIconWidth * diffFoundCount + 'px'"></div>
+        <i *ngFor="let number of miscGetArrayDiffFoundCount()" class="fas fa-search" [class.blue]="number < diffFoundCount" [class.red]="number > maxDiffCount - opponentDiffFoundCount - 1"></i>
+        <div class="diff-progress" [style.width]="miscGetDiffCounterWidth() + 'px'"></div>
+        <div *ngIf="!isSolo" id="diff-count" class="opponent">{{opponentDiffFoundCount}}</div>
+        <i *ngIf="!isSolo" class="fas fa-user-circle user-badge"></i>
       </div>
     </div>
 

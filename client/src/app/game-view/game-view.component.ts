@@ -15,6 +15,9 @@ import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-
 export class GameViewComponent implements OnInit, AfterViewInit {
   public originalImage: GameCard;
   public diffFoundCount: number = 0;
+  public opponentDiffFoundCount: number = 0;
+  public readonly maxDiffCount: number = 7;
+  public isSolo: boolean = false;
 
   @ViewChild("console")
   private consoleEL: ElementRef;
@@ -33,6 +36,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
   private readonly timerResolution: number = 100;
   public readonly magnifierIconWidth: number = 35;
   public readonly magnifierProgressOffset: number = 40;
+  public readonly magnifierProgress1V1Offset: number = 42;
 
   public constructor() {
     this.originalImage = TWO_DIMENSION_GAME_CARD_LIST[0];
@@ -112,7 +116,12 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   /*Utilisé pour afficher le nombre de loupes avec ngFor*/
   public miscGetArrayDiffFoundCount(): Array<number> {
-    return new Array(this.diffFoundCount);
+    return Array.apply(null, { length: (this.isSolo ? this.diffFoundCount : this.maxDiffCount) }).map(Number.call, Number);
+  }
+
+  public miscGetDiffCounterWidth(): number {
+
+    return this.magnifierProgressOffset + (this.isSolo ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * (this.isSolo ? this.diffFoundCount : this.maxDiffCount));
   }
 
   public miscTimeToString(time: number): string {
