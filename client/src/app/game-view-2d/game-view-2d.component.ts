@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { AfterViewInit, Component } from "@angular/core";
-import {ClientConstants} from "../../../../common/communication/Constants";
+import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
 
@@ -40,21 +40,40 @@ export class GameView2DComponent implements AfterViewInit {
         if (this.ctx && img.complete) {
           this.ctx.drawImage(img, 0, 0, img.width, img.height);
         }
-      });
 
+        addEventListener("click", (e) => {
+          this.clickImage(e);
+          /*this.getPixel(img, 0, 0);*/ // Erreur d'accès sur la console page web
+        });
+      });
   }
 
   public clickImage(event: MouseEvent): void {
     this.clickPosition = [event.offsetX, event.offsetY];
     this.sendClickPosition(this.clickPosition);
-   /* console.log("----Click event!----");
+    /*
+    console.log("----Click event!----");
     console.log("Client coordinates: ");
     console.log(event.clientX);
     console.log(event.clientY);
+    */
     console.log("Offset coordinates: ");
     console.log(event.offsetX);
     console.log(event.offsetY);
-    console.log("---------------------");*/
+    console.log("---------------------");
+
+  }
+
+  public getPixel(img: HTMLImageElement, xPos: number, yPos: number): void {
+
+    if (this.ctx) {
+      const imageData: ImageData = this.ctx.getImageData(xPos, yPos, img.width, img.height);
+      console.log("First pixel colors: " + imageData.data);
+    }
+    // L'accès à imageData.data ne semble pas être autorisé
+    // const imageData: ImageData = new ImageData(img.width, img.height);
+
+    // return
   }
 
   public sendClickPosition(mousePos: Array<number>): void {
