@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import * as THREE from "three";
 import {ClientConstants} from "../../../../common/communication/Constants";
-import {ISnapshot} from "../../../../common/communication/Snapshot";
 import {IThreeObject} from "../../../../common/communication/ThreeObject";
 
 @Injectable({
@@ -20,9 +19,8 @@ export class SceneService {
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
-    this.createObjects();
     this.addLighting();
-    this.saveAsImage();
+    this.createObjects();
   }
 
   private makeScene(canvas: HTMLCanvasElement): void {
@@ -39,6 +37,7 @@ export class SceneService {
     this.http.get<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`)
     .toPromise()
     .then((objects) => {this.generateObjects(objects); }, )
+    .then(() => {this.saveAsImage(); }, )
     .catch((error: Error) => {console.error(error.message);
     });
   }
@@ -123,13 +122,8 @@ export class SceneService {
 
   public saveAsImage(): void {
     const imgData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
-    const snapshot: ISnapshot = {
-      imageData: imgData,
-      fileName: "test.jpg",
-    };
-    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/snapshot`, snapshot)
+    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D`, imgData)
     .toPromise()
-    .catch((error: Error) => {console.error(error.message);
-    });
+    .catch((error: Error) => {console.error(error.message); });
   }
 }
