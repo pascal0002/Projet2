@@ -16,4 +16,5 @@ export default {
         SnapshotWriterService: Symbol("SnapshotWriterService"),
         SceneController: Symbol("SceneController"),
         OriginalSceneBuilderService: Symbol("OriginalSceneBuilderService"),
+        ModifiedSceneBuilderService: Symbol("ModifiedSceneBuilderService"),
 };

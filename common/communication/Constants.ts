@@ -71,6 +71,9 @@ export class ServerConstants {
     static OBJECT_TYPES_NB: number = 5;
     static REFERENCE_SIZE: number = 10;
     static HALF_VALUE: number = 0.5;
+
+    static MODIFICATION_NB: number = 7;
+    static MODIFICATION_TYPE_NB: number = 3;
 }
 
 export class ClientConstants {
@@ -131,6 +134,4 @@ export class ClientConstants {
     static DIRECTIONAL_LIGHT_INTENSITY: number = 5;
     static AMBIENT_LIGHT_COLOR: number = 0xffffff;
     static DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
-
-    static SAVE_KEY: number = 13;
 }
