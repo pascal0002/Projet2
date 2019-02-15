@@ -64,7 +64,7 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public addGameCard3D(formInfo: IFormInfo3D): GameCard {
+  public addGameCard3D(formInfo: IFormInfo3D): Boolean {
     const gameCard: GameCard = this.generateGameCard3D(formInfo);
     this.databaseService.add(new gameCard3D({
       title: gameCard.title,
@@ -73,10 +73,10 @@ export class GameCardsService {
       bestScore1v1: gameCard.bestTime1v1,
     }));
 
-    return gameCard;
+    return true;
   }
 
-  private convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
+  public convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
     return {
       title: gameCard.toJSON().title,
       image: gameCard.toJSON().image,

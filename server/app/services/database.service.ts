@@ -36,11 +36,8 @@ export class DatabaseService {
         return model.countDocuments(condition);
     }
 
-    public updateOne(model: mongoose.Model<mongoose.Document>, condition: Object, modification: Object): void {
-        console.log(modification);
-        console.log(condition);
-        model.findOneAndUpdate(condition, modification, (err: Error) => {
-            if (err) { console.error(err); }
-        });
+    public async updateOne(model: mongoose.Model<mongoose.Document>, condition: Object, modification: Object):
+                           Promise<mongoose.Document | null> {
+        return model.findOneAndUpdate(condition, modification, {new: true});
     }
 }

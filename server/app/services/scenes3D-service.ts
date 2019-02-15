@@ -1,9 +1,10 @@
 import { inject, injectable } from "inversify";
+import * as mongoose from "mongoose";
 import { IThreeObject } from "../../../common/communication/ThreeObject";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
-import { scene3D } from "./scene3D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
+import { scene3D } from "./scene3D-schema";
 
 @injectable()
 export class Scene3DService {
@@ -18,7 +19,7 @@ export class Scene3DService {
     }));
   }
 
-  public update(title: string, imageData: string): void {
-    this.databaseService.updateOne(gameCard3D, {title : title}, {image : imageData});
+  public async update(title: string, imageData: string): Promise<mongoose.Document | null> {
+    return this.databaseService.updateOne(gameCard3D, {title : title}, {image : imageData});
   }
 }
