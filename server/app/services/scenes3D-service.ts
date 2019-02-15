@@ -3,6 +3,7 @@ import { IThreeObject } from "../../../common/communication/ThreeObject";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
 import { scene3D } from "./scene3D-schema";
+import { gameCard3D } from "./game-card-3D-schema";
 
 @injectable()
 export class Scene3DService {
@@ -15,5 +16,9 @@ export class Scene3DService {
       originalScene: originalScene,
       modifiedScene: modifiedScene,
     }));
+  }
+
+  public update(title: string, imageData: string): void {
+    this.databaseService.updateOne(gameCard3D, {title : title}, {imageData : imageData});
   }
 }

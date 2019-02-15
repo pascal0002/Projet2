@@ -68,7 +68,7 @@ export class GameCardsService {
     const gameCard: GameCard = this.generateGameCard3D(formInfo);
     this.databaseService.add(new gameCard3D({
       title: gameCard.title,
-      originalImagePath: gameCard.originalImagePath,
+      imageData: "",
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
     }));
@@ -101,7 +101,7 @@ export class GameCardsService {
 
     return {
       title: formInfo.gameName,
-      originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
+      originalImagePath: "",
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
       dimension: Dimension.THREE_DIMENSION,

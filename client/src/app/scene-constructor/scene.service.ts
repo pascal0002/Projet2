@@ -2,8 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import * as THREE from "three";
 import {ClientConstants} from "../../../../common/communication/Constants";
+import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
+import { ISnapshot } from "../../../../common/communication/Snapshot";
 import {IThreeObject} from "../../../../common/communication/ThreeObject";
-
 @Injectable({
   providedIn: "root",
 })
@@ -20,7 +21,6 @@ export class SceneService {
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
     this.addLighting();
-    this.createObjects();
   }
 
   private makeScene(canvas: HTMLCanvasElement): void {
@@ -32,17 +32,12 @@ export class SceneService {
     this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
   }
 
-  private createObjects(): void {
+  public createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
 
-    this.http.get<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`)
-    .toPromise()
-    .then((objects) => {this.generateObjects(objects); }, )
-    .then(() => {this.saveAsImage(); }, )
-    .catch((error: Error) => {console.error(error.message);
-    });
+    return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 
-  private generateObjects(objects: IThreeObject[]): void {
+  public generateObjects(objects: IThreeObject[]): void {
 
     for (const object of objects) {
       const threeObject: THREE.Mesh = this.createBasicObject(object);
@@ -120,9 +115,13 @@ export class SceneService {
     threeObject.rotateZ(object.orientation[1 + 1]);
   }
 
-  public saveAsImage(): void {
-    const imgData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
-    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, imgData)
+  public saveAsImage(gameName: string): void {
+    const imageData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
+    const snapshot: ISnapshot = {
+      gameName : gameName,
+      imageData: imageData,
+    };
+    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
     .toPromise()
     .catch((error: Error) => {console.error(error.message); });
   }

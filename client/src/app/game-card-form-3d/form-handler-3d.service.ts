@@ -5,13 +5,15 @@ import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
+import { SceneService } from "../scene-constructor/scene.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormHandler3DService {
 
-  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { /**/}
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService,
+                     private sceneService: SceneService) { /**/}
 
   public getValidatorFunction(): ValidatorFn {
     return (formGroup: FormGroup) => {
@@ -47,6 +49,13 @@ export class FormHandler3DService {
         (err) => {console.error("erreur :", err); },
       );
     });
+  }
+
+  public createObjects(formInfo: IFormInfo3D): void {
+    this.sceneService.createObjects(formInfo)
+    .then((objects) => {this.sceneService.generateObjects(objects);
+                        this.sceneService.saveAsImage(formInfo.gameName); }, )
+    .catch((error: Error) => {console.error(error.message); });
   }
 
 }
