@@ -19,6 +19,6 @@ export class Scene3DService {
   }
 
   public update(title: string, imageData: string): void {
-    this.databaseService.updateOne(gameCard3D, {title : title}, {imageData : imageData});
+    this.databaseService.updateOne(gameCard3D, {title : title}, {image : imageData});
   }
 }

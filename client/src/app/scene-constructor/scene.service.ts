@@ -5,6 +5,7 @@ import {ClientConstants} from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { ISnapshot } from "../../../../common/communication/Snapshot";
 import {IThreeObject} from "../../../../common/communication/ThreeObject";
+import { delay } from "q";
 @Injectable({
   providedIn: "root",
 })
@@ -32,12 +33,16 @@ export class SceneService {
     this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
   }
 
-  public createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
+  public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
 
     return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 
-  public generateObjects(objects: IThreeObject[]): void {
+  private async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  public async generateObjects(objects: IThreeObject[], gameName: string): void {
 
     for (const object of objects) {
       const threeObject: THREE.Mesh = this.createBasicObject(object);
@@ -45,6 +50,8 @@ export class SceneService {
       this.rotateObject(threeObject, object);
       this.scene.add(threeObject);
     }
+    await this.delay(1);
+    this.saveAsImage(gameName);
   }
 
   private addLighting(): void {
@@ -115,7 +122,7 @@ export class SceneService {
     threeObject.rotateZ(object.orientation[1 + 1]);
   }
 
-  public saveAsImage(gameName: string): void {
+  private saveAsImage(gameName: string): void {
     const imageData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
     const snapshot: ISnapshot = {
       gameName : gameName,

@@ -53,8 +53,7 @@ export class FormHandler3DService {
 
   public createObjects(formInfo: IFormInfo3D): void {
     this.sceneService.createObjects(formInfo)
-    .then((objects) => {this.sceneService.generateObjects(objects);
-                        this.sceneService.saveAsImage(formInfo.gameName); }, )
+    .then((objects) => {this.sceneService.generateObjects(objects, formInfo.gameName); }, )
     .catch((error: Error) => {console.error(error.message); });
   }
 
