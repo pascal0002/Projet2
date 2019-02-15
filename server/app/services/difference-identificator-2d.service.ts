@@ -1,21 +1,16 @@
 import { injectable } from "inversify";
-import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { IClickInfo } from "../../../common/communication/ClickInfo";
 import { ServerConstants } from "../../../common/communication/Constants";
 import { IPixel } from "../../../common/communication/Pixel";
-import { ModifiedImg } from "../../mock/image-mock";
 
 @injectable()
 export class DifferenceIdentificator2DService {
 
-    public differenceImgTest: IBitmapImage;
-    public clickPosition: IClickInfo;
-    public imageOfDifferencePixels: number[];
+    public posOfDifferencePixels: number[];
 
     public constructor() {
-                            const imgOfDifference: ModifiedImg = new ModifiedImg();
-                            this.imageOfDifferencePixels = imgOfDifference.pixels;
-                         }
+        this.posOfDifferencePixels = [];
+    }
 
     public confirmDifference(clickPosition: IClickInfo, imgOfDifferencePixels: number[]): boolean {
         const pixelAtPos: IPixel = this.getPixelAtPos(clickPosition, imgOfDifferencePixels);
@@ -35,12 +30,17 @@ export class DifferenceIdentificator2DService {
         };
     }
 
+    public resetPosOfDifferencePixels(): void {
+        this.posOfDifferencePixels = [];
+    }
+
     public getPositionInArray(clickPosition: IClickInfo): number {
         return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL)
             + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }
 
     public eraseDifference(currentPixelPos: number, pixels: number[], imageWidth: number): number[] {
+        this.resetPosOfDifferencePixels();
         const pixelStack: number[] = [currentPixelPos];
         pixels[currentPixelPos] = ServerConstants.WHITE_PIXEL_PARAMETER;
         pixels[currentPixelPos + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
@@ -50,13 +50,13 @@ export class DifferenceIdentificator2DService {
             const pixelIndexNumber: number | undefined = pixelStack.shift();
             if (pixelIndexNumber !== undefined) {
                 const neighbours: number[] = this.getBlackPixelNeighbours(pixelIndexNumber, imageWidth, pixels);
-                neighbours.forEach((neighbour: number) => {
-                    pixelStack.push(neighbour);
-                    pixels[neighbour] = ServerConstants.WHITE_PIXEL_PARAMETER;
-                    pixels[neighbour + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
-                    pixels[neighbour + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                neighbours.forEach((blackNeighbour: number) => {
+                    this.posOfDifferencePixels.push(blackNeighbour);
+                    pixelStack.push(blackNeighbour);
+                    pixels[blackNeighbour] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                    pixels[blackNeighbour + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
+                    pixels[blackNeighbour + 1 + 1] = ServerConstants.WHITE_PIXEL_PARAMETER;
                 });
-
             }
         }
 

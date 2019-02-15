@@ -1,4 +1,6 @@
-// import * from "buffer-dataview";
+// Ryan a dit que c'est ok de disable lint pour ca
+// tslint:disable-next-line:variable-name typedef
+const DataView = require("buffer-dataview");
 import * as fs from "fs";
 import { injectable } from "inversify";
 import "reflect-metadata";
@@ -7,7 +9,6 @@ import { ClientConstants, ServerConstants } from "../../../common/communication/
 @injectable()
 export class BitmapDecoder {
     public getPixels(path: string): number[] {
-        const DataView = require("buffer-dataview");
         let buffer: Buffer = Buffer.alloc(ServerConstants.FILE_SIZE);
         buffer = fs.readFileSync(process.cwd() + path);
         const dataView: DataView = new DataView(buffer);

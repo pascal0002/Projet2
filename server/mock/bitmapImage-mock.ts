@@ -137,3 +137,8 @@ export const diagonalDifferenceBitmap: IBitmapImage  = {
     fileName: "diagonalDifferenceBitmap.bmp",
     pixels: diagonalDifferenceArray,
 };
+
+export const firstLineBlackPixels: number[] = [];
+for (let i: number = 0; i < 921600; i++) {
+    (i < 1920) ? firstLineBlackPixels.push(0) : firstLineBlackPixels.push(255);
+}

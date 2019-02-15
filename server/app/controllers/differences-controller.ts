@@ -41,13 +41,15 @@ export class DifferencesController {
 
             if (this.differenceIdentificator2DService.confirmDifference(clickInfo, imgOfDifferencePixels)) {
                 // Overwrite the temp image
-                res.json("HELLO!");
                 this.bitmapGenerator.createTemporaryFile(
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
                                                                           imgOfDifferencePixels,
                                                                           ServerConstants.ACCEPTED_WIDTH),
                     ServerConstants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
                     clickInfo.differenceImageName);
+
+                // Send the array of the pos of diff pixels
+                res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
             }
         });
 
