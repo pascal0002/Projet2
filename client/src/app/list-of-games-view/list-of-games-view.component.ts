@@ -20,7 +20,6 @@ export class ListOfGamesViewComponent {
   }
 
   public playSolo(gameCard: GameCard): void {
-    console.log("allo");
     this.gameViewService.gamecard = gameCard;
     this.gameViewService.mode = Mode.SOLO;
   }

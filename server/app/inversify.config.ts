@@ -17,6 +17,7 @@ import { LoginService } from "./services/login.service";
 import { ModifiedSceneBuilderService } from "./services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "./services/original-scene-builder.service";
 import { ScenesParameterGeneratorService } from "./services/scenes-parameter-generator.service";
+import { Scene3DService } from "./services/scenes3D-service";
 import { WebsocketService } from "./services/websocket.service";
 import Types from "./types";
 
@@ -41,4 +42,5 @@ container.bind(Types.SceneController).to(SceneController);
 container.bind(Types.OriginalSceneBuilderService).to(OriginalSceneBuilderService);
 container.bind(Types.ModifiedSceneBuilderService).to(ModifiedSceneBuilderService);
 container.bind(Types.ScenesParameterGeneratorService).to(ScenesParameterGeneratorService);
+container.bind(Types.Scene3DService).to(Scene3DService);
 export { container };

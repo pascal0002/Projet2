@@ -117,12 +117,12 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   /*Utilisé pour afficher le nombre de loupes avec ngFor*/
   public miscGetArrayDiffFoundCount(): Array<number> {
-    return Array.apply(null, { length: ((this.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB) }).map(Number.call, Number);
+    return Array.apply(null, { length: ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB) }).map(Number.call, Number);
   }
 
   public miscGetDiffCounterWidth(): number {
 
-    return this.magnifierProgressOffset + ((this.dimension === Dimension.TWO_DIMENSION) ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB));
+    return this.magnifierProgressOffset + ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB));
   }
 
   public miscTimeToString(time: number): string {

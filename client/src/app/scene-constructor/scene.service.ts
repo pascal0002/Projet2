@@ -122,7 +122,7 @@ export class SceneService {
 
   public saveAsImage(): void {
     const imgData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
-    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D`, imgData)
+    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, imgData)
     .toPromise()
     .catch((error: Error) => {console.error(error.message); });
   }
