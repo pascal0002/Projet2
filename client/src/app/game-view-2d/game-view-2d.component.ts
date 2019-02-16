@@ -5,7 +5,6 @@ import { ClientConstants, ServerConstants } from "../../../../common/communicati
 import { IImagePath } from "../../../../common/communication/ImagePath";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
-import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 
 @Component({
   selector: "app-game-view-2d",
@@ -18,7 +17,7 @@ export class GameView2DComponent implements AfterViewInit {
   public game2d: GameCard;
   public ctx: CanvasRenderingContext2D | null;
   public clickPosition: Array<number>;
-  public imagePath: IImagePath = {path: ServerConstants.PUBLIC_OG_FOLDER_PATH + "cat.bmp"};
+  public imagePath: IImagePath = {path: ServerConstants.PUBLIC_MOD_FOLDER_PATH + "MY_TEST_BMP_MODIF.bmp"};
   public originalImagePixels: number[] = [];
 
   public constructor(private http: HttpClient, route: Router) {
@@ -56,23 +55,20 @@ export class GameView2DComponent implements AfterViewInit {
       // Iterate through every pixel
       this.originalImage()
       .then((res) => {
-        console.log("Did it go in herre");
         console.log(res);
         this.originalImagePixels = res;
-
+        let j: number = 0;
         for (let i: number = 0; i < this.originalImagePixels.length; i += 3) {
-          imageData.data[i + 0] = this.originalImagePixels[i + 0];    // R value
-          imageData.data[i + 1] = this.originalImagePixels[i + 1];    // G value
-          imageData.data[i + 2] = this.originalImagePixels[i + 2];    // B value
-          imageData.data[i + 3] = 255;             // A value
+          imageData.data[j + 0] = this.originalImagePixels[i + 0];    // R value
+          imageData.data[j + 1] = this.originalImagePixels[i + 1];    // G value
+          imageData.data[j + 2] = this.originalImagePixels[i + 2];    // B value
+          imageData.data[j + 3] = 255;                                // A value
+          j += 4;
         }
         if (this.ctx) {
           this.ctx.putImageData(imageData, 0, 0, );
         }
       });
-
-
-      console.log(this.originalImagePixels);
       /*for (let i: number = 0; i < this.originalImage.length; i ++) {
         image[i] = this.originalImage()[i];
       }*/

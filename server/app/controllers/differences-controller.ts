@@ -52,7 +52,7 @@ export class DifferencesController {
         });
 
         router.post("/bitmap_encoder", (req: Request, res: Response, next: NextFunction) => {
-            res.json(this.bitmapDecoder.getPixels(req.body.path));
+            res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.path)));
         });
 
         return router;
