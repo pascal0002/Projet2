@@ -10,11 +10,19 @@ import { DifferenceValidatorService } from "./difference-validator.service";
 })
 export class Game2DComponent {
 
+  public diffFoundCount: number;
   public gameCard: GameCard;
+  public modifiedImgPath: string;
 
   public constructor(public gameViewService: GameViewService, private differenceValidatorService: DifferenceValidatorService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
+    this.modifiedImgPath = this.differenceValidatorService.getModifiedImagePath();
+  }
+
+  public sendClickInfo(mouseEvent: MouseEvent): void {
+    this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY));
+    this.diffFoundCount++;
   }
 
 }

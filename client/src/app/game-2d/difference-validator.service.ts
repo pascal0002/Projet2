@@ -10,6 +10,7 @@ import { GameCard } from "../../../../common/communication/game-card";
 export class DifferenceValidatorService {
 
   public game2d: GameCard;
+  public diffFoundCount: number;
 
   public constructor(private http: HttpClient) {
   }
@@ -29,11 +30,18 @@ export class DifferenceValidatorService {
 
   public getDifferenceImageName(): string {
     const orginalFilePath: string = this.game2d.image;
-    console.log(this.game2d.image);
     const differenceFilePath: string =
      orginalFilePath.substr(0, orginalFilePath.length - ServerConstants.EXTENSION_LENGTH) + "Differences.bmp";
 
     return differenceFilePath.split("/").pop() as string;
+  }
+
+  public getModifiedImagePath(): string {
+    const orginalFilePath: string = this.game2d.image;
+    const imageName: string = (orginalFilePath.substr(0, orginalFilePath.length - ServerConstants.EXTENSION_LENGTH) + "Modified.bmp")
+                              .split("/").pop() as string;
+
+    return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
