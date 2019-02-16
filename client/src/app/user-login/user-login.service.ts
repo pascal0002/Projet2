@@ -14,7 +14,9 @@ export class UserLoginService {
     return this.websocketService.listenForUsernameValidation();
   }
 
-  public connect(username: string): void {
+  public connect(username: string): Observable<boolean> {
     this.websocketService.sendMessage(MessageType.CONNECT, username);
+
+    return this.websocketService.listenForConnectionValidation();
   }
 }

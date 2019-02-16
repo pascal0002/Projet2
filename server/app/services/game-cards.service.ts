@@ -1,18 +1,24 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
+import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../common/communication/Constants";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { Dimension, ServerConstants } from "../../../common/communication/Constants";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
+import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
+import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
+import { gameCard2D } from "./game-card-2D-schema";
+import { gameCard3D } from "./game-card-3D-schema";
 
 @injectable()
 export class GameCardsService {
 
-  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService) {/**/ }
+  public constructor(@inject(Types.DifferenceCounterService) private differenceCounterService: DifferenceCounterService,
+                     @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
-  public generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
+  public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
     const images: Object = {
       "originalImage": originalImg,
       "modifiedImage": modifiedImg,
@@ -20,7 +26,6 @@ export class GameCardsService {
 
     return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
       .then((image: AxiosResponse<IBitmapImage>) => {
-
         return image.data;
       });
   }
@@ -29,14 +34,77 @@ export class GameCardsService {
     return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
-  public generateGameCard(formInfo: IFormInfo): GameCard {
+  public async getGameCards2D(): Promise<mongoose.Document[]> {
+    return this.databaseService.getAll(gameCard2D);
+  }
+
+  public async getGameCards3D(): Promise<mongoose.Document[]> {
+    return this.databaseService.getAll(gameCard3D);
+  }
+
+  public convertDBGameCards(gameCardsDB: mongoose.Document[], dimension: Dimension): GameCard[] {
+    const gameCards: GameCard[] = [];
+    gameCardsDB.forEach((gameCard: mongoose.Document) => {
+      gameCards.push(this.convertDBGameCard(gameCard, dimension));
+    });
+
+    return gameCards;
+  }
+
+  public addGameCard2D(formInfo: IFormInfo2D, differenceImage: IBitmapImage): GameCard {
+    const gameCard: GameCard = this.generateGameCard2D(formInfo);
+    this.databaseService.add(new gameCard2D({
+      title: gameCard.title,
+      image: gameCard.image,
+      differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
+      bestScoreSolo: gameCard.bestTimeSolo,
+      bestScore1v1: gameCard.bestTime1v1,
+    }));
+
+    return gameCard;
+  }
+
+  public addGameCard3D(formInfo: IFormInfo3D): Boolean {
+    const gameCard: GameCard = this.generateGameCard3D(formInfo);
+    this.databaseService.add(new gameCard3D({
+      title: gameCard.title,
+      image: "",
+      bestScoreSolo: gameCard.bestTimeSolo,
+      bestScore1v1: gameCard.bestTime1v1,
+    }));
+
+    return true;
+  }
+
+  public convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
+    return {
+      title: gameCard.toJSON().title,
+      image: gameCard.toJSON().image,
+      bestTimeSolo: gameCard.toJSON().bestScoreSolo,
+      bestTime1v1: gameCard.toJSON().bestScore1v1,
+      dimension: dimension,
+    };
+  }
+
+  private generateGameCard2D(formInfo: IFormInfo2D): GameCard {
 
     return {
       title: formInfo.gameName,
-      imageName: this.generateOriginalImagePath(formInfo.originalImage.fileName),
-      modifiedImageName: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
+      image: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      dimension: Dimension.TWO_DIMENSION,
+    };
+  }
+
+  private generateGameCard3D(formInfo: IFormInfo3D): GameCard {
+
+    return {
+      title: formInfo.gameName,
+      image: "",
+      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      dimension: Dimension.THREE_DIMENSION,
     };
   }
 
@@ -45,39 +113,31 @@ export class GameCardsService {
     return ServerConstants.ORIGINAL_IMAGE_FOLDER + imageName;
   }
 
-  private generateModifiedImagePath(imageName: string): string {
+  private generateDifferenceImagePath(imageName: string): string {
 
-    return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
+    return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
   }
 
-  private generateBestTime(minimalTime: number, maximalTime: number): string[] {
-    const highScore: string[] = [];
+  private generateBestTime(minimalTime: number, maximalTime: number): { user: string, time: number }[] {
+    const highScores: { user: string, time: number }[] = [];
     for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
-      minimalTime = this.getRandomRange(minimalTime, maximalTime);
-      const time: string = this.convertTimeToMSSFormat(minimalTime);
+      const highScore: number = this.getRandomRange(minimalTime, maximalTime);
       const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
-      highScore.push(`${time} user${userID}`);
+      highScores.push({
+        user: `user${userID}`,
+        time: highScore,
+      });
+      minimalTime = highScore;
     }
 
-    return highScore;
+    return highScores;
   }
 
-  public getRandomRange(min: number, max: number): number {
+  private getRandomRange(min: number, max: number): number {
     return Math.floor(this.getRandomNumber() * (max - min) + min);
   }
 
-  public getRandomNumber(): number {
+  private getRandomNumber(): number {
     return Math.random();
-  }
-
-  private convertTimeToMSSFormat(time: number): string {
-    const seconde: number = time % ServerConstants.SECOND_PER_MINUTE;
-    const minute: number = (time - seconde) / ServerConstants.SECOND_PER_MINUTE;
-
-    return `${minute}:${this.totwoDigitString(seconde)}`;
-  }
-
-  private totwoDigitString(initialNumber: number): string {
-    return ("0" + initialNumber).slice(ServerConstants.TWO_DIGIT);
   }
 }

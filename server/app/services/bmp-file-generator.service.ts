@@ -3,7 +3,7 @@ import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { ServerConstants } from "../../../common/communication/Constants";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import Types from "../types";
 import { BitmapEncoder } from "./bitmap-encoder.service";
 
@@ -11,7 +11,7 @@ import { BitmapEncoder } from "./bitmap-encoder.service";
 export class BmpFileGenerator {
     public constructor(@inject(Types.BitmapEncoder) private bitmapEncoderService: BitmapEncoder) {}
 
-    public generateBMPFiles(form: IFormInfo, imageOfDifferences: IBitmapImage): void {
+    public generateBMPFiles(form: IFormInfo2D, imageOfDifferences: IBitmapImage): void {
         this.generateOriginalBMPFile(form.originalImage);
         this.generateModifedBMPFile(form.modifiedImage);
         this.generateDifferenceBMPFile(imageOfDifferences);

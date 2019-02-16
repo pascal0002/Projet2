@@ -1,19 +1,17 @@
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import {ServerConstants} from "../../../common/communication/Constants";
-
+import Types from "../types";
+import { DatabaseService } from "./database.service";
+import { userDB } from "./user-schema";
 @injectable()
 export class LoginService {
 
-    private usersConnected: string[];
-
-    public constructor() {
-        this.usersConnected = [];
-    }
+    public constructor(@inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
     public connectUser(username: string): void {
         if (this.validateUsername(username)) {
-            this.usersConnected.push(username);
+            this.databaseService.add(new userDB({ name: username }));
         }
     }
 
@@ -22,16 +20,16 @@ export class LoginService {
 
         return alphanumericCharacters.test(username)
             && username.length >= ServerConstants.MINIMUM_USERNAME_LENGTH
-            && username.length <= ServerConstants.MAXIMUM_USERNAME_LENGTH
-            && this.isUsernameUnique(username);
+            && username.length <= ServerConstants.MAXIMUM_USERNAME_LENGTH;
     }
 
     public disconnect(username: string): void {
-        this.usersConnected = this.usersConnected.filter((userConnected: string) => userConnected !== username);
+        this.databaseService.remove(userDB, {name: username});
     }
 
-    public isUsernameUnique(username: string): boolean {
-        return !this.usersConnected.includes(username);
+    public async countUsernameOccurence(username: string): Promise<number> {
+
+        return this.databaseService.countDocuments(userDB, {name: username});
     }
 
 }
