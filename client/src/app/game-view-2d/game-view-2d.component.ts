@@ -18,6 +18,7 @@ export class GameView2DComponent implements AfterViewInit {
   public ctx: CanvasRenderingContext2D | null;
   public clickPosition: Array<number>;
   public imagePath: IImagePath = {path: ServerConstants.PUBLIC_OG_FOLDER_PATH + "cat.bmp"};
+  public originalImagePixels: number[] = [];
 
   public constructor(private http: HttpClient, route: Router) {
     this.game2d = TWO_DIMENSION_GAME_CARD_LIST[0];
@@ -39,29 +40,56 @@ export class GameView2DComponent implements AfterViewInit {
   public ngAfterViewInit(): void {
 
     // Create img
-    const img: HTMLImageElement = new Image();
-    img.src = this.game2d.imageName;
+    // const img: HTMLImageElement = new Image();
+    // img.src = this.game2d.imageName;
+
+    // Create canvas
+    const canvas: HTMLCanvasElement = document.createElement("canvas");
+    canvas.width = 640;
+    canvas.height = 480;
+    document.body.appendChild(canvas);
+    this.ctx = canvas.getContext("2d");
+    const imageData: ImageData = new ImageData(640, 480);
+
+    if (this.ctx) {
+      // Iterate through every pixel
+      this.originalImage();
+      console.log(this.originalImagePixels);
+      /*for (let i: number = 0; i < this.originalImage.length; i ++) {
+        image[i] = this.originalImage()[i];
+      }*/
+      for (let i: number = 0; i < this.originalImagePixels.length; i += 4) {
+        imageData.data[i + 0] = this.originalImagePixels[i + 0];    // R value
+        imageData.data[i + 1] = this.originalImagePixels[i + 1];    // G value
+        imageData.data[i + 2] = this.originalImagePixels[i + 2];    // B value
+        imageData.data[i + 3] = 255;             // A value
+      }
+      this.ctx.putImageData(imageData, 0, 0, );
+    }
 
     // Load image, create canvas and draw
-    img.onload = (() => {
 
-        // Create canvas
-        const canvas: HTMLCanvasElement = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
-        document.body.appendChild(canvas);
-        // const context: CanvasRenderingContext2D | null = canvas.getContext("2d");
-        this.ctx = canvas.getContext("2d");
+    // this.ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        if (this.ctx && img.complete) {
-          this.ctx.drawImage(img, 0, 0, img.width, img.height);
-        }
+    // addEventListener("click", (e) => {
+    //      this.clickImage(e);
+    //      this.getPixel();
+    //    });
+  }
 
-        addEventListener("click", (e) => {
-          this.clickImage(e);
-          this.getPixel(); // Erreur d'accès sur la console page web
-        });
-      });
+  public originalImage(): void {
+
+    this.http.post<number[]>(ClientConstants.SERVER_BASE_URL + "api/differences/bitmap_encoder", this.imagePath)
+    .toPromise()
+    .then(
+      (res) => {
+        this.originalImagePixels = res;
+      },
+    )
+    .catch(
+      (err) => {console.error("erreur :", err); },
+    );
+
   }
 
   public clickImage(event: MouseEvent): void {
@@ -98,7 +126,6 @@ export class GameView2DComponent implements AfterViewInit {
       // console.log(imageData.data.length);
       // console.log("First pixel colors: " + imageData.data);
     }
-    // L'accès à imageData.data ne semble pas être autorisé
     // const imageData: ImageData = new ImageData(img.width, img.height);
 
     // return
