@@ -13,6 +13,7 @@ import { GameViewService } from "./game-view.service";
 
 export class GameViewComponent implements OnInit, AfterViewInit {
   public gameCard: GameCard;
+  public isSolo: boolean = true;
   public diffFoundCount: number = 0;
   public opponentDiffFoundCount: number = 0;
 
