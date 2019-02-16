@@ -20,7 +20,7 @@ export class DifferenceIdentificator2DService {
                 pixelAtPos.green === ServerConstants.BLACK_PIXEL_PARAMETER);
     }
 
-    public getPixelAtPos(clickPosition: IClickInfo, pixelArray: number[]): IPixel {
+    private getPixelAtPos(clickPosition: IClickInfo, pixelArray: number[]): IPixel {
         const POS_IN_ARRAY: number = this.getPositionInArray(clickPosition);
 
         return {
@@ -30,11 +30,11 @@ export class DifferenceIdentificator2DService {
         };
     }
 
-    public resetPosOfDifferencePixels(): void {
+    private resetPosOfDifferencePixels(): void {
         this.posOfDifferencePixels = [];
     }
 
-    public getPositionInArray(clickPosition: IClickInfo): number {
+    private getPositionInArray(clickPosition: IClickInfo): number {
         return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL)
             + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }
@@ -75,7 +75,7 @@ export class DifferenceIdentificator2DService {
         return blackPixelNeighbours;
     }
 
-    public getPixelNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
+    private getPixelNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
         const allPixelNeighbours: number[] = [];
         allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
@@ -89,35 +89,35 @@ export class DifferenceIdentificator2DService {
         return allPixelNeighbours;
     }
 
-    public getRightPixelNeighbour(clickedPixelPos: number): number {
+    private getRightPixelNeighbour(clickedPixelPos: number): number {
         return clickedPixelPos + ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getLeftPixelNeighbour(clickedPixelPos: number): number {
+    private getLeftPixelNeighbour(clickedPixelPos: number): number {
         return clickedPixelPos - ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getTopPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getTopPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos + (imageWidth * ServerConstants.BYTES_PER_PIXEL);
     }
 
-    public getTopRightPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getTopRightPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos + (imageWidth * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getTopLeftPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getTopLeftPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos + (imageWidth * ServerConstants.BYTES_PER_PIXEL) - ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getBottomPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getBottomPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos - (imageWidth * ServerConstants.BYTES_PER_PIXEL);
     }
 
-    public getBottomRightPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getBottomRightPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos - (imageWidth * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.BYTES_PER_PIXEL;
     }
 
-    public getBottomLeftPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
+    private getBottomLeftPixelNeighbour(clickedPixelPos: number, imageWidth: number): number {
         return clickedPixelPos - (imageWidth * ServerConstants.BYTES_PER_PIXEL) - ServerConstants.BYTES_PER_PIXEL;
     }
 }

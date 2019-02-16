@@ -62,7 +62,7 @@ export const testImage: number[] = [
 ];
 
 // 5x5 array of pixel
-export const testImageGetNeighbours: number[] = [
+export const testImageBlackPixels: number[] = [
     255, 255, 255,   0,   0,   0,   0,   0,   0, 255, 255, 255, 255, 255, 255,
     255, 255, 255,   0,   0,   0, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255,   0,   0,   0,   0,   0,   0,   0,   0,   0,

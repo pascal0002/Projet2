@@ -39,11 +39,11 @@ export class DifferenceValidatorService {
 
   public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
     return new Promise<IClickInfo>(() => {
-      this.http.post<IClickInfo>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
+      this.http.post<number[]>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
       .toPromise()
       .then(
         (res) => {
-          console.log(res);
+          // console.log(res);
           this.playSound();
         },
       )
