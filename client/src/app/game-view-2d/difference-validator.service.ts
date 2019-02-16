@@ -16,11 +16,11 @@ export class DifferenceValidatorService {
     this.game2d = TWO_DIMENSION_GAME_CARD_LIST[4];
    }
 
-  public getClickCoordinates(event: MouseEvent): IClickInfo {
+  public getClickInfo(xPosition: number, yPosition: number): IClickInfo {
 
     return {
-      xPos: event.offsetX,
-      yPos: this.getCorrectYPos(event.offsetY),
+      xPos: xPosition,
+      yPos: this.getCorrectYPos(yPosition),
       differenceImageName: this.getDifferenceImageName(),
     };
   }
@@ -37,18 +37,20 @@ export class DifferenceValidatorService {
     return differenceFilePath.split("/").pop() as string;
   }
 
-  public sendClickPosition(mousePos: IClickInfo): void {
-    this.http.post<IClickInfo>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
-    .toPromise()
-    .then(
-      (res) => {
-        console.log(res);
-        this.playSound();
-      },
-    )
-    .catch(
-      (err) => {console.error("erreur :", err); },
-    );
+  public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
+    return new Promise<IClickInfo>(() => {
+      this.http.post<IClickInfo>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
+      .toPromise()
+      .then(
+        (res) => {
+          console.log(res);
+          this.playSound();
+        },
+      )
+      .catch(
+        (err) => {console.error("erreur :", err); },
+      );
+    });
   }
 
   public playSound(): void {

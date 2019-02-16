@@ -1,5 +1,8 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+ // tslint:disable:no-any
 
+import { ErrorHandler } from "@angular/core";
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { AppModule } from "../app.module";
 import { GameView2DComponent } from "./game-view-2d.component";
 
 describe("GameView2DComponent", () => {
@@ -8,9 +11,11 @@ describe("GameView2DComponent", () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameView2DComponent ],
+      imports: [AppModule],
+      declarations: [  ],
     })
-    .compileComponents();
+    .compileComponents()
+    .catch((err: any) => new ErrorHandler());
   }));
 
   beforeEach(() => {

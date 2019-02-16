@@ -42,6 +42,6 @@ export class GameView2DComponent implements AfterViewInit {
   }
 
   public sendClickPosition(event: MouseEvent): void {
-    this.differenceValidatorService.sendClickPosition(this.differenceValidatorService.getClickCoordinates(event));
+    this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(event.offsetX, event.offsetY));
   }
 }
