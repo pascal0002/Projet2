@@ -122,8 +122,7 @@ describe("FormValidator2dService", () => {
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
     formValidatorService.generateGameCard(formSent).then((res: GameCard) => {
       expect(res.title).toEqual(formSent.gameName);
-      expect(res.originalImagePath).toEqual(formSent.originalImage.fileName);
-      expect(res.modifiedImagePath).toEqual(formSent.modifiedImage.fileName);
+      expect(res.image).toEqual(formSent.originalImage.fileName);
     }).catch((err) => new ErrorHandler());
   });
 });
