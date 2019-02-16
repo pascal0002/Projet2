@@ -55,7 +55,7 @@ export class GameCardsService {
     const gameCard: GameCard = this.generateGameCard2D(formInfo);
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
-      originalImagePath: gameCard.originalImagePath,
+      image: gameCard.image,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
@@ -64,22 +64,22 @@ export class GameCardsService {
     return gameCard;
   }
 
-  public addGameCard3D(formInfo: IFormInfo3D): GameCard {
+  public addGameCard3D(formInfo: IFormInfo3D): Boolean {
     const gameCard: GameCard = this.generateGameCard3D(formInfo);
     this.databaseService.add(new gameCard3D({
       title: gameCard.title,
-      originalImagePath: gameCard.originalImagePath,
+      image: "",
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
     }));
 
-    return gameCard;
+    return true;
   }
 
-  private convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
+  public convertDBGameCard(gameCard: mongoose.Document, dimension: Dimension): GameCard {
     return {
       title: gameCard.toJSON().title,
-      originalImagePath: gameCard.toJSON().originalImagePath,
+      image: gameCard.toJSON().image,
       bestTimeSolo: gameCard.toJSON().bestScoreSolo,
       bestTime1v1: gameCard.toJSON().bestScore1v1,
       dimension: dimension,
@@ -90,7 +90,7 @@ export class GameCardsService {
 
     return {
       title: formInfo.gameName,
-      originalImagePath: this.generateOriginalImagePath(formInfo.originalImage.fileName),
+      image: this.generateOriginalImagePath(formInfo.originalImage.fileName),
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
       dimension: Dimension.TWO_DIMENSION,
@@ -101,7 +101,7 @@ export class GameCardsService {
 
     return {
       title: formInfo.gameName,
-      originalImagePath: ServerConstants.ORIGINAL_IMAGE_FOLDER + "cat.bmp",
+      image: "",
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
       dimension: Dimension.THREE_DIMENSION,

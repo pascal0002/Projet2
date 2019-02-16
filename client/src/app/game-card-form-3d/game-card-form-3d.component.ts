@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-import { GameCard } from "../../../../common/communication/game-card";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
 @Component({
@@ -59,13 +58,15 @@ export class GameCardForm3DComponent implements OnInit {
     };
   }
 
-  public async sendFormInfo(): Promise<GameCard> {
-
-    const FORM_INFO: IFormInfo3D = this.get3DFormInfo();
-
+  private sendFormInfo(formInfo: IFormInfo3D): void {
     this.closeForm();
+    this.formHandler3DService.send3DFormInfo(formInfo);
+  }
 
-    return this.formHandler3DService.send3DFormInfo(FORM_INFO);
+  public submit(): void {
+    const formInfo: IFormInfo3D = this.get3DFormInfo();
+    this.sendFormInfo(formInfo);
+    this.formHandler3DService.createObjects(formInfo);
   }
 
   public resetInputValues(): void {

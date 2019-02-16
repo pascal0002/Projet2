@@ -2,8 +2,10 @@ import { HttpClient } from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import * as THREE from "three";
 import {ClientConstants} from "../../../../common/communication/Constants";
+import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
+import { ISnapshot } from "../../../../common/communication/Snapshot";
 import {IThreeObject} from "../../../../common/communication/ThreeObject";
-
+import { GameCard } from "../../../../common/communication/game-card";
 @Injectable({
   providedIn: "root",
 })
@@ -20,7 +22,6 @@ export class SceneService {
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
     this.addLighting();
-    this.createObjects();
   }
 
   private makeScene(canvas: HTMLCanvasElement): void {
@@ -32,17 +33,16 @@ export class SceneService {
     this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
   }
 
-  private createObjects(): void {
+  public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
 
-    this.http.get<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`)
-    .toPromise()
-    .then((objects) => {this.generateObjects(objects); }, )
-    .then(() => {this.saveAsImage(); }, )
-    .catch((error: Error) => {console.error(error.message);
-    });
+    return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 
-  private generateObjects(objects: IThreeObject[]): void {
+  private async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
 
     for (const object of objects) {
       const threeObject: THREE.Mesh = this.createBasicObject(object);
@@ -50,6 +50,9 @@ export class SceneService {
       this.rotateObject(threeObject, object);
       this.scene.add(threeObject);
     }
+    await this.delay(1);
+
+    return this.saveAsImage(gameName);
   }
 
   private addLighting(): void {
@@ -120,10 +123,14 @@ export class SceneService {
     threeObject.rotateZ(object.orientation[1 + 1]);
   }
 
-  public saveAsImage(): void {
-    const imgData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
-    this.http.post(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, imgData)
-    .toPromise()
-    .catch((error: Error) => {console.error(error.message); });
+  private async saveAsImage(gameName: string): Promise<GameCard> {
+    const imageData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
+    const snapshot: ISnapshot = {
+      gameName : gameName,
+      imageData: imageData,
+    };
+
+    return this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
+    .toPromise();
   }
 }

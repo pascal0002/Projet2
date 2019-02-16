@@ -3,15 +3,16 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
 import { ClientConstants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
+import { SceneService } from "../scene-constructor/scene.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class FormHandler3DService {
 
-  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { /**/}
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService,
+                     private sceneService: SceneService) { /**/}
 
   public getValidatorFunction(): ValidatorFn {
     return (formGroup: FormGroup) => {
@@ -35,18 +36,29 @@ export class FormHandler3DService {
     };
   }
 
-  public async send3DFormInfo(formInfo: IFormInfo3D): Promise<GameCard> {
-    return new Promise<GameCard>(() => {
-      this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
+  public send3DFormInfo(formInfo: IFormInfo3D): void {
+    this.http.post<boolean>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
       .toPromise()
       .then(
-        (gamecard) => { this.listOfGameService.addGameCard3D(gamecard); },
-        (gameCard) => { alert(gameCard.error); },
+        (isOk) => {/** */},
+        (isNotOk) => {alert(isNotOk.error); },
       )
       .catch(
         (err) => {console.error("erreur :", err); },
       );
-    });
+  }
+
+  public createObjects(formInfo: IFormInfo3D): void {
+    this.sceneService.createObjects(formInfo)
+    .then((objects) => {
+      this.sceneService.generateObjects(objects, formInfo.gameName)
+      .then(
+        (gamecard) => { this.listOfGameService.addGameCard3D(gamecard); },
+        (gameCard) => { alert(gameCard.error); },
+      )
+      .catch((error: Error) => {console.error(error.message); });
+    }, )
+    .catch((error: Error) => {console.error(error.message); });
   }
 
 }

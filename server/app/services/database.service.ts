@@ -35,4 +35,9 @@ export class DatabaseService {
     public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
         return model.countDocuments(condition);
     }
+
+    public async updateOne(model: mongoose.Model<mongoose.Document>, condition: Object, modification: Object):
+                           Promise<mongoose.Document | null> {
+        return model.findOneAndUpdate(condition, modification, {new: true});
+    }
 }

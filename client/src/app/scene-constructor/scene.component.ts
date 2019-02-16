@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgZone, ViewChild } from "@angular/core";
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 import { SceneService } from "./scene.service";
 
 @Component({
@@ -7,7 +7,7 @@ import { SceneService } from "./scene.service";
   styleUrls: ["scene.component.css"],
 })
 
-export class SceneComponent implements AfterViewInit {
+export class SceneComponent implements OnInit {
 
   private get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
@@ -17,7 +17,7 @@ export class SceneComponent implements AfterViewInit {
 
   public constructor(private ngZone: NgZone, private sceneService: SceneService) {/**/}
 
-  public ngAfterViewInit(): void {
+  public ngOnInit(): void {
     this.sceneService.createOriginalCanvas(this.canvas);
     this.ngZone.runOutsideAngular(() => this.render());
   }
