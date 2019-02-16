@@ -5,6 +5,7 @@ import { ClientConstants, ServerConstants } from "../../../../common/communicati
 import { IImagePath } from "../../../../common/communication/ImagePath";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TWO_DIMENSION_GAME_CARD_LIST } from "../../../../server/public/mock/2d-game-card-mock-list";
+import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 
 @Component({
   selector: "app-game-view-2d",
@@ -53,18 +54,35 @@ export class GameView2DComponent implements AfterViewInit {
 
     if (this.ctx) {
       // Iterate through every pixel
-      this.originalImage();
+      this.originalImage()
+      .then((res) => {
+        console.log("Did it go in herre");
+        console.log(res);
+        this.originalImagePixels = res;
+
+        for (let i: number = 0; i < this.originalImagePixels.length; i += 3) {
+          imageData.data[i + 0] = this.originalImagePixels[i + 0];    // R value
+          imageData.data[i + 1] = this.originalImagePixels[i + 1];    // G value
+          imageData.data[i + 2] = this.originalImagePixels[i + 2];    // B value
+          imageData.data[i + 3] = 255;             // A value
+        }
+        if (this.ctx) {
+          this.ctx.putImageData(imageData, 0, 0, );
+        }
+      });
+
+
       console.log(this.originalImagePixels);
       /*for (let i: number = 0; i < this.originalImage.length; i ++) {
         image[i] = this.originalImage()[i];
       }*/
-      for (let i: number = 0; i < this.originalImagePixels.length; i += 4) {
+      /*for (let i: number = 0; i < this.originalImagePixels.length; i += 4) {
         imageData.data[i + 0] = this.originalImagePixels[i + 0];    // R value
         imageData.data[i + 1] = this.originalImagePixels[i + 1];    // G value
         imageData.data[i + 2] = this.originalImagePixels[i + 2];    // B value
         imageData.data[i + 3] = 255;             // A value
       }
-      this.ctx.putImageData(imageData, 0, 0, );
+      this.ctx.putImageData(imageData, 0, 0, );*/
     }
 
     // Load image, create canvas and draw
@@ -77,10 +95,12 @@ export class GameView2DComponent implements AfterViewInit {
     //    });
   }
 
-  public originalImage(): void {
+  public async originalImage(): Promise<number[]> {
 
-    this.http.post<number[]>(ClientConstants.SERVER_BASE_URL + "api/differences/bitmap_encoder", this.imagePath)
-    .toPromise()
+    return new Promise<number[]> ((resolve: Function, res: Function) =>
+    resolve(this.http.post<number[]>(ClientConstants.SERVER_BASE_URL + "api/differences/bitmap_encoder", this.imagePath)
+    .toPromise()));
+    /*
     .then(
       (res) => {
         this.originalImagePixels = res;
@@ -88,24 +108,20 @@ export class GameView2DComponent implements AfterViewInit {
     )
     .catch(
       (err) => {console.error("erreur :", err); },
-    );
+    );*/
 
   }
+
+
+
+
+
+
+
 
   public clickImage(event: MouseEvent): void {
     this.clickPosition = [event.offsetX, event.offsetY];
     this.sendClickPosition(this.clickPosition);
-    /*
-    console.log("----Click event!----");
-    console.log("Client coordinates: ");
-    console.log(event.clientX);
-    console.log(event.clientY);
-
-    console.log("Offset coordinates: ");
-    console.log(event.offsetX);
-    console.log(event.offsetY);
-    console.log("---------------------");
-    */
   }
 
   public getPixel(): void {
