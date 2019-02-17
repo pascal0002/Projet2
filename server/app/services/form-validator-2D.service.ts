@@ -14,13 +14,13 @@ export class FormValidator2DService {
                );
     }
 
-    public validateGameName(gameName: string): boolean {
+    private validateGameName(gameName: string): boolean {
 
         return (gameName.length >= ServerConstants.MINIMUM_NAME_LENGTH
                 && gameName.length <= ServerConstants.MAXIMUM_NAME_LENGTH);
     }
 
-    public validateImage(image: IBitmapImage): boolean {
+    private validateImage(image: IBitmapImage): boolean {
 
         return (
                    this.validateImageDimensions(image.height, image.width) &&
@@ -29,17 +29,17 @@ export class FormValidator2DService {
                 );
     }
 
-    public validateImageDimensions(height: number, width: number): boolean {
+    private validateImageDimensions(height: number, width: number): boolean {
 
         return (height === ServerConstants.ACCEPTED_HEIGHT && width === ServerConstants.ACCEPTED_WIDTH);
     }
 
-    public validateBitDepth(bitDepth: number): boolean {
+    private validateBitDepth(bitDepth: number): boolean {
 
         return (bitDepth === ServerConstants.ACCEPTED_BIT_DEPTH);
     }
 
-    public validateImageExtension(extension: string): boolean {
+    private validateImageExtension(extension: string): boolean {
 
         return (extension.split(".").pop() === "bmp");
     }

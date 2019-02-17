@@ -38,7 +38,7 @@ describe("bit-map-encoder-service", () => {
         buffer.writeInt8(-3, 0);
         buffer.writeInt8(1, 1);
         buffer.writeInt8(20, 2);
-        const arrayBufferData: number[] = Array.from(new Int8Array(bitmapDecoder.toArrayBuffer(buffer), 0));
+        const arrayBufferData: number[] = Array.from(new Int8Array(bitmapDecoder["toArrayBuffer"](buffer), 0));
         expect(arrayBufferData[0]).to.equal(buffer.readInt8(0));
         expect(arrayBufferData[1]).to.equal(buffer.readInt8(1));
         expect(arrayBufferData[2]).to.equal(buffer.readInt8(2));

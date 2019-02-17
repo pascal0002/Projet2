@@ -17,15 +17,15 @@ export class BmpFileGenerator {
         this.generateDifferenceBMPFile(imageOfDifferences);
     }
 
-    public generateOriginalBMPFile(image: IBitmapImage): void {
+    private generateOriginalBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/originalImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
-    public generateModifedBMPFile(image: IBitmapImage): void {
+    private generateModifedBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/modifiedImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
-    public generateDifferenceBMPFile(image: IBitmapImage): void {
+    private generateDifferenceBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/differenceImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 

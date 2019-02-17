@@ -25,9 +25,31 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public closeForm2D(): void {
-    this.formValidatorService.closeForm2D();
+    this.hideForm2D();
     this.form2DGroup.reset();
     this.clearFormInfo();
+    this.clearInputFields();
+  }
+
+  private hideForm2D(): void {
+    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
+    const pageMask: HTMLElement | null = document.getElementById("pageMask");
+
+    if (form2D && pageMask) {
+      form2D.style.display = "none";
+      pageMask.style.display = "none";
+    }
+  }
+
+  private clearInputFields(): void {
+    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
+    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
+    if (modifiedImageInput && orignialImageInput && gameName) {
+      orignialImageInput.value = "";
+      modifiedImageInput.value = "";
+      gameName.value = "";
+    }
   }
 
   public ngOnInit(): void {
@@ -66,19 +88,19 @@ export class GameCardForm2DComponent implements OnInit {
     }
   }
 
-  public validImageDimensions(height: number, width: number): boolean {
+  private validImageDimensions(height: number, width: number): boolean {
     return this.formValidatorService.validImageDimensions(height, width);
   }
 
-  public validBitDepth(bitDepth: number): boolean {
+  private validBitDepth(bitDepth: number): boolean {
     return this.formValidatorService.validBitDepth(bitDepth);
   }
 
-  public validBMPExtension(extension: string): boolean {
+  private validBMPExtension(extension: string): boolean {
     return this.formValidatorService.validBMPExtension(extension);
   }
 
-  public validTitle(): boolean {
+  private validTitle(): boolean {
     return this.formValidatorService.validTitle(this.formInfo.gameName);
   }
 
@@ -87,6 +109,7 @@ export class GameCardForm2DComponent implements OnInit {
       .catch(
         (err) => { console.error("erreur :", err); },
       );
+    this.closeForm2D();
   }
 
   public updateGameName(): void {
@@ -94,7 +117,7 @@ export class GameCardForm2DComponent implements OnInit {
     this.formInfo.gameName = gameNameInput.value;
   }
 
-  public clearFormInfo(): void {
+  private clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };

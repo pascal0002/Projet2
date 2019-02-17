@@ -29,7 +29,7 @@ export class BitmapDecoder {
         return flippedPixels;
     }
 
-    public toArrayBuffer(buffer: Buffer): ArrayBuffer {
+    private toArrayBuffer(buffer: Buffer): ArrayBuffer {
         const ab: ArrayBuffer = new ArrayBuffer(buffer.length);
         const view: Uint8Array = new Uint8Array(ab);
         for (let i: number = 0; i < buffer.length; ++i) {

@@ -13,16 +13,6 @@ export class FormValidator2dService {
 
   public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) { }
 
-  public closeForm(): void {
-    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form2D && pageMask) {
-      form2D.style.display = "none";
-      pageMask.style.display = "none";
-    }
-  }
-
   public validTitle(title: string): boolean {
       return (title.length >= ClientConstants.MIN_TITLE_LENGTH && title.length <= ClientConstants.MAX_TITLE_LENGTH);
   }
@@ -44,8 +34,7 @@ export class FormValidator2dService {
       this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
       .toPromise()
       .then(
-        (gamecard) => { this.listOfGameService.addGameCard2D(gamecard);
-                        this.closeForm2D(); },
+        (gamecard) => { this.listOfGameService.addGameCard2D(gamecard); },
         (gameCard) => { alert(gameCard.error); },
       )
       .catch(
@@ -54,19 +43,4 @@ export class FormValidator2dService {
     });
   }
 
-  public closeForm2D(): void {
-    this.clearInputFields();
-    this.closeForm();
-  }
-
-  public clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    if (modifiedImageInput && orignialImageInput && gameName) {
-      orignialImageInput.value = "";
-      modifiedImageInput.value = "";
-      gameName.value = "";
-    }
-  }
 }

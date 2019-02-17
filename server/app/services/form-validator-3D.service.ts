@@ -14,21 +14,21 @@ export class FormValidator3DService {
                );
     }
 
-    public validateGameName(gameName: string): boolean {
+    private validateGameName(gameName: string): boolean {
 
         return (gameName.length >= ServerConstants.MINIMUM_NAME_LENGTH
                 && gameName.length <= ServerConstants.MAXIMUM_NAME_LENGTH);
     }
 
-    public validateObjectType(objectType: string): boolean {
+    private validateObjectType(objectType: string): boolean {
         return ClientConstants.OBJECT_TYPES.includes(objectType);
     }
 
-    public validateNumberOfObjects(nObjects: number): boolean {
+    private validateNumberOfObjects(nObjects: number): boolean {
         return (nObjects >= ClientConstants.MIN_NUMBER_OF_OBJECTS && nObjects <= ClientConstants.MAX_NUMBER_OF_OBJECTS);
     }
 
-    public validateNumberOfCheckboxesChecked(addCheckbox: boolean, deleteCheckbox: boolean, modifyCheckbox: boolean): boolean {
+    private validateNumberOfCheckboxesChecked(addCheckbox: boolean, deleteCheckbox: boolean, modifyCheckbox: boolean): boolean {
         return (addCheckbox || deleteCheckbox || modifyCheckbox);
     }
 

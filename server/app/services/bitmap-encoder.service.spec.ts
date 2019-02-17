@@ -13,7 +13,7 @@ describe("bit-map-encoder-service", () => {
     it("should write at the right position the correct BMP header info.", (done: Function) => {
         let tempBuffer: Buffer = Buffer.alloc(ServerConstants.FILE_SIZE);
         let position: number = 0;
-        tempBuffer = bitmapEncoder.writeHeader(tempBuffer);
+        tempBuffer = bitmapEncoder["writeHeader"](tempBuffer);
         position += ServerConstants.TWO_BYTES;
 
         expect(tempBuffer.readUInt32LE(position)).to.equal(ServerConstants.FILE_SIZE); position += ServerConstants.FOUR_BYTES;

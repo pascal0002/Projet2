@@ -26,7 +26,7 @@ describe("bit-map-file-generator-service", () => {
 
     it("should create a file in the originalImages directory if we call a generateOriginalBMP.", (done: Function) => {
         const FILE_PATH: string = process.cwd() + "/public/originalImages/blank.bmp";
-        bmpFileGenerator.generateOriginalBMPFile(TEST_IMAGE);
+        bmpFileGenerator["generateOriginalBMPFile"](TEST_IMAGE);
 
         expect(fs.existsSync(FILE_PATH)).to.equal(true);
 
@@ -37,7 +37,7 @@ describe("bit-map-file-generator-service", () => {
 
     it("should create a file in the modifiedImages directory if we call a generateModifiedBMP.", (done: Function) => {
         const FILE_PATH: string = process.cwd() + "/public/modifiedImages/blank.bmp";
-        bmpFileGenerator.generateModifedBMPFile(TEST_IMAGE);
+        bmpFileGenerator["generateModifedBMPFile"](TEST_IMAGE);
 
         expect(fs.existsSync(FILE_PATH)).to.equal(true);
 
@@ -48,7 +48,7 @@ describe("bit-map-file-generator-service", () => {
 
     it("should create a file in the differenceImages directory if we call a generateDifferenceBMP.", (done: Function) => {
         const FILE_PATH: string = process.cwd() + "/public/differenceImages/blank.bmp";
-        bmpFileGenerator.generateDifferenceBMPFile(TEST_IMAGE);
+        bmpFileGenerator["generateDifferenceBMPFile"](TEST_IMAGE);
 
         expect(fs.existsSync(FILE_PATH)).to.equal(true);
 

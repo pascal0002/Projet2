@@ -33,7 +33,7 @@ export class BitmapEncoder {
         return tempBuffer;
     }
 
-    public writeHeader(tempBuffer: Buffer): Buffer {
+    private writeHeader(tempBuffer: Buffer): Buffer {
         tempBuffer.write(ServerConstants.FLAG, this.position, ServerConstants.TWO_BYTES); this.position += ServerConstants.TWO_BYTES;
         tempBuffer.writeUInt32LE(ServerConstants.FILE_SIZE, this.position); this.position += ServerConstants.FOUR_BYTES;
         tempBuffer.writeUInt32LE(ServerConstants.DUMMY_VALUE, this.position); this.position += ServerConstants.FOUR_BYTES;
@@ -53,7 +53,7 @@ export class BitmapEncoder {
         return tempBuffer;
     }
 
-    public writePixels(tempBuffer: Buffer, pixels: number[]): Buffer {
+    private writePixels(tempBuffer: Buffer, pixels: number[]): Buffer {
         let i: number = 0;
         const ROW_BYTES: number = (ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL) + ServerConstants.EXTRA_BYTES;
 

@@ -63,7 +63,7 @@ export class DifferenceIdentificator2DService {
         return pixels;
     }
 
-    public getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, pixels: number[]): number[] {
+    private getBlackPixelNeighbours(clickedPixelPos: number, imageWidth: number, pixels: number[]): number[] {
         const blackPixelNeighbours: number[] = [];
         const allPixelNeighbours: number[] = this.getPixelNeighbours(clickedPixelPos, imageWidth);
         allPixelNeighbours.forEach((pixelPosition: number) => {
