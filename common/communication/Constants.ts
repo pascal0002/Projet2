@@ -101,6 +101,15 @@ export abstract class ClientConstants {
     static readonly SECOND_TO_MILLISECOND: number = 1000;
     static readonly PERCENT_FACTOR: number = 100;
 
+    // for the image displayer
+    static readonly RED_COLOR: number = 0;
+    static readonly GREEN_COLOR: number = 1;
+    static readonly BLUE_COLOR: number = 2;
+    static readonly NEXT_PIXEL_RGB: number = 3;
+    static readonly NEXT_PIXEL_RGBA: number = 4;
+    static readonly OPACITY_INDEX: number = 3;
+    static readonly MAX_PIXEL_OPACITY: number = 255;
+
     // for the 2D form validator
     static readonly MIN_TITLE_LENGTH: number = 3;
     static readonly MAX_TITLE_LENGTH: number = 15;
