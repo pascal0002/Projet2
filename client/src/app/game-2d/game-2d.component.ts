@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
@@ -11,15 +10,11 @@ import { ImageDisplayerService } from "./image-displayer.service";
   styleUrls: ["./game-2d.component.css"],
 })
 export class Game2DComponent implements OnInit {
-
-  public ctx: CanvasRenderingContext2D | null;
-  public clickPosition: Array<number>;
-
-  public diffFoundCount: number = 0;
   public gameCard: GameCard;
   public modifiedImgPath: string;
 
-  public constructor(public gameViewService: GameViewService, private differenceValidatorService: DifferenceValidatorService,
+  public constructor(public gameViewService: GameViewService,
+                     private differenceValidatorService: DifferenceValidatorService,
                      private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
@@ -29,39 +24,22 @@ export class Game2DComponent implements OnInit {
   public ngOnInit(): void {
     this.differenceValidatorService.startNewGame();
 
-    // Create canvas
-    const canvas: HTMLCanvasElement = document.createElement("canvas");
-    canvas.width = ClientConstants.VALID_BMP_WIDTH;
-    canvas.height = ClientConstants.VALID_BMP_HEIGHT;
-    document.body.appendChild(canvas);
-    this.ctx = canvas.getContext("2d");
+    const ogCanvas: HTMLCanvasElement = document.getElementById("ogCanvas") as HTMLCanvasElement;
+    const ogCtx: CanvasRenderingContext2D = ogCanvas.getContext("2d") as CanvasRenderingContext2D;
 
-    if (this.ctx) {
-      // console.log(this.gameCard);
-      this.imageDisplayerService.drawPixelsInCanvas(this.ctx, this.gameCard.image);
-    }
+    const modifCanvas: HTMLCanvasElement = document.getElementById("modifCanvas") as HTMLCanvasElement;
+    const modifCtx: CanvasRenderingContext2D = modifCanvas.getContext("2d") as CanvasRenderingContext2D;
 
-    addEventListener("click", (e) => {
-      // this.clickImage(e);
-      // this.getPixel();
+    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(this.gameCard.image, true))
+    .then((res) => {
+      this.imageDisplayerService.drawPixelsInCanvas(ogCtx, res);
+    });
+
+    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(this.modifiedImgPath, false))
+    .then((res) => {
+      this.imageDisplayerService.drawPixelsInCanvas(modifCtx, res);
     });
   }
-
- /*public ngAfterViewInit(): void {
-
-    // Create canvas
-    const canvas: HTMLCanvasElement = document.createElement("canvas");
-    canvas.width = ClientConstants.VALID_BMP_WIDTH;
-    canvas.height = ClientConstants.VALID_BMP_HEIGHT;
-    document.body.appendChild(canvas);
-    this.ctx = canvas.getContext("2d");
-
-    this.drawPixelsInCanvas();
-    addEventListener("click", (e) => {
-      this.clickImage(e);
-      this.getPixel();
-    });
-  }*/
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY));

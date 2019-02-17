@@ -1,8 +1,8 @@
 <div id="game">
     <div class="game-panel">
-        <img src="{{gameCard.image}}" (click)="sendClickInfo($event)">
+        <canvas id="ogCanvas" width=640 height=480 (click)="sendClickInfo($event)"></canvas>
     </div>
     <div class="game-panel">
-        <img src="{{modifiedImgPath}}" (click)="sendClickInfo($event)">
+        <canvas id="modifCanvas" width=640 height=480 (click)="sendClickInfo($event)"></canvas>
     </div>
 </div>

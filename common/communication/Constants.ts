@@ -13,6 +13,7 @@ export class ServerConstants {
     static readonly TWO_DIGIT: number = -2;
 
     static readonly PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
+    static readonly PUBLIC_MODIF_FOLDER_PATH: string = "/public/modifiedImages/";
     static readonly PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
     static readonly PUBLIC_TEMP_FOLDER_PATH: string = "/public/tempDifferenceImage/";
 
