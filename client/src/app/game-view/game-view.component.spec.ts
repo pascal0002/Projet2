@@ -6,7 +6,6 @@ import { AppModule } from "../app.module";
 import { GameViewComponent } from "./game-view.component";
 
 describe("GameViewComponent", () => {
-  let component: GameViewComponent;
   let fixture: ComponentFixture<GameViewComponent>;
 
   beforeEach(async(() => {
@@ -20,11 +19,6 @@ describe("GameViewComponent", () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(GameViewComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it("should create", () => {
-    expect(component).toBeTruthy();
   });
 });

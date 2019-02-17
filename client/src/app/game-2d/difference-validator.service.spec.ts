@@ -6,6 +6,9 @@ import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { DifferenceValidatorService } from "./difference-validator.service";
 
+// tslint:disable-next-line:no-any
+// const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+
 describe("DifferenceValidatorService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,47 +28,44 @@ describe("DifferenceValidatorService", () => {
   it("should return the correct Y position if the click event returns 0", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
 
-    expect(service.getCorrectYPos(0)).toEqual(480);
+    expect(service["getCorrectYPos"](0)).toEqual(480);
   });
 
   it("should return the correct Y position if the click event returns 480", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
 
-    expect(service.getCorrectYPos(480)).toEqual(0);
+    expect(service["getCorrectYPos"](480)).toEqual(0);
   });
 
   it("should return the correct Y position if the click event returns 200", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
 
-    expect(service.getCorrectYPos(200)).toEqual(280);
+    expect(service["getCorrectYPos"](200)).toEqual(280);
   });
 
   it("should return the correct difference image name if the path is test.bmp", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
     const mockOriginalImageName: string = "test.bmp";
+    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
 
-    // HEEREEEEEEEEEEEEEEEEEEEEEEEEE
     service.game2d.image = mockOriginalImageName;
-
-    expect(service.getDifferenceImageName()).toEqual("testDifferences.bmp");
+    expect(service["getDifferenceImageName"]()).toEqual("testDifferences.bmp");
   });
 
   it("should return the correct difference image name if the path is testFolder/test.bmp", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
-
     const mockOriginalImageName: string = "testFolder/test.bmp";
+    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
 
-    // HEEREEEEEEEEEEEEEEEEEEEEEEEEE
-    service.game2d.image = mockOriginalImageName;
-
-    expect(service.getDifferenceImageName()).toEqual("testDifferences.bmp");
+    expect(service["getDifferenceImageName"]()).toEqual("testDifferences.bmp");
   });
 
   it("should return the right click info if the x position and the y position of the click event are 50px", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
+
     const mockOriginalImageName: string = "testFolder/test.bmp";
-    // HEEREEEEEEEEEEEEEEEEEEEEEEEEE
-    service.game2d.image = mockOriginalImageName;
+    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
+
     const resultClickInfo: IClickInfo = service.getClickInfo(50, 50);
 
     expect(resultClickInfo.yPos).toEqual(430);
