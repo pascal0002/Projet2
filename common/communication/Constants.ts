@@ -79,4 +79,5 @@ export class ClientConstants {
     static HEIGHT_OFFSET: number = 22;
     static BITS_PER_PIXEL_OFFSET: number = 28;
     static PIXEL_OFFSET: number = 10;
+    static MAX_PIXEL_OPACITY: number = 255;
 }

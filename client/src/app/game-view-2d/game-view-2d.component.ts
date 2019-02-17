@@ -39,8 +39,8 @@ export class GameView2DComponent implements AfterViewInit {
 
     // Create canvas
     const canvas: HTMLCanvasElement = document.createElement("canvas");
-    canvas.width = 640;
-    canvas.height = 480;
+    canvas.width = ClientConstants.VALID_BMP_WIDTH;
+    canvas.height = ClientConstants.VALID_BMP_HEIGHT;
     document.body.appendChild(canvas);
     this.ctx = canvas.getContext("2d");
 
@@ -59,23 +59,24 @@ export class GameView2DComponent implements AfterViewInit {
   }
 
   public drawPixelsInCanvas(): void {
-    const imageData: ImageData = new ImageData(640, 480);
+    const imageData: ImageData = new ImageData(ClientConstants.VALID_BMP_WIDTH, ClientConstants.VALID_BMP_HEIGHT);
+
     if (this.ctx) {
-      // Iterate through every pixel
       this.originalImage()
       .then((res) => {
         this.originalImagePixels = res;
         let j: number = 0;
+        // Iterate through every pixel
         for (let i: number = 0; i < this.originalImagePixels.length; i += 3) {
           imageData.data[j + 0] = this.originalImagePixels[i + 2];    // B value
           imageData.data[j + 1] = this.originalImagePixels[i + 1];    // G value
           imageData.data[j + 2] = this.originalImagePixels[i + 0];    // R value
-          imageData.data[j + 3] = 255;                                // A value
+          imageData.data[j + 3] = ClientConstants.MAX_PIXEL_OPACITY;  // A value
           j += 4;
         }
 
         if (this.ctx) {
-          this.ctx.putImageData(imageData, 0, 0, );
+          this.ctx.putImageData(imageData, 0, 0);
         }
 
       });
@@ -88,7 +89,7 @@ export class GameView2DComponent implements AfterViewInit {
   }
 
   public getPixel(): void {
-
+    //
   }
 
   /*
