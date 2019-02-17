@@ -25,11 +25,11 @@ export class DifferenceValidatorService {
     };
   }
 
-  public getCorrectYPos(yPos: number): number {
+  private getCorrectYPos(yPos: number): number {
     return Math.abs(yPos - ClientConstants.VALID_BMP_HEIGHT);
   }
 
-  public getDifferenceImageName(): string {
+  private getDifferenceImageName(): string {
     const orginalFilePath: string = this.game2d.image;
     const differenceFilePath: string =
      orginalFilePath.substr(0, orginalFilePath.length - ServerConstants.EXTENSION_LENGTH) + "Differences.bmp";
@@ -66,7 +66,7 @@ export class DifferenceValidatorService {
     });
   }
 
-  public playSound(): void {
+  private playSound(): void {
     const audio: HTMLAudioElement = new Audio();
     audio.src = "../../../assets/sound.mp3";
     audio.play();
