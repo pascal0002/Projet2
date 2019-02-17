@@ -55,14 +55,14 @@ describe("scenes-parameter-generator-service", () => {
     describe("checkCollisions", () => {
         beforeEach(init);
 
-        it("should return false when no objects are in collision", (done: Mocha.Done) => {
+        it("should return false when no objects are in collision (even when side by side)", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
             object = {color: "rgb(0,0,0)", diameter: 5, height: 5,
-                      position: [-100, -50, -25], orientation: [0, 0, 0], type: 0};
+                      position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
             objects.push(object);
 
             const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
-                                                     position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
+                                                     position: [5, 0, 0], orientation: [0, 0, 0], type: 0};
 
             expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(false);
             done();
@@ -76,6 +76,58 @@ describe("scenes-parameter-generator-service", () => {
 
             const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
                                                      position: [4, 0, 0], orientation: [0, 0, 0], type: 0};
+
+            expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(true);
+            done();
+        });
+
+        it("should return true due to the bigger englobing sphere around a cube to check collisions", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            object = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                      position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
+            objects.push(object);
+
+            const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                                                     position: [6.8, 0, 0], orientation: [0, 0, 0], type: 1};
+
+            expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(true);
+            done();
+        });
+
+        it("should return true due to the bigger englobing sphere around a cylinder to check collisions", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            object = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                      position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
+            objects.push(object);
+
+            const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                                                     position: [6, 0, 0], orientation: [0, 0, 0], type: 2};
+
+            expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(true);
+            done();
+        });
+
+        it("should return true due to the bigger englobing sphere around a cone to check collisions", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            object = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                      position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
+            objects.push(object);
+
+            const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                                                     position: [6, 0, 0], orientation: [0, 0, 0], type: 3};
+
+            expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(true);
+            done();
+        });
+
+        it("should return true due to the bigger englobing sphere around a triangular pyramid to check collisions", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            object = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                      position: [0, 0, 0], orientation: [0, 0, 0], type: 0};
+            objects.push(object);
+
+            const comparativeObject: IThreeObject = {color: "rgb(0,0,0)", diameter: 5, height: 5,
+                                                     position: [6, 0, 0], orientation: [0, 0, 0], type: 4};
 
             expect(scenesParameterGeneratorServiceStub.checkCollisions(comparativeObject, objects)).to.equal(true);
             done();
