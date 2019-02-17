@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { IClickInfo } from "../../../../common/communication/ClickInfo";
 import { ClientConstants, ServerConstants } from "../../../../common/communication/Constants";
+import { IDifferenceImage } from "../../../../common/communication/DifferenceImage";
 import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
@@ -45,7 +46,8 @@ export class DifferenceValidatorService {
   }
 
   public startNewGame(): void {
-    this.http.post<string>(`${ClientConstants.SERVER_BASE_URL}api/differences/new_game`, this.getDifferenceImageName()).toPromise();
+    const differenceImage: IDifferenceImage = {name: this.getDifferenceImageName()};
+    this.http.post<IDifferenceImage>(`${ClientConstants.SERVER_BASE_URL}api/differences/new_game`, differenceImage).toPromise();
   }
 
   public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
