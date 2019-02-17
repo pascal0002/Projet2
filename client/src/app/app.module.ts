@@ -9,6 +9,7 @@ import { FormValidator2dService } from "../app/game-card-form-2d/form-validator-
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
 import { Game2DComponent } from "./game-2d/game-2d.component";
+import { ImageDisplayerService } from "./game-2d/image-displayer.service";
 import { GameCardForm2DComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { GameCardForm3DComponent } from "./game-card-form-3d/game-card-form-3d.component";
 import { GameViewComponent } from "./game-view/game-view.component";
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     NgCircleProgressModule.forRoot(),
   ],
-  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService, FormValidator2dService, SceneService],
+  providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService,
+              FormValidator2dService, SceneService, ImageDisplayerService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

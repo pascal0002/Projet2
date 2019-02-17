@@ -54,6 +54,11 @@ export class DifferencesController {
             }
         });
 
+        router.post("/bitmap_encoder", (req: Request, res: Response, next: NextFunction) => {
+            res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(ServerConstants.PUBLIC_OG_FOLDER_PATH +
+                 req.body.name)));
+        });
+
         return router;
     }
 }

@@ -12,6 +12,7 @@ export class ServerConstants {
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
 
+    static readonly PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
     static readonly PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
     static readonly PUBLIC_TEMP_FOLDER_PATH: string = "/public/tempDifferenceImage/";
 

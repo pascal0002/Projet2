@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ClientConstants, ServerConstants } from "../../../../common/communication/Constants";
+import { ClientConstants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
@@ -12,7 +12,6 @@ import { ImageDisplayerService } from "./image-displayer.service";
 })
 export class Game2DComponent implements OnInit {
 
-  public game2d: GameCard;
   public ctx: CanvasRenderingContext2D | null;
   public clickPosition: Array<number>;
 
@@ -37,14 +36,18 @@ export class Game2DComponent implements OnInit {
     document.body.appendChild(canvas);
     this.ctx = canvas.getContext("2d");
 
-    ImageDisplayerService.drawPixelsInCanvas(this.ctx, this.game2d.image);
+    if (this.ctx) {
+      // console.log(this.gameCard);
+      this.imageDisplayerService.drawPixelsInCanvas(this.ctx, this.gameCard.image);
+    }
+
     addEventListener("click", (e) => {
       // this.clickImage(e);
       // this.getPixel();
     });
   }
 
-/* public ngAfterViewInit(): void {
+ /*public ngAfterViewInit(): void {
 
     // Create canvas
     const canvas: HTMLCanvasElement = document.createElement("canvas");
