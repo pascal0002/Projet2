@@ -113,17 +113,21 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
   public logMessage(message: string): void {
     const now: number = Date.now();
-    this.consoleEL.nativeElement.innerHTML += "<span style='color:yellow;'>[" + formatDate(now, "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>";
+    this.consoleEL.nativeElement.innerHTML += "<span style='color:yellow;'>["
+    + formatDate(now, "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>";
   }
 
   /*Utilisé pour afficher le nombre de loupes avec ngFor*/
   public miscGetArrayDiffFoundCount(): Array<number> {
-    return Array.apply(null, { length: ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB) }).map(Number.call, Number);
+    return Array.apply(null, { length: ((this.gameCard.dimension === Dimension.TWO_DIMENSION)
+           ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB) }).map(Number.call, Number);
   }
 
   public miscGetDiffCounterWidth(): number {
 
-    return this.magnifierProgressOffset + ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.gameCard.dimension === Dimension.TWO_DIMENSION) ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB));
+    return this.magnifierProgressOffset + ((this.gameCard.dimension === Dimension.TWO_DIMENSION)
+           ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.gameCard.dimension === Dimension.TWO_DIMENSION)
+           ? this.diffFoundCount : ClientConstants.DIFFERENCE_NB));
   }
 
   public miscTimeToString(time: number): string {

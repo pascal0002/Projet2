@@ -39,7 +39,7 @@ export class SceneService {
   }
 
   private async delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise( (resolve) => setTimeout(resolve, ms) );
   }
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {

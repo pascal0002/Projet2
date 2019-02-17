@@ -7,6 +7,7 @@ import * as mongoose from "mongoose";
 import * as sinon from "sinon";
 import * as sinonts from "ts-sinon";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
+import { Dimension } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../common/communication/game-card";
 import { blackBitmap, whiteBitmap } from "../../mock/bitmapImage-mock";
@@ -14,7 +15,6 @@ import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
 import { GameCardsService } from "./game-cards.service";
-import { Dimension } from "../../../common/communication/Constants";
 
 let gameCardsService: GameCardsService;
 let gameCardsServiceStub: any;

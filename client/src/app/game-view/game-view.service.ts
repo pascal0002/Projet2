@@ -11,5 +11,5 @@ export class GameViewService {
   public gamecard: GameCard;
   public mode: Mode;
 
-  public constructor() {  }
+  public constructor() {/**/}
 }
