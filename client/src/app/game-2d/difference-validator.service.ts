@@ -44,6 +44,10 @@ export class DifferenceValidatorService {
     return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
+  public startNewGame(): void {
+    this.http.post<string>(`${ClientConstants.SERVER_BASE_URL}api/differences/new_game`, this.getDifferenceImageName()).toPromise();
+  }
+
   public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
     return new Promise<IClickInfo>(() => {
       this.http.post<number[]>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)

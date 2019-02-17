@@ -3,6 +3,7 @@ import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { Dimension, ServerConstants } from "../../../common/communication/Constants";
 import { IThreeObject } from "../../../common/communication/ThreeObject";
+import { GameCardsService } from "../services/game-cards.service";
 import { ModifiedSceneBuilderService } from "../services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "../services/original-scene-builder.service";
 import { Scene3DService } from "../services/scenes3D-service";
@@ -12,9 +13,9 @@ import Types from "../types";
 export class SceneController {
 
     public constructor(@inject(Types.OriginalSceneBuilderService) private originalSceneBuilderService: OriginalSceneBuilderService,
-        @inject(Types.ModifiedSceneBuilderService) private modifiedSceneBuilderService: ModifiedSceneBuilderService,
-        @inject(Types.Scene3DService) private scene3DService: Scene3DService,
-        @inject(Types.GameCardsService) private gameCardsService: GameCardsService) { }
+                       @inject(Types.ModifiedSceneBuilderService) private modifiedSceneBuilderService: ModifiedSceneBuilderService,
+                       @inject(Types.Scene3DService) private scene3DService: Scene3DService,
+                       @inject(Types.GameCardsService) private gameCardsService: GameCardsService) { }
 
     public get router(): Router {
         const router: Router = Router();
@@ -31,14 +32,8 @@ export class SceneController {
         router.post("/objects/", (req: Request, res: Response, next: NextFunction) => {
             const originalScene: IThreeObject[] = this.originalSceneBuilderService.createObjects();
             const modifiedScene: IThreeObject[] = this.modifiedSceneBuilderService.createModifications(
-<<<<<<< HEAD
-                JSON.parse(JSON.stringify(originalScene)));
-            this.scene3DService.addScene3D(originalScene, modifiedScene, "title");
-            console.log(modifiedScene.length);
-=======
                                                   JSON.parse(JSON.stringify(originalScene)));
             this.scene3DService.addScene3D(originalScene, modifiedScene, req.body.gameName);
->>>>>>> 56a2a5f1256b561ccae2b3098a737cb47f6590ef
             res.json(originalScene);
         });
 

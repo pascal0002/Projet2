@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
@@ -8,9 +8,9 @@ import { DifferenceValidatorService } from "./difference-validator.service";
   templateUrl: "./game-2d.component.html",
   styleUrls: ["./game-2d.component.css"],
 })
-export class Game2DComponent {
+export class Game2DComponent implements OnInit {
 
-  public diffFoundCount: number;
+  public diffFoundCount: number = 0;
   public gameCard: GameCard;
   public modifiedImgPath: string;
 
@@ -20,9 +20,12 @@ export class Game2DComponent {
     this.modifiedImgPath = this.differenceValidatorService.getModifiedImagePath();
   }
 
+  public ngOnInit(): void {
+    this.differenceValidatorService.startNewGame();
+  }
+
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY));
-    this.diffFoundCount++;
   }
 
 }

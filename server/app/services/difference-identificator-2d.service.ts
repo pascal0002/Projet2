@@ -34,7 +34,7 @@ export class DifferenceIdentificator2DService {
         this.posOfDifferencePixels = [];
     }
 
-    private getPositionInArray(clickPosition: IClickInfo): number {
+    public getPositionInArray(clickPosition: IClickInfo): number {
         return ((clickPosition.yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL)
             + clickPosition.xPos * ServerConstants.BYTES_PER_PIXEL);
     }

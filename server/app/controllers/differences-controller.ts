@@ -23,6 +23,10 @@ export class DifferencesController {
             res.json(this.differencesGeneratorService.generateDifferences(req.body.originalImage, req.body.modifiedImage));
         });
 
+        router.post("/new_game", (req: Request, res: Response, next: NextFunction) => {
+            console.log(req);
+        });
+
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
             const clickInfo: IClickInfo = req.body;
             const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(clickInfo);
