@@ -45,7 +45,7 @@ describe("FormHandler3DService", () => {
     .then((gameCard: GameCard) => {
       expect(gameCard.title).toEqual("test1");
     })
-    .catch((err) => new ErrorHandler());
+    .catch((err: any) => new ErrorHandler());
   });
 
   it("should return null (no errors) if 1 checkbox is checked", () => {

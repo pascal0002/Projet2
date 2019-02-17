@@ -19,11 +19,11 @@ describe("original-scene-builder-service", () => {
     const init: Mocha.Func = () => {
         scenesParameterGeneratorService = new ScenesParameterGeneratorService();
         scenesParameterGeneratorServiceStub = sinon.stubObject<ScenesParameterGeneratorService>(
-                                            scenesParameterGeneratorService, ["getRandomNumber"]);
+                                              scenesParameterGeneratorService, ["getRandomNumber", "checkCollisions"]);
 
         originalSceneBuilderService = new OriginalSceneBuilderService(scenesParameterGeneratorServiceStub);
         originalSceneBuilderServiceStub = sinon.stubObject<OriginalSceneBuilderService>(
-            originalSceneBuilderService, ["getRandomNumber"]);
+                                          originalSceneBuilderService, ["getRandomNumber"]);
 
         objects = [];
     };
@@ -33,9 +33,10 @@ describe("original-scene-builder-service", () => {
 
         it("should return the minimal amount of objects of type IThreeObject with all the minimal values", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
             originalSceneBuilderServiceStub.getRandomNumber.returns(0);
             for (let i: number = 0; i < 10; i++) {
-                objects.push({
+            objects.push({
                     color: "rgb(0,0,0)", diameter: 5, height: 5,
                     position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
                 });
@@ -46,6 +47,7 @@ describe("original-scene-builder-service", () => {
 
         it("should return the maximal amount of objects of type IThreeObject with all the maximal values", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
+            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
             originalSceneBuilderServiceStub.getRandomNumber.returns(1);
             for (let i: number = 0; i < 200; i++) {
                 objects.push({
@@ -59,6 +61,7 @@ describe("original-scene-builder-service", () => {
 
         it("should return the right amount of objects of type IThreeObject with all the right values", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(0.6);
+            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
             originalSceneBuilderServiceStub.getRandomNumber.returns(0.6);
             for (let i: number = 0; i < 124; i++) {
                 objects.push({
