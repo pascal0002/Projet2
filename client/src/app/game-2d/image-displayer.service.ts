@@ -47,9 +47,9 @@ export class ImageDisplayerService {
         const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
         const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
         pixelsToChange.forEach((pixelPos: number) => {
-            flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.RED_COLOR];
-            flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.GREEN_COLOR];
-            flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + ClientConstants.BLUE_COLOR];
+            flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + Constants.RED_COLOR];
+            flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + Constants.GREEN_COLOR];
+            flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + Constants.BLUE_COLOR];
         });
         this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
         this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
