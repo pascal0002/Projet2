@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import * as THREE from "three";
-import {ClientConstants} from "../../../../common/communication/Constants";
+import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { ISnapshot } from "../../../../common/communication/Snapshot";
-import {IThreeObject} from "../../../../common/communication/ThreeObject";
+import { IThreeObject } from "../../../../common/communication/ThreeObject";
 import { GameCard } from "../../../../common/communication/game-card";
 @Injectable({
   providedIn: "root",
@@ -17,7 +17,7 @@ export class SceneService {
   public camera: THREE.PerspectiveCamera;
   public glRenderer: THREE.WebGLRenderer;
 
-  public constructor(private http: HttpClient) {/**/}
+  public constructor(private http: HttpClient) {}
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
@@ -27,18 +27,18 @@ export class SceneService {
   private makeScene(canvas: HTMLCanvasElement): void {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("skyblue");
-    this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-                                              1, ClientConstants.CAMERA_RENDER_DISTANCE);
-    this.camera.position.z = ClientConstants.Z_CAMERA_POSITION;
-    this.glRenderer = new THREE.WebGLRenderer({canvas: canvas, antialias: true, preserveDrawingBuffer: true});
+    this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
+                                              1, Constants.CAMERA_RENDER_DISTANCE);
+    this.camera.position.z = Constants.Z_CAMERA_POSITION;
+    this.glRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
-    return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
+    return this.http.post<IThreeObject[]>(`${Constants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 
-  private async delay(ms: number) {
-    return new Promise( (resolve) => setTimeout(resolve, ms) );
+  private async delay(ms: number): Promise<{}> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
@@ -56,9 +56,9 @@ export class SceneService {
 
   private addLighting(): void {
     const light: THREE.AmbientLight
-    = new THREE.AmbientLight(ClientConstants.AMBIENT_LIGHT_COLOR, ClientConstants.AMBIENT_LIGHT_INTENSITY);
+      = new THREE.AmbientLight(Constants.AMBIENT_LIGHT_COLOR, Constants.AMBIENT_LIGHT_INTENSITY);
     const directionalLight: THREE.DirectionalLight
-    = new THREE.DirectionalLight(ClientConstants.DIRECTIONAL_LIGHT_COLOR, ClientConstants.DIRECTIONAL_LIGHT_INTENSITY);
+      = new THREE.DirectionalLight(Constants.DIRECTIONAL_LIGHT_COLOR, Constants.DIRECTIONAL_LIGHT_INTENSITY);
 
     this.scene.add(light);
     this.scene.add(directionalLight);
@@ -82,31 +82,31 @@ export class SceneService {
   private makeRandomColors(object: IThreeObject): THREE.MeshStandardMaterial {
     const color: THREE.Color = new THREE.Color(object.color);
 
-    return new THREE.MeshStandardMaterial( {color: color, metalness: 0.1} );
+    return new THREE.MeshStandardMaterial({ color: color, metalness: 0.1 });
   }
 
   private chooseObject(diameter: number, height: number, choice: number): THREE.Geometry {
     let geometry: THREE.Geometry;
     switch (choice) {
-        case ClientConstants.SPHERE:
-          geometry = new THREE.SphereGeometry(diameter * ClientConstants.HALF_VALUE,
-                                              ClientConstants.RADIAL_PRECISION, ClientConstants.RADIAL_PRECISION);
-          break;
-        case ClientConstants.CUBE:
-          geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
-          break;
-        case ClientConstants.CYLINDER:
-          geometry = new THREE.CylinderGeometry(diameter * ClientConstants.HALF_VALUE, diameter * ClientConstants.HALF_VALUE,
-                                                height, ClientConstants.RADIAL_PRECISION);
-          break;
-        case ClientConstants.CONE:
-          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.RADIAL_PRECISION);
-          break;
-        case ClientConstants.PYRAMID:
-          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.PYRAMID_BASE_SIDES_NB);
-          break;
-        default:
-          geometry = new THREE.ConeGeometry(diameter * ClientConstants.HALF_VALUE, height, ClientConstants.PYRAMID_BASE_SIDES_NB);
+      case Constants.SPHERE:
+        geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE,
+                                            Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
+        break;
+      case Constants.CUBE:
+        geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
+        break;
+      case Constants.CYLINDER:
+        geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE,
+                                              height, Constants.RADIAL_PRECISION);
+        break;
+      case Constants.CONE:
+        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.RADIAL_PRECISION);
+        break;
+      case Constants.PYRAMID:
+        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.PYRAMID_BASE_SIDES_NB);
+        break;
+      default:
+        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.PYRAMID_BASE_SIDES_NB);
     }
 
     return geometry;
@@ -125,11 +125,15 @@ export class SceneService {
   private async saveAsImage(gameName: string): Promise<GameCard> {
     const imageData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
     const snapshot: ISnapshot = {
-      gameName : gameName,
+      gameName: gameName,
       imageData: imageData,
     };
+    for (let i: number = this.scene.children.length - 1; i >= 0; i--) {
+      this.scene.remove(this.scene.children[i]);
+    }
+    this.addLighting();
 
-    return this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
-    .toPromise();
+    return this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
+      .toPromise();
   }
 }

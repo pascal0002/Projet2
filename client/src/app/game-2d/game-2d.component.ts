@@ -11,7 +11,6 @@ import { ImageDisplayerService } from "./image-displayer.service";
 })
 export class Game2DComponent implements OnInit {
   public gameCard: GameCard;
-  public modifiedImgPath: string;
   public modifCtx: CanvasRenderingContext2D;
 
   public constructor(public gameViewService: GameViewService,
@@ -19,7 +18,6 @@ export class Game2DComponent implements OnInit {
                      private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
-    this.modifiedImgPath = this.differenceValidatorService.getModifiedImagePath();
   }
 
   public ngOnInit(): void {
@@ -32,16 +30,16 @@ export class Game2DComponent implements OnInit {
     this.modifCtx = modifCanvas.getContext("2d") as CanvasRenderingContext2D;
 
     this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
-    this.drawImageInCanvas(this.modifCtx, this.modifiedImgPath, false);
+    this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false);
   }
 
   public drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
     this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
-    .then((res) => {
-      (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
-      this.imageDisplayerService.modifiedImagePixels = res;
-      this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
-    });
+      .then((res) => {
+        (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
+        this.imageDisplayerService.modifiedImagePixels = res;
+        this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
+      });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
@@ -50,6 +48,7 @@ export class Game2DComponent implements OnInit {
         if (res.length !== 0) {
           this.imageDisplayerService.eraseDifference(this.modifCtx, res);
           this.differenceValidatorService.playVictorySound();
+          this.gameViewService.onDiffFound();
         } else {
           this.differenceValidatorService.playFailSound();
         }

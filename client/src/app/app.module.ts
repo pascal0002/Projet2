@@ -10,6 +10,7 @@ import { AdministrationViewComponent } from "./administration-view/administratio
 import { AppComponent } from "./app.component";
 import { Game2DComponent } from "./game-2d/game-2d.component";
 import { ImageDisplayerService } from "./game-2d/image-displayer.service";
+import { Game3DComponent } from "./game-3d/game-3d.component";
 import { GameCardForm2DComponent } from "./game-card-form-2d/game-card-form-2d.component";
 import { GameCardForm3DComponent } from "./game-card-form-3d/game-card-form-3d.component";
 import { GameViewComponent } from "./game-view/game-view.component";
@@ -25,7 +26,7 @@ const appRoutes: Routes = [
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
   { path: "game_view_2d", component: GameViewComponent },
-  { path: "3d_edit", component: SceneComponent },
+  { path: "3d_edit", component: Game3DComponent },
 ];
 
 @NgModule({
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     GameCardForm3DComponent,
     SceneComponent,
     Game2DComponent,
+    Game3DComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,7 @@ const appRoutes: Routes = [
     NgCircleProgressModule.forRoot(),
   ],
   providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService,
-              FormValidator2dService, SceneService, ImageDisplayerService],
+    FormValidator2dService, SceneService, ImageDisplayerService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

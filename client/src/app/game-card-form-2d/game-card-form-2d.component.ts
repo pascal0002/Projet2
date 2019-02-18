@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import {ClientConstants} from "../../../../common/communication/Constants";
+import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
@@ -56,8 +56,8 @@ export class GameCardForm2DComponent implements OnInit {
     this.form2DGroup = new FormGroup({
       title: new FormControl("", [
         Validators.required,
-        Validators.minLength(ClientConstants.MIN_TITLE_LENGTH),
-        Validators.maxLength(ClientConstants.MAX_TITLE_LENGTH),
+        Validators.minLength(Constants.MIN_TITLE_LENGTH),
+        Validators.maxLength(Constants.MAX_TITLE_LENGTH),
       ]),
       originalFileInput: new FormControl("", []),
       modifiedFileInput: new FormControl("", []),

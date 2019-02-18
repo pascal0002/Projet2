@@ -1,5 +1,5 @@
 import { inject, injectable } from "inversify";
-import { ServerConstants } from "../../../common/communication/Constants";
+import { Constants } from "../../../common/communication/Constants";
 import { IThreeObject } from "../../../common/communication/ThreeObject";
 import Types from "../types";
 import { ScenesParameterGeneratorService } from "./scenes-parameter-generator.service";
@@ -40,21 +40,21 @@ export class ModifiedSceneBuilderService {
 
     private chooseModifications(allowedModifications: boolean[]): void {
         JSON.stringify(allowedModifications) === JSON.stringify([true, false, false]) ?
-        this.deletionNb += ServerConstants.MODIFICATION_NB :
+        this.deletionNb += Constants.MODIFICATION_NB :
         JSON.stringify(allowedModifications) === JSON.stringify([false, true, false]) ?
-        this.colorChangeNb += ServerConstants.MODIFICATION_NB :
+        this.colorChangeNb += Constants.MODIFICATION_NB :
         JSON.stringify(allowedModifications) === JSON.stringify([false, false, true]) ?
-        this.addNb += ServerConstants.MODIFICATION_NB :
+        this.addNb += Constants.MODIFICATION_NB :
         this.generateRandomModifications(allowedModifications);
     }
 
     private generateRandomModifications(allowedModifications: boolean[]): void {
-        for (let i: number = 0; i < ServerConstants.MODIFICATION_NB; i++) {
-            const modificationCode: number = Math.floor(this.getRandomNumber() * ServerConstants.MODIFICATION_TYPE_NB);
-            modificationCode === 0 && allowedModifications[0] === true ? this.deletionNb++ :
-            modificationCode === 1 && allowedModifications[1] === true ? this.colorChangeNb++ :
-            modificationCode === (1 + 1) || modificationCode === (ServerConstants.MODIFICATION_TYPE_NB)
-            && allowedModifications[1 + 1] === true ? this.addNb++ : i--;
+        for (let i: number = 0; i < Constants.MODIFICATION_NB; i++) {
+            const modificationCode: number = Math.floor(this.getRandomNumber() * Constants.MODIFICATION_TYPE_NB);
+            modificationCode === 0 && allowedModifications[0] ? this.deletionNb++ :
+            modificationCode === 1 && allowedModifications[1] ? this.colorChangeNb++ :
+            modificationCode === (1 + 1) || modificationCode === (Constants.MODIFICATION_TYPE_NB)
+            && allowedModifications[1 + 1] ? this.addNb++ : i--;
         }
     }
 

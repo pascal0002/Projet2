@@ -4,8 +4,8 @@ import { scoreSchema } from "./score-schema";
 const gamecard2DSchema: mongoose.Schema = new mongoose.Schema({
     title: String,
     image: String,
-    modifiedImagePath: String,
-    differenceImagePath: String,
+    imageModified: String,
+    differenceImage: String,
     bestScoreSolo: [scoreSchema],
     bestScore1v1: [scoreSchema],
 });

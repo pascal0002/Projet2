@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { Dimension, ServerConstants } from "../../../common/communication/Constants";
+import { Dimension, Constants } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
@@ -31,7 +31,7 @@ export class GameCardsService {
   }
 
   public validateDifferencesImage(differencesImage: IBitmapImage): boolean {
-    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === ServerConstants.VALID_NUMBER_OF_DIFFERENCES);
+    return (this.differenceCounterService.getNumberOfDifferences(differencesImage) === Constants.VALID_NUMBER_OF_DIFFERENCES);
   }
 
   public async getGameCards2D(): Promise<mongoose.Document[]> {
@@ -56,6 +56,7 @@ export class GameCardsService {
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       image: gameCard.image,
+      imageModified: gameCard.imageModified,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
@@ -80,6 +81,7 @@ export class GameCardsService {
     return {
       title: gameCard.toJSON().title,
       image: gameCard.toJSON().image,
+      imageModified: gameCard.toJSON().imageModified ? gameCard.toJSON().imageModified : "",
       bestTimeSolo: gameCard.toJSON().bestScoreSolo,
       bestTime1v1: gameCard.toJSON().bestScore1v1,
       dimension: dimension,
@@ -91,8 +93,9 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       image: this.generateOriginalImagePath(formInfo.originalImage.fileName),
-      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
-      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      imageModified: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
+      bestTimeSolo: this.generateBestTime(Constants.MINIMAL_TIME_SOLO, Constants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(Constants.MINIMAL_TIME_DUO, Constants.MAXIMAL_TIME_DUO),
       dimension: Dimension.TWO_DIMENSION,
     };
   }
@@ -102,27 +105,33 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       image: "",
-      bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
-      bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
+      imageModified: "",
+      bestTimeSolo: this.generateBestTime(Constants.MINIMAL_TIME_SOLO, Constants.MAXIMAL_TIME_SOLO),
+      bestTime1v1: this.generateBestTime(Constants.MINIMAL_TIME_DUO, Constants.MAXIMAL_TIME_DUO),
       dimension: Dimension.THREE_DIMENSION,
     };
   }
 
   private generateOriginalImagePath(imageName: string): string {
 
-    return ServerConstants.ORIGINAL_IMAGE_FOLDER + imageName;
+    return Constants.ORIGINAL_IMAGE_FOLDER + imageName;
   }
 
   private generateDifferenceImagePath(imageName: string): string {
 
-    return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
+    return Constants.DIFFERENCE_IMAGE_FOLDER + imageName;
+  }
+
+  private generateModifiedImagePath(imageName: string): string {
+
+    return Constants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): { user: string, time: number }[] {
     const highScores: { user: string, time: number }[] = [];
-    for (let i: number = 0; i < ServerConstants.NUMBER_HIGH_SCORE; i++) {
+    for (let i: number = 0; i < Constants.NUMBER_HIGH_SCORE; i++) {
       const highScore: number = this.getRandomRange(minimalTime, maximalTime);
-      const userID: number = this.getRandomRange(0, ServerConstants.MAXIMAL_USER_ID);
+      const userID: number = this.getRandomRange(0, Constants.MAXIMAL_USER_ID);
       highScores.push({
         user: `user${userID}`,
         time: highScore,

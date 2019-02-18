@@ -1,13 +1,11 @@
 // tslint:disable:no-magic-numbers
-// import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { IClickInfo } from "../../../../common/communication/ClickInfo";
-// import { TestHelper } from "../../test.helper";
+import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { DifferenceValidatorService } from "./difference-validator.service";
 
 // tslint:disable-next-line:no-any
-// const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
 
 describe("DifferenceValidatorService", () => {
   beforeEach(() => {
@@ -46,7 +44,8 @@ describe("DifferenceValidatorService", () => {
   it("should return the correct difference image name if the path is test.bmp", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
     const mockOriginalImageName: string = "test.bmp";
-    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
+    service.game2d = {title: "test", image: mockOriginalImageName, imageModified: mockOriginalImageName,
+                      bestTime1v1: [], bestTimeSolo: [], dimension: 0};
 
     service.game2d.image = mockOriginalImageName;
     expect(service["getDifferenceImageName"]()).toEqual("testDifferences.bmp");
@@ -55,7 +54,8 @@ describe("DifferenceValidatorService", () => {
   it("should return the correct difference image name if the path is testFolder/test.bmp", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
     const mockOriginalImageName: string = "testFolder/test.bmp";
-    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
+    service.game2d = {title: "test", image: mockOriginalImageName, imageModified: mockOriginalImageName,
+                      bestTime1v1: [], bestTimeSolo: [], dimension: 0};
 
     expect(service["getDifferenceImageName"]()).toEqual("testDifferences.bmp");
   });
@@ -64,7 +64,8 @@ describe("DifferenceValidatorService", () => {
     const service: DifferenceValidatorService = TestBed.get(DifferenceValidatorService);
 
     const mockOriginalImageName: string = "testFolder/test.bmp";
-    service.game2d = {title: "test", image: mockOriginalImageName, bestTime1v1: [], bestTimeSolo: [], dimension: 0};
+    service.game2d = {title: "test", image: mockOriginalImageName, imageModified: mockOriginalImageName,
+                      bestTime1v1: [], bestTimeSolo: [], dimension: 0};
 
     const resultClickInfo: IClickInfo = service.getClickInfo(50, 50);
 
@@ -77,20 +78,15 @@ describe("DifferenceValidatorService", () => {
     // Used to mock the http call
     // tslint:disable-next-line:no-any
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-    ///Dont forget to test this Pascal!
-    // const service: DifferenceValidatorService = new DifferenceValidatorService(httpClientSpy);
-    // const clickInfoSent: IClickInfo = {
-    //   yPos: 0,
-    //   xPos: 42,
-    //   differenceImageName: "barbecueDifferences.bmp",
-    // };
+    const service: DifferenceValidatorService = new DifferenceValidatorService(httpClientSpy);
+    const clickInfoSent: IClickInfo = {
+      yPos: 0,
+      xPos: 42,
+      differenceImageName: "barbecueDifferences.bmp",
+    };
 
-    // httpClientSpy.post.and.returnValue(TestHelper.asyncData(clickInfoSent));
-    // service.sendClickInfo(clickInfoSent).then((res: IClickInfo) => {
-    //   expect(res.xPos).toEqual(42);
-    //   expect(res.yPos).toEqual(0);
-    //   expect(res.differenceImageName).toEqual("barbecueDifferences.bmp");
-    // }).catch((err) => new ErrorHandler());
+    httpClientSpy.post.and.returnValue(TestHelper.asyncData(clickInfoSent));
+    service.sendClickInfo(clickInfoSent);
 
     expect(httpClientSpy.post.calls.count()).toBe(1);
   });

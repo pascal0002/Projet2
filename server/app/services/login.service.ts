@@ -1,6 +1,6 @@
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
-import {ServerConstants} from "../../../common/communication/Constants";
+import {Constants} from "../../../common/communication/Constants";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
 import { userDB } from "./user-schema";
@@ -19,8 +19,8 @@ export class LoginService {
         const alphanumericCharacters: RegExp = /^[0-9a-z]+$/i;
 
         return alphanumericCharacters.test(username)
-            && username.length >= ServerConstants.MINIMUM_USERNAME_LENGTH
-            && username.length <= ServerConstants.MAXIMUM_USERNAME_LENGTH;
+            && username.length >= Constants.MINIMUM_USERNAME_LENGTH
+            && username.length <= Constants.MAXIMUM_USERNAME_LENGTH;
     }
 
     public disconnect(username: string): void {

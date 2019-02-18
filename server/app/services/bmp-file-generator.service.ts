@@ -2,7 +2,7 @@ import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { ServerConstants } from "../../../common/communication/Constants";
+import { Constants } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import Types from "../types";
 import { BitmapEncoder } from "./bitmap-encoder.service";
@@ -36,9 +36,9 @@ export class BmpFileGenerator {
     public createTemporaryFile(imgPixels: number[], path: string, fileName: string): void {
             const tempImg: IBitmapImage = {
                 fileName: fileName,
-                height: ServerConstants.ACCEPTED_HEIGHT,
-                width: ServerConstants.ACCEPTED_WIDTH,
-                bitDepth: ServerConstants.ACCEPTED_BIT_DEPTH,
+                height: Constants.ACCEPTED_HEIGHT,
+                width: Constants.ACCEPTED_WIDTH,
+                bitDepth: Constants.ACCEPTED_BIT_DEPTH,
                 pixels: imgPixels,
             };
 

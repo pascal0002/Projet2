@@ -1,20 +1,19 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
-
-import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, FormGroup } from "@angular/forms";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
+import { SceneService } from "../scene-constructor/scene.service";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call
 
 const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+const sceneService: SceneService = new SceneService(httpClientSpy);
 const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
-const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy);
+const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy, sceneService);
 
 describe("FormHandler3DService", () => {
   beforeEach(() => {
@@ -32,7 +31,25 @@ describe("FormHandler3DService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
+  it("the HttpClient to send the 3D info should only be called once", () => {
+    const httpSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+    const formValidator: FormHandler3DService = new FormHandler3DService(httpSpy, listOfGameServiceSpy, sceneService);
+
+    const formSent: IFormInfo3D = {
+      gameName: "test1",
+      objectType: "Theme1",
+      numberOfObjects: 23,
+      addObjects: true,
+      modifyObjects: true,
+      deleteObjects: false,
+    };
+
+    httpSpy.post.and.returnValue(TestHelper.asyncData(formSent));
+    formValidator.send3DFormInfo(formSent);
+    expect(httpSpy.post.calls.count()).toBe(1);
+  });
+
+  it("the HttpClient to create 3D objects should only be called once", () => {
     const formSent: IFormInfo3D = {
       gameName: "test1",
       objectType: "Theme1",
@@ -43,11 +60,8 @@ describe("FormHandler3DService", () => {
     };
 
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.send3DFormInfo(formSent)
-    .then((gameCard: GameCard) => {
-      expect(gameCard.title).toEqual("test1");
-    })
-    .catch((err: any) => new ErrorHandler());
+    formValidatorService.createObjects(formSent);
+    expect(httpClientSpy.post.calls.count()).toBe(1);
   });
 
   it("should return null (no errors) if 1 checkbox is checked", () => {
@@ -87,4 +101,3 @@ describe("FormHandler3DService", () => {
   });
 
 });
-

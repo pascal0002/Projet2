@@ -9,6 +9,7 @@ import * as sinonts from "ts-sinon";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { Dimension } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
+import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
 import { blackBitmap, whiteBitmap } from "../../mock/bitmapImage-mock";
 import { DifferenceCounterService } from "./difference-counter.service";
@@ -51,20 +52,15 @@ class MockDatabaseService {
     public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
         return Promise.resolve(0);
     }
+
+    public async updateOne(model: mongoose.Model<mongoose.Document>, condition: Object, modification: Object): Promise<number> {
+        return Promise.resolve(0);
+    }
 }
 
 const databaseService: any = new MockDatabaseService();
 
 describe("game-cards-service", () => {
-
-    describe("test", () => {
-
-        it("should work", (done: Function) => {
-            expect(true);
-            done();
-        });
-
-    });
 
     describe("generateDifferences", () => {
 
@@ -203,16 +199,16 @@ describe("game-cards-service", () => {
         it("should return a valid gameCard when the array is composed of gameCard2D", (done: Function) => {
             const gamecard1: mongoose.Document = new gameCard2D({
                 title: "title1",
-                originalImagePath: "path1",
-                modifiedImagePath: "path2",
+                image: "path1",
+                imageModified: "path2",
                 differenceImagePath: "path3",
                 bestScoreSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestScore1v1: [{ user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
             });
             const gamecard2: mongoose.Document = new gameCard2D({
                 title: "title2",
-                originalImagePath: "path4",
-                modifiedImagePath: "path5",
+                image: "path4",
+                imageModified: "path5",
                 differenceImagePath: "path6",
                 bestScoreSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestScore1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
@@ -222,6 +218,7 @@ describe("game-cards-service", () => {
             const gamecard1Expected: GameCard = {
                 title: "title1",
                 image: "path1",
+                imageModified: "path2",
                 bestTimeSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestTime1v1: [{user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
                 dimension: Dimension.TWO_DIMENSION,
@@ -229,6 +226,7 @@ describe("game-cards-service", () => {
             const gamecard2Expected: GameCard = {
                 title: "title2",
                 image: "path4",
+                imageModified: "path5",
                 bestTimeSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestTime1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
                 dimension: Dimension.TWO_DIMENSION,
@@ -243,13 +241,13 @@ describe("game-cards-service", () => {
         it("should return a valid gameCard when the array is composed of gameCard3D", (done: Function) => {
             const gamecard1: mongoose.Document = new gameCard3D({
                 title: "title1",
-                originalImagePath: "path1",
+                image: "path1",
                 bestScoreSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestScore1v1: [{ user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
             });
             const gamecard2: mongoose.Document = new gameCard2D({
                 title: "title2",
-                originalImagePath: "path2",
+                image: "path2",
                 bestScoreSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestScore1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
             });
@@ -258,6 +256,7 @@ describe("game-cards-service", () => {
             const gamecard1Expected: GameCard = {
                 title: "title1",
                 image: "path1",
+                imageModified: "",
                 bestTimeSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestTime1v1: [{user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
                 dimension: Dimension.THREE_DIMENSION,
@@ -265,6 +264,7 @@ describe("game-cards-service", () => {
             const gamecard2Expected: GameCard = {
                 title: "title2",
                 image: "path2",
+                imageModified: "",
                 bestTimeSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestTime1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
                 dimension: Dimension.THREE_DIMENSION,
@@ -299,6 +299,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
                 bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -320,6 +321,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
                 bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -342,6 +344,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
                 bestTime1v1: [{user : "user109", time : 166}, {user : "user109", time : 180}, {user : "user109", time : 193}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -352,7 +355,159 @@ describe("game-cards-service", () => {
     });
 
     describe("generateGameCard3D", () => {
-        // TODO
+        beforeEach((done: Mocha.Done) => {
+            gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
+            gameCardsServiceStub = sinonts.stubObject<GameCardsService>(gameCardsService, ["getRandomNumber"]);
+            done();
+        });
+
+        it("should return minimal value when Math.random return 0", (done: Function) => {
+
+            gameCardsServiceStub.getRandomNumber.returns(0);
+            const formInfo: IFormInfo3D = {
+                gameName: "game",
+                objectType: "type",
+                numberOfObjects: 10,
+                addObjects: true,
+                deleteObjects: true,
+                modifyObjects: true,
+            };
+
+            const expectedGameCard: GameCard = {
+                title: "game",
+                image: "",
+                imageModified: "",
+                bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
+                dimension: Dimension.THREE_DIMENSION,
+            };
+            expect(gameCardsServiceStub.generateGameCard3D(formInfo)).deep.equal(expectedGameCard);
+            done();
+        });
+
+        it("should return maximal value when Math.random return 1", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(1);
+            const formInfo: IFormInfo3D = {
+                gameName: "game",
+                objectType: "type",
+                numberOfObjects: 10,
+                addObjects: true,
+                deleteObjects: true,
+                modifyObjects: true,
+            };
+
+            const expectedGameCard: GameCard = {
+                title: "game",
+                image: "",
+                imageModified: "",
+                bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
+                bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
+                dimension: Dimension.THREE_DIMENSION,
+            };
+            expect(gameCardsServiceStub.generateGameCard3D(formInfo)).deep.equal(expectedGameCard);
+            done();
+        });
+
+        it("should return expected value when Math.random return 0.11", (done: Function) => {
+            gameCardsServiceStub.getRandomNumber.returns(0.11);
+
+            const formInfo: IFormInfo3D = {
+                gameName: "game",
+                objectType: "type",
+                numberOfObjects: 10,
+                addObjects: true,
+                deleteObjects: true,
+                modifyObjects: true,
+            };
+
+            const expectedGameCard: GameCard = {
+                title: "game",
+                image: "",
+                imageModified: "",
+                bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
+                bestTime1v1: [{user : "user109", time : 166}, {user : "user109", time : 180}, {user : "user109", time : 193}],
+                dimension: Dimension.THREE_DIMENSION,
+            };
+            expect(gameCardsServiceStub.generateGameCard3D(formInfo)).deep.equal(expectedGameCard);
+            done();
+        });
+    });
+
+    describe("addGameCard2D", () => {
+        beforeEach((done: Mocha.Done) => {
+            gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
+            gameCardsServiceStub = sinonts.stubObject<GameCardsService>(gameCardsService, ["generateGameCard2D"]);
+            databaseServiceStub = sinon.stub(databaseService, "add");
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should return the game card and call database.add once", (done: Function) => {
+
+            const gameCard: GameCard = {
+                title: "game",
+                image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
+                dimension: Dimension.TWO_DIMENSION,
+            };
+            const image: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "image.bmp", pixels: []};
+            const formInfo: IFormInfo2D = {
+                gameName: "game",
+                originalImage: image,
+                modifiedImage: image,
+            };
+
+            gameCardsServiceStub.generateGameCard2D.returns(gameCard);
+
+            expect(gameCardsServiceStub.addGameCard2D(formInfo, image)).deep.equal(gameCard);
+            expect(databaseService.calledOnce);
+            done();
+        });
+    });
+
+    describe("addGameCard3D", () => {
+        beforeEach((done: Mocha.Done) => {
+            gameCardsService = new GameCardsService(differenceCounterServiceStub, databaseService);
+            gameCardsServiceStub = sinonts.stubObject<GameCardsService>(gameCardsService, ["generateGameCard3D"]);
+            databaseServiceStub = sinon.stub(databaseService, "add");
+            done();
+        });
+
+        afterEach((done: Mocha.Done) => {
+            databaseServiceStub.restore();
+            done();
+        });
+
+        it("should return true and call database.add once", (done: Function) => {
+            const gameCard: GameCard =  {
+                title: "game",
+                image: "",
+                imageModified: "",
+                bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
+                bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
+                dimension: Dimension.THREE_DIMENSION,
+            };
+            const formInfo: IFormInfo3D = {
+                gameName: "game",
+                objectType: "type",
+                numberOfObjects: 10,
+                addObjects: true,
+                deleteObjects: true,
+                modifyObjects: true,
+            };
+
+            gameCardsServiceStub.generateGameCard3D.returns(gameCard);
+
+            expect(gameCardsServiceStub.addGameCard3D(formInfo));
+            expect(databaseService.calledOnce);
+            done();
+        });
     });
 
     describe("getRandomRange", () => {
@@ -445,6 +600,21 @@ describe("game-cards-service", () => {
 
             expect(gameCardsServiceStub.generateModifiedImagePath("modifiedImage.bmp"))
             .to.equal("http://localhost:3000/modifiedImages/modifiedImage.bmp");
+            done();
+        });
+    });
+
+    describe("generateDifferenceImagePath", () => {
+
+        beforeEach((done: Mocha.Done) => {
+            gameCardsServiceStub = sinonts.stubObject<GameCardsService>(gameCardsService, ["getRandomNumber"]);
+            done();
+        });
+
+        it("should return the right path to the modified image", (done: Function) => {
+
+            expect(gameCardsServiceStub.generateDifferenceImagePath("differenceImage.bmp"))
+            .to.equal("http://localhost:3000/differenceImages/differenceImage.bmp");
             done();
         });
     });

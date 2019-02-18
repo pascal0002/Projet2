@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import { IClickInfo } from "../../../common/communication/ClickInfo";
-import { ServerConstants } from "../../../common/communication/Constants";
+import { Constants } from "../../../common/communication/Constants";
 import { IDifferenceImage } from "../../../common/communication/DifferenceImage";
 import { BitmapDecoder } from "../services/bitmap-decoder.service";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
@@ -26,10 +26,10 @@ export class DifferencesController {
 
         router.post("/new_game", (req: Request, res: Response, next: NextFunction) => {
             const differenceImage: IDifferenceImage = req.body;
-            const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels(ServerConstants.PUBLIC_DIFF_FOLDER_PATH
+            const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels(Constants.PUBLIC_DIFF_FOLDER_PATH
                 + differenceImage.name);
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
-                                                     ServerConstants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
+                                                     Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
                                                      differenceImage.name);
             res.send(true);
         });
@@ -39,15 +39,15 @@ export class DifferencesController {
             const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(clickInfo);
             let imgOfDifferencePixels: number[];
 
-            imgOfDifferencePixels = this.bitmapDecoder.getPixels(ServerConstants.PUBLIC_TEMP_FOLDER_PATH
+            imgOfDifferencePixels = this.bitmapDecoder.getPixels(Constants.PUBLIC_TEMP_FOLDER_PATH
                 + clickInfo.differenceImageName);
             if (this.differenceIdentificator2DService.confirmDifference(clickInfo, imgOfDifferencePixels)) {
                 // Overwrite the temp image
                 this.bitmapGenerator.createTemporaryFile(
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
                                                                           imgOfDifferencePixels,
-                                                                          ServerConstants.ACCEPTED_WIDTH),
-                    ServerConstants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
+                                                                          Constants.ACCEPTED_WIDTH),
+                    Constants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
                     clickInfo.differenceImageName);
 
                 // Send the array of the pos of diff pixels
