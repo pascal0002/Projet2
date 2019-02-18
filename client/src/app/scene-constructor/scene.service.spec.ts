@@ -1,20 +1,17 @@
-import { TestBed } from "@angular/core/testing";
-import { AppModule } from "../app.module";
+// tslint:disable:no-any
+// tslint:disable:no-magic-numbers
 import { SceneService } from "./scene.service";
+
+let httpClientSpy: any;
+let service: SceneService;
 
 describe("SceneService", () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [AppModule],
-      declarations: [
-
-      ],
-      providers: [],
-    });
+    httpClientSpy = jasmine.createSpyObj("HttpClient", ["post"]);
+    service = new SceneService(httpClientSpy);
   });
 
   it("should be created", () => {
-    const service: SceneService = TestBed.get(SceneService);
     expect(service).toBeTruthy();
   });
 });
