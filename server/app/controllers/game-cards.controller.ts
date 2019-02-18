@@ -37,18 +37,20 @@ export class GameCardsController {
         });
 
         router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
-            this.formValidator2DService.validateForm(req.body) ?
-                this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
-                    .then((image: IBitmapImage) => {
-                        if (this.gameCardsService.validateDifferencesImage(image)) {
-                            this.bmpFileGeneratorService.generateBMPFiles(req.body, image);
-                            res.json(this.gameCardsService.addGameCard2D(req.body, image));
-                        } else {
-                            res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
-                        }
-                    })
-                    .catch((err: Error) => console.error(err)) :
+            if (!this.formValidator2DService.validateForm(req.body)) {
                 res.status(Constants.ERROR).send("Les informations envoyées ne sont pas valides!");
+            }
+
+            this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
+            .then((image: IBitmapImage) => {
+                if (this.gameCardsService.validateDifferencesImage(image)) {
+                    this.bmpFileGeneratorService.generateBMPFiles(req.body, image);
+                    res.json(this.gameCardsService.addGameCard2D(req.body, image));
+                } else {
+                    res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
+                }
+            })
+            .catch((err: Error) => console.error(err));
         });
 
         router.post("/info_3D_game", (req: Request, res: Response, next: NextFunction) => {
