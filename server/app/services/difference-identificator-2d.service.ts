@@ -16,8 +16,8 @@ export class DifferenceIdentificator2DService {
         const pixelAtPos: IPixel = this.getPixelAtPos(clickPosition, imgOfDifferencePixels);
 
         return (pixelAtPos.red === Constants.BLACK_PIXEL_PARAMETER &&
-                pixelAtPos.blue === Constants.BLACK_PIXEL_PARAMETER &&
-                pixelAtPos.green === Constants.BLACK_PIXEL_PARAMETER);
+            pixelAtPos.blue === Constants.BLACK_PIXEL_PARAMETER &&
+            pixelAtPos.green === Constants.BLACK_PIXEL_PARAMETER);
     }
 
     private getPixelAtPos(clickPosition: IClickInfo, pixelArray: number[]): IPixel {
@@ -76,7 +76,25 @@ export class DifferenceIdentificator2DService {
     }
 
     private getPixelNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
+        let allPixelNeighbours: number[] = [];
+
+        // Dylan approuve ce disable de TSLint
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (this.checkPixelSide(clickedPixelPos, Constants.LEFT_SIDE)) {
+            allPixelNeighbours = this.getRightSideNeighbor(clickedPixelPos, imageWidth);
+        } else if (this.checkPixelSide(clickedPixelPos, ((Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL)
+                                                           -  Constants.BYTES_PER_PIXEL))) {
+            allPixelNeighbours = this.getLeftSideNeighbor(clickedPixelPos, imageWidth);
+        } else {
+            allPixelNeighbours = this.getBothSideNeighbor(clickedPixelPos, imageWidth);
+        }
+
+        return allPixelNeighbours;
+    }
+
+    private getBothSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
         const allPixelNeighbours: number[] = [];
+
         allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
         allPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
@@ -87,6 +105,34 @@ export class DifferenceIdentificator2DService {
         allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
 
         return allPixelNeighbours;
+    }
+
+    private getLeftSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
+        const allPixelNeighbours: number[] = [];
+
+        allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
+        allPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+
+        return allPixelNeighbours;
+    }
+
+    private getRightSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
+        const allPixelNeighbours: number[] = [];
+
+        allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
+        allPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
+        allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+
+        return allPixelNeighbours;
+    }
+
+    private checkPixelSide(pixelIndex: number, side: number): boolean {
+        return pixelIndex % (Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL) === side;
     }
 
     private getRightPixelNeighbour(clickedPixelPos: number): number {

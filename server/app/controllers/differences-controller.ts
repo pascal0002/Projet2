@@ -13,9 +13,9 @@ import Types from "../types";
 export class DifferencesController {
 
     public constructor(@inject(Types.DifferencesGeneratorService) private differencesGeneratorService: DifferencesGeneratorService,
-        @inject(Types.BitmapDecoder) private bitmapDecoder: BitmapDecoder,
-        @inject(Types.BmpFileGenerator) private bitmapGenerator: BmpFileGenerator,
-        @inject(Types.DifferenceIdentificator2DService) private differenceIdentificator2DService:
+                       @inject(Types.BitmapDecoder) private bitmapDecoder: BitmapDecoder,
+                       @inject(Types.BmpFileGenerator) private bitmapGenerator: BmpFileGenerator,
+                       @inject(Types.DifferenceIdentificator2DService) private differenceIdentificator2DService:
             DifferenceIdentificator2DService) { }
 
     public get router(): Router {
@@ -29,8 +29,8 @@ export class DifferencesController {
             const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels(Constants.PUBLIC_DIFF_FOLDER_PATH
                 + differenceImage.name);
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
-                Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
-                differenceImage.name);
+                                                     Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
+                                                     differenceImage.name);
             res.send(true);
         });
 
@@ -45,8 +45,8 @@ export class DifferencesController {
                 // Overwrite the temp image
                 this.bitmapGenerator.createTemporaryFile(
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
-                        imgOfDifferencePixels,
-                        Constants.ACCEPTED_WIDTH),
+                                                                          imgOfDifferencePixels,
+                                                                          Constants.ACCEPTED_WIDTH),
                     Constants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
                     clickInfo.differenceImageName);
 

@@ -62,6 +62,7 @@ export class DifferenceCounterService {
       return [];
     }
 
+    // Dylan approuve ce disable de TSLint 
     // tslint:disable-next-line:prefer-conditional-expression
     if (this.checkPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
       neighbors = this.getRightSideNeighbor(pixelIndex);

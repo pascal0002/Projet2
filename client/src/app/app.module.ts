@@ -26,7 +26,7 @@ const appRoutes: Routes = [
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
   { path: "game_view_2d", component: GameViewComponent },
-  { path: "3d_edit", component: SceneComponent },
+  { path: "3d_edit", component: Game3DComponent },
 ];
 
 @NgModule({
