@@ -74,6 +74,12 @@ describe("game-cards-service", () => {
       databaseServiceStub.restore();
       done();
     });
+
+    it("should call database.updateOne once", (done: Function) => {
+      scenes3DService.update("title", "data");
+      expect(databaseService.calledOnce);
+      done();
+    });
   });
 
 });
