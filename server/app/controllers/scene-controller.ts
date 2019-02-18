@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
-import { Dimension, Constants } from "../../../common/communication/Constants";
+import { Constants, Dimension } from "../../../common/communication/Constants";
 import { IThreeObject } from "../../../common/communication/ThreeObject";
 import { GameCardsService } from "../services/game-cards.service";
 import { ModifiedSceneBuilderService } from "../services/modified-scene-builder.service";
