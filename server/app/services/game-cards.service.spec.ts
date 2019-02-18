@@ -58,15 +58,6 @@ const databaseService: any = new MockDatabaseService();
 
 describe("game-cards-service", () => {
 
-    describe("test", () => {
-
-        it("should work", (done: Function) => {
-            expect(true);
-            done();
-        });
-
-    });
-
     describe("generateDifferences", () => {
 
         beforeEach((done: Mocha.Done) => {
