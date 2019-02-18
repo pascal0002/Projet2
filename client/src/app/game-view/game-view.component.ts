@@ -53,7 +53,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
   public miscGetArrayDiffFoundCount(): Array<number> {
     return Array.apply(null, {
       length: ((this.gameViewService.mode === Mode.SOLO)
-        ? this.gameViewService.diffFoundCount : Constants.DIFFERENCE_NB)
+        ? this.gameViewService.diffFoundCount : ClientConstants.DIFFERENCE_NB),
     }).map(Number.call, Number);
   }
 

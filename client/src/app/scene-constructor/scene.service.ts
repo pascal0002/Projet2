@@ -17,9 +17,7 @@ export class SceneService {
   public camera: THREE.PerspectiveCamera;
   public glRenderer: THREE.WebGLRenderer;
 
-  public constructor(private http: HttpClient) {
-    this.scene = new THREE.Scene();
-  }
+  public constructor(private http: HttpClient) {}
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
@@ -27,9 +25,10 @@ export class SceneService {
   }
 
   private makeScene(canvas: HTMLCanvasElement): void {
+    this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-      1, Constants.CAMERA_RENDER_DISTANCE);
+                                              1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
     this.glRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
   }
@@ -91,14 +90,14 @@ export class SceneService {
     switch (choice) {
       case Constants.SPHERE:
         geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE,
-          Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
+                                            Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
         break;
       case Constants.CUBE:
         geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
         break;
       case Constants.CYLINDER:
         geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE,
-          height, Constants.RADIAL_PRECISION);
+                                              height, Constants.RADIAL_PRECISION);
         break;
       case Constants.CONE:
         geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.RADIAL_PRECISION);
