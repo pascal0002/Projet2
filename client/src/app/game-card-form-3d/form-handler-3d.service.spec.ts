@@ -1,20 +1,22 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
-/*
 import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, FormGroup } from "@angular/forms";
+import "jasmine";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
-import { FormHandler3DService } from "./form-handler-3d.service";*/
+import { SceneService } from "../scene-constructor/scene.service";
+import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call
-/*
+
 const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+const sceneService: SceneService = new SceneService(httpClientSpy);
 const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
-const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy);
+const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy, sceneService);
 
 describe("FormHandler3DService", () => {
   beforeEach(() => {
@@ -86,5 +88,4 @@ describe("FormHandler3DService", () => {
     expect(formValidatorService.getValidatorFunction()(TEST_FORM_GROUP)).toBeDefined();
   });
 
-});*/
-
+});

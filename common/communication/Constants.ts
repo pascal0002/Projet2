@@ -12,6 +12,8 @@ export class ServerConstants {
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
 
+    static readonly PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
+    static readonly PUBLIC_MODIF_FOLDER_PATH: string = "/public/modifiedImages/";
     static readonly PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
     static readonly PUBLIC_TEMP_FOLDER_PATH: string = "/public/tempDifferenceImage/";
 
@@ -102,6 +104,15 @@ export abstract class ClientConstants {
     static readonly MINUTE_TO_SECOND: number = 60;
     static readonly DIGIT_OVERFLOW: number = 10;
     static readonly PERCENT_FACTOR: number = 100;
+
+    // for the image displayer
+    static readonly RED_COLOR: number = 0;
+    static readonly GREEN_COLOR: number = 1;
+    static readonly BLUE_COLOR: number = 2;
+    static readonly NEXT_PIXEL_RGB: number = 3;
+    static readonly NEXT_PIXEL_RGBA: number = 4;
+    static readonly OPACITY_INDEX: number = 3;
+    static readonly MAX_PIXEL_OPACITY: number = 255;
 
     // for the 2D form validator
     static readonly MIN_TITLE_LENGTH: number = 3;

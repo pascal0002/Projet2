@@ -56,6 +56,7 @@ export class GameCardsService {
     this.databaseService.add(new gameCard2D({
       title: gameCard.title,
       image: gameCard.image,
+      imageModified: gameCard.imageModified,
       differenceImagePath: this.generateDifferenceImagePath(differenceImage.fileName),
       bestScoreSolo: gameCard.bestTimeSolo,
       bestScore1v1: gameCard.bestTime1v1,
@@ -80,6 +81,7 @@ export class GameCardsService {
     return {
       title: gameCard.toJSON().title,
       image: gameCard.toJSON().image,
+      imageModified: gameCard.toJSON().modifiedImage,
       bestTimeSolo: gameCard.toJSON().bestScoreSolo,
       bestTime1v1: gameCard.toJSON().bestScore1v1,
       dimension: dimension,
@@ -91,6 +93,7 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       image: this.generateOriginalImagePath(formInfo.originalImage.fileName),
+      imageModified: this.generateModifiedImagePath(formInfo.modifiedImage.fileName),
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
       dimension: Dimension.TWO_DIMENSION,
@@ -102,6 +105,7 @@ export class GameCardsService {
     return {
       title: formInfo.gameName,
       image: "",
+      imageModified: "",
       bestTimeSolo: this.generateBestTime(ServerConstants.MINIMAL_TIME_SOLO, ServerConstants.MAXIMAL_TIME_SOLO),
       bestTime1v1: this.generateBestTime(ServerConstants.MINIMAL_TIME_DUO, ServerConstants.MAXIMAL_TIME_DUO),
       dimension: Dimension.THREE_DIMENSION,
@@ -116,6 +120,11 @@ export class GameCardsService {
   private generateDifferenceImagePath(imageName: string): string {
 
     return ServerConstants.DIFFERENCE_IMAGE_FOLDER + imageName;
+  }
+
+  private generateModifiedImagePath(imageName: string): string {
+
+    return ServerConstants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
   private generateBestTime(minimalTime: number, maximalTime: number): { user: string, time: number }[] {

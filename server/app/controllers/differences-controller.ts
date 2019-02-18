@@ -16,7 +16,7 @@ export class DifferencesController {
                        @inject(Types.BitmapDecoder) private bitmapDecoder: BitmapDecoder,
                        @inject(Types.BmpFileGenerator) private bitmapGenerator: BmpFileGenerator,
                        @inject(Types.DifferenceIdentificator2DService) private differenceIdentificator2DService:
-                                                                       DifferenceIdentificator2DService) { }
+            DifferenceIdentificator2DService) { }
 
     public get router(): Router {
         const router: Router = Router();
@@ -27,10 +27,11 @@ export class DifferencesController {
         router.post("/new_game", (req: Request, res: Response, next: NextFunction) => {
             const differenceImage: IDifferenceImage = req.body;
             const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels(ServerConstants.PUBLIC_DIFF_FOLDER_PATH
-                                                                               + differenceImage.name);
+                + differenceImage.name);
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
                                                      ServerConstants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
                                                      differenceImage.name);
+            res.send(true);
         });
 
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
@@ -39,7 +40,7 @@ export class DifferencesController {
             let imgOfDifferencePixels: number[];
 
             imgOfDifferencePixels = this.bitmapDecoder.getPixels(ServerConstants.PUBLIC_TEMP_FOLDER_PATH
-                                                                 + clickInfo.differenceImageName);
+                + clickInfo.differenceImageName);
             if (this.differenceIdentificator2DService.confirmDifference(clickInfo, imgOfDifferencePixels)) {
                 // Overwrite the temp image
                 this.bitmapGenerator.createTemporaryFile(
@@ -51,7 +52,15 @@ export class DifferencesController {
 
                 // Send the array of the pos of diff pixels
                 res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
+            } else {
+                res.send([]);
             }
+
+        });
+
+        router.post("/image_pixels", (req: Request, res: Response, next: NextFunction) => {
+            console.log(req.body.location);
+            res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.location)));
         });
 
         return router;

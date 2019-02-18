@@ -222,6 +222,7 @@ describe("game-cards-service", () => {
             const gamecard1Expected: GameCard = {
                 title: "title1",
                 image: "path1",
+                imageModified: "path2",
                 bestTimeSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestTime1v1: [{user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
                 dimension: Dimension.TWO_DIMENSION,
@@ -229,6 +230,7 @@ describe("game-cards-service", () => {
             const gamecard2Expected: GameCard = {
                 title: "title2",
                 image: "path4",
+                imageModified: "path5",
                 bestTimeSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestTime1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
                 dimension: Dimension.TWO_DIMENSION,
@@ -258,13 +260,15 @@ describe("game-cards-service", () => {
             const gamecard1Expected: GameCard = {
                 title: "title1",
                 image: "path1",
+                imageModified: "path2",
                 bestTimeSolo: [{ user: "user1", time: 1 }, { user: "user2", time: 2 }, { user: "user3", time: 3 }],
                 bestTime1v1: [{user: "user4", time: 4 }, { user: "user5", time: 5 }, { user: "user6", time: 6 }],
                 dimension: Dimension.THREE_DIMENSION,
             };
             const gamecard2Expected: GameCard = {
                 title: "title2",
-                image: "path2",
+                image: "path4",
+                imageModified: "path5",
                 bestTimeSolo: [{ user: "user7", time: 7 }, { user: "user8", time: 8 }, { user: "user9", time: 9 }],
                 bestTime1v1: [{ user: "user10", time: 10 }, { user: "user11", time: 11 }, { user: "user12", time: 12 }],
                 dimension: Dimension.THREE_DIMENSION,
@@ -299,6 +303,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/originalImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
                 bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -320,6 +325,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/originalImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
                 bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -342,6 +348,7 @@ describe("game-cards-service", () => {
             const expectedGameCard: GameCard = {
                 title: "game",
                 image: "http://localhost:3000/originalImages/originalImage.bmp",
+                imageModified: "http://localhost:3000/originalImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
                 bestTime1v1: [{user : "user109", time : 166}, {user : "user109", time : 180}, {user : "user109", time : 193}],
                 dimension: Dimension.TWO_DIMENSION,

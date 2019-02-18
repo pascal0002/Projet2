@@ -15,6 +15,7 @@ describe("modified-scene-builder-service", () => {
     let scenesParameterGeneratorServiceStub: any;
 
     let objects: IThreeObject[];
+    let positionsChanged: number[];
 
     const init: Mocha.Func = () => {
         scenesParameterGeneratorService = new ScenesParameterGeneratorService();
@@ -26,6 +27,7 @@ describe("modified-scene-builder-service", () => {
                                           modifiedSceneBuilderService, ["getRandomNumber", "checkObjectsChanged"]);
 
         objects = [];
+        positionsChanged = [];
     };
 
     describe("createModifications", () => {
@@ -44,13 +46,11 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)).deep.equal(comparativeObjects);
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])).deep.equal(comparativeObjects);
             done();
         });
 
         it("should delete 7 objects from the array", (done: Mocha.Done) => {
-            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
-            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
             modifiedSceneBuilderServiceStub.getRandomNumber.returns(0);
             for (let i: number = 0; i < 7; i++) {
                 objects.push({
@@ -59,14 +59,41 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)).deep.equal([]);
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])).deep.equal([]);
             done();
         });
 
-        /*it("should change the color of 7 different objects of the array", (done: Mocha.Done) => {
-            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0.4);
-            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
+        it("should change the color of the fifth object to the max value", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
             modifiedSceneBuilderServiceStub.getRandomNumber.returns(0.4);
+            modifiedSceneBuilderServiceStub.colorChangeNb = -6;
+
+            for (let i: number = 0; i < 10; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [0, 0, 0], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])[4].color).to.equal("rgb(255,255,255)");
+            done();
+        });
+
+        it("should add objects and change objects color only when specified", (done: Mocha.Done) => {
+            for (let i: number = 0; i < 7; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderService.createModifications(objects, [true, false, false])).deep.equal([]);
+            done();
+        });
+
+        it("should add objects and delete objects only when specified", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
+
             for (let i: number = 0; i < 7; i++) {
                 objects.push({
                     color: "rgb(0,0,0)", diameter: 5, height: 5,
@@ -74,17 +101,42 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
+            expect(modifiedSceneBuilderService.createModifications(objects, [false, true, false])[4].color)
+            .to.equal("rgb(255,255,255)");
+            done();
+        });
+
+        it("should delete objects and change objects color only when specified", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
+
             const comparativeObjects: IThreeObject[] = [];
             for (let i: number = 0; i < 7; i++) {
                 comparativeObjects.push({
-                    color: "rgb(102,102,102)", diameter: 5, height: 5,
-                    position: [0, 0, 0], orientation: [0, 0, 0], type: 0,
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)).deep.equal(comparativeObjects);
+            expect(modifiedSceneBuilderService.createModifications(objects, [false, false, true])).deep.equal(comparativeObjects);
             done();
-        });*/
+        });
+
+        it("should redo an iteration when the random function makes the disabled modification", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            modifiedSceneBuilderServiceStub.getRandomNumber.onFirstCall().returns(0.5);
+            modifiedSceneBuilderServiceStub.getRandomNumber.returns(0);
+
+            for (let i: number = 0; i < 7; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, false, true])).deep.equal([]);
+            done();
+        });
     });
 
     describe("deleteObject", () => {
@@ -107,6 +159,53 @@ describe("modified-scene-builder-service", () => {
                 color: "rgb(0,0,0)", diameter: 10, height: 10,
                 position: [0, 0, 0], orientation: [10, 10, 10], type: 1,
             }]);
+            done();
+        });
+    });
+
+    describe("changeColor", () => {
+        beforeEach(init);
+
+        it("should change color of 1 object from the array even if selected position is higher than array lenght", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
+            modifiedSceneBuilderServiceStub.getRandomNumber.returns(1);
+
+            for (let i: number = 0; i < 10; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [0, 0, 0], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            modifiedSceneBuilderServiceStub.changeColor(objects, positionsChanged);
+
+            expect(objects[9].color).to.equal("rgb(255,255,255)");
+            done();
+        });
+    });
+
+    describe("checkPositionsChanged", () => {
+        beforeEach(init);
+
+        it("should not return a position equal to the array lenght", (done: Mocha.Done) => {
+            modifiedSceneBuilderServiceStub.getRandomNumber.returns(1);
+
+            const positionToChange: number = 5;
+            const arrayLength: number = 10;
+            positionsChanged.push(positionToChange);
+
+            expect(modifiedSceneBuilderServiceStub.checkPositionsChanged(positionsChanged, positionToChange, arrayLength))
+            .not.to.equal(arrayLength);
+            done();
+        });
+
+        it("should choose another position to change if the position to change has already been changed", (done: Mocha.Done) => {
+
+            const positionToChange: number = 5;
+            positionsChanged.push(positionToChange);
+
+            expect(modifiedSceneBuilderServiceStub.checkPositionsChanged(positionsChanged, positionToChange, 10))
+            .not.to.equal(positionToChange);
             done();
         });
     });
