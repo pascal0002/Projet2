@@ -13,9 +13,9 @@ import Types from "../types";
 export class GameCardsController {
 
     public constructor(@inject(Types.FormValidator2DService) private formValidator2DService: FormValidator2DService,
-        @inject(Types.FormValidator3DService) private formValidator3DService: FormValidator3DService,
-        @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
-        @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
+                       @inject(Types.FormValidator3DService) private formValidator3DService: FormValidator3DService,
+                       @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
+                       @inject(Types.BmpFileGenerator) private bmpFileGeneratorService: BmpFileGenerator) { }
 
     public get router(): Router {
         const router: Router = Router();
