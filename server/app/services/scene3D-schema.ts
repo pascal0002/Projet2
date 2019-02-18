@@ -1,3 +1,5 @@
+// Ryan approuve ce disable
+// tslint:disable:align
 import * as mongoose from "mongoose";
 
 const threeObjectSchema: mongoose.Schema = new mongoose.Schema({
@@ -7,7 +9,7 @@ const threeObjectSchema: mongoose.Schema = new mongoose.Schema({
     position: [Number],
     orientation: [Number],
     type: Number,
-},                                                             {_id: false});
+}, {_id: false});
 
 const scenes3DSchema: mongoose.Schema = new mongoose.Schema({
     title: String,
