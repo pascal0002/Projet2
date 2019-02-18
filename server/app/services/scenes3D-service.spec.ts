@@ -1,7 +1,9 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
+import { expect } from "chai";
 import * as mongoose from "mongoose";
 import * as sinon from "sinon";
+import { IThreeObject } from "../../../common/communication/ThreeObject";
 import { Scene3DService } from "./scenes3D-service";
 
 let scenes3DService: Scene3DService;
@@ -48,6 +50,14 @@ describe("game-cards-service", () => {
 
     afterEach((done: Mocha.Done) => {
       databaseServiceStub.restore();
+      done();
+    });
+
+    it("should call database.add once", (done: Function) => {
+      const scene: IThreeObject[] = [];
+
+      scenes3DService.addScene3D(scene, scene, "title");
+      expect(databaseService.calledOnce);
       done();
     });
   });
