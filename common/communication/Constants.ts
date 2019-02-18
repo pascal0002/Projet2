@@ -122,6 +122,7 @@ export abstract class Constants {
     static readonly MAX_TITLE_LENGTH: number = 15;
     static readonly VALID_BMP_HEIGHT: number = 480;
     static readonly VALID_BMP_WIDTH: number = 640;
+    static readonly VALID_FILE_EXTENSION: string = "bmp";
     static readonly VALID_BITS_PER_PIXEL: number = 24;
 
     // for the bitmap reader

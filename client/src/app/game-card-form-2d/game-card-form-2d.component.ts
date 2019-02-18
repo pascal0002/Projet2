@@ -16,7 +16,7 @@ export class GameCardForm2DComponent implements OnInit {
   private formInfo: IFormInfo2D;
 
   public constructor(private formValidatorService: FormValidator2dService,
-    private bitmapReaderService: BitmapReaderService) {
+                     private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {
       gameName: "",
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
