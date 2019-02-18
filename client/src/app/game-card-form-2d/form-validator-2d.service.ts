@@ -26,7 +26,7 @@ export class FormValidator2dService {
   }
 
   public validBMPExtension(extension: string): boolean {
-    return (extension.split(".").pop() === "bmp");
+    return (extension.split(".").pop() === ClientConstants.VALID_IMG_EXTENSION);
   }
 
   public async generateGameCard(formInfo: IFormInfo2D): Promise<GameCard> {

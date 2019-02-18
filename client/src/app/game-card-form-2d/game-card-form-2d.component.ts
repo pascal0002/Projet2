@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import {ClientConstants} from "../../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
@@ -11,6 +11,7 @@ import { FormValidator2dService } from "./form-validator-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardForm2DComponent implements OnInit {
+  @ViewChild("title") public titleInput: HTMLInputElement;
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo2D;
@@ -44,11 +45,11 @@ export class GameCardForm2DComponent implements OnInit {
   private clearInputFields(): void {
     const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
     const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    if (modifiedImageInput && orignialImageInput && gameName) {
+    // const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
+    if (modifiedImageInput && orignialImageInput ) {
       orignialImageInput.value = "";
       modifiedImageInput.value = "";
-      gameName.value = "";
+      this.titleInput.value = "";
     }
   }
 
@@ -113,8 +114,8 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public updateGameName(): void {
-    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    this.formInfo.gameName = gameNameInput.value;
+    // const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
+    this.formInfo.gameName = this.titleInput.value;
   }
 
   private clearFormInfo(): void {

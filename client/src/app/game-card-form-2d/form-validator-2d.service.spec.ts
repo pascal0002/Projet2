@@ -112,7 +112,7 @@ describe("FormValidator2dService", () => {
   it("should return the expected form info when using an httpPost", () => {
     // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-    const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
+    const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard2D"]);
     const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy, listOfGameServiceSpy);
     const formSent: IFormInfo2D = {
       gameName: "Test",
@@ -124,5 +124,8 @@ describe("FormValidator2dService", () => {
       expect(res.title).toEqual(formSent.gameName);
       expect(res.image).toEqual(formSent.originalImage.fileName);
     }).catch((err) => new ErrorHandler());
+
+    // expect(httpClientSpy.get.calls.count()).toBe(1, "one call");
+
   });
 });

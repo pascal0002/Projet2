@@ -118,6 +118,7 @@ export abstract class ClientConstants {
     static readonly VALID_BMP_HEIGHT: number = 480;
     static readonly VALID_BMP_WIDTH: number = 640;
     static readonly VALID_BITS_PER_PIXEL: number = 24;
+    static readonly VALID_IMG_EXTENSION: string = "bmp";
 
     // for the bitmap reader
     static readonly WIDTH_OFFSET: number = 18;
