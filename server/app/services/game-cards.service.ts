@@ -81,7 +81,7 @@ export class GameCardsService {
     return {
       title: gameCard.toJSON().title,
       image: gameCard.toJSON().image,
-      imageModified: gameCard.toJSON().modifiedImage,
+      imageModified: gameCard.toJSON().imageModified ? gameCard.toJSON().imageModified : "",
       bestTimeSolo: gameCard.toJSON().bestScoreSolo,
       bestTime1v1: gameCard.toJSON().bestScore1v1,
       dimension: dimension,

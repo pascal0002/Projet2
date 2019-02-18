@@ -63,16 +63,23 @@ export class DifferenceCounterService {
       return [];
     }
 
-    neighbors = (pixelIndex % ServerConstants.ACCEPTED_WIDTH === 0)
-      ? this.getRightSideNeighbor(pixelIndex)
-      : (pixelIndex % ServerConstants.ACCEPTED_WIDTH === ServerConstants.ACCEPTED_WIDTH - 1)
-        ? neighbors = this.getLeftSideNeighbor(pixelIndex)
-        : this.getBothSideNeighbor(pixelIndex);
+    // tslint:disable-next-line:prefer-conditional-expression
+    if (this.CheckPixelSide(pixelIndex, ServerConstants.LEFT_SIDE)) {
+      neighbors = this.getRightSideNeighbor(pixelIndex);
+    } else if (this.CheckPixelSide(pixelIndex, ServerConstants.RIGHT_SIDE)) {
+      neighbors = this.getLeftSideNeighbor(pixelIndex);
+    } else {
+      neighbors = this.getBothSideNeighbor(pixelIndex);
+    }
 
     neighbors = neighbors.filter((neighbor: number) => neighbor >= 0
     && neighbor < ServerConstants.ACCEPTED_HEIGHT * ServerConstants.ACCEPTED_WIDTH);
 
     return neighbors;
+  }
+
+  private CheckPixelSide(pixelIndex: number, anotherOne: number): boolean {
+    return pixelIndex % ServerConstants.ACCEPTED_WIDTH === anotherOne;
   }
 
   private getLeftSideNeighbor(pixelIndex: number): number[] {
