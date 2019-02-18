@@ -4,6 +4,7 @@
   width: 640px;
   height: 480px;
   margin-left: 50px;
+  user-select: none;
 }
 
 #game{

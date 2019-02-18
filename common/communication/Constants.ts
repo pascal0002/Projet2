@@ -52,7 +52,7 @@ export class ServerConstants {
     static readonly BOTTOM: number = -ServerConstants.ACCEPTED_WIDTH;
     static readonly BOTTOM_RIGHT: number = -ServerConstants.ACCEPTED_WIDTH + 1;
 
-    static readonly BLACK_PIXEL: IPixel = { red: 0, blue: 0, green: 0};
+    static readonly BLACK_PIXEL: IPixel = { red: 0, blue: 0, green: 0 };
 
     static readonly FOUR_BYTES: number = 4;
     static readonly TWO_BYTES: number = 2;
@@ -64,7 +64,7 @@ export class ServerConstants {
     static readonly PLANES: number = 1;
     static readonly EXTRA_BYTES: number = ServerConstants.ACCEPTED_WIDTH % ServerConstants.FOUR_BYTES;
     static readonly LINE_BYTE_SIZE: number = (ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL)
-                                             + ServerConstants.EXTRA_BYTES;
+        + ServerConstants.EXTRA_BYTES;
     static readonly RGB_SIZE: number = ServerConstants.ACCEPTED_HEIGHT * ServerConstants.LINE_BYTE_SIZE;
     static readonly FILE_SIZE: number = ServerConstants.RGB_SIZE + ServerConstants.OFFSET_SIZE;
 
@@ -101,9 +101,11 @@ export abstract class ClientConstants {
     static readonly SILVER_COLOR: string = "#C0C0C0";
     static readonly BRONZE_COLOR: string = "#CD7F32";
     static readonly MEDAL_COLOR_SCALE: string[] = [ClientConstants.GOLD_COLOR, ClientConstants.SILVER_COLOR,
-                                                   ClientConstants.BRONZE_COLOR, "white"];
+    ClientConstants.BRONZE_COLOR, "white"];
 
     static readonly SECOND_TO_MILLISECOND: number = 1000;
+    static readonly MINUTE_TO_SECOND: number = 60;
+    static readonly DIGIT_OVERFLOW: number = 10;
     static readonly PERCENT_FACTOR: number = 100;
 
     // for the image displayer
