@@ -101,7 +101,7 @@ header {
   border-radius:10px;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  transition: all ease-in-out 1s;
+  transition: all ease-in-out 0.5s;
 }
 
 #diff-counter .diff-progress:hover{

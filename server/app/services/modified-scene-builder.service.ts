@@ -51,10 +51,10 @@ export class ModifiedSceneBuilderService {
     private generateRandomModifications(allowedModifications: boolean[]): void {
         for (let i: number = 0; i < ServerConstants.MODIFICATION_NB; i++) {
             const modificationCode: number = Math.floor(this.getRandomNumber() * ServerConstants.MODIFICATION_TYPE_NB);
-            modificationCode === 0 && allowedModifications[0] === true ? this.deletionNb++ :
-            modificationCode === 1 && allowedModifications[1] === true ? this.colorChangeNb++ :
+            modificationCode === 0 && allowedModifications[0] ? this.deletionNb++ :
+            modificationCode === 1 && allowedModifications[1] ? this.colorChangeNb++ :
             modificationCode === (1 + 1) || modificationCode === (ServerConstants.MODIFICATION_TYPE_NB)
-            && allowedModifications[1 + 1] === true ? this.addNb++ : i--;
+            && allowedModifications[1 + 1] ? this.addNb++ : i--;
         }
     }
 

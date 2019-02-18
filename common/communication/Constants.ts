@@ -30,6 +30,9 @@ export class ServerConstants {
     static readonly ACCEPTED_WIDTH: number = 640;
     static readonly ACCEPTED_BIT_DEPTH: number = 24;
 
+    static readonly LEFT_SIDE: number = 0;
+    static readonly RIGHT_SIDE: number = 639;
+
     static readonly WHITE_PIXEL_PARAMETER: number = 255;
     static readonly BLACK_PIXEL_PARAMETER: number = 0;
     static readonly PIXEL_PARAMETERS_NB: number = 3;
