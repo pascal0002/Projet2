@@ -128,9 +128,10 @@ export class SceneService {
       gameName : gameName,
       imageData: imageData,
     };
-    for (const child of this.scene.children) {
-      this.scene.remove(child);
+    for (let i: number = this.scene.children.length - 1; i >= 0; i--) {
+      this.scene.remove(this.scene.children[i]);
     }
+    this.addLighting();
 
     return this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
     .toPromise();
