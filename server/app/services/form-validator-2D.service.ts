@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../common/communication/Constants";
+import {Constants} from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 
 @injectable()
@@ -16,8 +16,8 @@ export class FormValidator2DService {
 
     private validateGameName(gameName: string): boolean {
 
-        return (gameName.length >= ServerConstants.MINIMUM_NAME_LENGTH
-                && gameName.length <= ServerConstants.MAXIMUM_NAME_LENGTH);
+        return (gameName.length >= Constants.MINIMUM_NAME_LENGTH
+                && gameName.length <= Constants.MAXIMUM_NAME_LENGTH);
     }
 
     private validateImage(image: IBitmapImage): boolean {
@@ -31,12 +31,12 @@ export class FormValidator2DService {
 
     private validateImageDimensions(height: number, width: number): boolean {
 
-        return (height === ServerConstants.ACCEPTED_HEIGHT && width === ServerConstants.ACCEPTED_WIDTH);
+        return (height === Constants.ACCEPTED_HEIGHT && width === Constants.ACCEPTED_WIDTH);
     }
 
     private validateBitDepth(bitDepth: number): boolean {
 
-        return (bitDepth === ServerConstants.ACCEPTED_BIT_DEPTH);
+        return (bitDepth === Constants.ACCEPTED_BIT_DEPTH);
     }
 
     private validateImageExtension(extension: string): boolean {

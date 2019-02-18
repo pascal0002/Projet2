@@ -4,15 +4,15 @@ const DataView = require("buffer-dataview");
 import * as fs from "fs";
 import { injectable } from "inversify";
 import "reflect-metadata";
-import { ClientConstants, ServerConstants } from "../../../common/communication/Constants";
+import { Constants } from "../../../common/communication/Constants";
 
 @injectable()
 export class BitmapDecoder {
     public getPixels(path: string): number[] {
-        let buffer: Buffer = Buffer.alloc(ServerConstants.FILE_SIZE);
+        let buffer: Buffer = Buffer.alloc(Constants.FILE_SIZE);
         buffer = fs.readFileSync(process.cwd() + path);
         const dataView: DataView = new DataView(buffer);
-        const pixelsPosition: number = dataView.getUint32(ClientConstants.PIXEL_OFFSET, true);
+        const pixelsPosition: number = dataView.getUint32(Constants.PIXEL_OFFSET, true);
         const inversedPixels: number[] = Array.from(new Uint8Array(this.toArrayBuffer(buffer), pixelsPosition));
 
         return this.flipPixelsOnYAxis(inversedPixels);
@@ -20,9 +20,9 @@ export class BitmapDecoder {
 
     public flipPixelsOnYAxis(pixels: number[]): number[] {
         const flippedPixels: number[] = [];
-        for (let y: number = (ServerConstants.ACCEPTED_HEIGHT - 1); y >= 0; y--) {
-            for (let x: number = 0; x < ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL; x++) {
-                flippedPixels.push(pixels[y * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL + x]);
+        for (let y: number = (Constants.ACCEPTED_HEIGHT - 1); y >= 0; y--) {
+            for (let x: number = 0; x < Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL; x++) {
+                flippedPixels.push(pixels[y * Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL + x]);
             }
         }
 
