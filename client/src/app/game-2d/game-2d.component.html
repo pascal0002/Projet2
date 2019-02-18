@@ -1,8 +1,8 @@
 <div id="game">
-    <div class="game-panel">
-        <img src="{{gameCard.image}}" (click)="sendClickInfo($event)">
-    </div>
-    <div class="game-panel">
-        <img src="{{modifiedImgPath}}" (click)="sendClickInfo($event)">
-    </div>
+  <div class="game-panel">
+    <img src="{{gameCard.image}}" (click)="sendClickInfo($event)" draggable="false">
+  </div>
+  <div class="game-panel">
+    <img src="{{modifiedImgPath}}" (click)="sendClickInfo($event)" draggable="false">
+  </div>
 </div>
