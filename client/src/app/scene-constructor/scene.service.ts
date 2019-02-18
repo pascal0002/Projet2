@@ -17,9 +17,7 @@ export class SceneService {
   public camera: THREE.PerspectiveCamera;
   public glRenderer: THREE.WebGLRenderer;
 
-  public constructor(private http: HttpClient) {
-    this.scene = new THREE.Scene();
-  }
+  public constructor(private http: HttpClient) {}
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeScene(canvas);
@@ -27,6 +25,7 @@ export class SceneService {
   }
 
   private makeScene(canvas: HTMLCanvasElement): void {
+    this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(ClientConstants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
                                               1, ClientConstants.CAMERA_RENDER_DISTANCE);
