@@ -79,7 +79,6 @@ describe("DifferenceValidatorService", () => {
     // Used to mock the http call
     // tslint:disable-next-line:no-any
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-    // Dont forget to test this Pascal!
     const service: DifferenceValidatorService = new DifferenceValidatorService(httpClientSpy);
     const clickInfoSent: IClickInfo = {
       yPos: 0,

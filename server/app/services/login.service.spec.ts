@@ -46,7 +46,6 @@ describe("loginService", () => {
             done();
         });
 
-
         it("should call add from database service if the username is valid ", (done: Mocha.Done) => {
             const serviceStub: any = sinonts.stubObject(service, ["validateUsername"]);
             serviceStub.validateUsername.returns(true);
@@ -121,7 +120,6 @@ describe("loginService", () => {
         });
     });
 
-    
     describe("Is username unique", () => {
 
         beforeEach((done: Mocha.Done) => {

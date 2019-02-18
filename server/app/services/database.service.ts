@@ -16,9 +16,7 @@ export class DatabaseService {
     }
 
     public async getAll(model: mongoose.Model<mongoose.Document>): Promise<mongoose.Document[]> {
-        return model.find((err: Error) => {
-            if (err) { console.error(err); }
-        });
+        return model.find();
     }
 
     public add(item: mongoose.Document): void {
