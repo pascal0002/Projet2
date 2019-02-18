@@ -18,9 +18,9 @@ export class ModifiedSceneBuilderService {
         this.addNb = 0;
     }
 
-    public createModifications(scene: IThreeObject[]): IThreeObject[] {
+    public createModifications(scene: IThreeObject[], allowedModifications: boolean[]): IThreeObject[] {
 
-        this.chooseModifications();
+        this.chooseModifications(allowedModifications);
 
         for (let i: number = 0; i < this.deletionNb; i++) {
             this.deleteObject(scene);
@@ -38,12 +38,23 @@ export class ModifiedSceneBuilderService {
         return scene;
     }
 
-    private chooseModifications(): void {
+    private chooseModifications(allowedModifications: boolean[]): void {
+        JSON.stringify(allowedModifications) === JSON.stringify([true, false, false]) ?
+        this.deletionNb += ServerConstants.MODIFICATION_NB :
+        JSON.stringify(allowedModifications) === JSON.stringify([false, true, false]) ?
+        this.colorChangeNb += ServerConstants.MODIFICATION_NB :
+        JSON.stringify(allowedModifications) === JSON.stringify([false, false, true]) ?
+        this.addNb += ServerConstants.MODIFICATION_NB :
+        this.generateRandomModifications(allowedModifications);
+    }
+
+    private generateRandomModifications(allowedModifications: boolean[]): void {
         for (let i: number = 0; i < ServerConstants.MODIFICATION_NB; i++) {
             const modificationCode: number = Math.floor(this.getRandomNumber() * ServerConstants.MODIFICATION_TYPE_NB);
-            modificationCode === 0 ? this.deletionNb++ :
-            modificationCode === 1 ? this.colorChangeNb++ :
-            this.addNb++;
+            modificationCode === 0 && allowedModifications[0] === true ? this.deletionNb++ :
+            modificationCode === 1 && allowedModifications[1] === true ? this.colorChangeNb++ :
+            modificationCode === (1 + 1) || modificationCode === (ServerConstants.MODIFICATION_TYPE_NB)
+            && allowedModifications[1 + 1] === true ? this.addNb++ : i--;
         }
     }
 
