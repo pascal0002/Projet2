@@ -46,12 +46,11 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)).deep.equal(comparativeObjects);
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])).deep.equal(comparativeObjects);
             done();
         });
 
         it("should delete 7 objects from the array", (done: Mocha.Done) => {
-            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
             modifiedSceneBuilderServiceStub.getRandomNumber.returns(0);
             for (let i: number = 0; i < 7; i++) {
                 objects.push({
@@ -60,7 +59,7 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)).deep.equal([]);
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])).deep.equal([]);
             done();
         });
 
@@ -76,7 +75,66 @@ describe("modified-scene-builder-service", () => {
                 });
             }
 
-            expect(modifiedSceneBuilderServiceStub.createModifications(objects)[4].color).to.equal("rgb(255,255,255)");
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, true, true])[4].color).to.equal("rgb(255,255,255)");
+            done();
+        });
+
+        it("should add objects and change objects color only when specified", (done: Mocha.Done) => {
+            for (let i: number = 0; i < 7; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderService.createModifications(objects, [true, false, false])).deep.equal([]);
+            done();
+        });
+
+        it("should add objects and delete objects only when specified", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
+
+            for (let i: number = 0; i < 7; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [0, 0, 0], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderService.createModifications(objects, [false, true, false])[4].color)
+            .to.equal("rgb(255,255,255)");
+            done();
+        });
+
+        it("should delete objects and change objects color only when specified", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            scenesParameterGeneratorServiceStub.checkCollisions.returns(false);
+
+            const comparativeObjects: IThreeObject[] = [];
+            for (let i: number = 0; i < 7; i++) {
+                comparativeObjects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderService.createModifications(objects, [false, false, true])).deep.equal(comparativeObjects);
+            done();
+        });
+
+        it("should redo an iteration when the random function makes the disabled modification", (done: Mocha.Done) => {
+            scenesParameterGeneratorServiceStub.getRandomNumber.returns(0);
+            modifiedSceneBuilderServiceStub.getRandomNumber.onFirstCall().returns(0.5);
+            modifiedSceneBuilderServiceStub.getRandomNumber.returns(0);
+
+            for (let i: number = 0; i < 7; i++) {
+                objects.push({
+                    color: "rgb(0,0,0)", diameter: 5, height: 5,
+                    position: [-100, -50, -25], orientation: [0, 0, 0], type: 0,
+                });
+            }
+
+            expect(modifiedSceneBuilderServiceStub.createModifications(objects, [true, false, true])).deep.equal([]);
             done();
         });
     });

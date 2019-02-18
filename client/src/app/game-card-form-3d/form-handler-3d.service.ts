@@ -40,7 +40,7 @@ export class FormHandler3DService {
     this.http.post<boolean>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
       .toPromise()
       .then(
-        (isOk) => {/** */},
+        (isOk) => {/**/},
         (isNotOk) => {alert(isNotOk.error); },
       )
       .catch(

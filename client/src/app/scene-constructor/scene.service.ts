@@ -34,7 +34,6 @@ export class SceneService {
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
-
     return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 

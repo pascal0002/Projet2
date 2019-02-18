@@ -30,9 +30,10 @@ export class SceneController {
         });
 
         router.post("/objects/", (req: Request, res: Response, next: NextFunction) => {
-            const originalScene: IThreeObject[] = this.originalSceneBuilderService.createObjects();
+            const originalScene: IThreeObject[] = this.originalSceneBuilderService.createObjects(req.body.numberOfObjects);
             const modifiedScene: IThreeObject[] = this.modifiedSceneBuilderService.createModifications(
-                                                  JSON.parse(JSON.stringify(originalScene)));
+                                                  JSON.parse(JSON.stringify(originalScene)),
+                                                  [req.body.deleteObjects, req.body.modifyObjects, req.body.addObjects]);
             this.scene3DService.addScene3D(originalScene, modifiedScene, req.body.gameName);
             res.json(originalScene);
         });
