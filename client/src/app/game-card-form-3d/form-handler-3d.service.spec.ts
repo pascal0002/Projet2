@@ -12,7 +12,7 @@ import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call
 
-let httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
 const sceneService: SceneService = new SceneService(httpClientSpy);
 const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
 const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy, sceneService);
@@ -34,7 +34,9 @@ describe("FormHandler3DService", () => {
   });
 
   it("the HttpClient to send the 3D info should only be called once", () => {
-    httpClientSpy = jasmine.createSpyObj("HttpClient", ["post"]);
+    const httpSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+    const formValidator: FormHandler3DService = new FormHandler3DService(httpSpy, listOfGameServiceSpy, sceneService);
+
     const formSent: IFormInfo3D = {
       gameName: "test1",
       objectType: "Theme1",
@@ -44,13 +46,12 @@ describe("FormHandler3DService", () => {
       deleteObjects: false,
     };
 
-    httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.send3DFormInfo(formSent);
-    expect(httpClientSpy.post.calls.count()).toBe(1);
+    httpSpy.post.and.returnValue(TestHelper.asyncData(formSent));
+    formValidator.send3DFormInfo(formSent);
+    expect(httpSpy.post.calls.count()).toBe(1);
   });
 
   it("the HttpClient to create 3D objects should only be called once", () => {
-    httpClientSpy = jasmine.createSpyObj("HttpClient", ["post"]);
     const formSent: IFormInfo3D = {
       gameName: "test1",
       objectType: "Theme1",
