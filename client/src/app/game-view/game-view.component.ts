@@ -18,7 +18,7 @@ export class GameViewComponent implements OnInit, AfterViewInit {
   private medalTimeProgressBarView: CircleProgressComponent;
 
   public readonly magnifierIconWidth: number = 35;
-  public readonly magnifierProgressOffset: number = 40;
+  public readonly magnifierProgressOffset: number = 42;
   public readonly magnifierProgress1V1Offset: number = 42;
 
   public constructor(public gameViewService: GameViewService) {
