@@ -6,7 +6,6 @@ import { AppModule } from "../app.module";
 import { DifferenceValidatorService } from "./difference-validator.service";
 
 // tslint:disable-next-line:no-any
-// const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
 
 describe("DifferenceValidatorService", () => {
   beforeEach(() => {

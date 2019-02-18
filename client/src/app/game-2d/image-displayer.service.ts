@@ -49,6 +49,7 @@ export class ImageDisplayerService {
     }
 
     public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
+        // In canvas, the pixels are written from top to bottom, while they are stored from bottom up on the server.
         const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
         const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
         pixelsToChange.forEach((pixelPos: number) => {
@@ -70,12 +71,4 @@ export class ImageDisplayerService {
 
         return flippedPixels;
     }
-
-    // private getCorrectPosInPixels(posInPixels: number): number {
-    //     const yPos: number = posInPixels % (ServerConstants.BYTES_PER_PIXEL * ServerConstants.ACCEPTED_WIDTH);
-    //     const xPos: number = (posInPixels - (yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL))
-    //                           / ServerConstants.BYTES_PER_PIXEL;
-    //     const correctYPos: number =
-    // }
-
 }
