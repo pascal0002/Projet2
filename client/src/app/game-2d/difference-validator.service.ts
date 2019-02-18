@@ -11,7 +11,6 @@ import { GameCard } from "../../../../common/communication/game-card";
 export class DifferenceValidatorService {
 
   public game2d: GameCard;
-  public diffFoundCount: number;
 
   public constructor(private http: HttpClient) {
   }
@@ -37,14 +36,6 @@ export class DifferenceValidatorService {
     return differenceFilePath.split("/").pop() as string;
   }
 
-  public getModifiedImagePath(): string {
-    const orginalFilePath: string = this.game2d.image;
-    const imageName: string = (orginalFilePath.substr(0, orginalFilePath.length - Constants.EXTENSION_LENGTH) + "Modified.bmp")
-      .split("/").pop() as string;
-
-    return Constants.MODIFIED_IMAGE_FOLDER + imageName;
-  }
-
   public startNewGame(): void {
     const differenceImage: IDifferenceImage = { name: this.getDifferenceImageName() };
     this.http.post<IDifferenceImage>(`${Constants.SERVER_BASE_URL}api/differences/new_game`, differenceImage).toPromise();
@@ -59,13 +50,13 @@ export class DifferenceValidatorService {
 
   public playVictorySound(): void {
     const audio: HTMLAudioElement = new Audio();
-    audio.src = "../../../assets/Sounds/victorySound.mp3";
+    audio.src = Constants.SOUND_FOLDER + Constants.VICTORY_SOUND;
     audio.play();
   }
 
   public playFailSound(): void {
     const audio: HTMLAudioElement = new Audio();
-    audio.src = "../../../assets/Sounds/failSound.mp3";
+    audio.src = Constants.SOUND_FOLDER + Constants.FAIL_SOUND;
     audio.play();
   }
 }

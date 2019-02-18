@@ -146,6 +146,12 @@ export abstract class Constants {
         "Océan"
     ];
 
+    // for the sounds played when a difference is found
+    static readonly SOUND_FOLDER: string = "../../../assets/Sounds/";
+    static readonly VICTORY_SOUND: string = "victorySound.mp3"; 
+    static readonly FAIL_SOUND: string = "failSound.mp3";
+
+
     static readonly CAMERA_FIELD_OF_VIEW: number = 80;
     static readonly CAMERA_RENDER_DISTANCE: number = 500;
     static readonly Z_CAMERA_POSITION: number = 90;

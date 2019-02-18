@@ -42,22 +42,22 @@ export class ImageDisplayerService {
     ctx.putImageData(imageData, 0, 0);
   }
 
+  public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
+        // In canvas, the pixels are written from top to bottom, while they are stored from bottom up on the server.
+        const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
+        const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
+        pixelsToChange.forEach((pixelPos: number) => {
+            flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.RED_COLOR];
+            flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.GREEN_COLOR];
+            flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + ClientConstants.BLUE_COLOR];
+        });
+        this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
+        this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
+    }
   public getFolderLocation(path: string, isTheOriginalImage: boolean): string {
     return (isTheOriginalImage) ?
       Constants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string
       : Constants.PUBLIC_MODIF_FOLDER_PATH + path.split("/").pop() as string;
-  }
-
-  public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
-    const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
-    const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
-    pixelsToChange.forEach((pixelPos: number) => {
-      flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + Constants.RED_COLOR];
-      flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + Constants.GREEN_COLOR];
-      flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR] = flippedOriginalPixels[pixelPos + Constants.BLUE_COLOR];
-    });
-    this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
-    this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
   }
 
   private flipPixelsOnYAxis(pixels: number[]): number[] {
@@ -70,12 +70,4 @@ export class ImageDisplayerService {
 
     return flippedPixels;
   }
-
-  // private getCorrectPosInPixels(posInPixels: number): number {
-  //     const yPos: number = posInPixels % (Constants.BYTES_PER_PIXEL * Constants.ACCEPTED_WIDTH);
-  //     const xPos: number = (posInPixels - (yPos * Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL))
-  //                           / Constants.BYTES_PER_PIXEL;
-  //     const correctYPos: number =
-  // }
-
 }
