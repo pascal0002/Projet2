@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
-import { ClientConstants, Mode } from "../../../../common/communication/Constants";
+import { Constants, Mode } from "../../../../common/communication/Constants";
 import { GameViewService } from "./game-view.service";
 @Component({
   selector: "app-game-view",
@@ -32,8 +32,8 @@ export class GameViewComponent implements OnInit, AfterViewInit {
       obtenir une médaille
     */
     this.medalTimeProgressBarView.percent = 0;
-    this.changeTimeProgressBarBackgroundColor(ClientConstants.GOLD_COLOR);
-    this.changeTimeProgressBarOuterColor(ClientConstants.SILVER_COLOR);
+    this.changeTimeProgressBarBackgroundColor(Constants.GOLD_COLOR);
+    this.changeTimeProgressBarOuterColor(Constants.SILVER_COLOR);
   }
 
   public ngAfterViewInit(): void {
@@ -61,6 +61,6 @@ export class GameViewComponent implements OnInit, AfterViewInit {
 
     return this.magnifierProgressOffset + ((this.gameViewService.mode === Mode.SOLO)
       ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.gameViewService.mode === Mode.SOLO)
-        ? this.gameViewService.diffFoundCount : ClientConstants.DIFFERENCE_NB));
+        ? this.gameViewService.diffFoundCount : Constants.DIFFERENCE_NB));
   }
 }

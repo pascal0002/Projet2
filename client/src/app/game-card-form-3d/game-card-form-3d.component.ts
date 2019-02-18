@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
-import { ClientConstants } from "../../../../common/communication/Constants";
+import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
@@ -15,29 +15,29 @@ export class GameCardForm3DComponent implements OnInit {
   public objectTypes: string[];
 
   public constructor(private formHandler3DService: FormHandler3DService) {
-    this.objectTypes = ClientConstants.OBJECT_TYPES;
+    this.objectTypes = Constants.OBJECT_TYPES;
   }
 
   public ngOnInit(): void {
     this.form3DGroup = new FormGroup({
       cardName: new FormControl("", [
         Validators.required,
-        Validators.minLength(ClientConstants.MIN_TITLE_LENGTH),
-        Validators.maxLength(ClientConstants.MAX_TITLE_LENGTH),
+        Validators.minLength(Constants.MIN_TITLE_LENGTH),
+        Validators.maxLength(Constants.MAX_TITLE_LENGTH),
       ]),
       optionMenu: new FormControl("", [
         Validators.required,
       ]),
       numberOfObjects: new FormControl("", [
         Validators.required,
-        Validators.max(ClientConstants.MAX_NUMBER_OF_OBJECTS),
-        Validators.min(ClientConstants.MIN_NUMBER_OF_OBJECTS),
+        Validators.max(Constants.MAX_NUMBER_OF_OBJECTS),
+        Validators.min(Constants.MIN_NUMBER_OF_OBJECTS),
       ]),
       checkBoxGroup: new FormGroup({
         addCheckBox: new FormControl(false),
         deleteCheckBox: new FormControl(false),
         modifyCheckBox: new FormControl(false),
-      },                           this.requireCheckboxesToBeCheckedValidator()),
+      }, this.requireCheckboxesToBeCheckedValidator()),
 
     });
   }

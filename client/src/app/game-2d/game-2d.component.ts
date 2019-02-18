@@ -11,15 +11,13 @@ import { ImageDisplayerService } from "./image-displayer.service";
 })
 export class Game2DComponent implements OnInit {
   public gameCard: GameCard;
-  public modifiedImgPath: string;
   public modifCtx: CanvasRenderingContext2D;
 
   public constructor(public gameViewService: GameViewService,
-    private differenceValidatorService: DifferenceValidatorService,
-    private imageDisplayerService: ImageDisplayerService) {
+                     private differenceValidatorService: DifferenceValidatorService,
+                     private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
-    this.modifiedImgPath = this.differenceValidatorService.getModifiedImagePath();
   }
 
   public ngOnInit(): void {
@@ -32,7 +30,7 @@ export class Game2DComponent implements OnInit {
     this.modifCtx = modifCanvas.getContext("2d") as CanvasRenderingContext2D;
 
     this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
-    this.drawImageInCanvas(this.modifCtx, this.modifiedImgPath, false);
+    this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false);
   }
 
   public drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
