@@ -37,7 +37,7 @@ export class SceneService {
     return this.http.post<IThreeObject[]>(`${ClientConstants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
   }
 
-  private async delay(ms: number) {
+  private async delay(ms: number): Promise<{}> {
     return new Promise( (resolve) => setTimeout(resolve, ms) );
   }
 
@@ -128,6 +128,9 @@ export class SceneService {
       gameName : gameName,
       imageData: imageData,
     };
+    for (const child of this.scene.children) {
+      this.scene.remove(child);
+    }
 
     return this.http.post<GameCard>(`${ClientConstants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
     .toPromise();

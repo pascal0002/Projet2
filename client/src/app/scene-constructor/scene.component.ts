@@ -9,7 +9,7 @@ import { SceneService } from "./scene.service";
 
 export class SceneComponent implements OnInit {
 
-  private get canvas(): HTMLCanvasElement {
+  public get canvas(): HTMLCanvasElement {
     return this.canvasRef.nativeElement;
   }
 
