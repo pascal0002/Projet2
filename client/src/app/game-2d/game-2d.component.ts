@@ -31,28 +31,31 @@ export class Game2DComponent implements OnInit {
     const modifCanvas: HTMLCanvasElement = document.getElementById("modifCanvas") as HTMLCanvasElement;
     this.modifCtx = modifCanvas.getContext("2d") as CanvasRenderingContext2D;
 
-    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(this.gameCard.image, true))
-      .then((res) => {
-        this.imageDisplayerService.originalImagePixels = res;
-        this.imageDisplayerService.drawPixelsInCanvas(ogCtx, res);
-      });
+    this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
+    this.drawImageInCanvas(this.modifCtx, this.modifiedImgPath, false);
+  }
 
-    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(this.modifiedImgPath, false))
-      .then((res) => {
-        this.imageDisplayerService.differenceImagePixels = res;
-        this.imageDisplayerService.drawPixelsInCanvas(this.modifCtx, res);
-      });
+  public drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
+    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
+    .then((res) => {
+      (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
+      this.imageDisplayerService.modifiedImagePixels = res;
+      this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
+    });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY))
       .then((res) => {
-        this.imageDisplayerService.eraseDifference(this.modifCtx, res);
-        this.differenceValidatorService.playSound();
+        if (res.length !== 0) {
+          this.imageDisplayerService.eraseDifference(this.modifCtx, res);
+          this.differenceValidatorService.playVictorySound();
+        } else {
+          this.differenceValidatorService.playFailSound();
+        }
       },
       )
       .catch(
         (err) => { console.error("erreur :", err); });
   }
-
 }

@@ -9,7 +9,7 @@ import { IImageLocation } from "../../../../common/communication/ImageLocation";
 
 export class ImageDisplayerService {
     public originalImagePixels: number[];
-    public differenceImagePixels: number[];
+    public modifiedImagePixels: number[];
 
     public constructor(private http: HttpClient) {
     }
@@ -18,7 +18,7 @@ export class ImageDisplayerService {
         const imgLocation: IImageLocation = { location: imageLocation};
 
         return new Promise<number[]>((resolve: Function, res: Function) =>
-            resolve(this.http.post<number[]>(ClientConstants.SERVER_BASE_URL + "api/differences/bitmap_encoder", imgLocation)
+            resolve(this.http.post<number[]>(ClientConstants.SERVER_BASE_URL + "api/differences/image_pixels", imgLocation)
                 .toPromise()));
     }
 
@@ -49,15 +49,15 @@ export class ImageDisplayerService {
     }
 
     public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
-        const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.differenceImagePixels);
+        const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
         const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
         pixelsToChange.forEach((pixelPos: number) => {
             flippedModifiedPixels[pixelPos + ClientConstants.RED_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.RED_COLOR];
             flippedModifiedPixels[pixelPos + ClientConstants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.GREEN_COLOR];
             flippedModifiedPixels[pixelPos + ClientConstants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + ClientConstants.BLUE_COLOR];
         });
-        this.differenceImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
-        this.drawPixelsInCanvas(modifCtx, this.differenceImagePixels);
+        this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
+        this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
     }
 
     private flipPixelsOnYAxis(pixels: number[]): number[] {
