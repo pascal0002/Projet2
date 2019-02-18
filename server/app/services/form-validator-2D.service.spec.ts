@@ -105,7 +105,7 @@ describe("form-validator-service-2D", () => {
         });
     });
 
-    describe("validateImageExtenstion", () => {
+    describe("validateImageExtension", () => {
         it("should return true if extension is bmp", (done: Function) => {
             expect(formValidatorService["validateImageExtension"]("bmp")).equal(true);
             done();
