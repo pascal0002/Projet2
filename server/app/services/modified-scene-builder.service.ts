@@ -26,13 +26,13 @@ export class ModifiedSceneBuilderService {
             this.deleteObject(scene);
         }
 
-        const objectsChanged: number[] = [];
+        const positionsChanged: number[] = [];
         for (let i: number = 0; i < this.colorChangeNb; i++) {
-            this.changeColor(scene, objectsChanged);
+            this.changeColor(scene, positionsChanged);
         }
 
         for (let i: number = 0; i < this.addNb; i++) {
-            this.addObject(scene);
+            this.scenesParameterGeneratorService.addObject(scene);
         }
 
         return scene;
@@ -55,33 +55,25 @@ export class ModifiedSceneBuilderService {
         scene.splice(positionToDelete, 1);
     }
 
-    private changeColor(scene: IThreeObject[], objectsChanged: number[]): void {
-        let objectToChange: number = Math.floor(this.getRandomNumber() * scene.length);
-        if (objectToChange === scene.length) {
-            objectToChange--;
+    private changeColor(scene: IThreeObject[], positionsChanged: number[]): void {
+        let positionToChange: number = Math.floor(this.getRandomNumber() * scene.length);
+        if (positionToChange === scene.length) {
+            positionToChange--;
         }
-        objectToChange = this.checkObjectsChanged(objectsChanged, objectToChange, scene.length);
-        scene[objectToChange].color = this.scenesParameterGeneratorService.makeRandomColors();
-        objectsChanged.push(objectToChange);
+        positionToChange = this.checkPositionsChanged(positionsChanged, positionToChange, scene.length);
+        scene[positionToChange].color = this.scenesParameterGeneratorService.makeRandomColors();
+        positionsChanged.push(positionToChange);
     }
 
-    private checkObjectsChanged (objectsChanged: number[], objectToChange: number, length: number): number {
-        while (objectsChanged.find((position: number): boolean => position === objectToChange) !== undefined) {
-            objectToChange = Math.floor(this.getRandomNumber() * length);
-            if (objectToChange === length) {
-                objectToChange--;
+    private checkPositionsChanged (positionsChanged: number[], positionToChange: number, length: number): number {
+        while (positionsChanged.find((position: number): boolean => position === positionToChange) !== undefined) {
+            positionToChange = Math.floor(this.getRandomNumber() * length);
+            if (positionToChange === length) {
+                positionToChange--;
             }
         }
 
-        return objectToChange;
-    }
-
-    private addObject(scene: IThreeObject[]): void {
-        let object: IThreeObject = this.scenesParameterGeneratorService.createObject();
-        while (this.scenesParameterGeneratorService.checkCollisions(object, scene)) {
-            object = this.scenesParameterGeneratorService.createObject();
-        }
-        scene.push(object);
+        return positionToChange;
     }
 
     private getRandomNumber(): number {

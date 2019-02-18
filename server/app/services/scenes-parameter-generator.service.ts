@@ -7,7 +7,15 @@ export class ScenesParameterGeneratorService {
 
     public constructor() {/**/ }
 
-    public createObject(): IThreeObject {
+    public addObject(scene: IThreeObject[]): void {
+        let object: IThreeObject = this.createObject();
+        while (this.checkCollisions(object, scene)) {
+            object = this.createObject();
+        }
+        scene.push(object);
+    }
+
+    private createObject(): IThreeObject {
         const object: IThreeObject = { color: "", diameter: 0, height: 0, position: [], orientation: [], type: -1 };
         object.color = this.makeRandomColors();
         object.diameter = (this.getRandomNumber() + ServerConstants.HALF_VALUE) * ServerConstants.REFERENCE_SIZE;
@@ -47,7 +55,7 @@ export class ScenesParameterGeneratorService {
         return [xOrientation, yOrientation, zOrientation];
     }
 
-    public checkCollisions(newObject: IThreeObject, existingObjects: IThreeObject[]): boolean {
+    private checkCollisions(newObject: IThreeObject, existingObjects: IThreeObject[]): boolean {
         for (const obj of existingObjects) {
             const distance: number = Math.sqrt(Math.pow(newObject.position[0] - obj.position[0], ServerConstants.SQUARE_FACTOR)
                                      + Math.pow(newObject.position[1] - obj.position[1], ServerConstants.SQUARE_FACTOR)
