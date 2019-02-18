@@ -58,15 +58,17 @@ export class GameCardForm3DComponent implements OnInit {
     };
   }
 
-  private sendFormInfo(formInfo: IFormInfo3D): void {
-    this.closeForm();
-    this.formHandler3DService.send3DFormInfo(formInfo);
-  }
-
   public submit(): void {
     const formInfo: IFormInfo3D = this.get3DFormInfo();
-    this.sendFormInfo(formInfo);
-    this.formHandler3DService.createObjects(formInfo);
+    this.closeForm();
+    this.formHandler3DService.send3DFormInfo(formInfo)
+    .then(
+      (isOk) => { if (isOk) {this.formHandler3DService.createObjects(formInfo); }},
+      (isNotOk) => { alert(isNotOk.error); },
+    )
+    .catch(
+      (err) => { console.error("erreur :", err); },
+    );
   }
 
   public resetInputValues(): void {

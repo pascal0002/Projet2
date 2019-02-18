@@ -12,7 +12,7 @@ import { SceneService } from "../scene-constructor/scene.service";
 export class FormHandler3DService {
 
   public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService,
-    private sceneService: SceneService) { /**/ }
+                     private sceneService: SceneService) { }
 
   public getValidatorFunction(): ValidatorFn {
     return (formGroup: FormGroup) => {
@@ -36,16 +36,8 @@ export class FormHandler3DService {
     };
   }
 
-  public send3DFormInfo(formInfo: IFormInfo3D): void {
-    this.http.post<boolean>(`${Constants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo)
-      .toPromise()
-      .then(
-        (isOk) => {/**/ },
-        (isNotOk) => { alert(isNotOk.error); },
-      )
-      .catch(
-        (err) => { console.error("erreur :", err); },
-      );
+  public async send3DFormInfo(formInfo: IFormInfo3D): Promise<boolean> {
+    return this.http.post<boolean>(`${Constants.SERVER_BASE_URL}api/game_cards/info_3D_game`, formInfo).toPromise()
   }
 
   public createObjects(formInfo: IFormInfo3D): void {
