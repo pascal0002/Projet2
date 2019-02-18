@@ -33,6 +33,10 @@ class MockDatabaseService {
     public async countDocuments(model: mongoose.Model<mongoose.Document>, condition: Object): Promise<number> {
         return Promise.resolve(0);
     }
+
+    public async updateOne(model: mongoose.Model<mongoose.Document>, condition: Object, modification: Object): Promise<number> {
+      return Promise.resolve(0);
+  }
 }
 
 const databaseService: any = new MockDatabaseService();
