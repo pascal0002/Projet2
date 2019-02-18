@@ -9,6 +9,9 @@
     padding-top: 15px;
 }
 
+#adminView{
+    margin-top: 200px;
+}
 .createCardButton{
     max-width: 300px;
     height: 40px;

@@ -11,7 +11,7 @@
     z-index:1;
     background-color: rgb(255, 255, 255);
     position: fixed;
-    display: inline-block;
+    display: none;
 }
 
 #title {
