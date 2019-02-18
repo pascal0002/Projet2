@@ -63,9 +63,9 @@ export class DifferenceCounterService {
     }
 
     // tslint:disable-next-line:prefer-conditional-expression
-    if (this.CheckPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
+    if (this.checkPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
       neighbors = this.getRightSideNeighbor(pixelIndex);
-    } else if (this.CheckPixelSide(pixelIndex, Constants.RIGHT_SIDE)) {
+    } else if (this.checkPixelSide(pixelIndex, Constants.RIGHT_SIDE)) {
       neighbors = this.getLeftSideNeighbor(pixelIndex);
     } else {
       neighbors = this.getBothSideNeighbor(pixelIndex);
@@ -77,7 +77,7 @@ export class DifferenceCounterService {
     return neighbors;
   }
 
-  private CheckPixelSide(pixelIndex: number, side: number): boolean {
+  private checkPixelSide(pixelIndex: number, side: number): boolean {
     return pixelIndex % Constants.ACCEPTED_WIDTH === side;
   }
 
