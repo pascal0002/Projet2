@@ -80,7 +80,8 @@ describe("game-cards-service", () => {
     });
 
     it("should call database.updateOne once", (done: Function) => {
-      scenes3DService.update("title", "data");
+      scenes3DService.update("title", "data")
+      .catch((err: Error) => { console.error(err); });
       expect(databaseService.calledOnce);
       done();
     });
