@@ -29,8 +29,7 @@ export class DifferenceCounterService {
     let numberOfDifference: number = 0;
     let pixelIndex: number = 0;
     pixelMap.value.forEach((pixel: [number, boolean] ) => {
-      if ( pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER
-        && pixel[Constants.IS_VISITED] === false ) {
+      if ( pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER && !pixel[Constants.IS_VISITED]) {
         numberOfDifference++;
         pixel[Constants.IS_VISITED] = true;
         this.findZone(pixelMap, pixelIndex);
@@ -65,9 +64,9 @@ export class DifferenceCounterService {
 
     // Dylan approuve ce disable de TSLint 
     // tslint:disable-next-line:prefer-conditional-expression
-    if (this.CheckPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
+    if (this.checkPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
       neighbors = this.getRightSideNeighbor(pixelIndex);
-    } else if (this.CheckPixelSide(pixelIndex, Constants.RIGHT_SIDE)) {
+    } else if (this.checkPixelSide(pixelIndex, Constants.RIGHT_SIDE)) {
       neighbors = this.getLeftSideNeighbor(pixelIndex);
     } else {
       neighbors = this.getBothSideNeighbor(pixelIndex);
@@ -79,8 +78,8 @@ export class DifferenceCounterService {
     return neighbors;
   }
 
-  private CheckPixelSide(pixelIndex: number, anotherOne: number): boolean {
-    return pixelIndex % Constants.ACCEPTED_WIDTH === anotherOne;
+  private checkPixelSide(pixelIndex: number, side: number): boolean {
+    return pixelIndex % Constants.ACCEPTED_WIDTH === side;
   }
 
   private getLeftSideNeighbor(pixelIndex: number): number[] {
