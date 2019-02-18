@@ -2,7 +2,7 @@ import { formatDate } from "@angular/common";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { timer, Observable, Subscription } from "rxjs";
-import { ClientConstants, Dimension, Mode } from "../../../../common/communication/Constants";
+import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
@@ -51,7 +51,7 @@ export class GameViewService {
   }
 
   public startTimer(): void {
-    const source: Observable<number> = timer(0, ClientConstants.SECOND_TO_MILLISECOND / this.timerResolution);
+    const source: Observable<number> = timer(0, Constants.SECOND_TO_MILLISECOND / this.timerResolution);
     source.subscribe((val: number) => {
       this.timer = val / this.timerResolution;
       this.timerOutput = this.timeToString(this.timer);
@@ -59,13 +59,13 @@ export class GameViewService {
   }
 
   public startBestScoreTimer(): Subscription {
-    const source: Observable<number> = timer(0, ClientConstants.SECOND_TO_MILLISECOND / this.timerResolution);
+    const source: Observable<number> = timer(0, Constants.SECOND_TO_MILLISECOND / this.timerResolution);
 
     return source.subscribe((val: number) => {
       this.bestScoreTimer = val / this.timerResolution;
-      this.timerEL.percent = this.bestScoreTimer / this.targetTime * ClientConstants.PERCENT_FACTOR;
+      this.timerEL.percent = this.bestScoreTimer / this.targetTime * Constants.PERCENT_FACTOR;
 
-      if (this.timerEL.percent >= ClientConstants.PERCENT_FACTOR) {
+      if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
       }
       this.timerEL["applyOptions"]();
@@ -79,9 +79,9 @@ export class GameViewService {
     /*Supprime le callback du timer de médaille*/
     this.bestScoreTimerLoopSub.unsubscribe();
 
-    if (this.cycle < ClientConstants.NUMBER_MEDAL) {
-      this.timerEL.backgroundColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle];
-      this.timerEL.outerStrokeColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle + 1];
+    if (this.cycle < Constants.NUMBER_MEDAL) {
+      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];
+      this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.cycle + 1];
 
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
       this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time - this.timer;
@@ -89,7 +89,7 @@ export class GameViewService {
       this.bestScoreTimerLoopSub = this.startBestScoreTimer();
     } else {
       /*Pas de médaille :( On arrête de suivre le temps*/
-      this.timerEL.backgroundColor = ClientConstants.MEDAL_COLOR_SCALE[this.cycle];
+      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];
     }
   }
 
@@ -98,10 +98,10 @@ export class GameViewService {
   }
 
   public timeToString(time: number): string {
-    const seconds: number = Math.floor(time % ClientConstants.MINUTE_TO_SECOND);
-    const minutes: number = Math.floor(time / ClientConstants.MINUTE_TO_SECOND);
+    const seconds: number = Math.floor(time % Constants.MINUTE_TO_SECOND);
+    const minutes: number = Math.floor(time / Constants.MINUTE_TO_SECOND);
 
-    return (minutes < ClientConstants.DIGIT_OVERFLOW ? "0" : "") +
-      minutes + ":" + (seconds < ClientConstants.DIGIT_OVERFLOW ? "0" : "") + seconds;
+    return (minutes < Constants.DIGIT_OVERFLOW ? "0" : "") +
+      minutes + ":" + (seconds < Constants.DIGIT_OVERFLOW ? "0" : "") + seconds;
   }
 }

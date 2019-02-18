@@ -1,10 +1,8 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
-// import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { FormControl, FormGroup } from "@angular/forms";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-// import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { SceneService } from "../scene-constructor/scene.service";

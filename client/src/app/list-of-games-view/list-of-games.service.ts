@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ClientConstants } from "../../../../common/communication/Constants";
+import { Constants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 @Injectable({
   providedIn: "root",
@@ -21,27 +21,27 @@ export class ListOfGamesService {
   }
 
   private getGamesLists2D(): void {
-    this.http.get<GameCard[]>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/2D_cards`)
+    this.http.get<GameCard[]>(`${Constants.SERVER_BASE_URL}api/game_cards/2D_cards`)
       .subscribe(
-        (gameCards) => { this.listes[ClientConstants.LIST_2D] = gameCards; },
+        (gameCards) => { this.listes[Constants.LIST_2D] = gameCards; },
         (err) => { console.error("erreur :", err); },
       );
   }
 
   private getGamesLists3D(): void {
-    this.http.get<GameCard[]>(`${ClientConstants.SERVER_BASE_URL}api/game_cards/3D_cards`)
+    this.http.get<GameCard[]>(`${Constants.SERVER_BASE_URL}api/game_cards/3D_cards`)
       .subscribe(
-        (gameCards) => { this.listes[ClientConstants.LIST_3D] = gameCards; },
+        (gameCards) => { this.listes[Constants.LIST_3D] = gameCards; },
         (err) => { console.error("erreur :", err); },
       );
   }
 
   public addGameCard2D(gamecard: GameCard): void {
-    this.listes[ClientConstants.LIST_2D].push(gamecard);
+    this.listes[Constants.LIST_2D].push(gamecard);
   }
 
   public addGameCard3D(gamecard: GameCard): void {
-    this.listes[ClientConstants.LIST_3D].push(gamecard);
+    this.listes[Constants.LIST_3D].push(gamecard);
   }
 
   public getBestTimeSolo(gameCard: GameCard, position: number): string {
@@ -59,13 +59,13 @@ export class ListOfGamesService {
   }
 
   private convertTimeToMSSFormat(time: number): string {
-    const seconde: number = time % ClientConstants.SECOND_PER_MINUTE;
-    const minute: number = (time - seconde) / ClientConstants.SECOND_PER_MINUTE;
+    const seconde: number = time % Constants.SECOND_PER_MINUTE;
+    const minute: number = (time - seconde) / Constants.SECOND_PER_MINUTE;
 
     return `${minute}:${this.totwoDigitString(seconde)}`;
   }
 
   private totwoDigitString(initialNumber: number): string {
-    return ("0" + initialNumber).slice(ClientConstants.TWO_DIGIT);
+    return ("0" + initialNumber).slice(Constants.TWO_DIGIT);
   }
 }

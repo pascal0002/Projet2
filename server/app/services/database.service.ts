@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import * as mongoose from "mongoose";
 import "reflect-metadata";
-import {ServerConstants} from "../../../common/communication/Constants";
+import {Constants} from "../../../common/communication/Constants";
 
 @injectable()
 export class DatabaseService {
@@ -11,7 +11,7 @@ export class DatabaseService {
     }
 
     private connect(): void {
-        mongoose.connect(ServerConstants.DB_URL, { useNewUrlParser: true })
+        mongoose.connect(Constants.DB_URL, { useNewUrlParser: true })
         .catch((err: Error) => console.error(err));
     }
 
