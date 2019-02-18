@@ -50,23 +50,23 @@ export class DifferenceValidatorService {
     this.http.post<IDifferenceImage>(`${ClientConstants.SERVER_BASE_URL}api/differences/new_game`, differenceImage).toPromise();
   }
 
-  public async sendClickInfo(mousePos: IClickInfo): Promise<IClickInfo> {
-    return new Promise<IClickInfo>(() => {
-      this.http.post<number[]>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
-      .toPromise()
-      .then(
-        (res) => {
-          // console.log(res);
-          this.playSound();
-        },
-      )
-      .catch(
-        (err) => {console.error("erreur :", err); },
-      );
+  public async sendClickInfo(mousePos: IClickInfo): Promise<number[]> {
+    return new Promise<number[]>((resolve: Function) => {
+      resolve(this.http.post<number[]>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
+      .toPromise());
+      // .then(
+      //   (res) => {
+      //     // console.log(res);
+      //     this.playSound();
+      //   },
+      // )
+      // .catch(
+      //   (err) => {console.error("erreur :", err); },
+      // );
     });
   }
 
-  private playSound(): void {
+  public playSound(): void {
     const audio: HTMLAudioElement = new Audio();
     audio.src = "../../../assets/sound.mp3";
     audio.play();

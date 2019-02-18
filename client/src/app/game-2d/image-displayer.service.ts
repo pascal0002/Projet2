@@ -8,6 +8,8 @@ import { IImageLocation } from "../../../../common/communication/ImageLocation";
 })
 
 export class ImageDisplayerService {
+    public originalImagePixels: number[];
+    public differenceImagePixels: number[];
 
     public constructor(private http: HttpClient) {
     }
@@ -45,4 +47,35 @@ export class ImageDisplayerService {
         ServerConstants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string
         : ServerConstants.PUBLIC_MODIF_FOLDER_PATH + path.split("/").pop() as string;
     }
+
+    public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
+        const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.differenceImagePixels);
+        const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
+        pixelsToChange.forEach((pixelPos: number) => {
+            flippedModifiedPixels[pixelPos + ClientConstants.RED_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.RED_COLOR];
+            flippedModifiedPixels[pixelPos + ClientConstants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + ClientConstants.GREEN_COLOR];
+            flippedModifiedPixels[pixelPos + ClientConstants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + ClientConstants.BLUE_COLOR];
+        });
+        this.differenceImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
+        this.drawPixelsInCanvas(modifCtx, this.differenceImagePixels);
+    }
+
+    private flipPixelsOnYAxis(pixels: number[]): number[] {
+        const flippedPixels: number[] = [];
+        for (let y: number = (ServerConstants.ACCEPTED_HEIGHT - 1); y >= 0; y--) {
+            for (let x: number = 0; x < ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL; x++) {
+                flippedPixels.push(pixels[y * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL + x]);
+            }
+        }
+
+        return flippedPixels;
+    }
+
+    // private getCorrectPosInPixels(posInPixels: number): number {
+    //     const yPos: number = posInPixels % (ServerConstants.BYTES_PER_PIXEL * ServerConstants.ACCEPTED_WIDTH);
+    //     const xPos: number = (posInPixels - (yPos * ServerConstants.ACCEPTED_WIDTH * ServerConstants.BYTES_PER_PIXEL))
+    //                           / ServerConstants.BYTES_PER_PIXEL;
+    //     const correctYPos: number =
+    // }
+
 }
