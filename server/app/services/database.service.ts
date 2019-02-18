@@ -38,4 +38,9 @@ export class DatabaseService {
                            Promise<mongoose.Document | null> {
         return model.findOneAndUpdate(condition, modification, {new: true});
     }
+
+    public async getOne(model: mongoose.Model<mongoose.Document>, condition: Object):
+                           Promise<mongoose.Document | null> {
+        return model.findOne(condition);
+    }
 }
