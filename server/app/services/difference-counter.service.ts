@@ -77,8 +77,8 @@ export class DifferenceCounterService {
     return neighbors;
   }
 
-  private CheckPixelSide(pixelIndex: number, anotherOne: number): boolean {
-    return pixelIndex % Constants.ACCEPTED_WIDTH === anotherOne;
+  private CheckPixelSide(pixelIndex: number, side: number): boolean {
+    return pixelIndex % Constants.ACCEPTED_WIDTH === side;
   }
 
   private getLeftSideNeighbor(pixelIndex: number): number[] {
