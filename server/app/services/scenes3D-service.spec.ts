@@ -62,4 +62,18 @@ describe("game-cards-service", () => {
     });
   });
 
+  describe("update", () => {
+
+    beforeEach((done: Mocha.Done) => {
+      scenes3DService = new Scene3DService(databaseService);
+      databaseServiceStub = sinon.stub(databaseService, "updateOne");
+      done();
+    });
+
+    afterEach((done: Mocha.Done) => {
+      databaseServiceStub.restore();
+      done();
+    });
+  });
+
 });
