@@ -29,8 +29,7 @@ export class DifferenceCounterService {
     let numberOfDifference: number = 0;
     let pixelIndex: number = 0;
     pixelMap.value.forEach((pixel: [number, boolean] ) => {
-      if ( pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER
-        && pixel[Constants.IS_VISITED] === false ) {
+      if ( pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER && !pixel[Constants.IS_VISITED]) {
         numberOfDifference++;
         pixel[Constants.IS_VISITED] = true;
         this.findZone(pixelMap, pixelIndex);
