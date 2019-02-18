@@ -54,21 +54,18 @@ export class DifferenceValidatorService {
     return new Promise<number[]>((resolve: Function) => {
       resolve(this.http.post<number[]>(`${ClientConstants.SERVER_BASE_URL}api/differences/difference_validator`, mousePos)
       .toPromise());
-      // .then(
-      //   (res) => {
-      //     // console.log(res);
-      //     this.playSound();
-      //   },
-      // )
-      // .catch(
-      //   (err) => {console.error("erreur :", err); },
-      // );
     });
   }
 
-  public playSound(): void {
+  public playVictorySound(): void {
     const audio: HTMLAudioElement = new Audio();
-    audio.src = "../../../assets/sound.mp3";
+    audio.src = "../../../assets/Sounds/victorySound.mp3";
+    audio.play();
+  }
+
+  public playFailSound(): void {
+    const audio: HTMLAudioElement = new Audio();
+    audio.src = "../../../assets/Sounds/failSound.mp3";
     audio.play();
   }
 }
