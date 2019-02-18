@@ -39,7 +39,8 @@ export class Game2DComponent implements OnInit {
         (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
-      });
+      })
+      .catch((err: Error) => {console.error(err); });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
