@@ -1,6 +1,6 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 import { SceneService } from "../scene-constructor/scene.service";
-import { Game3dGeneratorService } from "./game-3d-generator.service";
+// import { Game3dGeneratorService } from "./game-3d-generator.service";
 
 @Component({
   selector: "app-game-3d",
@@ -21,7 +21,7 @@ export class Game3DComponent implements OnInit {
   @ViewChild("rightCanvas") public rightCanvasRef: ElementRef;
 
   public constructor(private ngZone: NgZone, private sceneService: SceneService,
-                     private game3dGeneratorService: Game3dGeneratorService) {/**/}
+                     /*private game3dGeneratorService: Game3dGeneratorService*/) {/**/}
 
   public ngOnInit(): void {
     this.sceneService.createOriginalCanvas(this.leftCanvas);
