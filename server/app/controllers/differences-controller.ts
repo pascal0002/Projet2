@@ -31,6 +31,7 @@ export class DifferencesController {
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
                                                      ServerConstants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
                                                      differenceImage.name);
+            res.send(true);
         });
 
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
