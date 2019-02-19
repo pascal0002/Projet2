@@ -23,6 +23,6 @@ export class SceneComponent implements OnInit {
   }
 
   public render(): void {
-    this.sceneService.render(this.canvas);
+    this.sceneService.renderLeft(this.canvas);
   }
 }

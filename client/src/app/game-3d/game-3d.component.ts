@@ -22,13 +22,16 @@ export class Game3DComponent implements OnInit {
 
   public ngOnInit(): void {
     this.sceneService.createOriginalCanvas(this.leftCanvas);
-    this.ngZone.runOutsideAngular(() => this.render());
-    this.sceneService.createOriginalCanvas(this.rightCanvas);
-    this.ngZone.runOutsideAngular(() => this.render());
+    this.ngZone.runOutsideAngular(() => this.renderLeft());
+    this.sceneService.createModifiedCanvas(this.rightCanvas);
+    this.ngZone.runOutsideAngular(() => this.renderRight());
   }
 
-  public render(): void {
-    this.sceneService.render(this.leftCanvas);
-    this.sceneService.render(this.rightCanvas);
+  public renderLeft(): void {
+    this.sceneService.renderLeft(this.leftCanvas);
+  }
+
+  public renderRight(): void {
+    this.sceneService.renderRight(this.rightCanvas);
   }
 }
