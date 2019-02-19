@@ -21,7 +21,6 @@ export class SceneService {
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeOriginalScene(canvas);
-    this.game3dGeneratorService.generateObjectsLeft();
     this.addLighting(this.originalScene);
   }
 
@@ -36,7 +35,6 @@ export class SceneService {
 
   public createModifiedCanvas(rightCanvas: HTMLCanvasElement): void {
     this.makeModifiedScene(rightCanvas);
-    this.game3dGeneratorService.generateObjectsRight();
     this.addLighting(this.modifiedScene);
   }
 
@@ -44,6 +42,10 @@ export class SceneService {
     this.modifiedScene = new THREE.Scene();
     this.modifiedScene.background = new THREE.Color("skyblue");
     this.glRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true});
+  }
+
+  public generateAllObjects(): void {
+    this.game3dGeneratorService.generateObjects(this.originalScene, this.modifiedScene);
   }
 
   private addLighting(scene: THREE.Scene): void {

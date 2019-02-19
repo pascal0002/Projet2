@@ -3,9 +3,11 @@ import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { Constants, Dimension } from "../../../common/communication/Constants";
 import { IThreeObject } from "../../../common/communication/ThreeObject";
+import { DatabaseService } from "../services/database.service";
 import { GameCardsService } from "../services/game-cards.service";
 import { ModifiedSceneBuilderService } from "../services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "../services/original-scene-builder.service";
+import { scene3D } from "../services/scene3D-schema";
 import { Scene3DService } from "../services/scenes3D-service";
 import Types from "../types";
 
@@ -15,16 +17,17 @@ export class SceneController {
     public constructor(@inject(Types.OriginalSceneBuilderService) private originalSceneBuilderService: OriginalSceneBuilderService,
                        @inject(Types.ModifiedSceneBuilderService) private modifiedSceneBuilderService: ModifiedSceneBuilderService,
                        @inject(Types.Scene3DService) private scene3DService: Scene3DService,
-                       @inject(Types.GameCardsService) private gameCardsService: GameCardsService) { }
+                       @inject(Types.GameCardsService) private gameCardsService: GameCardsService,
+                       @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
     public get router(): Router {
         const router: Router = Router();
         router.post("/gameCard3D/imageData", (req: Request, res: Response, next: NextFunction) => {
             this.scene3DService.update(req.body.gameName, req.body.imageData)
                 .then((document: mongoose.Document | null) => {
-                    (document) ?
-                    res.json(this.gameCardsService.convertDBGameCard(document, Dimension.THREE_DIMENSION)) :
-                    res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
+                    document ?
+                        res.json(this.gameCardsService.convertDBGameCard(document, Dimension.THREE_DIMENSION)) :
+                        res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
                 })
                 .catch((err: Error) => { console.error(err); });
         });
@@ -36,6 +39,14 @@ export class SceneController {
                 [req.body.deleteObjects, req.body.modifyObjects, req.body.addObjects]);
             this.scene3DService.addScene3D(originalScene, modifiedScene, req.body.gameName);
             res.json(originalScene);
+        });
+
+        router.post("/scenes/", (req: Request, res: Response, next: NextFunction) => {
+            this.databaseService.getOne(scene3D, {title : req.body})
+            .then((scenes: mongoose.Document) => {
+                // res.json(this.gameCardsService.addGameCard3D(req.body));
+            })
+            .catch((err: Error) => console.error(err));
         });
 
         return router;

@@ -25,6 +25,7 @@ export class Game3DComponent implements OnInit {
     this.ngZone.runOutsideAngular(() => this.renderLeft());
     this.sceneService.createModifiedCanvas(this.rightCanvas);
     this.ngZone.runOutsideAngular(() => this.renderRight());
+    this.sceneService.generateAllObjects();
   }
 
   public renderLeft(): void {
