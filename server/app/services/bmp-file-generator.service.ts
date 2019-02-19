@@ -29,10 +29,6 @@ export class BmpFileGenerator {
         fs.writeFileSync(process.cwd() + "/public/differenceImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
-    public fileExists(path: string): boolean {
-        return (fs.existsSync(process.cwd() + path));
-    }
-
     public createTemporaryFile(imgPixels: number[], path: string, fileName: string): void {
             const tempImg: IBitmapImage = {
                 fileName: fileName,

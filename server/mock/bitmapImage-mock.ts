@@ -142,3 +142,10 @@ export const firstLineBlackPixels: number[] = [];
 for (let i: number = 0; i < 921600; i++) {
     (i < 1920) ? firstLineBlackPixels.push(0) : firstLineBlackPixels.push(255);
 }
+
+export const twoLineBlackPixels: number[] = [];
+for (let i: number = 0; i < 921600; i++) {
+    (i < 1920) ? twoLineBlackPixels.push(0) : twoLineBlackPixels.push(255);
+}
+// Separate the single black line
+twoLineBlackPixels[300] = 255;

@@ -16,8 +16,8 @@ export class DifferenceIdentificator2DService {
         const pixelAtPos: IPixel = this.getPixelAtPos(clickPosition, imgOfDifferencePixels);
 
         return (pixelAtPos.red === Constants.BLACK_PIXEL_PARAMETER &&
-            pixelAtPos.blue === Constants.BLACK_PIXEL_PARAMETER &&
-            pixelAtPos.green === Constants.BLACK_PIXEL_PARAMETER);
+                pixelAtPos.blue === Constants.BLACK_PIXEL_PARAMETER &&
+                pixelAtPos.green === Constants.BLACK_PIXEL_PARAMETER);
     }
 
     private getPixelAtPos(clickPosition: IClickInfo, pixelArray: number[]): IPixel {
@@ -76,23 +76,22 @@ export class DifferenceIdentificator2DService {
     }
 
     private getPixelNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
-        let allPixelNeighbours: number[] = [];
-
+        let correctPixelNeighbours: number[] = [];
         // Dylan approuve ce disable de TSLint
         // tslint:disable-next-line:prefer-conditional-expression
         if (this.checkPixelSide(clickedPixelPos, Constants.LEFT_SIDE)) {
-            allPixelNeighbours = this.getRightSideNeighbor(clickedPixelPos, imageWidth);
+            correctPixelNeighbours = this.getRightSideNeighbours(clickedPixelPos, imageWidth);
         } else if (this.checkPixelSide(clickedPixelPos, ((Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL)
                                                            -  Constants.BYTES_PER_PIXEL))) {
-            allPixelNeighbours = this.getLeftSideNeighbor(clickedPixelPos, imageWidth);
+            correctPixelNeighbours = this.getLeftSideNeighbours(clickedPixelPos, imageWidth);
         } else {
-            allPixelNeighbours = this.getBothSideNeighbor(clickedPixelPos, imageWidth);
+            correctPixelNeighbours = this.getBothSideNeighbours(clickedPixelPos, imageWidth);
         }
 
-        return allPixelNeighbours;
+        return correctPixelNeighbours;
     }
 
-    private getBothSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
+    private getBothSideNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
         const allPixelNeighbours: number[] = [];
 
         allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
@@ -107,28 +106,28 @@ export class DifferenceIdentificator2DService {
         return allPixelNeighbours;
     }
 
-    private getLeftSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
-        const allPixelNeighbours: number[] = [];
+    private getLeftSideNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
+        const leftPixelNeighbours: number[] = [];
 
-        allPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
-        allPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+        leftPixelNeighbours.push(this.getBottomLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        leftPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        leftPixelNeighbours.push(this.getLeftPixelNeighbour(clickedPixelPos));
+        leftPixelNeighbours.push(this.getTopLeftPixelNeighbour(clickedPixelPos, imageWidth));
+        leftPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
 
-        return allPixelNeighbours;
+        return leftPixelNeighbours;
     }
 
-    private getRightSideNeighbor(clickedPixelPos: number, imageWidth: number): number[] {
-        const allPixelNeighbours: number[] = [];
+    private getRightSideNeighbours(clickedPixelPos: number, imageWidth: number): number[] {
+        const rightPixelNeighbours: number[] = [];
 
-        allPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
-        allPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
-        allPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
+        rightPixelNeighbours.push(this.getBottomPixelNeighbour(clickedPixelPos, imageWidth));
+        rightPixelNeighbours.push(this.getBottomRightPixelNeighbour(clickedPixelPos, imageWidth));
+        rightPixelNeighbours.push(this.getRightPixelNeighbour(clickedPixelPos));
+        rightPixelNeighbours.push(this.getTopRightPixelNeighbour(clickedPixelPos, imageWidth));
+        rightPixelNeighbours.push(this.getTopPixelNeighbour(clickedPixelPos, imageWidth));
 
-        return allPixelNeighbours;
+        return rightPixelNeighbours;
     }
 
     private checkPixelSide(pixelIndex: number, side: number): boolean {
