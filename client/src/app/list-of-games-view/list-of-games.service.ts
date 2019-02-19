@@ -70,7 +70,7 @@ export class ListOfGamesService {
   }
 
   public delete(gameCard: GameCard): void {
-    this.http.post<GameCard[]>(`${Constants.SERVER_BASE_URL}api/game_cards/delete`, {title : gameCard.title})
+    this.http.post<void>(`${Constants.SERVER_BASE_URL}api/game_cards/delete`, gameCard)
       .toPromise()
       .catch((err) => { console.error("erreur :", err); });
   }
