@@ -13,7 +13,7 @@ export class Game3dGeneratorService {
   public constructor(private http: HttpClient) {/**/}
 
   public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene): void {
-    const test: IScene = {title: "test"};
+    const test: IScene = {title: "test couleur"};
     this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, test).toPromise()
     .then(
       (scenes) => { this.generateScene(scenes[0], originalScene);
