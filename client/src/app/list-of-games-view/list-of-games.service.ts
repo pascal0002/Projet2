@@ -69,5 +69,9 @@ export class ListOfGamesService {
     return ("0" + initialNumber).slice(Constants.TWO_DIGIT);
   }
 
-  public delete(gameCard: GameCard): void{}
+  public delete(gameCard: GameCard): void{
+    this.http.post<GameCard[]>(`${Constants.SERVER_BASE_URL}api/game_cards/delete`, {title : gameCard.title})
+      .toPromise()
+      .catch((err) => { console.error("erreur :", err); });
+  }
 }
