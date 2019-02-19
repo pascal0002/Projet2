@@ -23,7 +23,7 @@ export class Game3DComponent implements OnInit {
 
   public constructor(private ngZone: NgZone, private sceneService: SceneService,
                      private gameViewService: GameViewService) {
-    this.gameCard = gameViewService.gamecard;
+    this.gameCard = this.gameViewService.gamecard;
   }
 
   public ngOnInit(): void {
