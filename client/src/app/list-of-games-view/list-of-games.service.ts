@@ -68,4 +68,6 @@ export class ListOfGamesService {
   private totwoDigitString(initialNumber: number): string {
     return ("0" + initialNumber).slice(Constants.TWO_DIGIT);
   }
+
+  public delete(gameCard: GameCard): void{}
 }

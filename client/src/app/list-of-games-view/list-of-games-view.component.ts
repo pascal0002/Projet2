@@ -28,4 +28,8 @@ export class ListOfGamesViewComponent {
     this.gameViewService.gamecard = gameCard;
     this.gameViewService.mode = Mode.ONE_VS_ONE;
   }
+
+  public delete(gameCard: GameCard): void {
+    this.listOfGamesService.delete(gameCard);
+  }
 }

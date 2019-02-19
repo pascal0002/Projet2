@@ -47,7 +47,7 @@
               <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
               <ng-template #thenBlock>
                 <div>
-                  <div class="adminGameCardButton button">Supprimer</div>
+                  <div (click)="delete(gameCard)" class="adminGameCardButton button">Supprimer</div>
                 </div>
                 <div>
                   <div class="adminGameCardButton button">Réinitialiser</div>
