@@ -43,8 +43,11 @@ export class SceneController {
 
         router.post("/scenes/", (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getOne(scene3D, {title : req.body})
-            .then((scenes: mongoose.Document) => {
-                // res.json(this.gameCardsService.addGameCard3D(req.body));
+            .then((scenesBD: mongoose.Document) => {
+                const scenes: IThreeObject[][] = [];
+                scenes.push(scenesBD.toJSON().originalScene);
+                scenes.push(scenesBD.toJSON().modifiedScene);
+                res.json(this.gameCardsService.addGameCard3D(req.body));
             })
             .catch((err: Error) => console.error(err));
         });

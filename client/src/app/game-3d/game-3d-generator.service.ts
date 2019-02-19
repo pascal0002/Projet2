@@ -12,11 +12,11 @@ export class Game3dGeneratorService {
   public constructor(private http: HttpClient) {/**/}
 
   public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene): void {
-    this.http.post<any>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, "test").toPromise()
+    this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, "test").toPromise()
     .then(
       (scenes) => { console.log(scenes); },
-      // (scenes) => { this.generateScene(scenes[1], originalScene); },
-      // (scenes) => { this.generateScene(scenes[1 + 1], modifiedScene); },
+      // (scenes) => { this.generateScene(scenes[0], originalScene); },
+      // (scenes) => { this.generateScene(scenes[1], modifiedScene); },
     )
     .catch(
       (err) => { console.error("erreur :", err); },
