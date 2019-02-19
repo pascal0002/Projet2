@@ -15,7 +15,8 @@ export class SceneService {
   public originalScene: THREE.Scene;
   public modifiedScene: THREE.Scene;
   public camera: THREE.PerspectiveCamera;
-  public glRenderer: THREE.WebGLRenderer;
+  public originalGlRenderer: THREE.WebGLRenderer;
+  public modifiedGlRenderer: THREE.WebGLRenderer;
 
   public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) {}
 
@@ -30,7 +31,7 @@ export class SceneService {
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
                                               1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
-    this.glRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
+    this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
   }
 
   public createModifiedCanvas(rightCanvas: HTMLCanvasElement): void {
@@ -41,7 +42,7 @@ export class SceneService {
   private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
     this.modifiedScene = new THREE.Scene();
     this.modifiedScene.background = new THREE.Color("skyblue");
-    this.glRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true});
+    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true});
   }
 
   public generateAllObjects(title: string): void {
@@ -59,19 +60,19 @@ export class SceneService {
   }
 
   public renderLeft(canvas: HTMLCanvasElement): void {
-    this.glRenderer.setSize(window.innerWidth, window.innerHeight);
+    this.originalGlRenderer.setSize(window.innerWidth, window.innerHeight);
     requestAnimationFrame(() => {
       this.renderLeft(canvas);
     });
-    this.glRenderer.render(this.originalScene, this.camera);
+    this.originalGlRenderer.render(this.originalScene, this.camera);
   }
 
   public renderRight(canvas: HTMLCanvasElement): void {
-    this.glRenderer.setSize(window.innerWidth, window.innerHeight);
+    this.modifiedGlRenderer.setSize(window.innerWidth, window.innerHeight);
     requestAnimationFrame(() => {
       this.renderRight(canvas);
     });
-    this.glRenderer.render(this.modifiedScene, this.camera.clone());
+    this.modifiedGlRenderer.render(this.modifiedScene, this.camera.clone());
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
@@ -146,7 +147,7 @@ export class SceneService {
   }
 
   private async saveAsImage(gameName: string): Promise<GameCard> {
-    const imageData: string = this.glRenderer.domElement.toDataURL("image/jpeg");
+    const imageData: string = this.originalGlRenderer.domElement.toDataURL("image/jpeg");
     const snapshot: ISnapshot = {
       gameName: gameName,
       imageData: imageData,
