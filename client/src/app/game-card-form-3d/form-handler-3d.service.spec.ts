@@ -45,7 +45,8 @@ describe("FormHandler3DService", () => {
     };
 
     httpSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidator.send3DFormInfo(formSent);
+    formValidator.send3DFormInfo(formSent)
+    .catch((err: Error) => {console.error(err); });
     expect(httpSpy.post.calls.count()).toBe(1);
   });
 

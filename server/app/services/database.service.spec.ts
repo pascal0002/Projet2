@@ -75,4 +75,15 @@ describe("DatabaseService", () => {
         done();
     });
 
+    it("getOne, findOne function is call once ", (done: Mocha.Done) => {
+        const modelStub: sinon.SinonStub = sinon.stub(test, "findOne");
+        databaseService.getOne(test, {})
+        .catch((err: Error) => console.error(err));
+
+        expect(modelStub.calledOnce);
+
+        modelStub.restore();
+        done();
+    });
+
 });

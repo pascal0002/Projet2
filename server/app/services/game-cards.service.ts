@@ -2,7 +2,7 @@ import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { Dimension, Constants } from "../../../common/communication/Constants";
+import { Constants, Dimension } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
 import { GameCard } from "../../../common/communication/game-card";
