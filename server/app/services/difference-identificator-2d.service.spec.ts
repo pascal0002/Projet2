@@ -178,7 +178,7 @@ describe("DifferenceIdentificator2DService", () => {
         done();
     });
 
-    it("should erase the black line at height 0px of the pixel array", (done: Mocha.Done) => {
+    it("should erase the black line clicked at height 0px of the pixel array", (done: Mocha.Done) => {
         const mockClickInfo: IClickInfo = {
             xPos: 234,
             yPos: 0,
