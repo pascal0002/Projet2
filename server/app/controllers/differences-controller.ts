@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import { IClickInfo } from "../../../common/communication/ClickInfo";
 import { Constants } from "../../../common/communication/Constants";
 import { IDifferenceImage } from "../../../common/communication/DifferenceImage";
-import { firstThreeLineBlackPixels } from "../../mock/bitmapImage-mock";
 import { BitmapDecoder } from "../services/bitmap-decoder.service";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { DifferenceIdentificator2DService } from "../services/difference-identificator-2d.service";
