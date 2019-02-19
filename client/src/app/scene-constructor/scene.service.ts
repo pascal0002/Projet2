@@ -44,8 +44,8 @@ export class SceneService {
     this.glRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true});
   }
 
-  public generateAllObjects(): void {
-    this.game3dGeneratorService.generateObjects(this.originalScene, this.modifiedScene);
+  public generateAllObjects(title: string): void {
+    this.game3dGeneratorService.generateObjects(this.originalScene, this.modifiedScene, title);
   }
 
   private addLighting(scene: THREE.Scene): void {

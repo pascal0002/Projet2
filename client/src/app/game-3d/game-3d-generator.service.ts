@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import * as THREE from "three";
 import { Constants } from "../../../../common/communication/Constants";
-import { IScene } from "../../../../common/communication/Scene";
 import { IThreeObject } from "../../../../common/communication/ThreeObject";
 
 @Injectable({
@@ -12,9 +11,9 @@ export class Game3dGeneratorService {
 
   public constructor(private http: HttpClient) {/**/}
 
-  public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene): void {
-    const test: IScene = {title: "test"};
-    this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, test).toPromise()
+  public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene, title: string): void {
+    console.log(title);
+    this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, {title: title}).toPromise()
     .then(
       (scenes) => { this.generateScene(scenes[0], originalScene);
                     this.generateScene(scenes[1], modifiedScene); },
