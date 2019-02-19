@@ -43,8 +43,4 @@ export class DatabaseService {
                            Promise<mongoose.Document | null> {
         return model.findOne(condition);
     }
-
-    public deleteOne(model: mongoose.Model<mongoose.Document>, condition: Object): void {
-        model.deleteOne(condition);
-    }
 }
