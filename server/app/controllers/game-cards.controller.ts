@@ -77,6 +77,14 @@ export class GameCardsController {
             .catch((err: Error) => console.error(err));
         });
 
+        router.post("/delete", (req: Request, res: Response, next: NextFunction) => {
+            if (req.body.dimension === Dimension.TWO_DIMENSION) {
+                this.databaseService.deleteOne(gameCard2D, req.body.title);
+            } else {
+                this.databaseService.deleteOne(gameCard3D, req.body.title);
+            }
+        });
+
         return router;
     }
 }
