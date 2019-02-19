@@ -1,10 +1,7 @@
 import os
-import sys
 import re
-from enum import Enum
-from datetime import *
 from config import *
-
+import argparse
 
 TEMP_STAT_FILE = "./__out__"
 BIG_COMMIT_TRESHOLD = 1000
@@ -29,14 +26,11 @@ class MergeCommit(Commit):
         super().__init__()
         self.branch = "Undefined"
 
-
-
 class StatAuthor:
     def __init__(self):
         self.inserted = 0
         self.deleted = 0
         self.commits = 0
-
 
 def intersection(l1,l2):
     result = []
@@ -46,8 +40,6 @@ def intersection(l1,l2):
     return result
 
 def cleanLine(line):
-    line = line.replace("["," [ ")
-    line = line.replace("]"," ] ")
     line = line.replace("("," (")
     line = line.replace(")",") ")
     line = line.replace(":"," : ")
@@ -103,11 +95,18 @@ def findTask(list):
 
 
 def findAuthors(list):
+    if args.authors:
+        target_authors = args.authors
+    elif 'authors_id' in config:
+        target_authors = config['authors_id']
+    else:
+        target_authors = []
+
     authors = []
-    if 'authors_id' in config:
-        for a in config['authors_id']:
-            if a in list:
-                authors.append(a)
+    for a in target_authors:
+        if a in list:
+            authors.append(a)
+
     return authors
 
 def skipRemaining(stats):
@@ -123,24 +122,30 @@ def processError(stats,line)  :
 
 
 def accept(commit):
-    begin_date = config['period'].get('begin',date(1,1,1))
-    end_date = config['period'].get('end',date(9999,1,1))
+    begin_date = date(*args.begin) if args.begin else config['period'].get('begin',date(1,1,1))
+    end_date = date(*args.end) if args.end else config['period'].get('end',date(9999,1,1))
 
     if commit.date < begin_date:
         return False
     if end_date < commit.date:
         return False
 
-    if 'authors' in config and commit.commiter not in config['authors']:
-        return False
-
-    if 'authors_id' in config:
-        if intersection(commit.authors,config['authors_id']) == []:
+    if args.authors:
+        if intersection(commit.authors, args.authors) == []:
             return False
+    else:
+        if 'authors' in config and commit.commiter not in config['authors']:
+            if 'authors_id' in config:
+                if intersection(commit.authors,config['authors_id']) == []:
+                    return False
 
     if type(commit) is RegularCommit:
-        if 'tasks' in config and commit.task not in config['tasks']:
-            return False
+        if args.tasks:
+            if commit.task not in args.tasks:
+                return False
+        else:
+            if 'tasks' in config and commit.task not in config['tasks']:
+                return False
     else:
         if not config['merge']:
             return False
@@ -281,6 +286,25 @@ def statsPerAuthor(commits):
 
 
 ###### MAIN  ######
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--begin", nargs = 3, type = int,
+                    metavar=("ANNEE","MOIS","JOUR"),
+                    help = "Date de début de la période à couvrir")
+parser.add_argument("--end", nargs = 3, type = int,
+                    metavar=("ANNEE","MOIS","JOUR"),
+                    help="Date de fin de la période à couvrir")
+parser.add_argument("--authors", nargs = "*", metavar="AUTEUR",
+                    help = "Les initiales des auteurs pour lesquels on veut extraire les statistiques")
+parser.add_argument("--tasks", nargs = "*", metavar = "TACHE",
+                    help = "La liste des tâches pour lesquelles on veut extraire les statistiques. Les"
+                           "valeurs possibles sont les suivantes: {} {} {} {} {} {}".format(DEV,DEBUG,REFACTOR,TEST,OTHER,NONE))
+
+
+args = parser.parse_args()
+
+
 
 commits = parseStats(getStatFile())
 
