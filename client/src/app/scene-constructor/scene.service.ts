@@ -81,65 +81,10 @@ export class SceneService {
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
 
-    for (const object of objects) {
-      const threeObject: THREE.Mesh = this.createBasicObject(object);
-      this.translateObject(threeObject, object);
-      this.rotateObject(threeObject, object);
-      this.originalScene.add(threeObject);
-    }
+    this.game3dGeneratorService.generateGame(objects, this.originalScene);
     await this.delay(1);
 
     return this.saveAsImage(gameName);
-  }
-
-  private createBasicObject(object: IThreeObject): THREE.Mesh {
-    const material: THREE.MeshStandardMaterial = this.makeRandomColors(object);
-    const geometry: THREE.Geometry = this.chooseObject(object.diameter, object.height, object.type);
-
-    return new THREE.Mesh(geometry, material);
-  }
-
-  private makeRandomColors(object: IThreeObject): THREE.MeshStandardMaterial {
-    const color: THREE.Color = new THREE.Color(object.color);
-
-    return new THREE.MeshStandardMaterial({ color: color, metalness: 0.1 });
-  }
-
-  private chooseObject(diameter: number, height: number, choice: number): THREE.Geometry {
-    let geometry: THREE.Geometry;
-    switch (choice) {
-      case Constants.SPHERE:
-        geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE,
-                                            Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
-        break;
-      case Constants.CUBE:
-        geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
-        break;
-      case Constants.CYLINDER:
-        geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE,
-                                              height, Constants.RADIAL_PRECISION);
-        break;
-      case Constants.CONE:
-        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.RADIAL_PRECISION);
-        break;
-      case Constants.PYRAMID:
-        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.PYRAMID_BASE_SIDES_NB);
-        break;
-      default:
-        geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.PYRAMID_BASE_SIDES_NB);
-    }
-
-    return geometry;
-  }
-
-  private translateObject(threeObject: THREE.Mesh, object: IThreeObject): void {
-    threeObject.position.set(object.position[0], object.position[1], object.position[1 + 1]);
-  }
-
-  private rotateObject(threeObject: THREE.Mesh, object: IThreeObject): void {
-    threeObject.rotateX(object.orientation[0]);
-    threeObject.rotateY(object.orientation[1]);
-    threeObject.rotateZ(object.orientation[1 + 1]);
   }
 
   private async delay(ms: number): Promise<{}> {
