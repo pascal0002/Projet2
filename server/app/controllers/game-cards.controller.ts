@@ -11,6 +11,7 @@ import { gameCard2D } from "../services/game-card-2D-schema";
 import { gameCard3D } from "../services/game-card-3D-schema";
 import { GameCardsService } from "../services/game-cards.service";
 import Types from "../types";
+import { scene3D } from "../services/scene3D-schema";
 
 @injectable()
 export class GameCardsController {
@@ -75,6 +76,15 @@ export class GameCardsController {
                 }
             })
             .catch((err: Error) => console.error(err));
+        });
+
+        router.post("/delete", (req: Request, res: Response, next: NextFunction) => {
+            if (req.body.dimension === Dimension.TWO_DIMENSION) {
+                this.databaseService.remove(gameCard2D, {title: req.body.title});
+            } else {
+                this.databaseService.remove(gameCard3D, {title: req.body.title});
+                this.databaseService.remove(scene3D, {title: req.body.title});
+            }
         });
 
         return router;
