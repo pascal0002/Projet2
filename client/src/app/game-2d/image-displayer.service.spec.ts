@@ -1,9 +1,9 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
-import { BitmapEncoder } from "../../../../server/app/services/bitmap-encoder.service";
-import { BmpFileGenerator } from "../../../../server/app/services/bmp-file-generator.service";
-import { firstLineBlackPixels } from "../../../../server/mock/bitmapImage-mock";
+// import { BitmapEncoder } from "../../../../server/app/services/bitmap-encoder.service";
+// import { BmpFileGenerator } from "../../../../server/app/services/bmp-file-generator.service";
+// import { firstThreeLineBlackPixels } from "../../../../server/mock/bitmapImage-mock";
 import { AppModule } from "../app.module";
 import { ImageDisplayerService } from "./image-displayer.service";
 
@@ -21,17 +21,13 @@ describe("ImageDisplayerService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return an array of pixels for the specified image", () => {
+  it("should return an array of pixels for the specified image (an image with black pixels on the first 3 lines)", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-    const bitmapEncoder: BitmapEncoder = new BitmapEncoder();
-    const bmpFileGenerator: BmpFileGenerator = new BmpFileGenerator(bitmapEncoder);
 
-    const testImagePixels: number[] = firstLineBlackPixels;
-    bmpFileGenerator.createTemporaryFile(testImagePixels, "/mock/", "testImage.bmp");
-
+    // The first three lines of testImage.bmp are black pixels.
     service.getImagePixels("/mock/testImage.bmp").then((res) => {
-        for (let i: number = 0; i < 1920; i++ ) {
-            expect(res[i]).toEqual(0);
+        for (let i: number = 0; i < 921600; i++ ) {
+            (i < 1920 * 3) ? expect(res[i]).toEqual(0) : expect(res[i]).toEqual(255);
         }
     });
   });

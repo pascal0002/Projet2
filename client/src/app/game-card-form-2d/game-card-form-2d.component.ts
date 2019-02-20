@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
@@ -11,10 +11,10 @@ import { FormValidator2dService } from "./form-validator-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardForm2DComponent implements OnInit {
+  @Output() public form2DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo2D;
-
   public constructor(private formValidatorService: FormValidator2dService,
                      private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {
@@ -28,28 +28,10 @@ export class GameCardForm2DComponent implements OnInit {
     this.hideForm2D();
     this.form2DGroup.reset();
     this.clearFormInfo();
-    this.clearInputFields();
   }
 
   private hideForm2D(): void {
-    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form2D && pageMask) {
-      form2D.style.display = "none";
-      pageMask.style.display = "none";
-    }
-  }
-
-  private clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    if (modifiedImageInput && orignialImageInput && gameName) {
-      orignialImageInput.value = "";
-      modifiedImageInput.value = "";
-      gameName.value = "";
-    }
+    this.form2DClosedEvent.emit(true);
   }
 
   public ngOnInit(): void {
@@ -64,25 +46,26 @@ export class GameCardForm2DComponent implements OnInit {
     });
   }
 
-  public readOriginalBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+  public readOriginalBitmap($event: Event): void {
+    let originalInput: HTMLInputElement;
     let file: File;
-
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    if ($event.target) {
+      originalInput = $event.target as HTMLInputElement;
+      if (originalInput.files) {
+        file = originalInput.files[0];
         this.formInfo.originalImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
 
-  public readModifiedBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    let file: File;
+  public readModifiedBitmap($event: Event): void {
 
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    let modifiedInput: HTMLInputElement;
+    let file: File;
+    if ($event.target) {
+      modifiedInput = $event.target as HTMLInputElement;
+      if (modifiedInput.files) {
+        file = modifiedInput.files[0];
         this.formInfo.modifiedImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
@@ -113,8 +96,7 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public updateGameName(): void {
-    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    this.formInfo.gameName = gameNameInput.value;
+    this.formInfo.gameName = this.form2DGroup.controls.title.value;
   }
 
   private clearFormInfo(): void {

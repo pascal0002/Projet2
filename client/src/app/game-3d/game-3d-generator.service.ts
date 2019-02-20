@@ -14,15 +14,15 @@ export class Game3dGeneratorService {
   public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene, title: string): void {
     this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, {title : title}).toPromise()
     .then(
-      (scenes) => { this.generateScene(scenes[0], originalScene);
-                    this.generateScene(scenes[1], modifiedScene); },
+      (scenes) => { this.generateGame(scenes[0], originalScene);
+                    this.generateGame(scenes[1], modifiedScene); },
     )
     .catch(
       (err) => { console.error("erreur :", err); },
     );
   }
 
-  private generateScene(objects: IThreeObject[], currentScene: THREE.Scene): void {
+  public generateGame(objects: IThreeObject[], currentScene: THREE.Scene): void {
     for (const object of objects) {
       const threeObject: THREE.Mesh = this.createBasicObject(object);
       this.translateObject(threeObject, object);
