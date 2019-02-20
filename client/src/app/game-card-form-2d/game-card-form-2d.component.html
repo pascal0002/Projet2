@@ -24,7 +24,8 @@
 
     <div class="contentLeft"> Image originale</div>
     <form [formGroup]="form2DGroup">
-      <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput" (change)="readOriginalBitmap()">        
+      <div class="contentRight"> <input type="file" accept=".bmp" id="originalBMPInput" formControlName="originalFileInput" (change)="readOriginalBitmap($event)">        
+        <!-- <div class="contentRight"> <input type="file" [(ngModel)]="ogInput" accept=".bmp" id="originalBMPInput" (change)="readOriginalBitmap($event)"> -->
       </div>
       <div *ngIf="(this.form2DGroup.get('originalFileInput').dirty) && !(this.isAValidOriginalImage())"
         class="alert alert-danger">
@@ -46,7 +47,7 @@
 
     <div class="contentLeft"> Image modifiée</div>
     <form [formGroup]="form2DGroup" >
-      <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput" (change)="readModifiedBitmap()">
+      <div class="contentRight"> <input type="file" accept=".bmp" id="modifiedBMPInput" formControlName="modifiedFileInput" (change)="readModifiedBitmap($event)">
       </div>
       <div *ngIf="(this.form2DGroup.get('modifiedFileInput').dirty) && !(this.isAValidModifiedImage())"
         class="alert alert-danger">

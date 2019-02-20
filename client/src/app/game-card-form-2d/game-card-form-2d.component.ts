@@ -28,22 +28,10 @@ export class GameCardForm2DComponent implements OnInit {
     this.hideForm2D();
     this.form2DGroup.reset();
     this.clearFormInfo();
-    this.clearInputFields();
   }
 
   private hideForm2D(): void {
     this.form2DClosedEvent.emit(true);
-  }
-
-  private clearInputFields(): void {
-    const modifiedImageInput: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    const orignialImageInput: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
-    const gameName: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    if (modifiedImageInput && orignialImageInput && gameName) {
-      orignialImageInput.value = "";
-      modifiedImageInput.value = "";
-      gameName.value = "";
-    }
   }
 
   public ngOnInit(): void {
@@ -58,25 +46,26 @@ export class GameCardForm2DComponent implements OnInit {
     });
   }
 
-  public readOriginalBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+  public readOriginalBitmap($event: Event): void {
+    let originalInput: HTMLInputElement;
     let file: File;
-
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    if ($event.target) {
+      originalInput = $event.target as HTMLInputElement;
+      if (originalInput.files) {
+        file = originalInput.files[0];
         this.formInfo.originalImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
 
-  public readModifiedBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    let file: File;
+  public readModifiedBitmap($event: Event): void {
 
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    let modifiedInput: HTMLInputElement;
+    let file: File;
+    if ($event.target) {
+      modifiedInput = $event.target as HTMLInputElement;
+      if (modifiedInput.files) {
+        file = modifiedInput.files[0];
         this.formInfo.modifiedImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
