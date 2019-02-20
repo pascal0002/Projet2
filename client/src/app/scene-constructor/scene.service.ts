@@ -46,7 +46,7 @@ export class SceneService {
   }
 
   public generateAllObjects(title: string): void {
-    this.game3dGeneratorService.generateObjects(this.originalScene, this.modifiedScene, title);
+    this.game3dGeneratorService.generateGame(this.originalScene, this.modifiedScene, title);
   }
 
   private addLighting(scene: THREE.Scene): void {
@@ -81,7 +81,7 @@ export class SceneService {
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
 
-    this.game3dGeneratorService.generateGame(objects, this.originalScene);
+    this.game3dGeneratorService.generateObjects(objects, this.originalScene);
     await this.delay(1);
 
     return this.saveAsImage(gameName);
