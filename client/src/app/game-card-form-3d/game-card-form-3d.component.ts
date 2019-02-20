@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
@@ -13,6 +13,7 @@ export class GameCardForm3DComponent implements OnInit {
 
   public form3DGroup: FormGroup;
   public objectTypes: string[];
+  @Output() public form3DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public constructor(private formHandler3DService: FormHandler3DService) {
     this.objectTypes = Constants.OBJECT_TYPES;
@@ -77,13 +78,6 @@ export class GameCardForm3DComponent implements OnInit {
 
   public closeForm(): void {
     this.resetInputValues();
-
-    const form3D: HTMLElement | null = document.getElementById("formWindow3D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form3D && pageMask) {
-      form3D.style.display = "none";
-      pageMask.style.display = "none";
-    }
+    this.form3DClosedEvent.emit(true);
   }
 }

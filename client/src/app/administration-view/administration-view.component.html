@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
-<app-game-card-form-2d></app-game-card-form-2d>
+<app-game-card-form-2d [hidden]="form2DIsHidden" (form2DClosedEvent)="closeForm2D($event)"></app-game-card-form-2d>
 
-<app-game-card-form-3d></app-game-card-form-3d>
+<app-game-card-form-3d [hidden]="form3DIsHidden" (form3DClosedEvent)="closeForm3D($event)"></app-game-card-form-3d>
 
 <div class="adminMenu">
     <div class="createCardButton button" (click)="openForm2D()">Créer une carte PDV simple (2D)</div>

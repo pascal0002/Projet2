@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
@@ -11,10 +11,10 @@ import { FormValidator2dService } from "./form-validator-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardForm2DComponent implements OnInit {
+  @Output() public form2DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo2D;
-
   public constructor(private formValidatorService: FormValidator2dService,
                      private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {
@@ -32,13 +32,7 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   private hideForm2D(): void {
-    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form2D && pageMask) {
-      form2D.style.display = "none";
-      pageMask.style.display = "none";
-    }
+    this.form2DClosedEvent.emit(true);
   }
 
   private clearInputFields(): void {

@@ -14,29 +14,36 @@ import { ListOfGamesService } from "../list-of-games-view/list-of-games.service"
 
 export class AdministrationViewComponent {
 
+  public form2DIsHidden: boolean;
+  public form3DIsHidden: boolean;
   public listes: GameCard[][];
 
   public constructor(private listOfGamesService: ListOfGamesService) {
     this.listes = this.listOfGamesService.listes;
+    this.form2DIsHidden = true;
+    this.form3DIsHidden = true;
   }
 
   public openForm2D(): void {
-    const form2D: HTMLElement | null = document.getElementById("formWindow2D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
+    this.form2DIsHidden = false;
+  }
 
-    if (form2D && pageMask) {
-      form2D.style.display = "block";
-      pageMask.style.display = "block";
-    }
+  public closeForm2D($event: boolean): void {
+    this.form2DIsHidden = true;
   }
 
   public openForm3D(): void {
-    const form3D: HTMLElement | null = document.getElementById("formWindow3D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
+    // const form3D: HTMLElement | null = document.getElementById("formWindow3D");
+    // const pageMask: HTMLElement | null = document.getElementById("pageMask");
 
-    if (form3D && pageMask) {
-      form3D.style.display = "block";
-      pageMask.style.display = "block";
-    }
+    // if (form3D && pageMask) {
+    //   form3D.style.display = "block";
+    //   pageMask.style.display = "block";
+    // }
+    this.form3DIsHidden = false;
+  }
+
+  public closeForm3D($event: boolean): void {
+    this.form3DIsHidden = true;
   }
 }
