@@ -32,12 +32,15 @@ describe("ImageDisplayerService", () => {
     });
   });
 
-  /*it("should not return an array of the image pixels", () => {
+  it("should not return an array of the image pixels when the path is empty", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-    expect(service.getImagePixels("")).toBeFalsy();
+
+    service.getImagePixels("").then((res) => {
+      expect(res).toBeFalsy();
+     });
   });
 
-    it("should put the pixels in the canvas", () => {
+    /*it("should put the pixels in the canvas", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const ctx: CanvasRenderingContext2D = ;
     const testPixels: number[] = [0, 120, 65, 255, 22, 93, 201, 255, 11, 45, 26, 255, 10, 20, 60, 255];
