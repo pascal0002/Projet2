@@ -109,6 +109,7 @@ export abstract class Constants {
     static readonly PERCENT_FACTOR: number = 100;
 
     // for the image displayer
+    static readonly CTX_2D: string = "2d";
     static readonly RED_COLOR: number = 0;
     static readonly GREEN_COLOR: number = 1;
     static readonly BLUE_COLOR: number = 2;
