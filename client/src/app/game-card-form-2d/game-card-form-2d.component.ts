@@ -96,8 +96,7 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public updateGameName(): void {
-    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    this.formInfo.gameName = gameNameInput.value;
+    this.formInfo.gameName = this.form2DGroup.controls.title.value;
   }
 
   private clearFormInfo(): void {
