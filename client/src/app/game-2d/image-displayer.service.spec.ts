@@ -40,6 +40,14 @@ describe("ImageDisplayerService", () => {
      });
   });
 
+  it("should not return an array of the image pixels when the path is incorrect", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+
+    service.getImagePixels("testImage.bmp").then((res) => {
+      expect(res).toBeFalsy();
+     });
+  });
+
     /*it("should put the pixels in the canvas", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const ctx: CanvasRenderingContext2D = ;
