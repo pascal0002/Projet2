@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Mode } from "../../../../common/communication/Constants";
 import { GameViewService } from "./game-view.service";
@@ -8,7 +8,7 @@ import { GameViewService } from "./game-view.service";
   styleUrls: ["./game-view.component.css"],
 })
 
-export class GameViewComponent implements OnInit, AfterViewInit {
+export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild("console")
   private consoleView: ElementRef;
@@ -34,6 +34,10 @@ export class GameViewComponent implements OnInit, AfterViewInit {
     this.medalTimeProgressBarView.percent = 0;
     this.changeTimeProgressBarBackgroundColor(Constants.GOLD_COLOR);
     this.changeTimeProgressBarOuterColor(Constants.SILVER_COLOR);
+  }
+
+  public ngOnDestroy(): void {
+    this.gameViewService.reset();
   }
 
   public ngAfterViewInit(): void {

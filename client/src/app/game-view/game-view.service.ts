@@ -1,7 +1,6 @@
 import { formatDate } from "@angular/common";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
-import { timer, Observable, Subscription } from "rxjs";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 
@@ -26,15 +25,27 @@ export class GameViewService {
   public timerOutput: string;
   private targetTime: number = 0;
   private cycle: number = 0;
-  private bestScoreTimerLoopSub: Subscription;
+  private timerIntervalCache: number;
+  private bestScoreIntervalCache: number;
 
   public readonly timerResolution: number = 100;
+  public readonly timerIncrement: number = Constants.SECOND_TO_MILLISECOND / this.timerResolution;
 
   public init(): void {
-    this.bestScoreTimerLoopSub = this.startBestScoreTimer();
-    this.targetTime = this.gamecard.bestTimeSolo[0].time;
+    this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time;
+    this.startBestScoreTimer();
     this.startTimer();
     this.logMessage("Game started");
+  }
+
+  public reset(): void {
+    clearInterval(this.bestScoreIntervalCache);
+    clearInterval(this.timerIntervalCache);
+    this.bestScoreTimer = 0;
+    this.timer = 0;
+    this.cycle = 0;
+    this.diffFoundCount = 0;
+    this.opponentDiffFoundCount = 0;
   }
 
   public onDiffFound(): void {
@@ -51,33 +62,33 @@ export class GameViewService {
   }
 
   public startTimer(): void {
-    const source: Observable<number> = timer(0, Constants.SECOND_TO_MILLISECOND / this.timerResolution);
-    source.subscribe((val: number) => {
-      this.timer = val / this.timerResolution;
-      this.timerOutput = this.timeToString(this.timer);
-    });
+    const callback: Function = () => {
+      this.timer += this.timerIncrement;
+      this.timerOutput = this.timeToString(this.timer / this.timerResolution);
+    };
+    this.timerIntervalCache = setInterval(callback, this.timerResolution);
   }
 
-  public startBestScoreTimer(): Subscription {
-    const source: Observable<number> = timer(0, Constants.SECOND_TO_MILLISECOND / this.timerResolution);
-
-    return source.subscribe((val: number) => {
-      this.bestScoreTimer = val / this.timerResolution;
-      this.timerEL.percent = this.bestScoreTimer / this.targetTime * Constants.PERCENT_FACTOR;
+  public startBestScoreTimer(): void {
+    const callback: Function = () => {
+      this.bestScoreTimer += this.timerIncrement;
+      this.timerEL.percent = this.bestScoreTimer / this.timerResolution / this.targetTime * Constants.PERCENT_FACTOR;
 
       if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
       }
       this.timerEL["applyOptions"]();
       this.timerEL.draw(this.timerEL.percent);
-    });
+    };
+
+    this.bestScoreIntervalCache = setInterval(callback, this.timerResolution);
   }
 
   private onCycle(): void {
     this.cycle++;
 
     /*Supprime le callback du timer de médaille*/
-    this.bestScoreTimerLoopSub.unsubscribe();
+    clearInterval(this.bestScoreIntervalCache);
 
     if (this.cycle < Constants.NUMBER_MEDAL) {
       this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];
@@ -86,7 +97,7 @@ export class GameViewService {
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
       this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time - this.timer;
       this.bestScoreTimer = 0;
-      this.bestScoreTimerLoopSub = this.startBestScoreTimer();
+      this.startBestScoreTimer();
     } else {
       /*Pas de médaille :( On arrête de suivre le temps*/
       this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];

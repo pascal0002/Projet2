@@ -31,7 +31,7 @@ export class SceneService {
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
       1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
-    this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, preserveDrawingBuffer: true });
+    this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
   }
 
   public createModifiedCanvas(rightCanvas: HTMLCanvasElement): void {
@@ -42,7 +42,7 @@ export class SceneService {
   private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
     this.modifiedScene = new THREE.Scene();
     this.modifiedScene.background = new THREE.Color("skyblue");
-    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: false });
+    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true });
   }
 
   public generateAllObjects(title: string): void {
