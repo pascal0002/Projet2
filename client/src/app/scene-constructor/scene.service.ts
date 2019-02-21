@@ -29,9 +29,9 @@ export class SceneService {
     this.originalScene = new THREE.Scene();
     this.originalScene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-                                              1, Constants.CAMERA_RENDER_DISTANCE);
+      1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
-    this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, preserveDrawingBuffer: true });
+    this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, preserveDrawingBuffer: true });
   }
 
   public createModifiedCanvas(rightCanvas: HTMLCanvasElement): void {
@@ -42,7 +42,7 @@ export class SceneService {
   private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
     this.modifiedScene = new THREE.Scene();
     this.modifiedScene.background = new THREE.Color("skyblue");
-    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: true });
+    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: false });
   }
 
   public generateAllObjects(title: string): void {
@@ -92,17 +92,20 @@ export class SceneService {
   }
 
   private async saveAsImage(gameName: string): Promise<GameCard> {
+
     const imageData: string = this.originalGlRenderer.domElement.toDataURL("image/jpeg");
     const snapshot: ISnapshot = {
       gameName: gameName,
       imageData: imageData,
     };
-    for (let i: number = this.originalScene.children.length - 1; i >= 0; i--) {
-      this.originalScene.remove(this.originalScene.children[i]);
-    }
+    this.clearObjects();
     this.addLighting(this.originalScene);
 
     return this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
       .toPromise();
+  }
+
+  public clearObjects(): void {
+    // Future méthode servant à libérer la mémoire de la scène
   }
 }
