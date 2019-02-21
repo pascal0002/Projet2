@@ -29,7 +29,6 @@ export class Game3dGeneratorService {
       this.rotateObject(threeObject, object);
       currentScene.add(threeObject);
     }
-    console.log(currentScene);
   }
 
   private createBasicObject(object: IThreeObject): THREE.Mesh {

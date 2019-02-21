@@ -3,7 +3,7 @@
 import { TestBed } from "@angular/core/testing";
 import * as THREE from "three";
 import { IThreeObject } from "../../../../common/communication/ThreeObject";
-// import { TestHelper } from "../../test.helper";
+import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { Game3dGeneratorService } from "../game-3d/game-3d-generator.service";
 
@@ -13,7 +13,7 @@ let objects: IThreeObject[];
 let testObject: IThreeObject;
 let scene: THREE.Scene;
 
-describe("FormHandler3DService", () => {
+describe("Game3DGeneratorService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
@@ -28,14 +28,14 @@ describe("FormHandler3DService", () => {
   });
 
   describe("generateGame", () => {
-    /*it("should call the http request only once", () => {
+    it("should call the http request only once", () => {
       const title: string = "200 formes";
       objects.push(testObject);
 
       httpClientSpy.post.and.returnValue(TestHelper.asyncData({title : title}));
-      game3dGeneratorService.generateObjects(objects, scene);
+      game3dGeneratorService.generateGame(scene, scene, title);
       expect(httpClientSpy.post.calls.count()).toBe(1);
-    });*/
+    });
   });
 
   describe("generateObjects", () => {
