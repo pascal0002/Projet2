@@ -21,8 +21,7 @@ export class Game3DComponent implements OnInit, OnDestroy {
   @ViewChild("leftCanvas") public leftCanvasRef: ElementRef;
   @ViewChild("rightCanvas") public rightCanvasRef: ElementRef;
 
-  public constructor(private ngZone: NgZone, private sceneService: SceneService,
-    private gameViewService: GameViewService) {
+  public constructor(private ngZone: NgZone, private sceneService: SceneService, private gameViewService: GameViewService) {
     this.gameCard = this.gameViewService.gamecard;
   }
 
