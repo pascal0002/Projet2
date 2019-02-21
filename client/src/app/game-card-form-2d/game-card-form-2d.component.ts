@@ -2,9 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
-
 @Component({
   selector: "app-game-card-form-2d",
   templateUrl: "./game-card-form-2d.component.html",
@@ -18,7 +18,8 @@ export class GameCardForm2DComponent implements OnInit {
   public error: String;
 
   public constructor(private formValidatorService: FormValidator2dService,
-                     private bitmapReaderService: BitmapReaderService) {
+                     private bitmapReaderService: BitmapReaderService,
+                     private listOfGameService: ListOfGamesService) {
     this.formInfo = {
       gameName: "",
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
@@ -91,12 +92,14 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    try {
-      this.formValidatorService.generateGameCard(this.formInfo);
-    } catch (error) {
-      this.error = error.message;
-    }
-    this.closeForm2D();
+    this.formValidatorService.generateGameCard(this.formInfo)
+    .then(
+      (gamecard) => { this.listOfGameService.addGameCard2D(gamecard);
+                      this.closeForm2D(); },
+    )
+    .catch(
+      (err) => { this.error = err.error; },
+    );
   }
 
   public updateGameName(): void {
@@ -107,6 +110,7 @@ export class GameCardForm2DComponent implements OnInit {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+    this.error = "";
   }
 
   public canSubmit(): boolean {
