@@ -13,6 +13,11 @@ export class DifferencesGeneratorService {
     return differenceImg;
   }
 
+  private pixelAreDifferent(originalImg: IBitmapImage, modifiedImg: IBitmapImage, pixel: number): boolean {
+    return originalImg.pixels[pixel] !== modifiedImg.pixels[pixel]
+           || originalImg.pixels[pixel + 1] !== modifiedImg.pixels[pixel + 1]
+           || originalImg.pixels[pixel + 1 + 1] !== modifiedImg.pixels[pixel + 1 + 1];
+  }
   public fillDifferenceImage(originalImg: IBitmapImage, modifiedImg: IBitmapImage): IBitmapImage {
     const fileName: string = originalImg.fileName
     .substr(0, (originalImg.fileName.length - Constants.EXTENSION_LENGTH)) + "Differences.bmp";
@@ -20,9 +25,7 @@ export class DifferencesGeneratorService {
                                          fileName: fileName, pixels: []};
 
     for (let i: number = 0; i < originalImg.pixels.length; i += Constants.PIXEL_PARAMETERS_NB) {
-      if (originalImg.pixels[i] !== modifiedImg.pixels[i]
-        || originalImg.pixels[i + 1] !== modifiedImg.pixels[i + 1]
-        || originalImg.pixels[i + 1 + 1] !== modifiedImg.pixels[i + 1 + 1]) {
+      if (this.pixelAreDifferent(originalImg, modifiedImg, i)) {
         for (let j: number = 0; j < Constants.PIXEL_PARAMETERS_NB; j++) {
           differenceImg.pixels.push(Constants.BLACK_PIXEL_PARAMETER);
         }
@@ -65,16 +68,20 @@ export class DifferencesGeneratorService {
     return newDifferenceImg;
   }
 
+  private isNeighbor(positionX: number, positionY: number, index: number, height: number, width: number): boolean {
+    return (Math.abs(positionX) + Math.abs(positionY) <= Constants.MAX_PIXEL_REACH)
+            && (index / Constants.PIXEL_PARAMETERS_NB + positionY * width >= 0)
+            && (index / Constants.PIXEL_PARAMETERS_NB + positionY * width < height * width)
+            && (((index / Constants.PIXEL_PARAMETERS_NB) % width) + positionX < width)
+            && (((index / Constants.PIXEL_PARAMETERS_NB) % width) + positionX >= 0);
+  }
+
   public getNeighbors(index: number, height: number, width: number): number[] {
     const neighbors: number[] = [];
-    for (let i: number = -Constants.ENLARGING_SURFACE_RADIUS; i <= Constants.ENLARGING_SURFACE_RADIUS; i++) {
-      for (let j: number = -Constants.ENLARGING_SURFACE_RADIUS; j <= Constants.ENLARGING_SURFACE_RADIUS; j++) {
-        if ((Math.abs(i) + Math.abs(j) <= Constants.MAX_PIXEL_REACH)
-            && (index / Constants.PIXEL_PARAMETERS_NB + j * width >= 0)
-            && (index / Constants.PIXEL_PARAMETERS_NB + j * width < height * width)
-            && (((index / Constants.PIXEL_PARAMETERS_NB) % width) + i < width)
-            && (((index / Constants.PIXEL_PARAMETERS_NB) % width) + i >= 0)) {
-          neighbors.push(index / Constants.PIXEL_PARAMETERS_NB + i + j * width);
+    for (let positionX: number = -Constants.ENLARGING_SURFACE_RADIUS; positionX <= Constants.ENLARGING_SURFACE_RADIUS; positionX++) {
+      for (let positionY: number = -Constants.ENLARGING_SURFACE_RADIUS; positionY <= Constants.ENLARGING_SURFACE_RADIUS; positionY++) {
+        if (this.isNeighbor(positionX, positionY, index, height, width)) {
+          neighbors.push(index / Constants.PIXEL_PARAMETERS_NB + positionX + positionY * width);
         }
       }
     }

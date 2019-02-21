@@ -1,7 +1,7 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
-import { SceneService } from "../scene-constructor/scene.service";
+import { SceneService } from "../scene/scene.service";
 @Component({
   selector: "app-game-3d",
   templateUrl: "./game-3d.component.html",

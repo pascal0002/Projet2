@@ -1,25 +1,26 @@
 // tslint:disable:no-magic-numbers
 // tslint:disable:no-any
 import { ErrorHandler } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
-import { GameCardForm2DComponent } from "./game-card-form-2d.component";
+import { ListOfGamesViewComponent } from "./list-of-games-view.component";
 
-describe("GameCardFormComponent", () => {
-  let component: GameCardForm2DComponent;
-  let fixture: ComponentFixture<GameCardForm2DComponent>;
+describe("ListOfGamesViewComponent", () => {
+  let component: ListOfGamesViewComponent;
+  let fixture: ComponentFixture<ListOfGamesViewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
-      declarations: [  ],
+      declarations: [],
+      providers: [],
     })
     .compileComponents()
     .catch((err: any) => new ErrorHandler());
-  }));
+  });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameCardForm2DComponent);
+    fixture = TestBed.createComponent(ListOfGamesViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

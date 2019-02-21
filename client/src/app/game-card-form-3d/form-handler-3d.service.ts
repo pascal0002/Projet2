@@ -4,7 +4,7 @@ import { AbstractControl, FormGroup, ValidatorFn } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
-import { SceneService } from "../scene-constructor/scene.service";
+import { SceneService } from "../scene/scene.service";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +21,7 @@ export class FormHandler3DService {
       Object.keys(formGroup.controls).forEach((key) => {
         const control: AbstractControl = formGroup.controls[key];
 
-        if (control.value === true) {
+        if (control.value) {
           checked++;
         }
       });

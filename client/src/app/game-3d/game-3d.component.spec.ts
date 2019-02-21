@@ -3,24 +3,23 @@
 import { ErrorHandler } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
-import { GameCardForm3DComponent } from "./game-card-form-3d.component";
+import { Game3DComponent } from "./game-3d.component";
 
-describe("GameCardFormComponent3D", () => {
-  let component: GameCardForm3DComponent;
-  let fixture: ComponentFixture<GameCardForm3DComponent>;
+describe("Game3DComponent", () => {
+  let component: Game3DComponent;
+  let fixture: ComponentFixture<Game3DComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
       declarations: [],
       providers: [],
-    })
-    .compileComponents()
+    }).compileComponents()
     .catch((err: any) => new ErrorHandler());
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameCardForm3DComponent);
+    fixture = TestBed.createComponent(Game3DComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

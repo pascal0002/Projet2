@@ -18,7 +18,10 @@ export class SceneService {
   public originalGlRenderer: THREE.WebGLRenderer;
   public modifiedGlRenderer: THREE.WebGLRenderer;
 
-  public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) { }
+  public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) {
+    this.originalScene = new THREE.Scene();
+    this.modifiedScene = new THREE.Scene();
+  }
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeOriginalScene(canvas);
@@ -26,10 +29,9 @@ export class SceneService {
   }
 
   private makeOriginalScene(canvas: HTMLCanvasElement): void {
-    this.originalScene = new THREE.Scene();
     this.originalScene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-      1, Constants.CAMERA_RENDER_DISTANCE);
+                                              1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
     this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, preserveDrawingBuffer: true });
   }
@@ -40,7 +42,6 @@ export class SceneService {
   }
 
   private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
-    this.modifiedScene = new THREE.Scene();
     this.modifiedScene.background = new THREE.Color("skyblue");
     this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: false });
   }
@@ -84,15 +85,14 @@ export class SceneService {
     this.game3dGeneratorService.generateObjects(objects, this.originalScene);
     await this.delay(1);
 
-    return this.saveAsImage(gameName);
+    return this.saveImageData(gameName);
   }
 
   private async delay(ms: number): Promise<{}> {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  private async saveAsImage(gameName: string): Promise<GameCard> {
-
+  private async saveImageData(gameName: string): Promise<GameCard> {
     const imageData: string = this.originalGlRenderer.domElement.toDataURL("image/jpeg");
     const snapshot: ISnapshot = {
       gameName: gameName,
