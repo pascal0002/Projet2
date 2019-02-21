@@ -30,6 +30,7 @@
     bottom: 0;
     left: 0;
     display: block;
+    pointer-events: none;
   }
 
 #formWindow2D {
@@ -78,8 +79,8 @@
 }
 
 .alert{
-    width: 181px; 
-    font-size: 12px; 
-    padding-top: 5px; 
+    width: 181px;
+    font-size: 12px;
+    padding-top: 5px;
     padding-bottom: 5px;
 }
