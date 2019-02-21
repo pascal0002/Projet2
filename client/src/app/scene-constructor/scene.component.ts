@@ -15,7 +15,7 @@ export class SceneComponent implements OnInit {
 
   @ViewChild("canvas") public canvasRef: ElementRef;
 
-  public constructor(private ngZone: NgZone, private sceneService: SceneService) {/**/}
+  public constructor(private ngZone: NgZone, private sceneService: SceneService) {/**/ }
 
   public ngOnInit(): void {
     this.sceneService.createOriginalCanvas(this.canvas);

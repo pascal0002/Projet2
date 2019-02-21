@@ -26,11 +26,11 @@
   <!-- Le contenu ici sera remplacé éventuellement par un component soit 2D ou 3D qui gérera lui-même ses propres spécificités -->
   <!-- La classe css game-panel gère le style des bordures et de la taille, donc si on choisit de faire un seul composant global pour 2d et 3d il faudra les inclure comme tels-->
   <div *ngIf="gameViewService.gamecard.dimension === 0; else threeD">
-    <app-game-2d></app-game-2d>
+    <app-game-2d #game2d></app-game-2d>
   </div>
 
   <ng-template #threeD>
-    <app-game-3d></app-game-3d>
+    <app-game-3d #game3d></app-game-3d>
   </ng-template>
 
 
