@@ -1,6 +1,5 @@
 // tslint:disable:no-magic-numbers
 // tslint:disable:no-any
-import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../../common/communication/game-card";
@@ -12,9 +11,7 @@ describe("FormValidator2dService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
-      declarations: [
-
-      ],
+      declarations: [],
       providers: [],
     });
   });
@@ -112,17 +109,18 @@ describe("FormValidator2dService", () => {
   it("should return the expected form info when using an httpPost", () => {
     // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-    const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard2D"]);
-    const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy, listOfGameServiceSpy);
+    const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
     const formSent: IFormInfo2D = {
       gameName: "Test",
       originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: [255, 255, 255] },
       modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: [0, 0, 0] },
     };
-    httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.generateGameCard(formSent).then((res: GameCard) => {
-      expect(res.title).toEqual(formSent.gameName);
-      expect(res.image).toEqual(formSent.originalImage.fileName);
-    }).catch((err) => new ErrorHandler());
+    const gameCard: GameCard = {title: "", image: "", imageModified: "",
+                                bestTimeSolo: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
+                                bestTime1v1: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
+                                dimension: 0};
+    httpClientSpy.post.and.returnValue(TestHelper.asyncData(gameCard));
+    formValidatorService.generateGameCard(formSent);
+    expect(httpClientSpy.post.calls.count()).toBe(1);
   });
 });
