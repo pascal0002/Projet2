@@ -9,20 +9,22 @@ import { IThreeObject } from "../../../../common/communication/ThreeObject";
 })
 export class Game3dGeneratorService {
 
-  public constructor(private http: HttpClient) {}
+  public constructor(private http: HttpClient) { }
 
-  public generateObjects(originalScene: THREE.Scene, modifiedScene: THREE.Scene, title: string): void {
-    this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, {title : title}).toPromise()
-    .then(
-      (scenes) => { this.generateGame(scenes[0], originalScene);
-                    this.generateGame(scenes[1], modifiedScene); },
-    )
-    .catch(
-      (err) => { console.error("erreur :", err); },
-    );
+  public generateGame(originalScene: THREE.Scene, modifiedScene: THREE.Scene, title: string): void {
+    this.http.post<IThreeObject[][]>(`${Constants.SERVER_BASE_URL}api/scene/scenes`, { title: title }).toPromise()
+      .then(
+        (scenes) => {
+          this.generateObjects(scenes[0], originalScene);
+          this.generateObjects(scenes[1], modifiedScene);
+        },
+      )
+      .catch(
+        (err) => { console.error("erreur :", err); },
+      );
   }
 
-  public generateGame(objects: IThreeObject[], currentScene: THREE.Scene): void {
+  public generateObjects(objects: IThreeObject[], currentScene: THREE.Scene): void {
     for (const object of objects) {
       const threeObject: THREE.Mesh = this.createBasicObject(object);
       this.translateObject(threeObject, object);
@@ -49,14 +51,14 @@ export class Game3dGeneratorService {
     switch (choice) {
       case Constants.SPHERE:
         geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE,
-                                            Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
+          Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
         break;
       case Constants.CUBE:
         geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
         break;
       case Constants.CYLINDER:
         geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE,
-                                              height, Constants.RADIAL_PRECISION);
+          height, Constants.RADIAL_PRECISION);
         break;
       case Constants.CONE:
         geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.RADIAL_PRECISION);

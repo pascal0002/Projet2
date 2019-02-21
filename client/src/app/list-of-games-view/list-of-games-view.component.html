@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-<!-- <div id="pageMask"></div> -->
 
 <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock>
@@ -21,27 +20,27 @@
               <div class="gameCardMode">Solo</div>
               <div class="gameCardMode">1VS1</div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: gold;"></i>
+                <i class="fas fa-medal gold"></i>
                 {{listOfGamesService.getBestTimeSolo(gameCard, 0)}}
               </div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: gold;"></i>
+                <i class="fas fa-medal gold"></i>
                 {{listOfGamesService.getBestTime1v1(gameCard, 0)}}
               </div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: silver;"></i>
+                <i class="fas fa-medal silver"></i>
                 {{listOfGamesService.getBestTimeSolo(gameCard, 1)}}
               </div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: silver;"></i>
+                <i class="fas fa-medal silver"></i>
                 {{listOfGamesService.getBestTime1v1(gameCard, 1)}}
               </div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                <i class="fas fa-medal bronze"></i>
                 {{listOfGamesService.getBestTimeSolo(gameCard, 2)}}
               </div>
               <div class="gameCardScore">
-                <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                <i class="fas fa-medal bronze"></i>
                 {{listOfGamesService.getBestTime1v1(gameCard, 2)}}
               </div>
               <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>

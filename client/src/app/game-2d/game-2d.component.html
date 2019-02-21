@@ -1,8 +1,11 @@
 <div id="game">
   <div class="game-panel">
-    <canvas id="ogCanvas" width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
+    <!-- <canvas id="ogCanvas" width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas> -->
+    <canvas #ogCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
   </div>
   <div class="game-panel">
-    <canvas id="modifCanvas" width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
+    <!-- <canvas id="modifCanvas" width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas> -->
+    <canvas #modifCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
+
   </div>
 </div>
