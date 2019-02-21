@@ -96,6 +96,7 @@ export abstract class Constants {
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
     static readonly API_NEWGAME_URL: string = "api/differences/new_game";
     static readonly API_DIFFVALIDATOR_URL: string = "api/differences/difference_validator";
+    static readonly API_IMAGEPIXEL_URL: string = "api/differences/image_pixels";
 
     static readonly DIFFIMAGE_SUFFIX = "Differences.bmp";
 
