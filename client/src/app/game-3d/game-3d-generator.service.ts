@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import * as THREE from "three";
 // import { Constants } from "../../../../common/communication/Constants";
 
 @Injectable({
@@ -7,7 +6,7 @@ import * as THREE from "three";
 })
 export class Game3dGeneratorService {
 
-  public constructor() {/**/}
+  public constructor() {/**/ }
 
   public generateObjectsLeft(): void {
     console.log("scene gauche");
