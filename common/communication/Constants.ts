@@ -157,7 +157,7 @@ export abstract class Constants {
     static readonly CAMERA_RENDER_DISTANCE: number = 500;
     static readonly Z_CAMERA_POSITION: number = 90;
 
-    static readonly RADIAL_PRECISION: number = 20;
+    static readonly RADIAL_PRECISION: number = 15;
 
     static readonly SPHERE: number = 0;
     static readonly CUBE: number = 1;
