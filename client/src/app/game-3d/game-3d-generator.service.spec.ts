@@ -30,9 +30,11 @@ describe("Game3DGeneratorService", () => {
   describe("generateGame", () => {
     it("should call the http request only once", () => {
       const title: string = "200 formes";
-      objects.push(testObject);
 
-      httpClientSpy.post.and.returnValue(TestHelper.asyncData({title : title}));
+      const mockObjects: IThreeObject[][] = [];
+      mockObjects.push(objects);
+      mockObjects.push(objects);
+      httpClientSpy.post.and.returnValue(TestHelper.asyncData<IThreeObject[][]>(mockObjects));
       game3dGeneratorService.generateGame(scene, scene, title);
       expect(httpClientSpy.post.calls.count()).toBe(1);
     });
