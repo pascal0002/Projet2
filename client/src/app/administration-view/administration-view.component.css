@@ -7,6 +7,14 @@
     width: 100%;
     position: fixed;
     padding-top: 15px;
+    border-bottom: white solid 10px;
+}
+
+#logo{
+  text-align: left;
+  position: absolute;
+  left: 15px;
+  top: 15px;
 }
 
 #adminView{
@@ -19,6 +27,11 @@
     font-size: 16px;
     margin-right: 10px;
     margin-left: 10px;
+}
+
+.createCardButton i{
+  font-size: 140%;
+  margin-left: 5px;
 }
 
 #scene {

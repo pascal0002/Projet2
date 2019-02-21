@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
 <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
 <ng-template #thenBlock>
   <div style="height: 120px;"></div>
@@ -7,8 +5,8 @@
 <div class="gameCardsWindowWrapper">
   <div class="gameCardsWindow">
     <div class="titleWrapper">
-      <div class="title">Point de vue simple (2D)</div>
-      <div class="title">Point de vue libre (3D)</div>
+      <div class="title">Point de vue simple <i class="fas fa-draw-polygon"></i></div>
+      <div class="title">Point de vue libre <i class="fas fa-cubes"></i></div>
     </div>
     <div class="gameCardsWrapper">
       <div class="gameCardsContainer" *ngFor="let string of listes; let i = index">
@@ -17,8 +15,8 @@
             <div class="gameCardTitle"> {{gameCard.title}}</div>
             <div class="gameCardInfo">
               <div class="gameCardImage"><img src="{{gameCard.image}}" height="210px" width="280px"></div>
-              <div class="gameCardMode">Solo</div>
-              <div class="gameCardMode">1VS1</div>
+              <div class="gameCardMode">Solo <i class="fas fa-user"></i></div>
+              <div class="gameCardMode">1VS1 <i class="fas fa-globe"></i></div>
               <div class="gameCardScore">
                 <i class="fas fa-medal gold"></i>
                 {{listOfGamesService.getBestTimeSolo(gameCard, 0)}}
@@ -46,10 +44,10 @@
               <div *ngIf="isInAdminView; then thenBlock; else elseBlock"></div>
               <ng-template #thenBlock>
                 <div>
-                  <div (click)="delete(gameCard)" class="adminGameCardButton button">Supprimer</div>
+                  <div (click)="delete(gameCard)" class="adminGameCardButton button">Supprimer <i class="fas fa-trash-alt"></i></div>
                 </div>
                 <div>
-                  <div class="adminGameCardButton button">Réinitialiser</div>
+                  <div class="adminGameCardButton button">Réinitialiser <i class="fas fa-redo-alt"></i></div>
                 </div>
               </ng-template>
 
