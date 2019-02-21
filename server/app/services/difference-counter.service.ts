@@ -48,7 +48,7 @@ export class DifferenceCounterService {
       const neighbors: number[] = this.getNeighbors(pixelStack.shift());
       neighbors.forEach((neighbor: number) => {
         if (pixelMap.value[neighbor][Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER
-          && pixelMap.value[neighbor][Constants.IS_VISITED] === false) {
+          && !pixelMap.value[neighbor][Constants.IS_VISITED]) {
           pixelMap.value[neighbor][Constants.IS_VISITED] = true;
           pixelStack.push(neighbor);
         }
