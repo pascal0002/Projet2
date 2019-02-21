@@ -10,8 +10,8 @@ import { FormValidator3DService } from "../services/form-validator-3D.service";
 import { gameCard2D } from "../services/game-card-2D-schema";
 import { gameCard3D } from "../services/game-card-3D-schema";
 import { GameCardsService } from "../services/game-cards.service";
-import Types from "../types";
 import { scene3D } from "../services/scene3D-schema";
+import Types from "../types";
 
 @injectable()
 export class GameCardsController {

@@ -50,15 +50,14 @@ export class Game3dGeneratorService {
     let geometry: THREE.Geometry;
     switch (choice) {
       case Constants.SPHERE:
-        geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE,
-          Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
+        geometry = new THREE.SphereGeometry(diameter * Constants.HALF_VALUE, Constants.RADIAL_PRECISION, Constants.RADIAL_PRECISION);
         break;
       case Constants.CUBE:
         geometry = new THREE.BoxGeometry(diameter, diameter, diameter);
         break;
       case Constants.CYLINDER:
-        geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE,
-          height, Constants.RADIAL_PRECISION);
+        geometry = new THREE.CylinderGeometry(diameter * Constants.HALF_VALUE, diameter * Constants.HALF_VALUE, height,
+                                              Constants.RADIAL_PRECISION);
         break;
       case Constants.CONE:
         geometry = new THREE.ConeGeometry(diameter * Constants.HALF_VALUE, height, Constants.RADIAL_PRECISION);
