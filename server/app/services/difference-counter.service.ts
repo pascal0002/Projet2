@@ -25,11 +25,15 @@ export class DifferenceCounterService {
     return pixelMap;
   }
 
+  private pixelIsBlackAndNotVisited(pixel: [number, boolean]): boolean {
+    return pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER && !pixel[Constants.IS_VISITED];
+  }
+
   private travelAndCountDifference(pixelMap: PixelMap): number {
     let numberOfDifference: number = 0;
     let pixelIndex: number = 0;
     pixelMap.value.forEach((pixel: [number, boolean] ) => {
-      if ( pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER && !pixel[Constants.IS_VISITED]) {
+      if (this.pixelIsBlackAndNotVisited(pixel)) {
         numberOfDifference++;
         pixel[Constants.IS_VISITED] = true;
         this.findZone(pixelMap, pixelIndex);
@@ -47,8 +51,7 @@ export class DifferenceCounterService {
     while (pixelStack.length > 0) {
       const neighbors: number[] = this.getNeighbors(pixelStack.shift());
       neighbors.forEach((neighbor: number) => {
-        if (pixelMap.value[neighbor][Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER
-          && !pixelMap.value[neighbor][Constants.IS_VISITED]) {
+        if ( this.pixelIsBlackAndNotVisited(pixelMap.value[neighbor])) {
           pixelMap.value[neighbor][Constants.IS_VISITED] = true;
           pixelStack.push(neighbor);
         }
