@@ -13,6 +13,7 @@ export class GameCardForm3DComponent implements OnInit {
 
   public form3DGroup: FormGroup;
   public objectTypes: string[];
+  public error: string;
   @Output() public form3DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public constructor(private formHandler3DService: FormHandler3DService) {
@@ -65,7 +66,7 @@ export class GameCardForm3DComponent implements OnInit {
     this.formHandler3DService.send3DFormInfo(formInfo)
     .then(
       (isOk) => { if (isOk) {this.formHandler3DService.createObjects(formInfo); }},
-      (isNotOk) => { alert(isNotOk.error); },
+      (isNotOk) => { this.error = isNotOk.error; },
     )
     .catch(
       (err) => { console.error("erreur :", err); },
@@ -74,6 +75,7 @@ export class GameCardForm3DComponent implements OnInit {
 
   public resetInputValues(): void {
     this.form3DGroup.reset();
+    this.error = "";
   }
 
   public closeForm(): void {
