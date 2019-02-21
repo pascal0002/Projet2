@@ -1,11 +1,10 @@
 // tslint:disable:no-magic-numbers
+// tslint:disable:no-any
 import { TestBed } from "@angular/core/testing";
 import { IClickInfo } from "../../../../common/communication/ClickInfo";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { DifferenceValidatorService } from "./difference-validator.service";
-
-// tslint:disable-next-line:no-any
 
 describe("DifferenceValidatorService", () => {
   beforeEach(() => {

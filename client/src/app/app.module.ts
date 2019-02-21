@@ -15,8 +15,8 @@ import { GameCardForm2DComponent } from "./game-card-form-2d/game-card-form-2d.c
 import { GameCardForm3DComponent } from "./game-card-form-3d/game-card-form-3d.component";
 import { GameViewComponent } from "./game-view/game-view.component";
 import { ListOfGamesViewComponent } from "./list-of-games-view/list-of-games-view.component";
-import { SceneComponent } from "./scene-constructor/scene.component";
-import { SceneService } from "./scene-constructor/scene.service";
+import { SceneComponent } from "./scene/scene.component";
+import { SceneService } from "./scene/scene.service";
 import { UserLoginComponent } from "./user-login/user-login.component";
 import { UserLoginService } from "./user-login/user-login.service";
 import { WebsocketService } from "./websocket.service";

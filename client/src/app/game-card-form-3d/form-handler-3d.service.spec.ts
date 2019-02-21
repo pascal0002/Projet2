@@ -6,7 +6,7 @@ import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
 import { Game3dGeneratorService } from "../game-3d/game-3d-generator.service";
-import { SceneService } from "../scene-constructor/scene.service";
+import { SceneService } from "../scene/scene.service";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call

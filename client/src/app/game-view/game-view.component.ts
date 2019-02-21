@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Mode } from "../../../../common/communication/Constants";
 import { GameViewService } from "./game-view.service";

@@ -1,5 +1,5 @@
+// tslint:disable:no-magic-numbers
 // tslint:disable:no-any
-
 import { ErrorHandler } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { AppComponent } from "./app.component";
