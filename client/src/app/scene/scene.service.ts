@@ -21,6 +21,10 @@ export class SceneService {
   public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) {
     this.originalScene = new THREE.Scene();
     this.modifiedScene = new THREE.Scene();
+    // l'initialisation des renderer est faite dans le constructeur sans le canvas en paramètre pour que les tests fonctionnent
+    // puisqu'ils n'appelent pas le component qui contient le canvas
+    this.originalGlRenderer = new THREE.WebGLRenderer();
+    this.modifiedGlRenderer = new THREE.WebGLRenderer();
   }
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
