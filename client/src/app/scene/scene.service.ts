@@ -31,7 +31,7 @@ export class SceneService {
   private makeOriginalScene(canvas: HTMLCanvasElement): void {
     this.originalScene.background = new THREE.Color("skyblue");
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
-      1, Constants.CAMERA_RENDER_DISTANCE);
+                                              1, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
     this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, preserveDrawingBuffer: true });
   }
