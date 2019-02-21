@@ -66,10 +66,9 @@ export class GameCardForm3DComponent implements OnInit {
     this.formHandler3DService.send3DFormInfo(formInfo)
     .then(
       (isOk) => { if (isOk) {this.formHandler3DService.createObjects(formInfo); }},
-      (isNotOk) => { this.error = isNotOk.error; },
     )
     .catch(
-      (err) => { console.error("erreur :", err); },
+      (err) => { this.error = err.error; },
     );
   }
 
