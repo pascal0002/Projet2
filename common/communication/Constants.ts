@@ -167,7 +167,6 @@ export abstract class Constants {
     static readonly PYRAMID: number = 4;
     static readonly PYRAMID_BASE_SIDES_NB: number = 3;
 
-
     static readonly AMBIENT_LIGHT_INTENSITY: number = 1;
     static readonly DIRECTIONAL_LIGHT_INTENSITY: number = 5;
     static readonly AMBIENT_LIGHT_COLOR: number = 0xffffff;

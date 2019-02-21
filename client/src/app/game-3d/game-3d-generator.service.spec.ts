@@ -28,28 +28,13 @@ describe("FormHandler3DService", () => {
   });
 
   describe("generateGame", () => {
-    /*it("the HttpClient used to create 3D objects should only be called once", () => {
-      const formSent: IFormInfo3D = {
-        gameName: "test1",
-        objectType: "Theme1",
-        numberOfObjects: 23,
-        addObjects: true,
-        modifyObjects: true,
-        deleteObjects: false,
-      };
+    /*it("should call the http request only once", () => {
+      const title: string = "200 formes";
+      objects.push(testObject);
 
-      httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-      formValidatorService.createObjects(formSent);
+      httpClientSpy.post.and.returnValue(TestHelper.asyncData({title : title}));
+      game3dGeneratorService.generateObjects(objects, scene);
       expect(httpClientSpy.post.calls.count()).toBe(1);
-    });
-
-    it("should return null (no errors) if 1 checkbox is checked", () => {
-      const TEST_FORM_GROUP: FormGroup = new FormGroup({
-        addCheckBox: new FormControl(true),
-        deleteCheckBox: new FormControl(false),
-        modifyCheckBox: new FormControl(false),
-      });
-      expect(formValidatorService.getValidatorFunction()(TEST_FORM_GROUP)).toBeNull();
     });*/
   });
 
@@ -81,36 +66,72 @@ describe("FormHandler3DService", () => {
       expect(scene.children[0].position).toEqual(orientation);
     });
 
-    /*it("should add a sphere to the scene", () => {
+    it("should add an object to the scene with the specified diameter", () => {
       objects.push(testObject);
       game3dGeneratorService.generateObjects(objects, scene);
       // @ts-ignore
-      const sphere: Three.Geometry = new SphereGeometry(2);
-      expect(scene.children[0].geometry).toEqual();
+      expect(scene.children[0].geometry.parameters.radius).toEqual(testObject.diameter / 2);
     });
 
-    /*it("the HttpClient used to create 3D objects should only be called once", () => {
-      const formSent: IFormInfo3D = {
-        gameName: "test1",
-        objectType: "Theme1",
-        numberOfObjects: 23,
-        addObjects: true,
-        modifyObjects: true,
-        deleteObjects: false,
-      };
-
-      httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-      formValidatorService.createObjects(formSent);
-      expect(httpClientSpy.post.calls.count()).toBe(1);
+    it("should add an object to the scene with the specified height", () => {
+      testObject.type = 3;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.parameters.height).toEqual(testObject.height);
     });
 
-    it("should return null (no errors) if 1 checkbox is checked", () => {
-      const TEST_FORM_GROUP: FormGroup = new FormGroup({
-        addCheckBox: new FormControl(true),
-        deleteCheckBox: new FormControl(false),
-        modifyCheckBox: new FormControl(false),
-      });
-      expect(formValidatorService.getValidatorFunction()(TEST_FORM_GROUP)).toBeNull();
-    });*/
+    it("should add a sphere to the scene", () => {
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("SphereGeometry");
+    });
+
+    it("should add a cube to the scene", () => {
+      testObject.type = 1;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("BoxGeometry");
+    });
+
+    it("should add a cylinder to the scene", () => {
+      testObject.type = 2;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("CylinderGeometry");
+    });
+
+    it("should add a cone to the scene", () => {
+      testObject.type = 3;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("ConeGeometry");
+      // @ts-ignore
+      expect(scene.children[0].geometry.faces.length).not.toEqual(6);
+    });
+
+    it("should add a triangular pyramid to the scene", () => {
+      testObject.type = 4;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("ConeGeometry");
+      // @ts-ignore
+      expect(scene.children[0].geometry.faces.length).toEqual(6);
+    });
+
+    it("should add a triangular pyramid to the scene even if the type genrated is 5 (1 on Math.random())", () => {
+      testObject.type = 5;
+      objects.push(testObject);
+      game3dGeneratorService.generateObjects(objects, scene);
+      // @ts-ignore
+      expect(scene.children[0].geometry.type).toEqual("ConeGeometry");
+      // @ts-ignore
+      expect(scene.children[0].geometry.faces.length).toEqual(6);
+    });
   });
 });
