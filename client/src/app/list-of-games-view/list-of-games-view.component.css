@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
-#pageMask{
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: none;
-}
 .gameCardsWindowWrapper{
     text-align: center;
 }
@@ -139,4 +130,16 @@
     height: 90%;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+.gold {
+    color: gold;
+}
+
+.silver {
+    color: silver;
+}
+
+.bronze {
+    color: #cd7f32;
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { Constants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
@@ -9,8 +10,10 @@ import { ImageDisplayerService } from "./image-displayer.service";
   templateUrl: "./game-2d.component.html",
   styleUrls: ["./game-2d.component.css"],
 })
-export class Game2DComponent implements OnInit {
+export class Game2DComponent implements AfterViewInit {
   public gameCard: GameCard;
+  @ViewChild("ogCanvas") public ogCanvas: ElementRef;
+  @ViewChild("modifCanvas") public modifCanvas: ElementRef;
   public modifCtx: CanvasRenderingContext2D;
 
   public constructor(public gameViewService: GameViewService,
@@ -20,14 +23,10 @@ export class Game2DComponent implements OnInit {
     this.differenceValidatorService.game2d = gameViewService.gamecard;
   }
 
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
     this.differenceValidatorService.startNewGame();
-
-    const ogCanvas: HTMLCanvasElement = document.getElementById("ogCanvas") as HTMLCanvasElement;
-    const ogCtx: CanvasRenderingContext2D = ogCanvas.getContext("2d") as CanvasRenderingContext2D;
-
-    const modifCanvas: HTMLCanvasElement = document.getElementById("modifCanvas") as HTMLCanvasElement;
-    this.modifCtx = modifCanvas.getContext("2d") as CanvasRenderingContext2D;
+    const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
+    this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
     this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
     this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false);
@@ -39,7 +38,8 @@ export class Game2DComponent implements OnInit {
         (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
-      });
+      })
+      .catch((err: Error) => {console.error(err); });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {

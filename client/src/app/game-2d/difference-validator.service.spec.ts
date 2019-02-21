@@ -86,7 +86,8 @@ describe("DifferenceValidatorService", () => {
     };
 
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(clickInfoSent));
-    service.sendClickInfo(clickInfoSent);
+    service.sendClickInfo(clickInfoSent)
+    .catch((err: Error) => { console.error(err); });
 
     expect(httpClientSpy.post.calls.count()).toBe(1);
   });

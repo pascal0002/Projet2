@@ -59,7 +59,7 @@ export class DifferencesController {
         });
 
         router.post("/image_pixels", (req: Request, res: Response, next: NextFunction) => {
-            res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.location)));
+    res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.location)));
         });
 
         return router;

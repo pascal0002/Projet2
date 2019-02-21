@@ -5,13 +5,14 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
+import { Game3dGeneratorService } from "../game-3d/game-3d-generator.service";
 import { SceneService } from "../scene-constructor/scene.service";
 import { FormHandler3DService } from "./form-handler-3d.service";
 
  // Used to mock the http call
 
 const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
-const sceneService: SceneService = new SceneService(httpClientSpy);
+const sceneService: SceneService = new SceneService(httpClientSpy, new Game3dGeneratorService(httpClientSpy));
 const listOfGameServiceSpy: any = jasmine.createSpyObj("ListOfGamesService", ["addGameCard3D"]);
 const formValidatorService: FormHandler3DService = new FormHandler3DService(httpClientSpy, listOfGameServiceSpy, sceneService);
 
@@ -45,11 +46,12 @@ describe("FormHandler3DService", () => {
     };
 
     httpSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidator.send3DFormInfo(formSent);
+    formValidator.send3DFormInfo(formSent)
+    .catch((err: Error) => {console.error(err); });
     expect(httpSpy.post.calls.count()).toBe(1);
   });
 
-  it("the HttpClient to create 3D objects should only be called once", () => {
+  it("the HttpClient used to create 3D objects should only be called once", () => {
     const formSent: IFormInfo3D = {
       gameName: "test1",
       objectType: "Theme1",

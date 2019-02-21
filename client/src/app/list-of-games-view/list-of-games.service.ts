@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Constants } from "../../../../common/communication/Constants";
+import { Constants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 @Injectable({
   providedIn: "root",
@@ -67,5 +67,21 @@ export class ListOfGamesService {
 
   private totwoDigitString(initialNumber: number): string {
     return ("0" + initialNumber).slice(Constants.TWO_DIGIT);
+  }
+
+  public delete(gameCard: GameCard): void {
+    this.http.post<void>(`${Constants.SERVER_BASE_URL}api/game_cards/delete`, gameCard)
+      .toPromise()
+      .catch((err) => { console.error("erreur :", err); });
+    (gameCard.dimension === Dimension.TWO_DIMENSION) ?
+      this.deleteFromList(gameCard, Constants.LIST_2D) :
+      this.deleteFromList(gameCard, Constants.LIST_3D);
+  }
+
+  private deleteFromList(gameCard: GameCard, dimension: number): void {
+    const index: number = this.listes[dimension].indexOf(gameCard, 0);
+    if (index > -1) {
+      this.listes[dimension].splice(index, 1);
+    }
   }
 }

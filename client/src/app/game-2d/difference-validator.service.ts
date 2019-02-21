@@ -38,7 +38,9 @@ export class DifferenceValidatorService {
 
   public startNewGame(): void {
     const differenceImage: IDifferenceImage = { name: this.getDifferenceImageName() };
-    this.http.post<IDifferenceImage>(`${Constants.SERVER_BASE_URL}api/differences/new_game`, differenceImage).toPromise();
+    this.http.post<IDifferenceImage>(`${Constants.SERVER_BASE_URL}api/differences/new_game`, differenceImage)
+    .toPromise()
+    .catch((err: Error) => {console.error(err); });
   }
 
   public async sendClickInfo(mousePos: IClickInfo): Promise<number[]> {
@@ -51,12 +53,14 @@ export class DifferenceValidatorService {
   public playVictorySound(): void {
     const audio: HTMLAudioElement = new Audio();
     audio.src = Constants.SOUND_FOLDER + Constants.VICTORY_SOUND;
-    audio.play();
+    audio.play()
+    .catch((err: Error) => {console.error(err); });
   }
 
   public playFailSound(): void {
     const audio: HTMLAudioElement = new Audio();
     audio.src = Constants.SOUND_FOLDER + Constants.FAIL_SOUND;
-    audio.play();
+    audio.play()
+    .catch((err: Error) => {console.error(err); });
   }
 }

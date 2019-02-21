@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
@@ -13,6 +13,7 @@ export class GameCardForm3DComponent implements OnInit {
 
   public form3DGroup: FormGroup;
   public objectTypes: string[];
+  @Output() public form3DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public constructor(private formHandler3DService: FormHandler3DService) {
     this.objectTypes = Constants.OBJECT_TYPES;
@@ -37,7 +38,7 @@ export class GameCardForm3DComponent implements OnInit {
         addCheckBox: new FormControl(false),
         deleteCheckBox: new FormControl(false),
         modifyCheckBox: new FormControl(false),
-      }, this.requireCheckboxesToBeCheckedValidator()),
+      },                           this.requireCheckboxesToBeCheckedValidator()),
 
     });
   }
@@ -58,15 +59,17 @@ export class GameCardForm3DComponent implements OnInit {
     };
   }
 
-  private sendFormInfo(formInfo: IFormInfo3D): void {
-    this.closeForm();
-    this.formHandler3DService.send3DFormInfo(formInfo);
-  }
-
   public submit(): void {
     const formInfo: IFormInfo3D = this.get3DFormInfo();
-    this.sendFormInfo(formInfo);
-    this.formHandler3DService.createObjects(formInfo);
+    this.closeForm();
+    this.formHandler3DService.send3DFormInfo(formInfo)
+    .then(
+      (isOk) => { if (isOk) {this.formHandler3DService.createObjects(formInfo); }},
+      (isNotOk) => { alert(isNotOk.error); },
+    )
+    .catch(
+      (err) => { console.error("erreur :", err); },
+    );
   }
 
   public resetInputValues(): void {
@@ -75,13 +78,6 @@ export class GameCardForm3DComponent implements OnInit {
 
   public closeForm(): void {
     this.resetInputValues();
-
-    const form3D: HTMLElement | null = document.getElementById("formWindow3D");
-    const pageMask: HTMLElement | null = document.getElementById("pageMask");
-
-    if (form3D && pageMask) {
-      form3D.style.display = "none";
-      pageMask.style.display = "none";
-    }
+    this.form3DClosedEvent.emit(true);
   }
 }
