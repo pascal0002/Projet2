@@ -34,7 +34,6 @@ describe("SceneService", () => {
       const mockFormInfo3D: IFormInfo3D = { gameName: "Nom", objectType: "", numberOfObjects: 40, addObjects: true,
                                             modifyObjects: true, deleteObjects: false };
 
-
       httpClientSpy.post.and.returnValue(TestHelper.asyncData(mockFormInfo3D));
 
       sceneService.createObjects(mockFormInfo3D);
