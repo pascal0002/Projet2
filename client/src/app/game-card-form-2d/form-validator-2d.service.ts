@@ -29,18 +29,15 @@ export class FormValidator2dService {
     return ((extension.toLowerCase()).split(".").pop() === Constants.VALID_FILE_EXTENSION);
   }
 
-  public async generateGameCard(formInfo: IFormInfo2D): Promise<GameCard> {
-    return new Promise<GameCard>(() => {
-      this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
-        .toPromise()
-        .then(
-          (gamecard) => { this.listOfGameService.addGameCard2D(gamecard); },
-          (gameCard) => { alert(gameCard.error); },
-        )
-        .catch(
-          (err) => { console.error("erreur :", err); },
-        );
-    });
+  public generateGameCard(formInfo: IFormInfo2D): void {
+    this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/game_cards/image_pair`, formInfo)
+      .toPromise()
+      .then(
+        (gamecard) => { this.listOfGameService.addGameCard2D(gamecard); },
+        (gameCard) => { alert(gameCard.error); },
+      )
+      .catch(
+        (err) => { console.error("erreur :", err); },
+      );
   }
-
 }

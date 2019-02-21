@@ -15,6 +15,8 @@ export class GameCardForm2DComponent implements OnInit {
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo2D;
+  public error: String;
+
   public constructor(private formValidatorService: FormValidator2dService,
                      private bitmapReaderService: BitmapReaderService) {
     this.formInfo = {
@@ -22,6 +24,7 @@ export class GameCardForm2DComponent implements OnInit {
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
       modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
     };
+    this.error = "";
   }
 
   public closeForm2D(): void {
@@ -88,10 +91,11 @@ export class GameCardForm2DComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.formValidatorService.generateGameCard(this.formInfo)
-      .catch(
-        (err) => { console.error("erreur :", err); },
-      );
+    try {
+      this.formValidatorService.generateGameCard(this.formInfo);
+    } catch (error) {
+      this.error = error.message;
+    }
     this.closeForm2D();
   }
 
