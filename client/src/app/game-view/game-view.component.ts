@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Mode } from "../../../../common/communication/Constants";
+import { Game3DComponent } from "../game-3d/game-3d.component";
 import { GameViewService } from "./game-view.service";
+
 @Component({
   selector: "app-game-view",
   templateUrl: "./game-view.component.html",
@@ -16,6 +18,9 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild("timeProgressView")
   private medalTimeProgressBarView: CircleProgressComponent;
+
+  @ViewChild("game3d")
+  private game3d: Game3DComponent;
 
   public readonly magnifierIconWidth: number = 35;
   public readonly magnifierProgressOffset: number = 42;
@@ -38,6 +43,7 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.gameViewService.reset();
+    this.game3d.ngOnDestroy();
   }
 
   public ngAfterViewInit(): void {

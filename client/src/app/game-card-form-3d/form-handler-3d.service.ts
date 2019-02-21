@@ -21,7 +21,7 @@ export class FormHandler3DService {
       Object.keys(formGroup.controls).forEach((key) => {
         const control: AbstractControl = formGroup.controls[key];
 
-        if (control.value === true) {
+        if (control.value) {
           checked++;
         }
       });

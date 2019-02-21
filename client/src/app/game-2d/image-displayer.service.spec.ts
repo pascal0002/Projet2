@@ -22,25 +22,27 @@ describe("ImageDisplayerService", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
 
     // The first three lines of testImage.bmp are black pixels.
-    service.getImagePixels("/mock/testImage.bmp").then((res) => {
-        for (let i: number = 0; i < 921600; i++ ) {
+    service.getImagePixels("/mock/testImage.bmp")
+      .then(
+        (res) => {
+          for (let i: number = 0; i < 921600; i++) {
             (i < 1920 * 3) ? expect(res[i]).toEqual(0) : expect(res[i]).toEqual(255);
-        }
-    });
+          }
+        },
+      );
   });
 
   it("should not return an array of the image pixels when the path is empty", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
 
-    service.getImagePixels("")
-    .catch((err: Error) => { expect(err).toBeTruthy(); });
+    service.getImagePixels("").catch((err: Error) => { expect(err).toBeTruthy(); });
   });
 
   it("should not return an array of the image pixels when the path is incorrect", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
 
     service.getImagePixels("testImage.bmp")
-    .catch((err: Error) => { expect(err).toBeTruthy(); });
+      .catch((err: Error) => { expect(err).toBeTruthy(); });
   });
 
   it("should put the pixels in the canvas", () => {
@@ -49,10 +51,13 @@ describe("ImageDisplayerService", () => {
     const ctx: CanvasRenderingContext2D | null = testCanvas.getContext("2d");
 
     if (ctx) {
-      service.getImagePixels("/mock/testImage.bmp").then((res) => {
-        service.drawPixelsInCanvas(ctx, res);
-        expect(ctx.getImageData(0, 0, 640, 480).data).toEqual(res);
-      });
+      service.getImagePixels("/mock/testImage.bmp")
+        .then(
+          (res) => {
+            service.drawPixelsInCanvas(ctx, res);
+            expect(ctx.getImageData(0, 0, 640, 480).data).toEqual(res);
+          },
+        );
     }
   });
 

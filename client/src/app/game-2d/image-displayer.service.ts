@@ -18,8 +18,7 @@ export class ImageDisplayerService {
     const imgLocation: IImageLocation = { location: imageLocation };
 
     return new Promise<number[]>((resolve: Function, res: Function) =>
-      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + "api/differences/image_pixels", imgLocation)
-        .toPromise()));
+      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API_IMAGEPIXEL_URL, imgLocation).toPromise()));
   }
 
   public drawPixelsInCanvas(ctx: CanvasRenderingContext2D, pixels: number[]): void {
@@ -43,17 +42,17 @@ export class ImageDisplayerService {
   }
 
   public eraseDifference(modifCtx: CanvasRenderingContext2D, pixelsToChange: number[]): void {
-        // In canvas, the pixels are written from top to bottom, while they are stored from bottom up on the server.
-        const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
-        const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
-        pixelsToChange.forEach((pixelPos: number) => {
-            flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + Constants.RED_COLOR];
-            flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + Constants.GREEN_COLOR];
-            flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR ] = flippedOriginalPixels[pixelPos + Constants.BLUE_COLOR];
-        });
-        this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
-        this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
-    }
+    // In canvas, the pixels are written from top to bottom, while they are stored from bottom up on the server.
+    const flippedModifiedPixels: number[] = this.flipPixelsOnYAxis(this.modifiedImagePixels);
+    const flippedOriginalPixels: number[] = this.flipPixelsOnYAxis(this.originalImagePixels);
+    pixelsToChange.forEach((pixelPos: number) => {
+      flippedModifiedPixels[pixelPos + Constants.RED_COLOR] = flippedOriginalPixels[pixelPos + Constants.RED_COLOR];
+      flippedModifiedPixels[pixelPos + Constants.GREEN_COLOR] = flippedOriginalPixels[pixelPos + Constants.GREEN_COLOR];
+      flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR] = flippedOriginalPixels[pixelPos + Constants.BLUE_COLOR];
+    });
+    this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
+    this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
+  }
   public getFolderLocation(path: string, isTheOriginalImage: boolean): string {
     return (isTheOriginalImage) ?
       Constants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string

@@ -16,9 +16,11 @@ export class Game2DComponent implements AfterViewInit {
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
   public modifCtx: CanvasRenderingContext2D;
 
-  public constructor(public gameViewService: GameViewService,
-                     private differenceValidatorService: DifferenceValidatorService,
-                     private imageDisplayerService: ImageDisplayerService) {
+  public constructor
+    (
+      public gameViewService: GameViewService,
+      private differenceValidatorService: DifferenceValidatorService,
+      private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
   }
@@ -39,22 +41,22 @@ export class Game2DComponent implements AfterViewInit {
         this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
       })
-      .catch((err: Error) => {console.error(err); });
+      .catch((err: Error) => { console.error(err); });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY))
-      .then((res) => {
-        if (res.length !== 0) {
-          this.imageDisplayerService.eraseDifference(this.modifCtx, res);
-          this.differenceValidatorService.playVictorySound();
-          this.gameViewService.onDiffFound();
-        } else {
-          this.differenceValidatorService.playFailSound();
-        }
-      },
+      .then(
+        (res) => {
+          if (res.length !== 0) {
+            this.imageDisplayerService.eraseDifference(this.modifCtx, res);
+            this.differenceValidatorService.playVictorySound();
+            this.gameViewService.onDiffFound();
+          } else {
+            this.differenceValidatorService.playFailSound();
+          }
+        },
       )
-      .catch(
-        (err) => { console.error("erreur :", err); });
+      .catch((err) => { console.error("erreur :", err); });
   }
 }
