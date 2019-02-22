@@ -72,9 +72,9 @@
       <button class="btn btn-default" (click)="closeForm2D()">Annuler</button>
     </div>
 
-    <div id="error">
-      {{error}}
-    </div>
+  </div>
 
+  <div id="error" [class.visible]="error.length > 0">
+    {{error}}
   </div>
 </div>

@@ -18,6 +18,7 @@ export class GameCardForm3DComponent implements OnInit {
 
   public constructor(private formHandler3DService: FormHandler3DService) {
     this.objectTypes = Constants.OBJECT_TYPES;
+    this.error = "";
   }
 
   public ngOnInit(): void {
