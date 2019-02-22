@@ -2,7 +2,6 @@
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
-// import * as THREE from "three";
 import { IThreeObject } from "../../../../common/communication/ThreeObject";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
@@ -15,7 +14,6 @@ let game3dGeneratorService: Game3dGeneratorService;
 let sceneService: SceneService;
 let mockObjects: IThreeObject[];
 let testObject: IThreeObject;
-// let scene: THREE.Scene;
 
 describe("SceneService", () => {
   beforeEach(() => {
@@ -47,11 +45,11 @@ describe("SceneService", () => {
   describe("generateObjects", () => {
     it("should call the http request only once", () => {
       const gameName: string = "testGame";
-      mockObjects.push(testObject);
       const mockGameCard: GameCard = { title: gameName, image: "", imageModified: "",
                                        bestTimeSolo: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
                                        bestTime1v1: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
                                        dimension: 1};
+      mockObjects.push(testObject);
 
       httpClientSpy.post.and.returnValue(TestHelper.asyncData(mockGameCard));
       sceneService.generateObjects(mockObjects, gameName);
