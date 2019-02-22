@@ -25,7 +25,7 @@ const appRoutes: Routes = [
   { path: "", component: UserLoginComponent },
   { path: "games_list", component: ListOfGamesViewComponent },
   { path: "admin", component: AdministrationViewComponent },
-  { path: "game_view_2d", component: GameViewComponent },
+  { path: "game_view", component: GameViewComponent },
   { path: "3d_edit", component: Game3DComponent },
 ];
 
@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     NgCircleProgressModule.forRoot(),
   ],
   providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService,
-              FormValidator2dService, SceneService, ImageDisplayerService, ],
+    FormValidator2dService, SceneService, ImageDisplayerService,],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
