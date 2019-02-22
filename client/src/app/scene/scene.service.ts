@@ -21,8 +21,8 @@ export class SceneService {
   public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) {
     this.originalScene = new THREE.Scene();
     this.modifiedScene = new THREE.Scene();
-    // l'initialisation des renderer est faite dans le constructeur sans le canvas en paramètre pour que les tests fonctionnent
-    // puisqu'ils n'appelent pas le component qui contient le canvas
+    // l'initialisation des renderer est faite dans le constructeur sans le canvas en paramètre pour que
+    // les tests fonctionnent puisqu'ils n'appelent pas le component qui contient le canvas
     this.originalGlRenderer = new THREE.WebGLRenderer();
     this.modifiedGlRenderer = new THREE.WebGLRenderer();
   }
@@ -103,13 +103,15 @@ export class SceneService {
       imageData: imageData,
     };
     this.clearObjects();
-    this.addLighting(this.originalScene);
 
     return this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
       .toPromise();
   }
 
-  public clearObjects(): void {
-    // Future méthode servant à libérer la mémoire de la scène
+  private clearObjects(): void {
+    for (let i: number = this.originalScene.children.length - 1; i >= 0; i--) {
+      this.originalScene.remove(this.originalScene.children[i]);
+    }
+    this.addLighting(this.originalScene);
   }
 }

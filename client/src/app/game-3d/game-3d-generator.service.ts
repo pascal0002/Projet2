@@ -34,16 +34,16 @@ export class Game3dGeneratorService {
   }
 
   private createBasicObject(object: IThreeObject): THREE.Mesh {
-    const material: THREE.MeshStandardMaterial = this.makeRandomColors(object);
+    const material: THREE.MeshStandardMaterial = this.makeColors(object);
     const geometry: THREE.Geometry = this.chooseObject(object.diameter, object.height, object.type);
 
     return new THREE.Mesh(geometry, material);
   }
 
-  private makeRandomColors(object: IThreeObject): THREE.MeshStandardMaterial {
+  private makeColors(object: IThreeObject): THREE.MeshStandardMaterial {
     const color: THREE.Color = new THREE.Color(object.color);
 
-    return new THREE.MeshStandardMaterial({ color: color, metalness: 0.1 });
+    return new THREE.MeshStandardMaterial({ color: color});
   }
 
   private chooseObject(diameter: number, height: number, choice: number): THREE.Geometry {

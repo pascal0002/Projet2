@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { SceneService } from "../scene/scene.service";
@@ -7,7 +7,7 @@ import { SceneService } from "../scene/scene.service";
   templateUrl: "./game-3d.component.html",
   styleUrls: ["./game-3d.component.css"],
 })
-export class Game3DComponent implements OnInit, OnDestroy {
+export class Game3DComponent implements OnInit {
   private gameCard: GameCard;
 
   public get leftCanvas(): HTMLCanvasElement {
@@ -31,10 +31,6 @@ export class Game3DComponent implements OnInit, OnDestroy {
     this.sceneService.createModifiedCanvas(this.rightCanvas);
     this.ngZone.runOutsideAngular(() => this.renderRight());
     this.sceneService.generateAllObjects(this.gameCard.title);
-  }
-
-  public ngOnDestroy(): void {
-    this.sceneService.clearObjects();
   }
 
   public renderLeft(): void {
