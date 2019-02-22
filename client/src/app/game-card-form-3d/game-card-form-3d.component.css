@@ -1,16 +1,20 @@
 #formWindow3D {
-    margin-left: 30%;
-    margin-top: 7px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
     width: 500px;
+
     display: flex;
     grid-gap: 10px;
     flex-direction: row;
-    padding: 20px;
     align-items: center;
-    border: 2px solid #ddd;
+
+    padding: 20px;
+    border-radius: 10px;
     z-index:1;
     background-color: rgb(255, 255, 255);
-    position: fixed;
     display: inline-block;
 }
 
@@ -18,9 +22,6 @@
     font-size: 30px;
 }
 
-#header {
-    height: 90px;
-}
 
 .formElementContainer {
     display: flex;
@@ -31,8 +32,6 @@
     display: flex;
     flex-direction: row;
     padding-bottom: 5px;
-    
-
 }
 
 .checkBoxText{
@@ -64,15 +63,15 @@
     width: 230px;
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .lastCheckBoxContainer{
     display: flex;
     flex-direction: row;
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
     margin-bottom:7px;
 }

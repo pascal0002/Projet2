@@ -39,7 +39,7 @@ export class GameCardForm3DComponent implements OnInit {
         addCheckBox: new FormControl(false),
         deleteCheckBox: new FormControl(false),
         modifyCheckBox: new FormControl(false),
-      },                           this.requireCheckboxesToBeCheckedValidator()),
+      }, this.requireCheckboxesToBeCheckedValidator()),
 
     });
   }
@@ -64,12 +64,12 @@ export class GameCardForm3DComponent implements OnInit {
     const formInfo: IFormInfo3D = this.get3DFormInfo();
     this.closeForm();
     this.formHandler3DService.send3DFormInfo(formInfo)
-    .then(
-      (isOk) => { if (isOk) {this.formHandler3DService.createObjects(formInfo); }},
-    )
-    .catch(
-      (err) => { this.error = err.error; },
-    );
+      .then(
+        (isOk) => { if (isOk) { this.formHandler3DService.createObjects(formInfo); } },
+      )
+      .catch(
+        (err) => { this.error = err.error; },
+      );
   }
 
   public resetInputValues(): void {

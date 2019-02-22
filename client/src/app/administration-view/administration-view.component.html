@@ -5,10 +5,12 @@
 
 <div class="adminMenu">
   <img id="logo" src="../../assets/logo.png" height="50px" width="50px" />
-  <div class="createCardButton button" (click)="openForm2D()">Créer une carte PDV simple <i class="fas fa-draw-polygon"></i></div>
-  <div class="createCardButton button" (click)="openForm3D()">Créer une carte PDV libre <i class="fas fa-cubes"></i></div>
+  <div class="createCardButton button" (click)="openForm2D()" [class.unclickable]="!form2DIsHidden || !form3DIsHidden">Créer une carte PDV simple <i class="fas fa-draw-polygon"></i></div>
+  <div class="createCardButton button" (click)="openForm3D()" [class.unclickable]=" !form2DIsHidden || !form3DIsHidden">Créer une carte PDV libre <i class="fas fa-cubes"></i></div>
 </div>
 
 <app-list-of-games-view [isInAdminView]=true id="adminView"></app-list-of-games-view>
 
 <app-scene id="scene"></app-scene>
+
+<div id="mask" [class.visible]="!form2DIsHidden || !form3DIsHidden"></div>
