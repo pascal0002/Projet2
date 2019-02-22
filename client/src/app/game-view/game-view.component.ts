@@ -18,8 +18,6 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("timeProgressView")
   private medalTimeProgressBarView: CircleProgressComponent;
 
-  @ViewChild("game3d")
-
   public readonly magnifierIconWidth: number = 35;
   public readonly magnifierProgressOffset: number = 42;
   public readonly magnifierProgress1V1Offset: number = 42;

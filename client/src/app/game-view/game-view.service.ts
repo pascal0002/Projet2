@@ -10,10 +10,12 @@ import { GameCard } from "../../../../common/communication/game-card";
 
 export class GameViewService {
 
-  public gamecard: GameCard = {title: "", image: "", imageModified: "",
-                               bestTimeSolo: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
-                               bestTime1v1: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
-                               dimension: 0};
+  public gamecard: GameCard = {
+    title: "", image: "", imageModified: "",
+    bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+    bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+    dimension: 0
+  };
   public mode: Mode = Mode.SOLO;
   public dimension: Dimension = Dimension.TWO_DIMENSION;
 
