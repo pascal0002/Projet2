@@ -1,5 +1,6 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
+import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { IThreeObject } from "../../../../common/communication/ThreeObject";
@@ -36,7 +37,8 @@ describe("SceneService", () => {
       mockObjects.push(testObject);
 
       httpClientSpy.post.and.returnValue(TestHelper.asyncData(mockObjects));
-      sceneService.createObjects(mockFormInfo3D);
+      sceneService.createObjects(mockFormInfo3D)
+      .catch((err: any) => new ErrorHandler());
 
       expect(httpClientSpy.post.calls.count()).toBe(1);
     });
@@ -52,7 +54,8 @@ describe("SceneService", () => {
       mockObjects.push(testObject);
 
       httpClientSpy.post.and.returnValue(TestHelper.asyncData(mockGameCard));
-      sceneService.generateObjects(mockObjects, gameName);
+      sceneService.generateObjects(mockObjects, gameName)
+      .catch((err: any) => new ErrorHandler());
 
       expect(httpClientSpy.post.calls.count()).toBe(1);
     });
