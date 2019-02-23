@@ -14,7 +14,7 @@ export class GameViewService {
     title: "", image: "", imageModified: "",
     bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
     bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
-    dimension: 0
+    dimension: 0,
   };
   public mode: Mode = Mode.SOLO;
   public dimension: Dimension = Dimension.TWO_DIMENSION;
@@ -53,7 +53,11 @@ export class GameViewService {
     this.opponentDiffFoundCount = 0;
   }
 
-  public onDiffFound(): void {
+  // public onDiffFound(): void {
+  //   this.diffFoundCount++;
+  // }
+
+  public incrementDiffFound(): void {
     this.diffFoundCount++;
   }
 
