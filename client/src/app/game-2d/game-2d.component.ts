@@ -11,16 +11,14 @@ import { ImageDisplayerService } from "./image-displayer.service";
   styleUrls: ["./game-2d.component.css"],
 })
 export class Game2DComponent implements AfterViewInit {
-  public gameCard: GameCard;
+
   @ViewChild("ogCanvas") public ogCanvas: ElementRef;
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
   public modifCtx: CanvasRenderingContext2D;
+  public gameCard: GameCard;
 
-  public constructor
-    (
-      public gameViewService: GameViewService,
-      private differenceValidatorService: DifferenceValidatorService,
-      private imageDisplayerService: ImageDisplayerService) {
+  public constructor(public gameViewService: GameViewService, private differenceValidatorService: DifferenceValidatorService,
+                     private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
   }

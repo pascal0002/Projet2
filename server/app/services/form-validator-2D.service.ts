@@ -31,7 +31,7 @@ export class FormValidator2DService {
 
     private validateImageDimensions(height: number, width: number): boolean {
 
-        return (height === Constants.ACCEPTED_HEIGHT && width === Constants.ACCEPTED_WIDTH);
+        return (height === Constants.VALID_BMP_HEIGHT && width === Constants.VALID_BMP_WIDTH);
     }
 
     private validateBitDepth(bitDepth: number): boolean {

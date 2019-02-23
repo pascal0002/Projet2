@@ -46,7 +46,7 @@ export class DifferencesController {
                 this.bitmapGenerator.createTemporaryFile(
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
                                                                           imgOfDifferencePixels,
-                                                                          Constants.ACCEPTED_WIDTH),
+                                                                          Constants.VALID_BMP_WIDTH),
                     Constants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
                     clickInfo.differenceImageName);
 

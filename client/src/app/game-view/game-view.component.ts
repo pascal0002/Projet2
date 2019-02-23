@@ -18,10 +18,6 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("timeProgressView")
   private medalTimeProgressBarView: CircleProgressComponent;
 
-  public readonly magnifierIconWidth: number = 35;
-  public readonly magnifierProgressOffset: number = 42;
-  public readonly magnifierProgress1V1Offset: number = 42;
-
   public constructor(public gameViewService: GameViewService) {
   }
 
@@ -58,14 +54,14 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
   public miscGetArrayDiffFoundCount(): Array<number> {
     return Array.apply(null, {
       length: ((this.gameViewService.mode === Mode.SOLO)
-        ? this.gameViewService.diffFoundCount : Constants.DIFFERENCE_NB),
+        ? this.gameViewService.diffFoundCount : Constants.VALID_NUMBER_OF_DIFFERENCES),
     }).map(Number.call, Number);
   }
 
   public miscGetDiffCounterWidth(): number {
 
-    return this.magnifierProgressOffset + ((this.gameViewService.mode === Mode.SOLO)
-      ? 0 : this.magnifierProgress1V1Offset) + (this.magnifierIconWidth * ((this.gameViewService.mode === Mode.SOLO)
-        ? this.gameViewService.diffFoundCount : Constants.DIFFERENCE_NB));
+    return Constants.MAGNIFIER_PROGRESS_OFFSET + ((this.gameViewService.mode === Mode.SOLO)
+      ? 0 : Constants.MAGNIFIER_PROGRESS_1V1_OFFSET) + (Constants.MAGNIFIER_ICON_WIDTH * ((this.gameViewService.mode === Mode.SOLO)
+        ? this.gameViewService.diffFoundCount : Constants.VALID_NUMBER_OF_DIFFERENCES));
   }
 }
