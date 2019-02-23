@@ -13,7 +13,6 @@ const clickedPixelPos: number = 36;
 const mockClickInfo: IClickInfo = {
     xPos: 0,
     yPos: 0,
-    differenceImageName: "test.bmp",
 };
 
 describe("DifferenceIdentificator2DService", () => {

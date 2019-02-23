@@ -43,7 +43,7 @@ export class DifferencesController {
                                                                         diffInfoToHandle.differenceImage.pixels)) {
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
                                                                           diffInfoToHandle.differenceImage.pixels,
-                                                                          Constants.ACCEPTED_WIDTH);
+                                                                          Constants.VALID_BMP_WIDTH);
 
                     // Send the array of the pos of diff pixels
                     res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
