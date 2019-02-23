@@ -51,7 +51,7 @@ const appRoutes: Routes = [
     NgCircleProgressModule.forRoot(),
   ],
   providers: [UserLoginService, WebsocketService, HttpClient, BitmapReaderService,
-    FormValidator2dService, SceneService, ImageDisplayerService,],
+              FormValidator2dService, SceneService, ImageDisplayerService, ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

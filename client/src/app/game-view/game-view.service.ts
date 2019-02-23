@@ -10,31 +10,38 @@ import { GameCard } from "../../../../common/communication/game-card";
 
 export class GameViewService {
 
-  public gamecard: GameCard = {
-    title: "", image: "", imageModified: "",
-    bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
-    bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
-    dimension: 0,
-  };
-  public mode: Mode = Mode.SOLO;
-  public dimension: Dimension = Dimension.TWO_DIMENSION;
+  public gamecard: GameCard;
+  public mode: Mode;
 
-  public diffFoundCount: number = 0;
-  public opponentDiffFoundCount: number = 0;
+  public diffFoundCount: number;
+  public opponentDiffFoundCount: number;
 
   public consoleEL: ElementRef;
   public timerEL: CircleProgressComponent;
 
-  public bestScoreTimer: number = 0;
-  public timer: number = 0;
+  public bestScoreTimer: number;
+  public timer: number;
   public timerOutput: string;
-  private targetTime: number = 0;
-  private cycle: number = 0;
+  private targetTime: number;
+  private cycle: number;
   private timerIntervalCache: number;
   private bestScoreIntervalCache: number;
 
-  public readonly timerResolution: number = 100;
-  public readonly timerIncrement: number = Constants.SECOND_TO_MILLISECOND / this.timerResolution;
+  public constructor() {
+    this.gamecard = {
+      title: "", image: "", imageModified: "",
+      bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+      bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+      dimension: Dimension.TWO_DIMENSION,
+    };
+    this.mode = Mode.SOLO;
+    this.diffFoundCount = 0;
+    this.opponentDiffFoundCount = 0;
+    this.bestScoreTimer = 0;
+    this.timer = 0;
+    this.targetTime = 0;
+    this.cycle = 0;
+  }
 
   public init(): void {
     this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time;
@@ -53,10 +60,6 @@ export class GameViewService {
     this.opponentDiffFoundCount = 0;
   }
 
-  // public onDiffFound(): void {
-  //   this.diffFoundCount++;
-  // }
-
   public incrementDiffFound(): void {
     this.diffFoundCount++;
   }
@@ -72,16 +75,16 @@ export class GameViewService {
 
   public startTimer(): void {
     const callback: Function = () => {
-      this.timer += this.timerIncrement;
-      this.timerOutput = this.timeToString(this.timer / this.timerResolution);
+      this.timer += Constants.TIMER_INCREMENT;
+      this.timerOutput = this.timeToString(this.timer / Constants.TIMER_RESOLUTION);
     };
-    this.timerIntervalCache = setInterval(callback, this.timerResolution);
+    this.timerIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
   public startBestScoreTimer(): void {
     const callback: Function = () => {
-      this.bestScoreTimer += this.timerIncrement;
-      this.timerEL.percent = this.bestScoreTimer / this.timerResolution / this.targetTime * Constants.PERCENT_FACTOR;
+      this.bestScoreTimer += Constants.TIMER_INCREMENT;
+      this.timerEL.percent = this.bestScoreTimer / Constants.TIMER_RESOLUTION / this.targetTime * Constants.PERCENT_FACTOR;
 
       if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
@@ -90,7 +93,7 @@ export class GameViewService {
       this.timerEL.draw(this.timerEL.percent);
     };
 
-    this.bestScoreIntervalCache = setInterval(callback, this.timerResolution);
+    this.bestScoreIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
   private onCycle(): void {

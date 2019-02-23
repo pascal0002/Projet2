@@ -40,7 +40,7 @@ export class GameCardForm3DComponent implements OnInit {
         addCheckBox: new FormControl(false),
         deleteCheckBox: new FormControl(false),
         modifyCheckBox: new FormControl(false),
-      }, this.requireCheckboxesToBeCheckedValidator()),
+      },                           this.requireCheckboxesToBeCheckedValidator()),
 
     });
   }
