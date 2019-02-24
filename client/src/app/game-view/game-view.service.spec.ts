@@ -45,5 +45,12 @@ describe("GameViewService", () => {
     expect(service.timerModel.bestScoreTime).toBeGreaterThan(1);
   });
 
+  it("should reset correctly the timer callback", async () => {
+    service.init();
+    service.reset();
+    await sleep(Constants.TIMER_RESOLUTION);
+    expect(service.timerModel.time).toEqual(0);
+  });
+
 
 });
