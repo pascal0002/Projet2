@@ -2,6 +2,7 @@ import { formatDate } from "@angular/common";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
+import { TimerProps } from "../../../../common/communication/TimerProps";
 import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
@@ -19,13 +20,7 @@ export class GameViewService {
   public consoleEL: ElementRef;
   public timerEL: CircleProgressComponent;
 
-  public bestScoreTimer: number;
-  public timer: number;
-  public timerOutput: string;
-  private targetTime: number;
-  private cycle: number;
-  private timerIntervalCache: number;
-  private bestScoreIntervalCache: number;
+  public timerModel: TimerProps;
 
   public constructor() {
     this.gamecard = {
@@ -37,25 +32,20 @@ export class GameViewService {
     this.mode = Mode.SOLO;
     this.diffFoundCount = 0;
     this.opponentDiffFoundCount = 0;
-    this.bestScoreTimer = 0;
-    this.timer = 0;
-    this.targetTime = 0;
-    this.cycle = 0;
+    this.timerModel = { bestScoreTime: 0, time: 0, targetTime: 0, cycle: 0, output: "0", intervalCache: 0, bestScoreIntervalCache: 0 };
   }
 
   public init(): void {
-    this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time;
+    this.timerModel.targetTime = this.gamecard.bestTimeSolo[this.timerModel.cycle].time;
     this.startBestScoreTimer();
     this.startTimer();
     this.logMessage("Game started");
   }
 
   public reset(): void {
-    clearInterval(this.bestScoreIntervalCache);
-    clearInterval(this.timerIntervalCache);
-    this.bestScoreTimer = 0;
-    this.timer = 0;
-    this.cycle = 0;
+    clearInterval(this.timerModel.bestScoreIntervalCache);
+    clearInterval(this.timerModel.intervalCache);
+    this.timerModel = { bestScoreTime: 0, time: 0, targetTime: 0, cycle: 0, output: "0", intervalCache: 0, bestScoreIntervalCache: 0 };
     this.diffFoundCount = 0;
     this.opponentDiffFoundCount = 0;
   }
@@ -75,16 +65,16 @@ export class GameViewService {
 
   public startTimer(): void {
     const callback: Function = () => {
-      this.timer += Constants.TIMER_INCREMENT;
-      this.timerOutput = this.timeToString(this.timer / Constants.TIMER_RESOLUTION);
+      this.timerModel.time += Constants.TIMER_INCREMENT;
+      this.timerModel.output = this.timeToString(this.timerModel.time / Constants.TIMER_RESOLUTION);
     };
-    this.timerIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
+    this.timerModel.intervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
   public startBestScoreTimer(): void {
     const callback: Function = () => {
-      this.bestScoreTimer += Constants.TIMER_INCREMENT;
-      this.timerEL.percent = this.bestScoreTimer / Constants.TIMER_RESOLUTION / this.targetTime * Constants.PERCENT_FACTOR;
+      this.timerModel.bestScoreTime += Constants.TIMER_INCREMENT;
+      this.timerEL.percent = this.timerModel.bestScoreTime / Constants.TIMER_RESOLUTION / this.timerModel.targetTime * Constants.PERCENT_FACTOR;
 
       if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
@@ -93,26 +83,26 @@ export class GameViewService {
       this.timerEL.draw(this.timerEL.percent);
     };
 
-    this.bestScoreIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
+    this.timerModel.bestScoreIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
   private onCycle(): void {
-    this.cycle++;
+    this.timerModel.cycle++;
 
     /*Supprime le callback du timer de médaille*/
-    clearInterval(this.bestScoreIntervalCache);
+    clearInterval(this.timerModel.bestScoreIntervalCache);
 
-    if (this.cycle < Constants.NUMBER_MEDAL) {
-      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];
-      this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.cycle + 1];
+    if (this.timerModel.cycle < Constants.NUMBER_MEDAL) {
+      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
+      this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle + 1];
 
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
-      this.targetTime = this.gamecard.bestTimeSolo[this.cycle].time - this.timer;
-      this.bestScoreTimer = 0;
+      this.timerModel.targetTime = this.gamecard.bestTimeSolo[this.timerModel.cycle].time - this.timerModel.time;
+      this.timerModel.bestScoreTime = 0;
       this.startBestScoreTimer();
     } else {
       /*Pas de médaille :( On arrête de suivre le temps*/
-      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.cycle];
+      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
     }
   }
 

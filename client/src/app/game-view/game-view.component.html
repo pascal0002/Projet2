@@ -16,7 +16,7 @@
 
     <div id="game-title">{{gameViewService.gamecard.title}}</div>
     <div id="chrono-container">
-      <span id="time">{{this.gameViewService.timerOutput}}</span>
+      <span id="time">{{this.gameViewService.timerModel.output}}</span>
       <circle-progress #timeProgressView id="timer" [outerStrokeLinecap]="'butt'" [renderOnClick]=false [space]="-1" [showTitle]=false [showSubtitle]=[false] [showImage]=[false] [showBackground]="true" [showUnits]="false" [radius]="35" [outerStrokeWidth]="16" [backgroundPadding]="0" [showInnerStroke]="false"></circle-progress>
       <img id="hourglass" src="../../assets/hourglass.png" />
     </div>
