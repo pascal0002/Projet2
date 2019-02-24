@@ -1,4 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
+import { Constants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { SceneService } from "../scene/scene.service";
@@ -18,8 +19,8 @@ export class Game3DComponent implements OnInit {
     return this.rightCanvasRef.nativeElement;
   }
 
-  @ViewChild("leftCanvas") public leftCanvasRef: ElementRef;
-  @ViewChild("rightCanvas") public rightCanvasRef: ElementRef;
+  @ViewChild(Constants.ORIGINAL_CANVAS_3D) public leftCanvasRef: ElementRef;
+  @ViewChild(Constants.MODIFIED_CANVAS_3D) public rightCanvasRef: ElementRef;
 
   public constructor(private ngZone: NgZone, private sceneService: SceneService, private gameViewService: GameViewService) {
     this.gameCard = this.gameViewService.model.gamecard;

@@ -55,8 +55,8 @@ export class ImageDisplayerService {
 
   public getFolderLocation(path: string, isTheOriginalImage: boolean): string {
     return (isTheOriginalImage) ?
-      Constants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string
-      : Constants.PUBLIC_MODIF_FOLDER_PATH + path.split("/").pop() as string;
+      Constants.PUBLIC_OG_FOLDER_PATH + path.split(Constants.BACK_SLASH).pop() as string
+      : Constants.PUBLIC_MODIF_FOLDER_PATH + path.split(Constants.BACK_SLASH).pop() as string;
   }
 
   private flipPixelsOnYAxis(pixels: number[]): number[] {

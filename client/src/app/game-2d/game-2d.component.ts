@@ -15,8 +15,8 @@ export class Game2DComponent implements AfterViewInit {
   public differenceImgPixels: number[];
   public canClickAgain: boolean = true;
   public modifCtx: CanvasRenderingContext2D;
-  @ViewChild("ogCanvas") public ogCanvas: ElementRef;
-  @ViewChild("modifCanvas") public modifCanvas: ElementRef;
+  @ViewChild(Constants.ORIGINAL_CANVAS_2D) public ogCanvas: ElementRef;
+  @ViewChild(Constants.MODIFIED_CANVAS_2D) public modifCanvas: ElementRef;
 
   public constructor(public gameViewService: GameViewService,
                      private differenceValidatorService: DifferenceValidatorService,
