@@ -59,43 +59,41 @@ describe("ImageDisplayerService", () => {
       .catch((err: Error) => { expect(err).toBeTruthy(); });
   });
 
-  it("should put the pixels in the canvas", () => {
+  it("should draw the pixels in the canvas", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const testCanvas: HTMLCanvasElement = document.createElement("canvas");
-    const ctx: CanvasRenderingContext2D | null = testCanvas.getContext("2d");
+    const ctx: CanvasRenderingContext2D = testCanvas.getContext("2d") as CanvasRenderingContext2D;
+    const pixelsToInsert: number [] = [12, 155, 35, 17, 231, 84];
 
-    if (ctx) {
-      service.getImagePixels("/mock/testImage.bmp")
-        .then(
-          (res) => {
-            service.drawPixelsInCanvas(ctx, res);
-            expect(ctx.getImageData(0, 0, 640, 480).data).toEqual(res);
-          },
-        );
+    // it should add an opacity of 255 after the RGB values of each pixel
+    // the pixel colors are drawn in BGR instead of RGB in the canvas
+    const expectedResult: number[] = [35, 155, 12, 255, 84, 231, 17, 255];
+
+    service.drawPixelsInCanvas(ctx, pixelsToInsert);
+    for (let i: number = 0; i < expectedResult.length; i++) {
+      expect(ctx.getImageData(0, 0, 2, 1).data[i]).toEqual(expectedResult[i]);
     }
   });
 
-  // it("should return the folder location of the specified original image", () => {
-  //   const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-  //   expect(service.getFolderLocation("testImage.bmp", true)).toEqual("/public/originalImages/testImage.bmp");
-  // });
+  it("should return the folder location of the specified original image", () => {
+     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+     expect(service.getFolderLocation("testImage.bmp", true)).toEqual("/public/originalImages/testImage.bmp");
+   });
 
-  // it("should return the folder location of the specified modified image", () => {
-  //   const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-  //   expect(service.getFolderLocation("modifImage.bmp", false)).toEqual("/public/modifiedImages/modifImage.bmp");
-  // });
+  it("should return the folder location of the specified modified image", () => {
+     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+     expect(service.getFolderLocation("modifImage.bmp", false)).toEqual("/public/modifiedImages/modifImage.bmp");
+   });
 
-  // Ce test fonctionne si la méthode flipPixelsOnYAxis est publique
-
-  /*it("should return the pixels flipped", () => {
+  it("should return the pixels flipped", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const pixelsToFlip: number[] = firstLineBlackPixels;
 
-    const flippedPixels: number[] = service.flipPixelsOnYAxis(pixelsToFlip);
+    const flippedPixels: number[] = service["flipPixelsOnYAxis"](pixelsToFlip);
     for (let i: number = 919680; i > 921600; i++) {
       expect(flippedPixels[i]).toEqual(0);
     }
-  });*/
+  });
 
   it("should erase 1 black pixel if a difference of 1 pixel needs to be erased", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
