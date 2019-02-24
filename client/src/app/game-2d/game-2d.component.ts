@@ -17,18 +17,18 @@ export class Game2DComponent implements AfterViewInit {
   @ViewChild("ogCanvas") public ogCanvas: ElementRef;
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
 
-  public constructor (public gameViewService: GameViewService,
-                      private differenceValidatorService: DifferenceValidatorService,
-                      private imageDisplayerService: ImageDisplayerService) {
+  public constructor(public gameViewService: GameViewService,
+    private differenceValidatorService: DifferenceValidatorService,
+    private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
   }
 
   public ngAfterViewInit(): void {
     this.differenceValidatorService.getDifferenceImgPixels()
-    .then((res: number[]) => {
-      this.differenceImgPixels = res;
-    });
+      .then((res: number[]) => {
+        this.differenceImgPixels = res;
+      });
     const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
@@ -48,7 +48,7 @@ export class Game2DComponent implements AfterViewInit {
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
-                                                  this.differenceImgPixels)
+      this.differenceImgPixels)
       .then(
         (res) => {
           if (res.length) {
@@ -64,7 +64,7 @@ export class Game2DComponent implements AfterViewInit {
   private onDifferenceFound(differencePixelsToErase: number[]): void {
     this.imageDisplayerService.eraseDifference(this.modifCtx, differencePixelsToErase);
     this.differenceValidatorService.playVictorySound();
-    this.gameViewService.incrementDiffFound();
+    this.gameViewService.onDiffFound();
   }
 
   private onClickFail(): void {

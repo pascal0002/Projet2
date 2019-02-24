@@ -50,7 +50,7 @@ export class GameViewService {
     this.opponentDiffFoundCount = 0;
   }
 
-  public incrementDiffFound(): void {
+  public onDiffFound(): void {
     this.diffFoundCount++;
   }
 

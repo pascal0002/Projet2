@@ -64,6 +64,15 @@ describe("GameViewService", () => {
     expect(service.timerModel.cycle).toEqual(Constants.SILVER_COLOR);
   });
 
+  it("should increment diffFoundCount", () => {
+    service.onDiffFound();
+    expect(service.diffFoundCount).toEqual(1);
+  });
+
+  it("should increment opponentDiffFoundCount", () => {
+    service.onOpponentDiffFound();
+    expect(service.opponentDiffFoundCount).toEqual(1);
+  });
 
 
 });
