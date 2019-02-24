@@ -2,7 +2,8 @@ import * as fs from "fs";
 import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
-import { IFormInfo } from "../../../common/communication/FormInfo";
+import { Constants } from "../../../common/communication/Constants";
+import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import Types from "../types";
 import { BitmapEncoder } from "./bitmap-encoder.service";
 
@@ -10,21 +11,33 @@ import { BitmapEncoder } from "./bitmap-encoder.service";
 export class BmpFileGenerator {
     public constructor(@inject(Types.BitmapEncoder) private bitmapEncoderService: BitmapEncoder) {}
 
-    public generateBMPFiles(form: IFormInfo, imageOfDifferences: IBitmapImage): void {
+    public generateBMPFiles(form: IFormInfo2D, imageOfDifferences: IBitmapImage): void {
         this.generateOriginalBMPFile(form.originalImage);
         this.generateModifedBMPFile(form.modifiedImage);
         this.generateDifferenceBMPFile(imageOfDifferences);
     }
 
-    public generateOriginalBMPFile(image: IBitmapImage): void {
+    private generateOriginalBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/originalImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
-    public generateModifedBMPFile(image: IBitmapImage): void {
+    private generateModifedBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/modifiedImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
-    public generateDifferenceBMPFile(image: IBitmapImage): void {
+    private generateDifferenceBMPFile(image: IBitmapImage): void {
         fs.writeFileSync(process.cwd() + "/public/differenceImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
+    }
+
+    public createTemporaryFile(imgPixels: number[], path: string, fileName: string): void {
+            const tempImg: IBitmapImage = {
+                fileName: fileName,
+                height: Constants.VALID_BMP_HEIGHT,
+                width: Constants.VALID_BMP_WIDTH,
+                bitDepth: Constants.ACCEPTED_BIT_DEPTH,
+                pixels: imgPixels,
+            };
+
+            fs.writeFileSync(process.cwd() + path, this.bitmapEncoderService.encodeBitmap(tempImg));
     }
 }

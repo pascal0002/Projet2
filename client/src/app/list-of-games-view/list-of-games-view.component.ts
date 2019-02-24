@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from "@angular/core";
-import {GameCard} from "../../../../common/communication/game-card";
-import {TWO_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/2d-game-card-mock-list";
-import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-game-card-mock-list";
+import { Component, Input } from "@angular/core";
+import { Mode } from "../../../../common/communication/Constants";
+import { GameCard } from "../../../../common/communication/game-card";
+import { GameViewService } from "../game-view/game-view.service";
+import { ListOfGamesService } from "./list-of-games.service";
 
 @Component({
   selector: "app-list-of-games-view",
@@ -9,16 +10,26 @@ import {THREE_DIMENSION_GAME_CARD_LIST} from "../../../../server/public/mock/3d-
   styleUrls: ["./list-of-games-view.component.css"],
 })
 
-export class ListOfGamesViewComponent implements OnInit {
+export class ListOfGamesViewComponent {
 
   @Input() public isInAdminView: boolean = false;
   public listes: GameCard[][];
 
-  public constructor(/**/) {
-    this.listes = [TWO_DIMENSION_GAME_CARD_LIST, THREE_DIMENSION_GAME_CARD_LIST];
+  public constructor(public listOfGamesService: ListOfGamesService, public gameViewService: GameViewService) {
+    this.listes = this.listOfGamesService.listes;
   }
 
-  public ngOnInit(): void {
-    /**/
+  public playSolo(gameCard: GameCard): void {
+    this.gameViewService.model.gamecard = gameCard;
+    this.gameViewService.model.mode = Mode.SOLO;
+  }
+
+  public play1v1(gameCard: GameCard): void {
+    this.gameViewService.model.gamecard = gameCard;
+    this.gameViewService.model.mode = Mode.ONE_VS_ONE;
+  }
+
+  public delete(gameCard: GameCard): void {
+    this.listOfGamesService.delete(gameCard);
   }
 }

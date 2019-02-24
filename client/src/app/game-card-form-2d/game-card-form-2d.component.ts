@@ -1,129 +1,146 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import {ClientConstants} from "../../../../common/communication/Constants";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { Constants } from "../../../../common/communication/Constants";
+import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 import { BitmapReaderService } from "./bitmap-reader.service";
 import { FormValidator2dService } from "./form-validator-2d.service";
-
 @Component({
   selector: "app-game-card-form-2d",
   templateUrl: "./game-card-form-2d.component.html",
   styleUrls: ["./game-card-form-2d.component.css"],
 })
-export class GameCardFormComponent implements OnInit {
+export class GameCardForm2DComponent implements OnInit {
+  @Output() public form2DClosedEvent: EventEmitter<boolean> = new EventEmitter();
 
   public form2DGroup: FormGroup;
-  private formInfo: IFormInfo;
+  private formInfo: IFormInfo2D;
+  public error: String;
 
-  public constructor(private formValidatorService: FormValidator2dService, private bitmapReaderService: BitmapReaderService) {
+  public constructor(private formValidatorService: FormValidator2dService,
+                     private bitmapReaderService: BitmapReaderService,
+                     private listOfGameService: ListOfGamesService) {
     this.formInfo = {
       gameName: "",
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
       modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
     };
+    this.error = "";
   }
 
   public closeForm2D(): void {
-    this.formValidatorService.closeForm2D();
+    this.hideForm2D();
     this.form2DGroup.reset();
+    this.clearFormInfo();
+  }
+
+  private hideForm2D(): void {
+    this.form2DClosedEvent.emit(true);
   }
 
   public ngOnInit(): void {
     this.form2DGroup = new FormGroup({
       title: new FormControl("", [
         Validators.required,
-        Validators.minLength(ClientConstants.MIN_TITLE_LENGTH),
-        Validators.maxLength(ClientConstants.MAX_TITLE_LENGTH),
+        Validators.minLength(Constants.MIN_TITLE_LENGTH),
+        Validators.maxLength(Constants.MAX_TITLE_LENGTH),
       ]),
       originalFileInput: new FormControl("", []),
       modifiedFileInput: new FormControl("", []),
     });
   }
 
-  public readOriginalBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("originalBMPInput") as HTMLInputElement;
+  public readOriginalBitmap($event: Event): void {
+    let originalInput: HTMLInputElement;
     let file: File;
-
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    if ($event.target) {
+      originalInput = $event.target as HTMLInputElement;
+      if (originalInput.files) {
+        file = originalInput.files[0];
         this.formInfo.originalImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
 
-  public readModifiedBitmap(): void {
-    const inputElement: HTMLInputElement = document.getElementById("modifiedBMPInput") as HTMLInputElement;
-    let file: File;
+  public readModifiedBitmap($event: Event): void {
 
-    if (inputElement.files) {
-      file = inputElement.files[0];
-      if (file) {
+    let modifiedInput: HTMLInputElement;
+    let file: File;
+    if ($event.target) {
+      modifiedInput = $event.target as HTMLInputElement;
+      if (modifiedInput.files) {
+        file = modifiedInput.files[0];
         this.formInfo.modifiedImage = this.bitmapReaderService.decodeBitmapFile(file);
       }
     }
   }
 
-  public validImageDimensions(height: number, width: number): boolean {
+  private validImageDimensions(height: number, width: number): boolean {
     return this.formValidatorService.validImageDimensions(height, width);
   }
 
-  public validBitDepth(bitDepth: number): boolean {
+  private validBitDepth(bitDepth: number): boolean {
     return this.formValidatorService.validBitDepth(bitDepth);
   }
 
-  public validBMPExtension(extension: string): boolean {
+  private validBMPExtension(extension: string): boolean {
     return this.formValidatorService.validBMPExtension(extension);
   }
 
-  public validTitle(): boolean {
+  private validTitle(): boolean {
     return this.formValidatorService.validTitle(this.formInfo.gameName);
   }
 
   public onSubmit(): void {
     this.formValidatorService.generateGameCard(this.formInfo)
-    .catch(
-      (err) => {console.error("erreur :", err); },
-    );
+      .then(
+        (gamecard) => {
+          this.listOfGameService.addGameCard2D(gamecard);
+          this.closeForm2D();
+        },
+      )
+      .catch(
+        (err) => { this.error = err.error; },
+      );
   }
 
   public updateGameName(): void {
-    const gameNameInput: HTMLInputElement = document.getElementById("gameName") as HTMLInputElement;
-    this.formInfo.gameName = gameNameInput.value;
+    this.formInfo.gameName = this.form2DGroup.controls.title.value;
   }
 
-  public clearFormInfo(): void {
+  private clearFormInfo(): void {
     this.formInfo.gameName = "";
     this.formInfo.originalImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
     this.formInfo.modifiedImage = { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] };
+    this.error = "";
   }
 
   public canSubmit(): boolean {
 
     return (
-             this.validBMPExtension(this.formInfo.originalImage.fileName) &&
-             this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
-             this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
-             this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
-             this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
-             this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
-             this.validTitle()
-           );
+      this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+      this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+      this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+      this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width) &&
+      this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width) &&
+      this.validTitle()
+    );
   }
 
   public isAValidOriginalImage(): boolean {
-      return (
-               this.validBMPExtension(this.formInfo.originalImage.fileName) &&
-               this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
-               this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
-             );
+    return (
+      this.validBMPExtension(this.formInfo.originalImage.fileName) &&
+      this.validBitDepth(this.formInfo.originalImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.originalImage.height, this.formInfo.originalImage.width)
+    );
   }
 
   public isAValidModifiedImage(): boolean {
-      return (
-               this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
-               this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
-               this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
-             );
+    return (
+      this.validBMPExtension(this.formInfo.modifiedImage.fileName) &&
+      this.validBitDepth(this.formInfo.modifiedImage.bitDepth) &&
+      this.validImageDimensions(this.formInfo.modifiedImage.height, this.formInfo.modifiedImage.width)
+    );
   }
 }

@@ -1,0 +1,91 @@
+#formWindow3D {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 500px;
+
+    display: flex;
+    grid-gap: 10px;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 20px;
+    border-radius: 10px;
+    z-index:1;
+    background-color: rgb(255, 255, 255);
+    display: inline-block;
+}
+
+#title {
+    font-size: 30px;
+}
+
+
+.formElementContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkBoxContainer {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+}
+
+.checkBoxText{
+    margin-left: 15px;
+}
+
+.elementTitle {
+    margin-top: 20px;
+}
+
+.textInput {
+    width: 50%;
+}
+
+.numberInput {
+    width: 50px;
+}
+
+.alert {
+    width: 230px;
+    margin-bottom: 0px;
+}
+
+.btn {
+    margin-right: 15px;
+}
+
+.optionMenu {
+    width: 230px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.lastCheckBoxContainer{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 5px;
+    margin-bottom:7px;
+}
+
+#error{
+    color: red;
+    background-color: rgb(255, 126, 126);
+    border-radius: 10px;
+    padding: 10px;
+    opacity: 0;
+    transition: 0.5s ease-in-out all;
+}
+
+#error.visible{
+  opacity: 1;
+}
+

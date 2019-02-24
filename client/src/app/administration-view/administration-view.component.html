@@ -1,10 +1,16 @@
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-<app-game-card-form-2d id="formWindow" style="display: none;"></app-game-card-form-2d>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<app-game-card-form-2d [hidden]="form2DIsHidden" (form2DClosedEvent)="closeForm2D($event)"></app-game-card-form-2d>
+
+<app-game-card-form-3d [hidden]="form3DIsHidden" (form3DClosedEvent)="closeForm3D($event)"></app-game-card-form-3d>
 
 <div class="adminMenu">
-    <div class="createCardButton button" (click)="openForm2D()">Créer une carte PDV simple (2D)</div>
-    <div class="createCardButton button">Créer une carte PDV libre (3D)</div>
+  <img id="logo" src="../../assets/logo.png" height="50px" width="50px" />
+  <div class="createCardButton button" (click)="openForm2D()" [class.unclickable]="!form2DIsHidden || !form3DIsHidden">Créer une carte PDV simple <i class="fas fa-draw-polygon"></i></div>
+  <div class="createCardButton button" (click)="openForm3D()" [class.unclickable]=" !form2DIsHidden || !form3DIsHidden">Créer une carte PDV libre <i class="fas fa-cubes"></i></div>
 </div>
 
-<app-list-of-games-view [isInAdminView]=true style="margin-top: 200px;"></app-list-of-games-view>
+<app-list-of-games-view [isInAdminView]=true id="adminView"></app-list-of-games-view>
+
+<app-scene id="scene"></app-scene>
+
+<div id="mask" [class.visible]="!form2DIsHidden || !form3DIsHidden"></div>

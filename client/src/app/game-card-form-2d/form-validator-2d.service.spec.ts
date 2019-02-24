@@ -2,7 +2,7 @@
 // tslint:disable:no-any
 import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
-import { IFormInfo } from "../../../../common/communication/FormInfo";
+import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../../common/communication/game-card";
 import { TestHelper } from "../../test.helper";
 import { AppModule } from "../app.module";
@@ -12,9 +12,7 @@ describe("FormValidator2dService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
-      declarations: [
-
-      ],
+      declarations: [],
       providers: [],
     });
   });
@@ -109,22 +107,22 @@ describe("FormValidator2dService", () => {
     expect(service.validBMPExtension("extension.bmp")).toBeTruthy();
   });
 
-  it("should return the expected form info when using an httpPost. The HttpClient should also only be called once", () => {
+  it("should return the expected form info when using an httpPost", () => {
     // Used to mock the http call
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
     const formValidatorService: FormValidator2dService = new FormValidator2dService(httpClientSpy);
-    const formSent: IFormInfo = {
+    const formSent: IFormInfo2D = {
       gameName: "Test",
       originalImage: { height: 480, width: 640, bitDepth: 24, fileName: "original.bmp", pixels: [255, 255, 255] },
       modifiedImage: { height: 480, width: 640, bitDepth: 24, fileName: "modified.bmp", pixels: [0, 0, 0] },
     };
-    httpClientSpy.post.and.returnValue(TestHelper.asyncData(formSent));
-    formValidatorService.generateGameCard(formSent).then((res: GameCard) => {
-      expect(res.title).toEqual(formSent.gameName);
-      expect(res.imageName).toEqual(formSent.originalImage.fileName);
-      expect(res.modifiedImageName).toEqual(formSent.modifiedImage.fileName);
-    }).catch((err) => new ErrorHandler());
-
-    expect(httpClientSpy.post.calls.count()).toBe(1, "one call");
+    const gameCard: GameCard = {title: "", image: "", imageModified: "",
+                                bestTimeSolo: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
+                                bestTime1v1: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
+                                dimension: 0};
+    httpClientSpy.post.and.returnValue(TestHelper.asyncData(gameCard));
+    formValidatorService.generateGameCard(formSent)
+    .catch((err: any) => new ErrorHandler());
+    expect(httpClientSpy.post.calls.count()).toBe(1);
   });
 });

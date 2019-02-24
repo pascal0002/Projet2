@@ -1,7 +1,7 @@
 import { injectable } from "inversify";
 import "reflect-metadata";
 import {IBitmapImage} from "../../../common/communication/BitmapImage";
-import {ServerConstants} from "../../../common/communication/Constants";
+import {Constants} from "../../../common/communication/Constants";
 
 @injectable()
 export class DifferenceCounterService {
@@ -17,7 +17,7 @@ export class DifferenceCounterService {
     let counter: number = 0;
     differencesImage.pixels.forEach((pixel: number) => {
       counter++;
-      if (counter % ServerConstants.PIXEL_PARAMETERS_NB === 0 ) {
+      if (counter % Constants.PIXEL_PARAMETERS_NB === 0 ) {
         pixelMap.push([pixel, false]);
       }
     });
@@ -25,17 +25,20 @@ export class DifferenceCounterService {
     return pixelMap;
   }
 
+  private pixelIsBlackAndNotVisited(pixel: [number, boolean]): boolean {
+    return pixel[Constants.COLOR] === Constants.BLACK_PIXEL_PARAMETER && !pixel[Constants.IS_VISITED];
+  }
+
   private travelAndCountDifference(pixelMap: PixelMap): number {
     let numberOfDifference: number = 0;
     let pixelIndex: number = 0;
     pixelMap.value.forEach((pixel: [number, boolean] ) => {
-      if ( pixel[ServerConstants.COLOR] === ServerConstants.BLACK_PIXEL_PARAMETER
-        && pixel[ServerConstants.IS_VISITED] === false ) {
+      if (this.pixelIsBlackAndNotVisited(pixel)) {
         numberOfDifference++;
-        pixel[ServerConstants.IS_VISITED] = true;
+        pixel[Constants.IS_VISITED] = true;
         this.findZone(pixelMap, pixelIndex);
       } else {
-        pixel[ServerConstants.IS_VISITED] = true;
+        pixel[Constants.IS_VISITED] = true;
       }
       pixelIndex ++;
     });
@@ -48,9 +51,8 @@ export class DifferenceCounterService {
     while (pixelStack.length > 0) {
       const neighbors: number[] = this.getNeighbors(pixelStack.shift());
       neighbors.forEach((neighbor: number) => {
-        if (pixelMap.value[neighbor][ServerConstants.COLOR] === ServerConstants.BLACK_PIXEL_PARAMETER
-          && pixelMap.value[neighbor][ServerConstants.IS_VISITED] === false) {
-          pixelMap.value[neighbor][ServerConstants.IS_VISITED] = true;
+        if ( this.pixelIsBlackAndNotVisited(pixelMap.value[neighbor])) {
+          pixelMap.value[neighbor][Constants.IS_VISITED] = true;
           pixelStack.push(neighbor);
         }
       });
@@ -63,43 +65,51 @@ export class DifferenceCounterService {
       return [];
     }
 
-    neighbors = (pixelIndex % ServerConstants.ACCEPTED_WIDTH === 0)
-      ? this.getRightSideNeighbor(pixelIndex)
-      : (pixelIndex % ServerConstants.ACCEPTED_WIDTH === ServerConstants.ACCEPTED_WIDTH - 1)
-        ? neighbors = this.getLeftSideNeighbor(pixelIndex)
-        : this.getBothSideNeighbor(pixelIndex);
+    // Dylan approuve ce disable de TSLint
+    // tslint:disable-next-line:prefer-conditional-expression
+    if (this.checkPixelSide(pixelIndex, Constants.LEFT_SIDE)) {
+      neighbors = this.getRightSideNeighbor(pixelIndex);
+    } else if (this.checkPixelSide(pixelIndex, Constants.RIGHT_SIDE)) {
+      neighbors = this.getLeftSideNeighbor(pixelIndex);
+    } else {
+      neighbors = this.getBothSideNeighbor(pixelIndex);
+    }
 
     neighbors = neighbors.filter((neighbor: number) => neighbor >= 0
-    && neighbor < ServerConstants.ACCEPTED_HEIGHT * ServerConstants.ACCEPTED_WIDTH);
+    && neighbor < Constants.VALID_BMP_HEIGHT * Constants.VALID_BMP_WIDTH);
 
     return neighbors;
   }
 
+  private checkPixelSide(pixelIndex: number, side: number): boolean {
+    return pixelIndex % Constants.VALID_BMP_WIDTH === side;
+  }
+
   private getLeftSideNeighbor(pixelIndex: number): number[] {
-    return [this.getNeighbor(pixelIndex, ServerConstants.TOP_LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.TOP),
-            this.getNeighbor(pixelIndex, ServerConstants.LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM_LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM)];
+    return [this.getNeighbor(pixelIndex, Constants.TOP_LEFT),
+            this.getNeighbor(pixelIndex, Constants.TOP),
+            this.getNeighbor(pixelIndex, Constants.LEFT),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM_LEFT),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM)];
   }
 
   private getRightSideNeighbor(pixelIndex: number): number[] {
-    return [this.getNeighbor(pixelIndex, ServerConstants.TOP),
-            this.getNeighbor(pixelIndex, ServerConstants.TOP_RIGHT),
-            this.getNeighbor(pixelIndex, ServerConstants.RIGHT),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM_RIGHT)];
+    return [this.getNeighbor(pixelIndex, Constants.TOP),
+            this.getNeighbor(pixelIndex, Constants.TOP_RIGHT),
+            this.getNeighbor(pixelIndex, Constants.RIGHT),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM_RIGHT)];
   }
 
   private getBothSideNeighbor(pixelIndex: number): number[] {
-    return [this.getNeighbor(pixelIndex, ServerConstants.TOP_LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.TOP),
-            this.getNeighbor(pixelIndex, ServerConstants.TOP_RIGHT),
-            this.getNeighbor(pixelIndex, ServerConstants.LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.RIGHT),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM_LEFT),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM),
-            this.getNeighbor(pixelIndex, ServerConstants.BOTTOM_RIGHT)];
+    return [this.getNeighbor(pixelIndex, Constants.TOP_LEFT),
+            this.getNeighbor(pixelIndex, Constants.TOP),
+            this.getNeighbor(pixelIndex, Constants.TOP_RIGHT),
+            this.getNeighbor(pixelIndex, Constants.LEFT),
+            this.getNeighbor(pixelIndex, Constants.RIGHT),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM_LEFT),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM),
+            this.getNeighbor(pixelIndex, Constants.BOTTOM_RIGHT)];
   }
 
   private getNeighbor(pixelIndex: number, position: number): number {
