@@ -86,7 +86,7 @@ export class GameViewService {
     this.timerModel.bestScoreIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
-  private onCycle(): void {
+  public onCycle(): void {
     this.timerModel.cycle++;
 
     /*Supprime le callback du timer de médaille*/

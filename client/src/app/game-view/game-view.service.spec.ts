@@ -1,6 +1,6 @@
 import { ElementRef } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
-import { mock } from "ts-mockito";
+import { mock, instance } from "ts-mockito";
 import { Constants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "./game-view.service";
@@ -15,14 +15,13 @@ const mockGameCard: GameCard = {
   dimension: Dimension.TWO_DIMENSION,
 };
 
-describe("GameViewService", () => {
+fdescribe("GameViewService", () => {
 
-  const sleep: Function = async (ms: number): Promise<new () => {}> => {
+  const sleep: Function = async (ms: number) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
   beforeEach(() => {
-    service.reset();
     service = new GameViewService();
     service.gamecard = mockGameCard;
 
@@ -30,7 +29,11 @@ describe("GameViewService", () => {
     service.consoleEL = mockConsoleView;
 
     mockTimerView = mock(CircleProgressComponent);
-    service.timerEL = mockTimerView;
+    service.timerEL = instance(mockTimerView);
+  });
+
+  afterEach(() => {
+    service.reset();
   });
 
   it("should set properly the timer model", () => {
@@ -50,7 +53,7 @@ describe("GameViewService", () => {
 
   it("should hook correctly the best score timer callback", async () => {
     service.startBestScoreTimer();
-    await sleep(Constants.TIMER_RESOLUTION);
+    await sleep(Constants.TIMER_RESOLUTION + 1000);
     expect(service.timerModel.bestScoreTime).toBeGreaterThan(0);
   });
 
@@ -63,14 +66,15 @@ describe("GameViewService", () => {
 
   it("should cycle when 100%", async () => {
     service.init();
-    service.timerEL.percent = Constants.PERCENT_FACTOR;
-    await sleep(Constants.TIMER_RESOLUTION);
-    expect(service["onCycle"]).toHaveBeenCalled();
+    service.timerModel.targetTime = 1;
+    spyOn(service, "onCycle");
+    await sleep(Constants.TIMER_RESOLUTION + 1000);
+    expect(service.onCycle).toHaveBeenCalled();
   });
 
   it("should show the next medal on cycle", () => {
-    service["onCycle"]();
-    expect(service.timerModel.cycle).toEqual(Constants.SILVER_COLOR);
+    service.onCycle();
+    expect(service.timerEL.backgroundColor).toEqual(Constants.SILVER_COLOR);
   });
 
   it("should increment diffFoundCount", () => {
@@ -83,13 +87,6 @@ describe("GameViewService", () => {
     expect(service.opponentDiffFoundCount).toEqual(1);
   });
 
-  it("should log a message properly", () => {
-    service.init();
-    const msg: string = "Hello world !";
-    service.logMessage(msg);
-    expect(service.consoleEL.nativeElement.innerHTML.includes(msg)).toBeTruthy();
-  });
-
   it("should return a valid string time with 0s", () => {
     expect(service.timeToString(0)).toEqual("00:00");
   });
@@ -99,7 +96,7 @@ describe("GameViewService", () => {
   });
 
   it("should return a valid string time with 13s", () => {
-    expect(service.timeToString(5)).toEqual("00:13");
+    expect(service.timeToString(13)).toEqual("00:13");
   });
 
   it("should return a valid string time with 100s", () => {
@@ -107,7 +104,7 @@ describe("GameViewService", () => {
   });
 
   it("should return a valid string time with 600s", () => {
-    expect(service.timeToString(100)).toEqual("10:00");
+    expect(service.timeToString(600)).toEqual("10:00");
   });
 
 });
