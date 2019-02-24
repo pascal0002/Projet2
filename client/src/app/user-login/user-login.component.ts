@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
+import { Constants } from "../../../../common/communication/Constants";
 import { UserLoginService } from "./user-login.service";
 
 @Component({
@@ -14,7 +15,7 @@ export class UserLoginComponent {
 
   public constructor(private userLoginService: UserLoginService, private router: Router) {
     this.isUsernameValid = false;
-    this.errorMessage = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+    this.errorMessage = Constants.LOGIN_ERROR_NAME_SIZE;
   }
 
   public validateUsername(username: string): void {
@@ -24,7 +25,7 @@ export class UserLoginComponent {
       .subscribe(
         (isValid: boolean) => {
           this.isUsernameValid = isValid;
-          this.errorMessage = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+          this.errorMessage = Constants.LOGIN_ERROR_NAME_SIZE;
         },
       );
   }
@@ -34,9 +35,9 @@ export class UserLoginComponent {
       .connect(this.username)
       .subscribe((isValid: boolean) => {
         this.isUsernameValid = isValid;
-        this.errorMessage = "Ce nom d'utilisateur est déjà utilisé";
+        this.errorMessage = Constants.LOGIN_ERROR_NAME_IN_USE;
         if (isValid) {
-          this.router.navigate(["/games_list"])
+          this.router.navigate([Constants.GAME_LIST_ROUTE])
           .catch((err) => console.error(err));
         }
       });

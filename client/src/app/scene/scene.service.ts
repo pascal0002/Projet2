@@ -33,7 +33,7 @@ export class SceneService {
   }
 
   private makeOriginalScene(canvas: HTMLCanvasElement): void {
-    this.originalScene.background = new THREE.Color("skyblue");
+    this.originalScene.background = new THREE.Color(Constants.SKYBLUE_COLOR);
     this.camera = new THREE.PerspectiveCamera(Constants.CAMERA_FIELD_OF_VIEW, canvas.clientWidth / canvas.clientHeight,
                                               Constants.CAMERA_MINIMAL_DISTANCE, Constants.CAMERA_RENDER_DISTANCE);
     this.camera.position.z = Constants.Z_CAMERA_POSITION;
@@ -46,7 +46,7 @@ export class SceneService {
   }
 
   private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
-    this.modifiedScene.background = new THREE.Color("skyblue");
+    this.modifiedScene.background = new THREE.Color(Constants.SKYBLUE_COLOR);
     this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: false });
   }
 
@@ -81,7 +81,7 @@ export class SceneService {
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
-    return this.http.post<IThreeObject[]>(`${Constants.SERVER_BASE_URL}api/scene/objects`, formInfo).toPromise();
+    return this.http.post<IThreeObject[]>(Constants.SERVER_BASE_URL + Constants.API_SCENE_OBJECTS, formInfo).toPromise();
   }
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
@@ -97,14 +97,14 @@ export class SceneService {
   }
 
   private async saveImageData(gameName: string): Promise<GameCard> {
-    const imageData: string = this.originalGlRenderer.domElement.toDataURL("image/jpeg");
+    const imageData: string = this.originalGlRenderer.domElement.toDataURL(Constants.FILE_WANTED);
     const snapshot: ISnapshot = {
       gameName: gameName,
       imageData: imageData,
     };
     this.clearObjects();
 
-    return this.http.post<GameCard>(`${Constants.SERVER_BASE_URL}api/scene/gameCard3D/imageData`, snapshot)
+    return this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API_3D_GAME_CARD_DATA, snapshot)
       .toPromise();
   }
 
