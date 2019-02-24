@@ -39,8 +39,8 @@ export class BitmapEncoder {
         tempBuffer.writeUInt32LE(Constants.DUMMY_VALUE, this.position); this.position += Constants.FOUR_BYTES;
         tempBuffer.writeUInt32LE(Constants.OFFSET_SIZE, this.position); this.position += Constants.FOUR_BYTES;
         tempBuffer.writeUInt32LE(Constants.HEADER_SIZE, this.position); this.position += Constants.FOUR_BYTES;
-        tempBuffer.writeUInt32LE(Constants.ACCEPTED_WIDTH, this.position); this.position += Constants.FOUR_BYTES;
-        tempBuffer.writeInt32LE(-Constants.ACCEPTED_HEIGHT, this.position); this.position += Constants.FOUR_BYTES;
+        tempBuffer.writeUInt32LE(Constants.VALID_BMP_WIDTH, this.position); this.position += Constants.FOUR_BYTES;
+        tempBuffer.writeInt32LE(-Constants.VALID_BMP_HEIGHT, this.position); this.position += Constants.FOUR_BYTES;
         tempBuffer.writeUInt16LE(Constants.PLANES, this.position); this.position += Constants.TWO_BYTES;
         tempBuffer.writeUInt16LE(Constants.ACCEPTED_BIT_DEPTH, this.position); this.position += Constants.TWO_BYTES;
         tempBuffer.writeUInt32LE(Constants.DUMMY_VALUE, this.position); this.position += Constants.FOUR_BYTES;
@@ -55,16 +55,16 @@ export class BitmapEncoder {
 
     private writePixels(tempBuffer: Buffer, pixels: number[]): Buffer {
         let i: number = 0;
-        const ROW_BYTES: number = (Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL) + Constants.EXTRA_BYTES;
+        const ROW_BYTES: number = (Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL) + Constants.EXTRA_BYTES;
 
-        for (let y: number = Constants.ACCEPTED_HEIGHT - 1; y >= 0; y--) {
-            for (let x: number = 0; x < Constants.ACCEPTED_WIDTH; x++) {
+        for (let y: number = Constants.VALID_BMP_HEIGHT - 1; y >= 0; y--) {
+            for (let x: number = 0; x < Constants.VALID_BMP_WIDTH; x++) {
                 const PIXEL_POS: number = this.position + y * ROW_BYTES + x * Constants.BYTES_PER_PIXEL;
                 tempBuffer[PIXEL_POS] = pixels[i++];
                 tempBuffer[PIXEL_POS + 1] = pixels[i++];
                 tempBuffer[PIXEL_POS + 1 + 1] = pixels[i++];
             }
-            const FILL_OFFSET: number = this.position + y * ROW_BYTES + Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL;
+            const FILL_OFFSET: number = this.position + y * ROW_BYTES + Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL;
             tempBuffer.fill(0, FILL_OFFSET, FILL_OFFSET + Constants.EXTRA_BYTES);
         }
 

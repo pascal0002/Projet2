@@ -21,13 +21,21 @@ export abstract class Constants {
     static readonly MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
     static readonly DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/";
 
+    static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
+
     static readonly MINIMUM_NAME_LENGTH: number = 3;
     static readonly MAXIMUM_NAME_LENGTH: number = 15;
     static readonly MINIMUM_USERNAME_LENGTH: number = 3;
     static readonly MAXIMUM_USERNAME_LENGTH: number = 20;
 
-    static readonly ACCEPTED_HEIGHT: number = 480;
-    static readonly ACCEPTED_WIDTH: number = 640;
+    // for the 2D form validator
+    static readonly MIN_TITLE_LENGTH: number = 3;
+    static readonly MAX_TITLE_LENGTH: number = 15;
+    static readonly VALID_BMP_HEIGHT: number = 480;
+    static readonly VALID_BMP_WIDTH: number = 640;
+    static readonly VALID_FILE_EXTENSION: string = "bmp";
+    static readonly VALID_BITS_PER_PIXEL: number = 24;
+
     static readonly ACCEPTED_BIT_DEPTH: number = 24;
 
     static readonly LEFT_SIDE: number = 0;
@@ -43,14 +51,14 @@ export abstract class Constants {
 
     static readonly COLOR: number = 0;
     static readonly IS_VISITED: number = 1;
-    static readonly TOP_LEFT: number = Constants.ACCEPTED_WIDTH - 1;
-    static readonly TOP: number = Constants.ACCEPTED_WIDTH;
-    static readonly TOP_RIGHT: number = Constants.ACCEPTED_WIDTH + 1;
+    static readonly TOP_LEFT: number = Constants.VALID_BMP_WIDTH - 1;
+    static readonly TOP: number = Constants.VALID_BMP_WIDTH;
+    static readonly TOP_RIGHT: number = Constants.VALID_BMP_WIDTH + 1;
     static readonly LEFT: number = -1;
     static readonly RIGHT: number = 1;
-    static readonly BOTTOM_LEFT: number = -Constants.ACCEPTED_WIDTH - 1;
-    static readonly BOTTOM: number = -Constants.ACCEPTED_WIDTH;
-    static readonly BOTTOM_RIGHT: number = -Constants.ACCEPTED_WIDTH + 1;
+    static readonly BOTTOM_LEFT: number = -Constants.VALID_BMP_WIDTH - 1;
+    static readonly BOTTOM: number = -Constants.VALID_BMP_WIDTH;
+    static readonly BOTTOM_RIGHT: number = -Constants.VALID_BMP_WIDTH + 1;
 
     static readonly BLACK_PIXEL: IPixel = { red: 0, blue: 0, green: 0 };
 
@@ -62,15 +70,13 @@ export abstract class Constants {
     static readonly HEADER_SIZE: number = 40;
     static readonly FLAG: string = "BM";
     static readonly PLANES: number = 1;
-    static readonly EXTRA_BYTES: number = Constants.ACCEPTED_WIDTH % Constants.FOUR_BYTES;
-    static readonly LINE_BYTE_SIZE: number = (Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL)
+    static readonly EXTRA_BYTES: number = Constants.VALID_BMP_WIDTH % Constants.FOUR_BYTES;
+    static readonly LINE_BYTE_SIZE: number = (Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL)
         + Constants.EXTRA_BYTES;
-    static readonly RGB_SIZE: number = Constants.ACCEPTED_HEIGHT * Constants.LINE_BYTE_SIZE;
+    static readonly RGB_SIZE: number = Constants.VALID_BMP_HEIGHT * Constants.LINE_BYTE_SIZE;
     static readonly FILE_SIZE: number = Constants.RGB_SIZE + Constants.OFFSET_SIZE;
 
     static readonly ERROR: number = 400;
-
-    static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
 
     static readonly X_OBJECT_DISPERSION: number = 200;
     static readonly Y_OBJECT_DISPERSION: number = 100;
@@ -91,8 +97,6 @@ export abstract class Constants {
     static readonly SQUARE_FACTOR: number = 2;
     static readonly DIMENSIONS_NB: number = 3;
 
-    /* SERVER */
-
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
     static readonly API_NEWGAME_URL: string = "api/differences/new_game";
     static readonly API_DIFFVALIDATOR_URL: string = "api/differences/difference_validator";
@@ -100,7 +104,7 @@ export abstract class Constants {
 
     static readonly DIFFIMAGE_SUFFIX = "Differences.bmp";
 
-    /*Game View*/
+    // game View
     static readonly NUMBER_MEDAL: number = 3;
     static readonly GOLD_COLOR: string = "#FFD700";
     static readonly SILVER_COLOR: string = "#C0C0C0";
@@ -122,14 +126,6 @@ export abstract class Constants {
     static readonly NEXT_PIXEL_RGBA: number = 4;
     static readonly OPACITY_INDEX: number = 3;
     static readonly MAX_PIXEL_OPACITY: number = 255;
-
-    // for the 2D form validator
-    static readonly MIN_TITLE_LENGTH: number = 3;
-    static readonly MAX_TITLE_LENGTH: number = 15;
-    static readonly VALID_BMP_HEIGHT: number = 480;
-    static readonly VALID_BMP_WIDTH: number = 640;
-    static readonly VALID_FILE_EXTENSION: string = "bmp";
-    static readonly VALID_BITS_PER_PIXEL: number = 24;
 
     // for the bitmap reader
     static readonly WIDTH_OFFSET: number = 18;
@@ -177,7 +173,12 @@ export abstract class Constants {
     static readonly AMBIENT_LIGHT_COLOR: number = 0xffffff;
     static readonly DIRECTIONAL_LIGHT_COLOR: number = 0x333333;
 
-    static readonly DIFFERENCE_NB: number = 7;
+    static readonly MAGNIFIER_ICON_WIDTH: number = 35;
+    static readonly MAGNIFIER_PROGRESS_OFFSET: number = 42;
+    static readonly MAGNIFIER_PROGRESS_1V1_OFFSET: number = 42;
+
+    static readonly TIMER_RESOLUTION: number = 100;
+    static readonly TIMER_INCREMENT: number = Constants.SECOND_TO_MILLISECOND / Constants.TIMER_RESOLUTION;
 }
 
 export enum Dimension {

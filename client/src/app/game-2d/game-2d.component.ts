@@ -12,21 +12,23 @@ import { ImageDisplayerService } from "./image-displayer.service";
 })
 export class Game2DComponent implements AfterViewInit {
   public gameCard: GameCard;
+  public differenceImgPixels: number[];
+  public modifCtx: CanvasRenderingContext2D;
   @ViewChild("ogCanvas") public ogCanvas: ElementRef;
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
-  public modifCtx: CanvasRenderingContext2D;
 
-  public constructor
-    (
-      public gameViewService: GameViewService,
-      private differenceValidatorService: DifferenceValidatorService,
-      private imageDisplayerService: ImageDisplayerService) {
+  public constructor (public gameViewService: GameViewService,
+                      private differenceValidatorService: DifferenceValidatorService,
+                      private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.gamecard;
     this.differenceValidatorService.game2d = gameViewService.gamecard;
   }
 
   public ngAfterViewInit(): void {
-    this.differenceValidatorService.startNewGame();
+    this.differenceValidatorService.getDifferenceImgPixels()
+    .then((res: number[]) => {
+      this.differenceImgPixels = res;
+    });
     const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
@@ -34,7 +36,7 @@ export class Game2DComponent implements AfterViewInit {
     this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false);
   }
 
-  public drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
+  private drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
     this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
       .then((res) => {
         (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
@@ -45,18 +47,28 @@ export class Game2DComponent implements AfterViewInit {
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
-    this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY))
+    this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
+                                                  this.differenceImgPixels)
       .then(
         (res) => {
-          if (res.length !== 0) {
-            this.imageDisplayerService.eraseDifference(this.modifCtx, res);
-            this.differenceValidatorService.playVictorySound();
-            this.gameViewService.onDiffFound();
+          if (res.length) {
+            this.onDifferenceFound(res);
           } else {
-            this.differenceValidatorService.playFailSound();
+            this.onClickFail();
           }
         },
       )
       .catch((err) => { console.error("erreur :", err); });
   }
+
+  private onDifferenceFound(differencePixelsToErase: number[]): void {
+    this.imageDisplayerService.eraseDifference(this.modifCtx, differencePixelsToErase);
+    this.differenceValidatorService.playVictorySound();
+    this.gameViewService.incrementDiffFound();
+  }
+
+  private onClickFail(): void {
+    this.differenceValidatorService.playFailSound();
+  }
+
 }

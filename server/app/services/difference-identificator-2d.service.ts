@@ -35,7 +35,7 @@ export class DifferenceIdentificator2DService {
     }
 
     public getPositionInArray(clickPosition: IClickInfo): number {
-        return ((clickPosition.yPos * Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL)
+        return ((clickPosition.yPos * Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL)
             + clickPosition.xPos * Constants.BYTES_PER_PIXEL);
     }
 
@@ -81,7 +81,7 @@ export class DifferenceIdentificator2DService {
         // tslint:disable-next-line:prefer-conditional-expression
         if (this.checkPixelSide(clickedPixelPos, Constants.LEFT_SIDE)) {
             correctPixelNeighbours = this.getRightSideNeighbours(clickedPixelPos, imageWidth);
-        } else if (this.checkPixelSide(clickedPixelPos, ((Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL)
+        } else if (this.checkPixelSide(clickedPixelPos, ((Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL)
                                                            -  Constants.BYTES_PER_PIXEL))) {
             correctPixelNeighbours = this.getLeftSideNeighbours(clickedPixelPos, imageWidth);
         } else {
@@ -131,7 +131,7 @@ export class DifferenceIdentificator2DService {
     }
 
     private checkPixelSide(pixelIndex: number, side: number): boolean {
-        return pixelIndex % (Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL) === side;
+        return pixelIndex % (Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL) === side;
     }
 
     private getRightPixelNeighbour(clickedPixelPos: number): number {

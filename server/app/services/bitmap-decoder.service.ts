@@ -20,9 +20,9 @@ export class BitmapDecoder {
 
     public flipPixelsOnYAxis(pixels: number[]): number[] {
         const flippedPixels: number[] = [];
-        for (let y: number = (Constants.ACCEPTED_HEIGHT - 1); y >= 0; y--) {
-            for (let x: number = 0; x < Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL; x++) {
-                flippedPixels.push(pixels[y * Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL + x]);
+        for (let y: number = (Constants.VALID_BMP_HEIGHT - 1); y >= 0; y--) {
+            for (let x: number = 0; x < Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL; x++) {
+                flippedPixels.push(pixels[y * Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL + x]);
             }
         }
 

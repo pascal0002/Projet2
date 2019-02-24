@@ -32,8 +32,8 @@ export class BmpFileGenerator {
     public createTemporaryFile(imgPixels: number[], path: string, fileName: string): void {
             const tempImg: IBitmapImage = {
                 fileName: fileName,
-                height: Constants.ACCEPTED_HEIGHT,
-                width: Constants.ACCEPTED_WIDTH,
+                height: Constants.VALID_BMP_HEIGHT,
+                width: Constants.VALID_BMP_WIDTH,
                 bitDepth: Constants.ACCEPTED_BIT_DEPTH,
                 pixels: imgPixels,
             };

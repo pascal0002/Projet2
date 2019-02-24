@@ -76,13 +76,13 @@ export class DifferenceCounterService {
     }
 
     neighbors = neighbors.filter((neighbor: number) => neighbor >= 0
-    && neighbor < Constants.ACCEPTED_HEIGHT * Constants.ACCEPTED_WIDTH);
+    && neighbor < Constants.VALID_BMP_HEIGHT * Constants.VALID_BMP_WIDTH);
 
     return neighbors;
   }
 
   private checkPixelSide(pixelIndex: number, side: number): boolean {
-    return pixelIndex % Constants.ACCEPTED_WIDTH === side;
+    return pixelIndex % Constants.VALID_BMP_WIDTH === side;
   }
 
   private getLeftSideNeighbor(pixelIndex: number): number[] {

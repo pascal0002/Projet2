@@ -70,10 +70,9 @@ describe("DifferenceValidatorService", () => {
 
     expect(resultClickInfo.yPos).toEqual(430);
     expect(resultClickInfo.xPos).toEqual(50);
-    expect(resultClickInfo.differenceImageName).toEqual("testDifferences.bmp");
   });
 
-  it("should return the expected click info when using an httpPost. The HttpClient should also only be called once", () => {
+  it("the HttpClient should  only be called once", () => {
     // Used to mock the http call
     // tslint:disable-next-line:no-any
     const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
@@ -81,14 +80,11 @@ describe("DifferenceValidatorService", () => {
     const clickInfoSent: IClickInfo = {
       yPos: 0,
       xPos: 42,
-      differenceImageName: "barbecueDifferences.bmp",
     };
-
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(clickInfoSent));
-    service.sendClickInfo(clickInfoSent)
+    service.sendClickInfo(clickInfoSent, [255, 255, 255])
     .catch((err: Error) => { console.error(err); });
 
     expect(httpClientSpy.post.calls.count()).toBe(1);
   });
-
 });

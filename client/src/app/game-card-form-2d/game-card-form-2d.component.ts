@@ -18,8 +18,8 @@ export class GameCardForm2DComponent implements OnInit {
   public error: String;
 
   public constructor(private formValidatorService: FormValidator2dService,
-    private bitmapReaderService: BitmapReaderService,
-    private listOfGameService: ListOfGamesService) {
+                     private bitmapReaderService: BitmapReaderService,
+                     private listOfGameService: ListOfGamesService) {
     this.formInfo = {
       gameName: "",
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },

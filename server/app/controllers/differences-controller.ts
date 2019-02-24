@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
-import { IClickInfo } from "../../../common/communication/ClickInfo";
 import { Constants } from "../../../common/communication/Constants";
+// import { IClickInfo } from "../../../common/communication/ClickInfo";
+import { IDiffInfoToHandle } from "../../../common/communication/DiffInfoToHandle";
 import { IDifferenceImage } from "../../../common/communication/DifferenceImage";
 import { BitmapDecoder } from "../services/bitmap-decoder.service";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
@@ -31,35 +32,28 @@ export class DifferencesController {
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
                                                      Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
                                                      differenceImage.name);
-            res.send(true);
+            // res.send(true);
+            res.json(imgOfDifferencePixels);
         });
 
         router.post("/difference_validator", (req: Request, res: Response, next: NextFunction) => {
-            const clickInfo: IClickInfo = req.body;
-            const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(clickInfo);
-            let imgOfDifferencePixels: number[];
-
-            imgOfDifferencePixels = this.bitmapDecoder.getPixels(Constants.PUBLIC_TEMP_FOLDER_PATH
-                + clickInfo.differenceImageName);
-            if (this.differenceIdentificator2DService.confirmDifference(clickInfo, imgOfDifferencePixels)) {
-                // Overwrite the temp image
-                this.bitmapGenerator.createTemporaryFile(
+            const diffInfoToHandle: IDiffInfoToHandle = req.body;
+            const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(diffInfoToHandle.clickInfo);
+            if (this.differenceIdentificator2DService.confirmDifference(diffInfoToHandle.clickInfo,
+                                                                        diffInfoToHandle.differenceImage.pixels)) {
                     this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
-                                                                          imgOfDifferencePixels,
-                                                                          Constants.ACCEPTED_WIDTH),
-                    Constants.PUBLIC_TEMP_FOLDER_PATH + clickInfo.differenceImageName,
-                    clickInfo.differenceImageName);
+                                                                          diffInfoToHandle.differenceImage.pixels,
+                                                                          Constants.VALID_BMP_WIDTH);
 
-                // Send the array of the pos of diff pixels
-                res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
-            } else {
-                res.send([]);
-            }
-
+                    // Send the array of the pos of diff pixels
+                    res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
+                } else {
+                    res.send([]);
+                }
         });
 
         router.post("/image_pixels", (req: Request, res: Response, next: NextFunction) => {
-    res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.location)));
+            res.json(this.bitmapDecoder.flipPixelsOnYAxis(this.bitmapDecoder.getPixels(req.body.location)));
         });
 
         return router;

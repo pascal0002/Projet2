@@ -13,7 +13,6 @@ const clickedPixelPos: number = 36;
 const mockClickInfo: IClickInfo = {
     xPos: 0,
     yPos: 0,
-    differenceImageName: "test.bmp",
 };
 
 describe("DifferenceIdentificator2DService", () => {
@@ -168,7 +167,7 @@ describe("DifferenceIdentificator2DService", () => {
     it("should detect that the pixel is on the right border", (done: Mocha.Done) => {
         mockClickInfo.xPos = 639;
         mockClickInfo.yPos = 400;
-        const RIGHT_SIDE: number = (Constants.ACCEPTED_WIDTH * Constants.BYTES_PER_PIXEL) -  Constants.BYTES_PER_PIXEL;
+        const RIGHT_SIDE: number = (Constants.VALID_BMP_WIDTH * Constants.BYTES_PER_PIXEL) -  Constants.BYTES_PER_PIXEL;
         const clickPos: number = differenceIdentificatorService["getPositionInArray"](mockClickInfo);
         expect(differenceIdentificatorService["checkPixelSide"](clickPos, RIGHT_SIDE)).equal(true);
         done();
