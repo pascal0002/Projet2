@@ -231,6 +231,9 @@ export abstract class Constants {
     static readonly DELETE_ONLY: string = JSON.stringify([true, false, false]);
     static readonly COLOR_ONLY: string = JSON.stringify([false, true, false]);
     static readonly ADD_ONLY: string = JSON.stringify([false, false, true]);
+
+    static readonly DELETE_ELEMENT: number = 0;
+    static readonly CHANGE_COLOR: number = 1;
 }
 
 export enum Dimension {

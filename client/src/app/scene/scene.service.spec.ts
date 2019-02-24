@@ -126,7 +126,7 @@ describe("SceneService", () => {
       sceneService.createModifiedCanvas(testCanvas);
       sceneService.renderLeft(testCanvas);
 
-      expect("something").toEqual("something");
+      expect(sceneService.originalGlRenderer.info).toEqual("something");
     });
   });
 });
