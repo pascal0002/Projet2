@@ -80,7 +80,7 @@ describe("ImageDisplayerService", () => {
     expect(service.modifiedImagePixels[2]).toEqual(255);
   });
 
-  it("should be able to erase a white difference and turn it black", () => {
+  it("should be able to erase a white difference of 3 pixels and turn it black", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const testCanvas: HTMLCanvasElement = document.createElement("canvas");
     const ctx: CanvasRenderingContext2D = testCanvas.getContext("2d") as CanvasRenderingContext2D;
