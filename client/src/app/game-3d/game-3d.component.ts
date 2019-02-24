@@ -22,7 +22,7 @@ export class Game3DComponent implements OnInit {
   @ViewChild("rightCanvas") public rightCanvasRef: ElementRef;
 
   public constructor(private ngZone: NgZone, private sceneService: SceneService, private gameViewService: GameViewService) {
-    this.gameCard = this.gameViewService.gamecard;
+    this.gameCard = this.gameViewService.model.gamecard;
   }
 
   public ngOnInit(): void {

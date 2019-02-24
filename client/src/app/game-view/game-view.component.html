@@ -9,12 +9,12 @@
         <div id="diff-count">{{gameViewService.diffFoundCount}}</div>
         <i *ngFor="let number of miscGetArrayDiffFoundCount()" class="fas fa-search" [class.blue]="number < gameViewService.diffFoundCount" [class.red]="number > 7 - gameViewService.opponentDiffFoundCount - 1"></i>
         <div class="diff-progress" [style.width]="miscGetDiffCounterWidth() + 'px'"></div>
-        <div *ngIf="this.gameViewService.mode != 0" id="diff-count" class="opponent">{{gameViewService.opponentDiffFoundCount}}</div>
-        <i *ngIf="this.gameViewService.mode != 0" class="fas fa-user-circle user-badge"></i>
+        <div *ngIf="this.gameViewService.model.mode != 0" id="diff-count" class="opponent">{{gameViewService.opponentDiffFoundCount}}</div>
+        <i *ngIf="this.gameViewService.model.mode != 0" class="fas fa-user-circle user-badge"></i>
       </div>
     </div>
 
-    <div id="game-title">{{gameViewService.gamecard.title}}</div>
+    <div id="game-title">{{gameViewService.model.gamecard.title}}</div>
     <div id="chrono-container">
       <span id="time">{{this.gameViewService.timerModel.output}}</span>
       <circle-progress #timeProgressView id="timer" [outerStrokeLinecap]="'butt'" [renderOnClick]=false [space]="-1" [showTitle]=false [showSubtitle]=[false] [showImage]=[false] [showBackground]="true" [showUnits]="false" [radius]="35" [outerStrokeWidth]="16" [backgroundPadding]="0" [showInnerStroke]="false"></circle-progress>
@@ -25,7 +25,7 @@
 
   <!-- Le contenu ici sera remplacé éventuellement par un component soit 2D ou 3D qui gérera lui-même ses propres spécificités -->
   <!-- La classe css game-panel gère le style des bordures et de la taille, donc si on choisit de faire un seul composant global pour 2d et 3d il faudra les inclure comme tels-->
-  <div *ngIf="gameViewService.gamecard.dimension === 0; else threeD">
+  <div *ngIf="gameViewService.model.gamecard.dimension === 0; else threeD">
     <app-game-2d #game2d></app-game-2d>
   </div>
 

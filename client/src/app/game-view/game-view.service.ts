@@ -2,8 +2,8 @@ import { formatDate } from "@angular/common";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
+import { GameModel } from "../../../../common/communication/GameModel";
 import { ITimerProps } from "../../../../common/communication/TimerProps";
-import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
   providedIn: "root",
@@ -11,8 +11,7 @@ import { GameCard } from "../../../../common/communication/game-card";
 
 export class GameViewService {
 
-  public gamecard: GameCard;
-  public mode: Mode;
+  public model: GameModel;
 
   public diffFoundCount: number;
   public opponentDiffFoundCount: number;
@@ -23,20 +22,23 @@ export class GameViewService {
   public timerModel: ITimerProps;
 
   public constructor() {
-    this.gamecard = {
-      title: "", image: "", imageModified: "",
-      bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
-      bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
-      dimension: Dimension.TWO_DIMENSION,
+    this.model = {
+      mode: Mode.SOLO,
+      gamecard: {
+        title: "", image: "", imageModified: "",
+        bestTimeSolo: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+        bestTime1v1: [{ user: "", time: 0 }, { user: "", time: 0 }, { user: "", time: 0 }],
+        dimension: Dimension.TWO_DIMENSION,
+      },
     };
-    this.mode = Mode.SOLO;
+    this.model.mode = Mode.SOLO;
     this.diffFoundCount = 0;
     this.opponentDiffFoundCount = 0;
     this.timerModel = { bestScoreTime: 0, time: 0, targetTime: 0, cycle: 0, output: "0", intervalCache: 0, bestScoreIntervalCache: 0 };
   }
 
   public init(): void {
-    this.timerModel.targetTime = this.gamecard.bestTimeSolo[this.timerModel.cycle].time;
+    this.timerModel.targetTime = this.model.gamecard.bestTimeSolo[this.timerModel.cycle].time;
     this.startBestScoreTimer();
     this.startTimer();
     this.logMessage("Game started");
@@ -75,7 +77,7 @@ export class GameViewService {
     const callback: Function = () => {
       this.timerModel.bestScoreTime += Constants.TIMER_INCREMENT;
       this.timerEL.percent = this.timerModel.bestScoreTime / Constants.TIMER_RESOLUTION /
-                             this.timerModel.targetTime * Constants.PERCENT_FACTOR;
+        this.timerModel.targetTime * Constants.PERCENT_FACTOR;
 
       if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
@@ -98,7 +100,7 @@ export class GameViewService {
       this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle + 1];
 
       /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
-      this.timerModel.targetTime = this.gamecard.bestTimeSolo[this.timerModel.cycle].time - this.timerModel.time;
+      this.timerModel.targetTime = this.model.gamecard.bestTimeSolo[this.timerModel.cycle].time - this.timerModel.time;
       this.timerModel.bestScoreTime = 0;
       this.startBestScoreTimer();
     } else {

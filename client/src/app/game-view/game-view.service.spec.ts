@@ -25,7 +25,7 @@ describe("GameViewService", () => {
 
   beforeEach(() => {
     service = new GameViewService();
-    service.gamecard = mockGameCard;
+    service.model.gamecard = mockGameCard;
 
     mockConsoleView = mock(ElementRef);
     service.consoleEL = mockConsoleView;

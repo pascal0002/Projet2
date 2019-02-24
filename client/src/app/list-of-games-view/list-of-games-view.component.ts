@@ -20,13 +20,13 @@ export class ListOfGamesViewComponent {
   }
 
   public playSolo(gameCard: GameCard): void {
-    this.gameViewService.gamecard = gameCard;
-    this.gameViewService.mode = Mode.SOLO;
+    this.gameViewService.model.gamecard = gameCard;
+    this.gameViewService.model.mode = Mode.SOLO;
   }
 
   public play1v1(gameCard: GameCard): void {
-    this.gameViewService.gamecard = gameCard;
-    this.gameViewService.mode = Mode.ONE_VS_ONE;
+    this.gameViewService.model.gamecard = gameCard;
+    this.gameViewService.model.mode = Mode.ONE_VS_ONE;
   }
 
   public delete(gameCard: GameCard): void {

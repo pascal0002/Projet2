@@ -18,10 +18,10 @@ export class Game2DComponent implements AfterViewInit {
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
 
   public constructor(public gameViewService: GameViewService,
-                     private differenceValidatorService: DifferenceValidatorService,
-                     private imageDisplayerService: ImageDisplayerService) {
-    this.gameCard = gameViewService.gamecard;
-    this.differenceValidatorService.game2d = gameViewService.gamecard;
+    private differenceValidatorService: DifferenceValidatorService,
+    private imageDisplayerService: ImageDisplayerService) {
+    this.gameCard = gameViewService.model.gamecard;
+    this.differenceValidatorService.game2d = gameViewService.model.gamecard;
   }
 
   public ngAfterViewInit(): void {
@@ -29,7 +29,7 @@ export class Game2DComponent implements AfterViewInit {
       .then((res: number[]) => {
         this.differenceImgPixels = res;
       })
-      .catch((err) => {console.error(err); });
+      .catch((err) => { console.error(err); });
     const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
@@ -48,7 +48,7 @@ export class Game2DComponent implements AfterViewInit {
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
-                                                  this.differenceImgPixels)
+      this.differenceImgPixels)
       .then(
         (res) => {
           if (res) {
