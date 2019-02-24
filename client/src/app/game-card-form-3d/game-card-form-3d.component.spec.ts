@@ -1,13 +1,13 @@
 // tslint:disable:no-magic-numbers
 // tslint:disable:no-any
 import { ErrorHandler } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
 import { GameCardForm3DComponent } from "./game-card-form-3d.component";
 
 describe("GameCardFormComponent3D", () => {
-  let component: GameCardForm3DComponent;
-  let fixture: ComponentFixture<GameCardForm3DComponent>;
+  const formHandlerService: any = jasmine.createSpy("FormHandler3DService");
+  const component: GameCardForm3DComponent = new GameCardForm3DComponent(formHandlerService);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,12 +17,6 @@ describe("GameCardFormComponent3D", () => {
     })
     .compileComponents()
     .catch((err: any) => new ErrorHandler());
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(GameCardForm3DComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should create", () => {

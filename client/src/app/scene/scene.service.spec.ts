@@ -23,7 +23,6 @@ describe("SceneService", () => {
       declarations: [],
       providers: [],
     });
-
     game3dGeneratorService = new Game3dGeneratorService(httpClientSpy);
     sceneService = new SceneService(httpClientSpy, game3dGeneratorService);
     mockObjects = [];

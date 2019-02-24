@@ -1,13 +1,18 @@
 // tslint:disable:no-magic-numbers
 // tslint:disable:no-any
 import { ErrorHandler } from "@angular/core";
-import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { AppModule } from "../app.module";
+import { GameViewService } from "../game-view/game-view.service";
+import { DifferenceValidatorService } from "./difference-validator.service";
 import { Game2DComponent } from "./game-2d.component";
+import { ImageDisplayerService } from "./image-displayer.service";
 
 describe("GameCardFormComponent3D", () => {
-  let component: Game2DComponent;
-  let fixture: ComponentFixture<Game2DComponent>;
+  const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+  const component: Game2DComponent = new Game2DComponent(new GameViewService(),
+                                                         new DifferenceValidatorService(httpClientSpy),
+                                                         new ImageDisplayerService(httpClientSpy));
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,12 +22,7 @@ describe("GameCardFormComponent3D", () => {
     })
     .compileComponents()
     .catch((err: any) => new ErrorHandler());
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(Game2DComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it("should create", () => {
