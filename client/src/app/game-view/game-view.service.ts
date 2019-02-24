@@ -89,7 +89,7 @@ export class GameViewService {
     this.timerModel.bestScoreIntervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
   }
 
-  public onCycle(): void {
+  private onCycle(): void {
     this.timerModel.cycle++;
 
     /*Supprime le callback du timer de médaille*/
@@ -109,7 +109,7 @@ export class GameViewService {
     }
   }
 
-  public timeToString(time: number): string {
+  private timeToString(time: number): string {
     const seconds: number = Math.floor(time % Constants.MINUTE_TO_SECOND);
     const minutes: number = Math.floor(time / Constants.MINUTE_TO_SECOND);
 
