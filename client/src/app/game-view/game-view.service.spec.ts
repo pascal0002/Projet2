@@ -1,4 +1,4 @@
-import { Dimension } from "../../../../common/communication/Constants";
+import { Dimension, Constants } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "./game-view.service";
 
@@ -17,5 +17,11 @@ describe("GameViewService", () => {
     service = new GameViewService();
     service.gamecard = mockGameCard;
   });
+
+  it("should set properly the timer model", () => {
+    expect(service.timerModel).toBeDefined();
+  });
+
+
 
 });
