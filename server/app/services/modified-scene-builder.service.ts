@@ -55,7 +55,7 @@ export class ModifiedSceneBuilderService {
     private generateRandomModifications(allowedModifications: boolean[]): void {
         for (let i: number = 0; i < Constants.MODIFICATION_NB; i++) {
             const modificationChoice: number = Math.floor(this.getRandomNumber() * Constants.MODIFICATION_TYPE_NB);
-            if (allowedModifications[modificationChoice]) {
+            if (this.modificationChoiceIsValid(allowedModifications, modificationChoice)) {
                 modificationChoice === Constants.DELETE_ELEMENT ? this.deletionNb++ :
                 modificationChoice === Constants.CHANGE_COLOR ? this.colorChangeNb++ :
                 this.addNb++;
@@ -63,6 +63,11 @@ export class ModifiedSceneBuilderService {
                 i--;
             }
         }
+    }
+
+    private modificationChoiceIsValid(allowedModifications: boolean[], modificationChoice: number): boolean {
+        return (allowedModifications[modificationChoice] ||
+               (modificationChoice === Constants.MODIFICATION_TYPE_NB && allowedModifications[Constants.MODIFICATION_TYPE_NB - 1]));
     }
 
     private deleteObject(scene: IThreeObject[]): void {
