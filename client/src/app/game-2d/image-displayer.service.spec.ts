@@ -52,12 +52,14 @@ describe("ImageDisplayerService", () => {
 
   it("should return the folder location of the specified original image", () => {
      const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-     expect(service.getFolderLocation("testImage.bmp", true)).toEqual("/public/originalImages/testImage.bmp");
+     const isTheOriginalImage: boolean = true;
+     expect(service.getFolderLocation("originalImage.bmp", isTheOriginalImage)).toEqual("/public/originalImages/originalImage.bmp");
    });
 
   it("should return the folder location of the specified modified image", () => {
      const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-     expect(service.getFolderLocation("modifImage.bmp", false)).toEqual("/public/modifiedImages/modifImage.bmp");
+     const isTheOriginalImage: boolean = false;
+     expect(service.getFolderLocation("modifImage.bmp", isTheOriginalImage)).toEqual("/public/modifiedImages/modifImage.bmp");
    });
 
   it("should return the pixels flipped", () => {
