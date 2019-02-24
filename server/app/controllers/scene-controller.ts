@@ -22,17 +22,17 @@ export class SceneController {
 
     public get router(): Router {
         const router: Router = Router();
-        router.post("/gameCard3D/imageData", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.IMAGE_DATA, (req: Request, res: Response, next: NextFunction) => {
             this.scene3DService.update(req.body.gameName, req.body.imageData)
                 .then((document: mongoose.Document | null) => {
                     document ?
                         res.json(this.gameCardsService.convertDBGameCard(document, Dimension.THREE_DIMENSION)) :
-                        res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
+                        res.status(Constants.ERROR).send(Constants.BAD_NUMBER_OF_DIFF_ERROR);
                 })
                 .catch((err: Error) => { console.error(err); });
         });
 
-        router.post("/objects/", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.OBJECTS, (req: Request, res: Response, next: NextFunction) => {
             const originalScene: IThreeObject[] = this.originalSceneBuilderService.createObjects(req.body.numberOfObjects);
             const modifiedScene: IThreeObject[] = this.modifiedSceneBuilderService.createModifications(
                 JSON.parse(JSON.stringify(originalScene)),
@@ -41,7 +41,7 @@ export class SceneController {
             res.json(originalScene);
         });
 
-        router.post("/scenes/", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.SCENES, (req: Request, res: Response, next: NextFunction) => {
             this.databaseService.getOne(scene3D, {title : req.body.title})
             .then((scenesBD: mongoose.Document) => {
                 const scenes: IThreeObject[][] = [];
