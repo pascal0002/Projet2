@@ -34,7 +34,7 @@ export class DifferenceValidatorService {
     const differenceFilePath: string =
       orginalFilePath.substr(0, orginalFilePath.length - Constants.EXTENSION_LENGTH) + Constants.DIFFIMAGE_SUFFIX;
 
-    return differenceFilePath.split("/").pop() as string;
+    return differenceFilePath.split(Constants.BACK_SLASH).pop() as string;
   }
 
   public async getDifferenceImgPixels(): Promise<number[]> {

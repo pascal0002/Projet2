@@ -7,7 +7,7 @@ import {ScenesParameterGeneratorService} from "./scenes-parameter-generator.serv
 export class OriginalSceneBuilderService {
 
     public constructor(@inject(Types.ScenesParameterGeneratorService)
-                       private scenesParameterGeneratorService: ScenesParameterGeneratorService) {/**/}
+                       private scenesParameterGeneratorService: ScenesParameterGeneratorService) {}
 
     public createObjects(objectsNb: number): IThreeObject[] {
         const objects: IThreeObject[] = [];

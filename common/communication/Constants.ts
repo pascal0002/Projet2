@@ -3,12 +3,14 @@ import { IPixel } from "./Pixel";
 export abstract class Constants {
     static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
 
+    static readonly BACK_SLASH = "/";
     static readonly MINIMAL_TIME_DUO: number = 150;
     static readonly MAXIMAL_TIME_DUO: number = 300;
     static readonly MINIMAL_TIME_SOLO: number = 210;
     static readonly MAXIMAL_TIME_SOLO: number = 360;
     static readonly NUMBER_HIGH_SCORE: number = 3;
     static readonly SECOND_PER_MINUTE: number = 60;
+    static readonly HALF_A_SECOND: number = 500;
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
 
