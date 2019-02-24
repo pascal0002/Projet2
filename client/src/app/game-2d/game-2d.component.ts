@@ -19,8 +19,8 @@ export class Game2DComponent implements AfterViewInit {
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
 
   public constructor(public gameViewService: GameViewService,
-    private differenceValidatorService: DifferenceValidatorService,
-    private imageDisplayerService: ImageDisplayerService) {
+                     private differenceValidatorService: DifferenceValidatorService,
+                     private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.model.gamecard;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
   }
@@ -50,7 +50,7 @@ export class Game2DComponent implements AfterViewInit {
   public sendClickInfo(mouseEvent: MouseEvent): void {
     if (this.canClickAgain) {
       this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
-        this.differenceImgPixels)
+                                                    this.differenceImgPixels)
         .then(
           (res) => {
             if (res) {
@@ -70,7 +70,7 @@ export class Game2DComponent implements AfterViewInit {
     this.canClickAgain = false;
     setTimeout(() => {
       this.canClickAgain = true;
-    }, Constants.HALF_A_SECOND);
+    },         Constants.HALF_A_SECOND);
   }
 
   private onDifferenceFound(differencePixelsToErase: number[]): void {
