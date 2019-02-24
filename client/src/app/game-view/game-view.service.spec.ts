@@ -52,5 +52,12 @@ describe("GameViewService", () => {
     expect(service.timerModel.time).toEqual(0);
   });
 
+  it("should cycle when 100%", async () => {
+    service.init();
+    service.timerEL.percent = Constants.PERCENT_FACTOR;
+    await sleep(Constants.TIMER_RESOLUTION);
+    expect(service["onCycle"]).toHaveBeenCalled();
+  });
+
 
 });
