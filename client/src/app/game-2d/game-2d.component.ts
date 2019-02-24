@@ -62,8 +62,8 @@ export class Game2DComponent implements AfterViewInit {
           },
         )
         .catch((err) => { console.error("erreur :", err); });
+      this.waitHalfASecond();
     }
-    this.waitHalfASecond();
   }
 
   private waitHalfASecond(): void {
