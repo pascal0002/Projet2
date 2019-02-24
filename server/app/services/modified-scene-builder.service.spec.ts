@@ -24,7 +24,7 @@ describe("modified-scene-builder-service", () => {
 
         modifiedSceneBuilderService = new ModifiedSceneBuilderService(scenesParameterGeneratorServiceStub);
         modifiedSceneBuilderServiceStub = sinon.stubObject<ModifiedSceneBuilderService>(
-                                          modifiedSceneBuilderService, ["getRandomNumber", "checkObjectsChanged"]);
+                                          modifiedSceneBuilderService, ["getRandomNumber", "checkObjectsChanged", "checkPositionsChanged"]);
 
         objects = [];
         positionsChanged = [];
@@ -66,7 +66,7 @@ describe("modified-scene-builder-service", () => {
         it("should change the color of the fifth object to the max value", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
             modifiedSceneBuilderServiceStub.getRandomNumber.returns(0.4);
-            modifiedSceneBuilderServiceStub.colorChangeNb = -6;
+            modifiedSceneBuilderServiceStub.checkPositionsChanged.returns(4);
 
             for (let i: number = 0; i < 10; i++) {
                 objects.push({
@@ -169,6 +169,7 @@ describe("modified-scene-builder-service", () => {
         it("should change color of 1 object from the array even if selected position is higher than array lenght", (done: Mocha.Done) => {
             scenesParameterGeneratorServiceStub.getRandomNumber.returns(1);
             modifiedSceneBuilderServiceStub.getRandomNumber.returns(1);
+            modifiedSceneBuilderServiceStub.checkPositionsChanged.returns(9);
 
             for (let i: number = 0; i < 10; i++) {
                 objects.push({
