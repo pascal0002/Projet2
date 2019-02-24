@@ -118,15 +118,4 @@ describe("SceneService", () => {
       expect(sceneService.modifiedGlRenderer.domElement).toEqual(testCanvas);
     });
   });
-
-  describe("renderLeft", () => {
-    it("should render correctly", () => {
-      const testCanvas: HTMLCanvasElement = document.createElement("canvas");
-
-      sceneService.createModifiedCanvas(testCanvas);
-      sceneService.renderLeft(testCanvas);
-
-      expect(sceneService.originalGlRenderer.info).toEqual("something");
-    });
-  });
 });
