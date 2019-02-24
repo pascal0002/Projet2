@@ -59,7 +59,7 @@ export class GameViewService {
   }
 
   public logMessage(message: string): void {
-    this.appendElementInnerHTML(this.consoleEL, "<span style='color:yellow;'>["
+    this.consoleEL.nativeElement.innerHTML = "<span style='color:yellow;'>["
       + formatDate(Date.now(), "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>");
   }
 
@@ -104,10 +104,6 @@ export class GameViewService {
       /*Pas de médaille :( On arrête de suivre le temps*/
       this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
     }
-  }
-
-  public appendElementInnerHTML(el: ElementRef, html: string): void {
-    el.nativeElement.innerHTML += html;
   }
 
   public timeToString(time: number): string {

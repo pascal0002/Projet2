@@ -1,16 +1,19 @@
+import { ElementRef } from "@angular/core";
+import { CircleProgressComponent } from "ng-circle-progress";
+import { mock } from "ts-mockito";
 import { Constants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "./game-view.service";
 
 let service: GameViewService;
+let mockConsoleView: ElementRef;
+let mockTimerView: CircleProgressComponent;
 const mockGameCard: GameCard = {
   title: "Bonjour", image: "x.bmp", imageModified: "y.bmp",
   bestTimeSolo: [{ user: "Ali", time: 20 }, { user: "Baba", time: 40 }, { user: "Michel", time: 133 }],
   bestTime1v1: [{ user: "Haxer", time: 1 }, { user: "User231", time: 122 }, { user: "NickPacté", time: 9001 }],
   dimension: Dimension.TWO_DIMENSION,
 };
-
-
 
 describe("GameViewService", () => {
 
@@ -22,6 +25,12 @@ describe("GameViewService", () => {
     service.reset();
     service = new GameViewService();
     service.gamecard = mockGameCard;
+
+    mockConsoleView = mock(ElementRef);
+    service.consoleEL = mockConsoleView;
+
+    mockTimerView = mock(CircleProgressComponent);
+    service.timerEL = mockTimerView;
   });
 
   it("should set properly the timer model", () => {
@@ -74,5 +83,11 @@ describe("GameViewService", () => {
     expect(service.opponentDiffFoundCount).toEqual(1);
   });
 
+  it("should log a message properly", () => {
+    service.init();
+    const msg: string = "Hello world !";
+    service.logMessage(msg);
+    expect(service.consoleEL.nativeElement.innerHTML.includes(msg)).toBeTruthy();
+  });
 
 });
