@@ -28,7 +28,8 @@ export class Game2DComponent implements AfterViewInit {
     this.differenceValidatorService.getDifferenceImgPixels()
       .then((res: number[]) => {
         this.differenceImgPixels = res;
-      });
+      })
+      .catch((err) => {console.error(err); });
     const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
