@@ -1,12 +1,13 @@
 import { IPixel } from "./Pixel";
 
 export abstract class Constants {
-    static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
     
-
+    static readonly DIFFERENCE_EXTENSION: string = "Differences.bmp";
     static readonly FILE_WANTED: string = "image/jpeg";
     static readonly SKYBLUE_COLOR: string = "skyblue";
     static readonly BACK_SLASH: string = "/";
+
+    static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
     static readonly MINIMAL_TIME_DUO: number = 150;
     static readonly MAXIMAL_TIME_DUO: number = 300;
     static readonly MINIMAL_TIME_SOLO: number = 210;
@@ -16,7 +17,6 @@ export abstract class Constants {
     static readonly HALF_A_SECOND: number = 500;
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
-    static readonly DIFFERENCE_EXTENSION: string = "Differences.bmp";
 
     static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
 
@@ -25,7 +25,7 @@ export abstract class Constants {
     static readonly MINIMUM_USERNAME_LENGTH: number = 3;
     static readonly MAXIMUM_USERNAME_LENGTH: number = 20;
 
-    //Login error messages
+    // Login error messages
     static readonly LOGIN_ERROR_NAME_SIZE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
     static readonly LOGIN_ERROR_NAME_IN_USE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
 
@@ -116,6 +116,7 @@ export abstract class Constants {
 
     // Routes clients
     static readonly API:string = "api";
+    static readonly DIFFERENCE_CONTROLLER: string = "/differences"
     static readonly GAME_LIST_URL: string = "/games_list";
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
     static readonly NEWGAME_URL: string = "/differences/new_game";
@@ -143,19 +144,10 @@ export abstract class Constants {
     static readonly OBJECTS: string = "/objects/";
     static readonly SCENES: string = "/scenes/";
 
-
-
-
-
-
     // Messages d'erreur pour le formulaire
-
     static readonly BAD_INFO_ERROR: string = "Les informations envoyées ne sont pas valides!";
     static readonly BAD_NUMBER_OF_DIFF_ERROR: string = "Les deux images sélectionnées doivent avoir exactement 7 différences";
     static readonly BAD_NAME_ERROR: string = "Une partie avec ce nom existe déjà !";
-
-
-
     static readonly DIFFIMAGE_SUFFIX = "Differences.bmp";
 
     // game View
@@ -234,6 +226,11 @@ export abstract class Constants {
 
     static readonly TIMER_RESOLUTION: number = 100;
     static readonly TIMER_INCREMENT: number = Constants.SECOND_TO_MILLISECOND / Constants.TIMER_RESOLUTION;
+
+    //modification scene 3D
+    static readonly DELETE_ONLY: string = JSON.stringify([true, false, false]);
+    static readonly COLOR_ONLY: string = JSON.stringify([false, true, false]);
+    static readonly ADD_ONLY: string = JSON.stringify([false, false, true]);
 }
 
 export enum Dimension {

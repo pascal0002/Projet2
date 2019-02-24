@@ -41,13 +41,15 @@ export class ModifiedSceneBuilderService {
     }
 
     private chooseModifications(allowedModifications: boolean[]): void {
-        JSON.stringify(allowedModifications) === JSON.stringify([true, false, false]) ?
-        this.deletionNb += Constants.MODIFICATION_NB :
-        JSON.stringify(allowedModifications) === JSON.stringify([false, true, false]) ?
-        this.colorChangeNb += Constants.MODIFICATION_NB :
-        JSON.stringify(allowedModifications) === JSON.stringify([false, false, true]) ?
-        this.addNb += Constants.MODIFICATION_NB :
-        this.generateRandomModifications(allowedModifications);
+        if (JSON.stringify(allowedModifications) === Constants.DELETE_ONLY) {
+            this.deletionNb += Constants.MODIFICATION_NB;
+        } else if (JSON.stringify(allowedModifications) === Constants.COLOR_ONLY) {
+            this.colorChangeNb += Constants.MODIFICATION_NB;
+        } else if (JSON.stringify(allowedModifications) === Constants.ADD_ONLY) {
+            this.addNb += Constants.MODIFICATION_NB;
+        } else {
+            this.generateRandomModifications(allowedModifications);
+        }
     }
 
     private generateRandomModifications(allowedModifications: boolean[]): void {
