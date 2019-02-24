@@ -5,6 +5,7 @@ import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { Constants, Dimension } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
 import { IFormInfo3D } from "../../../common/communication/FormInfo3D";
+import { IImages } from "../../../common/communication/Images";
 import { GameCard } from "../../../common/communication/game-card";
 import Types from "../types";
 import { DatabaseService } from "./database.service";
@@ -19,7 +20,7 @@ export class GameCardsService {
                      @inject(Types.DatabaseService) private databaseService: DatabaseService) { }
 
   public async generateDifferences(originalImg: IBitmapImage, modifiedImg: IBitmapImage): Promise<IBitmapImage> {
-    const images: Object = {
+    const images: IImages = {
       "originalImage": originalImg,
       "modifiedImage": modifiedImg,
     };
