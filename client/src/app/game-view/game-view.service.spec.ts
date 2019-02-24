@@ -22,6 +22,10 @@ describe("GameViewService", () => {
     expect(service.timerModel).toBeDefined();
   });
 
+  it("should set the correct gold target time on init", () => {
+    service.init();
+    expect(service.timerModel.targetTime).toEqual(20);
+  });
 
 
 });
