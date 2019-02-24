@@ -207,6 +207,11 @@ export abstract class Constants {
 
     static readonly TIMER_RESOLUTION: number = 100;
     static readonly TIMER_INCREMENT: number = Constants.SECOND_TO_MILLISECOND / Constants.TIMER_RESOLUTION;
+
+    //modification scene 3D
+    static readonly DELETE_ONLY: string = JSON.stringify([true, false, false]);
+    static readonly COLOR_ONLY: string = JSON.stringify([false, true, false]);
+    static readonly ADD_ONLY: string = JSON.stringify([false, false, true]);
 }
 
 export enum Dimension {
