@@ -90,4 +90,24 @@ describe("GameViewService", () => {
     expect(service.consoleEL.nativeElement.innerHTML.includes(msg)).toBeTruthy();
   });
 
+  it("should return a valid string time with 0s", () => {
+    expect(service.timeToString(0)).toEqual("00:00");
+  });
+
+  it("should return a valid string time with 5s", () => {
+    expect(service.timeToString(5)).toEqual("00:05");
+  });
+
+  it("should return a valid string time with 13s", () => {
+    expect(service.timeToString(5)).toEqual("00:13");
+  });
+
+  it("should return a valid string time with 100s", () => {
+    expect(service.timeToString(100)).toEqual("01:40");
+  });
+
+  it("should return a valid string time with 600s", () => {
+    expect(service.timeToString(100)).toEqual("10:00");
+  });
+
 });
