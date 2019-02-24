@@ -1,7 +1,7 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
-import { firstLineBlackPixels, whiteBitmap } from "../../../../server/mock/bitmapImage-mock";
+// import { firstLineBlackPixels, whiteBitmap } from "../../../../server/mock/bitmapImage-mock";
 import { AppModule } from "../app.module";
 import { ImageDisplayerService } from "./image-displayer.service";
 
