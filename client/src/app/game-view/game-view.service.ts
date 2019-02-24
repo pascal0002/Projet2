@@ -74,7 +74,8 @@ export class GameViewService {
   public startBestScoreTimer(): void {
     const callback: Function = () => {
       this.timerModel.bestScoreTime += Constants.TIMER_INCREMENT;
-      this.timerEL.percent = this.timerModel.bestScoreTime / Constants.TIMER_RESOLUTION / this.timerModel.targetTime * Constants.PERCENT_FACTOR;
+      this.timerEL.percent = this.timerModel.bestScoreTime / Constants.TIMER_RESOLUTION /
+                             this.timerModel.targetTime * Constants.PERCENT_FACTOR;
 
       if (this.timerEL.percent >= Constants.PERCENT_FACTOR) {
         this.onCycle();
