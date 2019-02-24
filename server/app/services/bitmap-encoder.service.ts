@@ -17,7 +17,7 @@ import {Constants} from "../../../common/communication/Constants";
 export class BitmapEncoder {
     public position: number;
 
-    public constructor(/**/) {
+    public constructor() {
         this.position = 0;
     }
 
