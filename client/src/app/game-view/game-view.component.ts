@@ -53,15 +53,19 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
   /*Utilisé pour afficher le nombre de loupes avec ngFor*/
   public miscGetArrayDiffFoundCount(): Array<number> {
     return Array.apply(null, {
-      length: ((this.gameViewService.model.mode === Mode.SOLO) ?
-      this.gameViewService.diffFoundCount : Constants.VALID_NUMBER_OF_DIFFERENCES),
+      length: ((this.gameViewService.model.mode === Mode.SOLO)
+        ? this.gameViewService.diffFoundCount : Constants.VALID_NUMBER_OF_DIFFERENCES),
     }).map(Number.call, Number);
   }
 
   public miscGetDiffCounterWidth(): number {
+    let counterWidth: number = Constants.MAGNIFIER_PROGRESS_OFFSET;
+    if (this.gameViewService.model.mode === Mode.ONE_VS_ONE) {
+      counterWidth += Constants.MAGNIFIER_PROGRESS_1V1_OFFSET + Constants.MAGNIFIER_ICON_WIDTH * Constants.VALID_NUMBER_OF_DIFFERENCES;
+    } else {
+      counterWidth += Constants.MAGNIFIER_ICON_WIDTH * this.gameViewService.diffFoundCount;
+    }
 
-    return Constants.MAGNIFIER_PROGRESS_OFFSET + ((this.gameViewService.model.mode === Mode.SOLO)
-      ? 0 : Constants.MAGNIFIER_PROGRESS_1V1_OFFSET) + (Constants.MAGNIFIER_ICON_WIDTH * ((this.gameViewService.model.mode === Mode.SOLO)
-        ? this.gameViewService.diffFoundCount : Constants.VALID_NUMBER_OF_DIFFERENCES));
+    return counterWidth;
   }
 }

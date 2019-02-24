@@ -37,7 +37,7 @@ export class UserLoginComponent {
         this.isUsernameValid = isValid;
         this.errorMessage = Constants.LOGIN_ERROR_NAME_IN_USE;
         if (isValid) {
-          this.router.navigate([Constants.GAME_LIST_ROUTE])
+          this.router.navigate([Constants.GAME_LIST_URL])
           .catch((err) => console.error(err));
         }
       });

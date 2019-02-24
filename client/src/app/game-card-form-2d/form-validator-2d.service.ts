@@ -29,6 +29,6 @@ export class FormValidator2dService {
   }
 
   public async generateGameCard(formInfo: IFormInfo2D): Promise<GameCard> {
-    return this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API_IMAGE_PAIR_URL, formInfo).toPromise();
+    return this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API + Constants.IMAGE_PAIR_URL, formInfo).toPromise();
   }
 }

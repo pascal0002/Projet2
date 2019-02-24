@@ -18,15 +18,16 @@ export class BmpFileGenerator {
     }
 
     private generateOriginalBMPFile(image: IBitmapImage): void {
-        fs.writeFileSync(process.cwd() + "/public/originalImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
+        fs.writeFileSync(process.cwd() + Constants.PUBLIC_OG_FOLDER_PATH + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
     private generateModifedBMPFile(image: IBitmapImage): void {
-        fs.writeFileSync(process.cwd() + "/public/modifiedImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
+        fs.writeFileSync(process.cwd() + Constants.PUBLIC_MODIF_FOLDER_PATH + image.fileName,
+                         this.bitmapEncoderService.encodeBitmap(image));
     }
 
     private generateDifferenceBMPFile(image: IBitmapImage): void {
-        fs.writeFileSync(process.cwd() + "/public/differenceImages/" + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
+        fs.writeFileSync(process.cwd() + Constants.PUBLIC_DIFF_FOLDER_PATH + image.fileName, this.bitmapEncoderService.encodeBitmap(image));
     }
 
     public createTemporaryFile(imgPixels: number[], path: string, fileName: string): void {

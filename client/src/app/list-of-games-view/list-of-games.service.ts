@@ -21,7 +21,7 @@ export class ListOfGamesService {
   }
 
   private getGamesLists2D(): void {
-    this.http.get<GameCard[]>(Constants.SERVER_BASE_URL + Constants.API_2D_GAME_CARDS)
+    this.http.get<GameCard[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.GAME_2D_CARDS_URL)
       .subscribe(
         (gameCards) => { this.listes[Constants.LIST_2D] = gameCards; },
         (err) => { console.error("erreur :", err); },
@@ -29,7 +29,7 @@ export class ListOfGamesService {
   }
 
   private getGamesLists3D(): void {
-    this.http.get<GameCard[]>(Constants.SERVER_BASE_URL + Constants.API_3D_GAME_CARDS)
+    this.http.get<GameCard[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.GAME_3D_CARDS_URL)
       .subscribe(
         (gameCards) => { this.listes[Constants.LIST_3D] = gameCards; },
         (err) => { console.error("erreur :", err); },
@@ -70,7 +70,7 @@ export class ListOfGamesService {
   }
 
   public delete(gameCard: GameCard): void {
-    this.http.post<void>(Constants.SERVER_BASE_URL + Constants.API_DELETE_CARD, gameCard)
+    this.http.post<void>(Constants.SERVER_BASE_URL + Constants.API + Constants.DELETE_CARD_URL, gameCard)
       .toPromise()
       .catch((err) => { console.error("erreur :", err); });
     (gameCard.dimension === Dimension.TWO_DIMENSION) ?

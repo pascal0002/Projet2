@@ -16,6 +16,7 @@ export abstract class Constants {
     static readonly HALF_A_SECOND: number = 500;
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
+    static readonly DIFFERENCE_EXTENSION: string = "Differences.bmp";
 
     static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
 
@@ -113,20 +114,46 @@ export abstract class Constants {
     static readonly SQUARE_FACTOR: number = 2;
     static readonly DIMENSIONS_NB: number = 3;
 
-    // Routes 
-    static readonly GAME_LIST_ROUTE: string = "/games_list";
+    // Routes clients
+    static readonly API:string = "api";
+    static readonly GAME_LIST_URL: string = "/games_list";
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
-    static readonly API_NEWGAME_URL: string = "api/differences/new_game";
-    static readonly API_DIFFVALIDATOR_URL: string = "api/differences/difference_validator";
-    static readonly API_IMAGEPIXEL_URL: string = "api/differences/image_pixels";
-    static readonly API_SCENE_URL: string = "api/scene/scenes"; 
-    static readonly API_IMAGE_PAIR_URL: string = "api/game_cards/image_pair"; 
-    static readonly API_3D_GAME_INFO: string = "api/game_cards/info_3D_game";
-    static readonly API_2D_GAME_CARDS: string = "api/game_cards/2D_cards";
-    static readonly API_3D_GAME_CARDS: string = "api/game_cards/3D_cards";
-    static readonly API_DELETE_CARD: string = "api/game_cards/delete";
-    static readonly API_SCENE_OBJECTS : string = "api/scene/objects";
-    static readonly API_3D_GAME_CARD_DATA = "api/scene/gameCard3D/imageData";
+    static readonly NEWGAME_URL: string = "/differences/new_game";
+    static readonly DIFFVALIDATOR_URL: string = "/differences/difference_validator";
+    static readonly IMAGEPIXEL_URL: string = "/differences/image_pixels";
+    static readonly SCENE_URL: string = "/scene/scenes"; 
+    static readonly IMAGE_PAIR_URL: string = "/game_cards/image_pair"; 
+    static readonly GAME_3D_INFO_URL: string = "/game_cards/info_3D_game";
+    static readonly GAME_2D_CARDS_URL: string = "/game_cards/2D_cards";
+    static readonly GAME_3D_CARDS_URL: string = "/game_cards/3D_cards";
+    static readonly DELETE_CARD_URL: string = "/game_cards/delete";
+    static readonly SCENE_OBJECTS_URL : string = "/scene/objects";
+    static readonly GAME_3D_CARD_DATA_URL: string = "/scene/gameCard3D/imageData";
+
+    // Routes pour les controlleurs
+    static readonly NEW_GAME: string = "/new_game";
+    static readonly DIFFERENCE_VALIDATOR: string = "/difference_validator";
+    static readonly IMAGE_PIXELS: string = "/image_pixels";
+    static readonly CARDS_2D: string = "/2D_cards";
+    static readonly CARDS_3D: string = "/3D_cards";
+    static readonly IMAGE_PAIR: string = "/image_pair";
+    static readonly INFO_3D_GAME: string = "/info_3D_game";
+    static readonly DELETE: string = "/delete";
+    static readonly IMAGE_DATA: string = "/gameCard3D/imageData";
+    static readonly OBJECTS: string = "/objects/";
+    static readonly SCENES: string = "/scenes/";
+
+
+
+
+
+
+    // Messages d'erreur pour le formulaire
+
+    static readonly BAD_INFO_ERROR: string = "Les informations envoyées ne sont pas valides!";
+    static readonly BAD_NUMBER_OF_DIFF_ERROR: string = "Les deux images sélectionnées doivent avoir exactement 7 différences";
+    static readonly BAD_NAME_ERROR: string = "Une partie avec ce nom existe déjà !";
+
 
 
     static readonly DIFFIMAGE_SUFFIX = "Differences.bmp";
