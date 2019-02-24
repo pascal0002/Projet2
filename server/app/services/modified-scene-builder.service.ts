@@ -54,11 +54,14 @@ export class ModifiedSceneBuilderService {
 
     private generateRandomModifications(allowedModifications: boolean[]): void {
         for (let i: number = 0; i < Constants.MODIFICATION_NB; i++) {
-            const modificationCode: number = Math.floor(this.getRandomNumber() * Constants.MODIFICATION_TYPE_NB);
-            modificationCode === 0 && allowedModifications[0] ? this.deletionNb++ :
-            modificationCode === 1 && allowedModifications[1] ? this.colorChangeNb++ :
-            modificationCode === (1 + 1) || modificationCode === (Constants.MODIFICATION_TYPE_NB)
-            && allowedModifications[1 + 1] ? this.addNb++ : i--;
+            const modificationChoice: number = Math.floor(this.getRandomNumber() * Constants.MODIFICATION_TYPE_NB);
+            if (allowedModifications[modificationChoice]) {
+                modificationChoice === Constants.DELETE_ELEMENT ? this.deletionNb++ :
+                modificationChoice === Constants.CHANGE_COLOR ? this.colorChangeNb++ :
+                this.addNb++;
+            } else {
+                i--;
+            }
         }
     }
 
