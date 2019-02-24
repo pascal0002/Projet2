@@ -1,4 +1,4 @@
-import { Dimension, Constants } from "../../../../common/communication/Constants";
+import { Constants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "./game-view.service";
 
@@ -36,13 +36,13 @@ describe("GameViewService", () => {
   it("should hook correctly the timer callback", async () => {
     service.startTimer();
     await sleep(Constants.TIMER_RESOLUTION);
-    expect(service.timerModel.time).toBeGreaterThan(1);
+    expect(service.timerModel.time).toBeGreaterThan(0);
   });
 
   it("should hook correctly the best score timer callback", async () => {
     service.startBestScoreTimer();
     await sleep(Constants.TIMER_RESOLUTION);
-    expect(service.timerModel.bestScoreTime).toBeGreaterThan(1);
+    expect(service.timerModel.bestScoreTime).toBeGreaterThan(0);
   });
 
   it("should reset correctly the timer callback", async () => {
@@ -58,6 +58,12 @@ describe("GameViewService", () => {
     await sleep(Constants.TIMER_RESOLUTION);
     expect(service["onCycle"]).toHaveBeenCalled();
   });
+
+  it("should show the next medal on cycle", () => {
+    service["onCycle"]();
+    expect(service.timerModel.cycle).toEqual(Constants.SILVER_COLOR);
+  });
+
 
 
 });
