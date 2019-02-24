@@ -1,5 +1,6 @@
 // tslint:disable:no-magic-numbers
 // tslint:disable:no-any
+import { ErrorHandler } from "@angular/core";
 import { TestBed } from "@angular/core/testing";
 import { IFormInfo2D } from "../../../../common/communication/FormInfo2D";
 import { GameCard } from "../../../../common/communication/game-card";
@@ -120,7 +121,8 @@ describe("FormValidator2dService", () => {
                                 bestTime1v1: [{user: "", time: 0}, {user: "", time: 0}, {user: "", time: 0}],
                                 dimension: 0};
     httpClientSpy.post.and.returnValue(TestHelper.asyncData(gameCard));
-    formValidatorService.generateGameCard(formSent);
+    formValidatorService.generateGameCard(formSent)
+    .catch((err: any) => new ErrorHandler());
     expect(httpClientSpy.post.calls.count()).toBe(1);
   });
 });

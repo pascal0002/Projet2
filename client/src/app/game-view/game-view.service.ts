@@ -2,7 +2,7 @@ import { formatDate } from "@angular/common";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
-import { TimerProps } from "../../../../common/communication/TimerProps";
+import { ITimerProps } from "../../../../common/communication/TimerProps";
 import { GameCard } from "../../../../common/communication/game-card";
 
 @Injectable({
@@ -20,7 +20,7 @@ export class GameViewService {
   public consoleEL: ElementRef;
   public timerEL: CircleProgressComponent;
 
-  public timerModel: TimerProps;
+  public timerModel: ITimerProps;
 
   public constructor() {
     this.gamecard = {
