@@ -1,6 +1,6 @@
 import { IBitmapImage } from "./BitmapImage";
 
-export interface IImage {
+export interface IImages {
     "originalImage": IBitmapImage,
     "modifiedImage": IBitmapImage,
 }
