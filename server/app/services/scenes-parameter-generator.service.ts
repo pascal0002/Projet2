@@ -76,7 +76,7 @@ export class ScenesParameterGeneratorService {
         if (object.type === Constants.SPHERE) {
             radius = object.diameter * Constants.HALF_VALUE;
         } else if (object.type === Constants.CUBE) {
-            radius = Math.sqrt(Math.pow(object.diameter * Constants.HALF_VALUE, Constants.SQUARE_FACTOR) * Constants.DIMENSIONS_NB)
+            radius = Math.sqrt(Math.pow(object.diameter * Constants.HALF_VALUE, Constants.SQUARE_FACTOR) * Constants.DIMENSIONS_NB);
         } else {
             radius = Math.sqrt(Math.pow(object.diameter * Constants.HALF_VALUE, Constants.SQUARE_FACTOR) +
                      Math.pow(object.height * Constants.HALF_VALUE, Constants.SQUARE_FACTOR));
