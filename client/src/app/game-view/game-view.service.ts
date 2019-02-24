@@ -60,7 +60,7 @@ export class GameViewService {
 
   public logMessage(message: string): void {
     this.consoleEL.nativeElement.innerHTML = "<span style='color:yellow;'>["
-      + formatDate(Date.now(), "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>");
+      + formatDate(Date.now(), "HH:mm", "en-US", "UTC-5") + "] </span>" + message + "<br/>";
   }
 
   public startTimer(): void {
