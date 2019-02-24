@@ -1,3 +1,5 @@
+// tslint:disable:no-magic-numbers
+
 import { ElementRef } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { instance, mock } from "ts-mockito";
