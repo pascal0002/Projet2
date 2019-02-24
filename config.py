@@ -36,7 +36,7 @@ config = {
 
     # Only commits for these tasks will be displayed
     # If this key is removed, alls tasks will be displayed
-    #'tasks': [DEV,DEBUG],
+    #'tasks': [DEV,DEBUG,TEST,REVISION],
 
     # Put 'true' if you want to display merge commits
     'merge': False,
