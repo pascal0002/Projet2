@@ -84,6 +84,18 @@ describe("ImageDisplayerService", () => {
     expect(service.getFolderLocation("modifImage.bmp", false)).toEqual("/public/modifiedImages/modifImage.bmp");
   });
 
+  // Ce test fonctionne si la méthode flipPixelsOnYAxis est publique
+
+  /*it("should return the pixels flipped", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+    const pixelsToFlip: number[] = firstLineBlackPixels;
+
+    const flippedPixels: number[] = service.flipPixelsOnYAxis(pixelsToFlip);
+    for (let i: number = 919680; i > 921600; i++) {
+      expect(flippedPixels[i]).toEqual(0);
+    }
+  });*/
+
   it("should erase 1 black pixel if a difference of 1 pixel needs to be erased", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const testCanvas: HTMLCanvasElement = document.createElement("canvas");
