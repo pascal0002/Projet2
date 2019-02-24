@@ -15,7 +15,7 @@ const mockGameCard: GameCard = {
   dimension: Dimension.TWO_DIMENSION,
 };
 
-fdescribe("GameViewService", () => {
+describe("GameViewService", () => {
 
   const sleep: Function = async (ms: number) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
