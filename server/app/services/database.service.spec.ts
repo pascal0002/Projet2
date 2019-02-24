@@ -3,8 +3,8 @@ import { expect } from "chai";
 import * as mongoose from "mongoose";
 import "reflect-metadata";
 import * as sinon from "sinon";
+import { test } from "../../mock/test-schema";
 import { DatabaseService } from "./database.service";
-import { test } from "./test-schema";
 
 let databaseService: DatabaseService;
 

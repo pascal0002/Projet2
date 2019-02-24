@@ -18,7 +18,7 @@ export class ImageDisplayerService {
     const imgLocation: IImageLocation = { location: imageLocation };
 
     return new Promise<number[]>((resolve: Function, res: Function) =>
-      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API_IMAGEPIXEL_URL, imgLocation).toPromise()));
+      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.IMAGEPIXEL_URL, imgLocation).toPromise()));
   }
 
   public drawPixelsInCanvas(ctx: CanvasRenderingContext2D, pixels: number[]): void {

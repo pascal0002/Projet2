@@ -93,11 +93,29 @@ describe("SceneService", () => {
       expect(sceneService.camera.far).toEqual(Constants.CAMERA_RENDER_DISTANCE);
     });
 
-    it("should create the WebGlRenderer with the expected canvas", () => {
+    it("should create the original WebGlRenderer with the expected canvas", () => {
       const testCanvas: HTMLCanvasElement = document.createElement("canvas");
 
       sceneService.createOriginalCanvas(testCanvas);
       expect(sceneService.originalGlRenderer.domElement).toEqual(testCanvas);
+    });
+  });
+
+  describe("createModifiedCanvas", () => {
+    it("should set the modified scene background color to skyblue", () => {
+      const testCanvas: HTMLCanvasElement = document.createElement("canvas");
+      const backgroundColor: THREE.Color = new THREE.Color("skyblue");
+
+      sceneService.createModifiedCanvas(testCanvas);
+
+      expect(sceneService.modifiedScene.background).toEqual(backgroundColor);
+    });
+
+    it("should create the modified WebGlRenderer with the expected canvas", () => {
+      const testCanvas: HTMLCanvasElement = document.createElement("canvas");
+
+      sceneService.createModifiedCanvas(testCanvas);
+      expect(sceneService.modifiedGlRenderer.domElement).toEqual(testCanvas);
     });
   });
 });

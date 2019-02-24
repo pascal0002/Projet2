@@ -40,7 +40,7 @@ export class DifferenceValidatorService {
   public async getDifferenceImgPixels(): Promise<number[]> {
     const differenceImage: IDifferenceImage = { name: this.getDifferenceImageName(), pixels: []};
 
-    return (this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API_NEWGAME_URL, differenceImage)
+    return (this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.NEWGAME_URL, differenceImage)
       .toPromise()
       .catch((err: Error) => { console.error(err); }) as Promise<number[]>);
   }
@@ -50,7 +50,7 @@ export class DifferenceValidatorService {
     const diffInfo: IDiffInfoToHandle = {clickInfo: mousePos, differenceImage: differenceImage };
 
     return new Promise<IDifferenceErased>((resolve: Function) => {
-      resolve(this.http.post<IDifferenceErased>(Constants.SERVER_BASE_URL + Constants.API_DIFFVALIDATOR_URL, diffInfo)
+      resolve(this.http.post<IDifferenceErased>(Constants.SERVER_BASE_URL + Constants.API + Constants.DIFFVALIDATOR_URL, diffInfo)
         .toPromise());
     });
   }

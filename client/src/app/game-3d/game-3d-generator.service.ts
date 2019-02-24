@@ -12,7 +12,7 @@ export class Game3dGeneratorService {
   public constructor(private http: HttpClient) { }
 
   public generateGame(originalScene: THREE.Scene, modifiedScene: THREE.Scene, title: string): void {
-    this.http.post<IThreeObject[][]>(Constants.SERVER_BASE_URL + Constants.API_SCENE_URL, { title: title }).toPromise()
+    this.http.post<IThreeObject[][]>(Constants.SERVER_BASE_URL + Constants.API + Constants.SCENE_URL, { title: title }).toPromise()
       .then(
         (scenes) => {
           this.generateObjects(scenes[0], originalScene);

@@ -20,7 +20,7 @@ export class DifferencesGeneratorService {
   }
   public fillDifferenceImage(originalImg: IBitmapImage, modifiedImg: IBitmapImage): IBitmapImage {
     const fileName: string = originalImg.fileName
-    .substr(0, (originalImg.fileName.length - Constants.EXTENSION_LENGTH)) + "Differences.bmp";
+    .substr(0, (originalImg.fileName.length - Constants.EXTENSION_LENGTH)) + Constants.DIFFERENCE_EXTENSION;
     const differenceImg: IBitmapImage = {height: originalImg.height, width: originalImg.width, bitDepth: 24,
                                          fileName: fileName, pixels: []};
 

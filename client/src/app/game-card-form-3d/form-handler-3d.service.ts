@@ -37,7 +37,7 @@ export class FormHandler3DService {
   }
 
   public async send3DFormInfo(formInfo: IFormInfo3D): Promise<boolean> {
-    return this.http.post<boolean>(Constants.SERVER_BASE_URL + Constants.API_3D_GAME_INFO, formInfo).toPromise();
+    return this.http.post<boolean>(Constants.SERVER_BASE_URL + Constants.API + Constants.GAME_3D_INFO_URL, formInfo).toPromise();
   }
 
   public createObjects(formInfo: IFormInfo3D): void {

@@ -25,7 +25,7 @@ export class GameCardsController {
     public get router(): Router {
         const router: Router = Router();
 
-        router.get("/2D_cards", (req: Request, res: Response, next: NextFunction) => {
+        router.get(Constants.CARDS_2D, (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards2D()
                 .then((gameCardsDB: mongoose.Document[]) => {
                     res.json(this.gameCardsService.convertDBGameCards(gameCardsDB, Dimension.TWO_DIMENSION));
@@ -33,7 +33,7 @@ export class GameCardsController {
                 .catch((err: Error) => console.error(err));
         });
 
-        router.get("/3D_cards", (req: Request, res: Response, next: NextFunction) => {
+        router.get(Constants.CARDS_3D, (req: Request, res: Response, next: NextFunction) => {
             this.gameCardsService.getGameCards3D()
                 .then((gameCardsDB: mongoose.Document[]) => {
                     res.json(this.gameCardsService.convertDBGameCards(gameCardsDB, Dimension.THREE_DIMENSION));
@@ -41,13 +41,13 @@ export class GameCardsController {
                 .catch((err: Error) => console.error(err));
         });
 
-        router.post("/image_pair", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.IMAGE_PAIR, (req: Request, res: Response, next: NextFunction) => {
             (!this.formValidator2DService.validateForm(req.body)) ?
-            res.status(Constants.ERROR).send("Les informations envoyées ne sont pas valides!") :
+            res.status(Constants.ERROR).send(Constants.BAD_INFO_ERROR) :
             this.databaseService.getOne(gameCard2D, {title : req.body.gameName})
             .then((gamecard: mongoose.Document) => {
                 if (gamecard) {
-                    res.status(Constants.ERROR).send("Une partie avec ce nom existe déjà !");
+                    res.status(Constants.ERROR).send(Constants.BAD_NAME_ERROR);
                 } else {
                     this.gameCardsService.generateDifferences(req.body.originalImage, req.body.modifiedImage)
                     .then((image: IBitmapImage) => {
@@ -55,7 +55,7 @@ export class GameCardsController {
                             this.bmpFileGeneratorService.generateBMPFiles(req.body, image);
                             res.json(this.gameCardsService.addGameCard2D(req.body, image));
                         } else {
-                            res.status(Constants.ERROR).send("Les deux images sélectionnées doivent avoir exactement 7 différences");
+                            res.status(Constants.ERROR).send(Constants.BAD_NUMBER_OF_DIFF_ERROR);
                         }
                     })
                     .catch((err: Error) => console.error(err));
@@ -64,13 +64,13 @@ export class GameCardsController {
             .catch((err: Error) => console.error(err));
         });
 
-        router.post("/info_3D_game", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.INFO_3D_GAME, (req: Request, res: Response, next: NextFunction) => {
             (!this.formValidator3DService.validateForm(req.body)) ?
-            res.status(Constants.ERROR).send("Les informations envoyées ne sont pas valides!") :
+            res.status(Constants.ERROR).send(Constants.BAD_INFO_ERROR) :
             this.databaseService.getOne(gameCard3D, {title : req.body.gameName})
             .then((gamecard: mongoose.Document) => {
                 if (gamecard) {
-                    res.status(Constants.ERROR).send("Une partie avec ce nom existe déjà !");
+                    res.status(Constants.ERROR).send(Constants.BAD_NAME_ERROR);
                 } else {
                     res.json(this.gameCardsService.addGameCard3D(req.body));
                 }
@@ -78,7 +78,7 @@ export class GameCardsController {
             .catch((err: Error) => console.error(err));
         });
 
-        router.post("/delete", (req: Request, res: Response, next: NextFunction) => {
+        router.post(Constants.DELETE, (req: Request, res: Response, next: NextFunction) => {
             if (req.body.dimension === Dimension.TWO_DIMENSION) {
                 this.databaseService.remove(gameCard2D, {title: req.body.title});
             } else {

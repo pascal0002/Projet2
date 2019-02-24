@@ -81,7 +81,7 @@ export class SceneService {
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
-    return this.http.post<IThreeObject[]>(Constants.SERVER_BASE_URL + Constants.API_SCENE_OBJECTS, formInfo).toPromise();
+    return this.http.post<IThreeObject[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.SCENE_OBJECTS_URL, formInfo).toPromise();
   }
 
   public async generateObjects(objects: IThreeObject[], gameName: string): Promise<GameCard> {
@@ -104,7 +104,7 @@ export class SceneService {
     };
     this.clearObjects();
 
-    return this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API_3D_GAME_CARD_DATA, snapshot)
+    return this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API + Constants.GAME_3D_CARD_DATA_URL, snapshot)
       .toPromise();
   }
 
