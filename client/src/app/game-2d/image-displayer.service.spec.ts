@@ -33,6 +33,18 @@ describe("ImageDisplayerService", () => {
       );
   });
 
+    /*it("should return an array of pixels for the specified image (an image with black pixels on the first 3 lines)", () => {
+    let httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+    const imageDisplayerService: ImageDisplayerService = new ImageDisplayerService(httpClientSpy);
+    const res: number[] = [];
+    httpClientSpy.post.and.returnValue(TestHelper.asyncData(res));
+    // The first three lines of testImage.bmp are black pixels.
+    httpClientSpy = imageDisplayerService.getImagePixels("/mock/testImage.bmp");
+    for (let i: number = 0; i < 921600; i++) {
+      (i < 1920 * 3) ? expect(res[i]).toEqual(0) : expect(res[i]).toEqual(255);
+    }
+  });*/
+
   it("should not return an array of the image pixels when the path is empty", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
 
@@ -60,6 +72,16 @@ describe("ImageDisplayerService", () => {
           },
         );
     }
+  });
+
+  it("should return the folder location of the specified original image", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+    expect(service.getFolderLocation("testImage.bmp", true)).toEqual("/public/originalImages/testImage.bmp");
+  });
+
+  it("should return the folder location of the specified modified image", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+    expect(service.getFolderLocation("modifImage.bmp", false)).toEqual("/public/modifiedImages/modifImage.bmp");
   });
 
   it("should erase 1 black pixel if a difference of 1 pixel needs to be erased", () => {
