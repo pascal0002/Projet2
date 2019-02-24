@@ -5,8 +5,6 @@ import { IThreeObject } from "../../../common/communication/ThreeObject";
 @injectable()
 export class ScenesParameterGeneratorService {
 
-    public constructor() {/**/ }
-
     public addObject(scene: IThreeObject[]): void {
         let object: IThreeObject = this.createObject();
         while (this.checkCollisions(object, scene)) {
