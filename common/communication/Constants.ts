@@ -210,6 +210,7 @@ export abstract class Constants {
 
 
     static readonly CAMERA_FIELD_OF_VIEW: number = 80;
+    static readonly CAMERA_MINIMAL_DISTANCE: number = 1;
     static readonly CAMERA_RENDER_DISTANCE: number = 500;
     static readonly Z_CAMERA_POSITION: number = 90;
 
