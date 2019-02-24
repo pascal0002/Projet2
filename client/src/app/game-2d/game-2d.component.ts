@@ -13,6 +13,7 @@ import { ImageDisplayerService } from "./image-displayer.service";
 export class Game2DComponent implements AfterViewInit {
   public gameCard: GameCard;
   public differenceImgPixels: number[];
+  public canClickAgain: boolean = true;
   public modifCtx: CanvasRenderingContext2D;
   @ViewChild("ogCanvas") public ogCanvas: ElementRef;
   @ViewChild("modifCanvas") public modifCanvas: ElementRef;
@@ -47,19 +48,29 @@ export class Game2DComponent implements AfterViewInit {
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
-    this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
-                                                  this.differenceImgPixels)
-      .then(
-        (res) => {
-          if (res) {
-            this.onDifferenceFound(res.posOfPixelsToErase);
-            this.differenceImgPixels = res.updatedDifferenceImage;
-          } else {
-            this.onClickFail();
-          }
-        },
-      )
-      .catch((err) => { console.error("erreur :", err); });
+    if (this.canClickAgain) {
+      this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
+                                                    this.differenceImgPixels)
+        .then(
+          (res) => {
+            if (res) {
+              this.onDifferenceFound(res.posOfPixelsToErase);
+              this.differenceImgPixels = res.updatedDifferenceImage;
+            } else {
+              this.onClickFail();
+            }
+          },
+        )
+        .catch((err) => { console.error("erreur :", err); });
+    }
+    this.waitHalfASecond();
+  }
+
+  private waitHalfASecond(): void {
+    this.canClickAgain = false;
+    setTimeout(() => {
+      this.canClickAgain = true;
+    },         Constants.HALF_A_SECOND);
   }
 
   private onDifferenceFound(differencePixelsToErase: number[]): void {
