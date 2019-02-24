@@ -1,6 +1,6 @@
 import { ElementRef } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
-import { mock, instance } from "ts-mockito";
+import { instance, mock } from "ts-mockito";
 import { Constants, Dimension } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "./game-view.service";
