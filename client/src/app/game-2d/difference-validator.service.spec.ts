@@ -10,9 +10,7 @@ describe("DifferenceValidatorService", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [AppModule],
-      declarations: [
-
-      ],
+      declarations: [],
       providers: [],
     });
   });
