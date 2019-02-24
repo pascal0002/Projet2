@@ -27,13 +27,10 @@ export class ImageDisplayerService {
 
     for (let imageIndex: number = 0; imageIndex < pixels.length;
       imageIndex += Constants.NEXT_PIXEL_RGB) {
-      // B value
+      // RGB values are stored in the BGR order in the canvas
       imageData.data[canvasIndex + Constants.RED_COLOR] = pixels[imageIndex + Constants.BLUE_COLOR];
-      // G value
       imageData.data[canvasIndex + Constants.GREEN_COLOR] = pixels[imageIndex + Constants.GREEN_COLOR];
-      // R value
       imageData.data[canvasIndex + Constants.BLUE_COLOR] = pixels[imageIndex + Constants.RED_COLOR];
-      // A value
       imageData.data[canvasIndex + Constants.OPACITY_INDEX] = Constants.MAX_PIXEL_OPACITY;
       canvasIndex += Constants.NEXT_PIXEL_RGBA;
     }
