@@ -10,7 +10,13 @@ const mockGameCard: GameCard = {
   dimension: Dimension.TWO_DIMENSION,
 };
 
+
+
 describe("GameViewService", () => {
+
+  const sleep: Function = async (ms: number): Promise<new () => {}> => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
   beforeEach(() => {
     service.reset();
@@ -25,6 +31,18 @@ describe("GameViewService", () => {
   it("should set the correct gold target time on init", () => {
     service.init();
     expect(service.timerModel.targetTime).toEqual(20);
+  });
+
+  it("should hook correctly the timer callback", async () => {
+    service.startTimer();
+    await sleep(Constants.TIMER_RESOLUTION);
+    expect(service.timerModel.time).toBeGreaterThan(1);
+  });
+
+  it("should hook correctly the best score timer callback", async () => {
+    service.startBestScoreTimer();
+    await sleep(Constants.TIMER_RESOLUTION);
+    expect(service.timerModel.bestScoreTime).toBeGreaterThan(1);
   });
 
 
