@@ -1,4 +1,4 @@
-export interface TimerProps {
+export interface ITimerProps {
     bestScoreTime: number;
     time: number;
     output: string;
