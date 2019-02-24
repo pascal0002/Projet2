@@ -1,7 +1,7 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
-// import { firstLineBlackPixels, whiteBitmap } from "../../../../server/mock/bitmapImage-mock";
+import { firstLineBlackPixels, whitePixels } from "../../../../server/mock/bitmapImage-mock";
 import { AppModule } from "../app.module";
 import { ImageDisplayerService } from "./image-displayer.service";
 
@@ -62,33 +62,62 @@ describe("ImageDisplayerService", () => {
     }
   });
 
-  /*it("should erase the difference", () => {
+  it("should erase 1 black pixel if a difference of 1 pixel needs to be erased", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
     const testCanvas: HTMLCanvasElement = document.createElement("canvas");
-    const ctx: CanvasRenderingContext2D | null = testCanvas.getContext("2d");
+    const ctx: CanvasRenderingContext2D = testCanvas.getContext("2d") as CanvasRenderingContext2D;
 
-    service.originalImagePixels = whiteBitmap.pixels;
+    service.originalImagePixels = whitePixels;
     service.modifiedImagePixels = firstLineBlackPixels;
 
-    const testModifiedPixels: number[] = firstLineBlackPixels;
-    const testOriginalPixels: number[] = whiteBitmap.pixels;
-    // const testModifiedImage: ImageData = new ImageData(640, 480);
-    const testPixelsToChange: number[] = [];
+    // The first pixel of the last line because the images are flipped when trying to erase a difference
+    const posOfPixelsToChange: number[] = [];
+    posOfPixelsToChange.push(919680);
 
-    for (let i: number = 0; i < 1920; i += 3) {
-        testPixelsToChange.push(i);
+    service.eraseDifference(ctx, posOfPixelsToChange);
+    expect(service.modifiedImagePixels[0]).toEqual(255);
+    expect(service.modifiedImagePixels[1]).toEqual(255);
+    expect(service.modifiedImagePixels[2]).toEqual(255);
+  });
+
+  it("should be able to erase a white difference and turn it black", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+    const testCanvas: HTMLCanvasElement = document.createElement("canvas");
+    const ctx: CanvasRenderingContext2D = testCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+    service.originalImagePixels = firstLineBlackPixels;
+    service.modifiedImagePixels = whitePixels;
+
+    const posOfPixelsToChange: number[] = [];
+    // Pushing the pos of 3 white pixels
+    for (let i: number = 919680; i < 919689; i += 3) {
+      posOfPixelsToChange.push(i);
     }
-    // for (let i: number = 0; i < 921600; i++) {
-    //   testModifiedImage.data[i] = testModifiedPixels[i];
-    // }
 
-    if (ctx) {
-      service.drawPixelsInCanvas(ctx, testModifiedPixels);
-      // ctx.putImageData(testModifiedImage, 0, 0);
-      service.eraseDifference(ctx, testPixelsToChange);
-      expect(ctx.getImageData(0, 0, 640, 480).data).toEqual(testOriginalPixels);
-
+    service.eraseDifference(ctx, posOfPixelsToChange);
+    for (let i: number = 0; i < 99; i++) {
+      (i < 9) ?
+      expect(service.modifiedImagePixels[i]).toEqual(0)
+      : expect(service.modifiedImagePixels[i]).toEqual(255);
     }
-  });*/
+  });
+
+  it("should erase the first black line (640 pixels) of a difference", () => {
+    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
+    const testCanvas: HTMLCanvasElement = document.createElement("canvas");
+    const ctx: CanvasRenderingContext2D = testCanvas.getContext("2d") as CanvasRenderingContext2D;
+
+    service.originalImagePixels = whitePixels;
+    service.modifiedImagePixels = firstLineBlackPixels;
+
+    // The top line because the images are flipped when trying to erase a difference
+    const posOfPixelsToChange: number[] = [];
+    for (let i: number = 919680; i < 921600; i += 3) {
+      posOfPixelsToChange.push(i);
+    }
+
+    service.eraseDifference(ctx, posOfPixelsToChange);
+    expect(service.modifiedImagePixels).toEqual(whitePixels);
+  });
 
 });

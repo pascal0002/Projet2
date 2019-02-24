@@ -143,6 +143,11 @@ for (let i: number = 0; i < 921600; i++) {
     (i < 1920) ? firstLineBlackPixels.push(0) : firstLineBlackPixels.push(255);
 }
 
+export const whitePixels: number[] = [];
+for (let i: number = 0; i < 921600; i++) {
+    whitePixels.push(255);
+}
+
 export const firstThreeLineBlackPixels: number[] = [];
 for (let i: number = 0; i < 921600; i++) {
     (i < (1920 * 3)) ? firstThreeLineBlackPixels.push(0) : firstThreeLineBlackPixels.push(255);
