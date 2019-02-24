@@ -19,7 +19,9 @@ export class ModifiedSceneBuilderService {
     }
 
     public createModifications(scene: IThreeObject[], allowedModifications: boolean[]): IThreeObject[] {
-
+        this.deletionNb = 0;
+        this.colorChangeNb = 0;
+        this.addNb = 0;
         this.chooseModifications(allowedModifications);
 
         for (let i: number = 0; i < this.deletionNb; i++) {
