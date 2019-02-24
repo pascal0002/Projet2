@@ -1,6 +1,7 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
+import { TestHelper } from "src/test.helper";
 import { firstLineBlackPixels, whitePixels } from "../../../../server/mock/bitmapImage-mock";
 import { AppModule } from "../app.module";
 import { ImageDisplayerService } from "./image-displayer.service";
@@ -19,44 +20,18 @@ describe("ImageDisplayerService", () => {
     expect(service).toBeTruthy();
   });
 
-  // it("should return an array of pixels for the specified image (an image with black pixels on the first 3 lines)", () => {
-  //   const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-
-  //   // The first three lines of testImage.bmp are black pixels.
-  //   service.getImagePixels("/mock/testImage.bmp")
-  //     .then(
-  //       (res) => {
-  //         console.log("ta mere");
-  //         for (let i: number = 0; i < 921600; i++) {
-  //           (i < 1920 * 3) ? expect(res[i]).toEqual(0) : expect(res[i]).toEqual(255);
-  //         }
-  //       },
-  //     );
-  // });
-
-    /*it("should return an array of pixels for the specified image (an image with black pixels on the first 3 lines)", () => {
-    let httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
+  it("should return an array of pixels when using httpClientSpy", () => {
+    const httpClientSpy: any = jasmine.createSpyObj("HttpClient", ["post"]);
     const imageDisplayerService: ImageDisplayerService = new ImageDisplayerService(httpClientSpy);
-    const res: number[] = [];
-    httpClientSpy.post.and.returnValue(TestHelper.asyncData(res));
-    // The first three lines of testImage.bmp are black pixels.
-    httpClientSpy = imageDisplayerService.getImagePixels("/mock/testImage.bmp");
-    for (let i: number = 0; i < 921600; i++) {
-      (i < 1920 * 3) ? expect(res[i]).toEqual(0) : expect(res[i]).toEqual(255);
-    }
-  });*/
+    const expectedRes: number[] = [12, 155, 35, 17, 231, 84];
+    httpClientSpy.post.and.returnValue(TestHelper.asyncData(expectedRes));
 
-  it("should not return an array of the image pixels when the path is empty", () => {
-    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-
-    service.getImagePixels("").catch((err: Error) => { expect(err).toBeTruthy(); });
-  });
-
-  it("should not return an array of the image pixels when the path is incorrect", () => {
-    const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-
-    service.getImagePixels("testImage.bmp")
-      .catch((err: Error) => { expect(err).toBeTruthy(); });
+    imageDisplayerService.getImagePixels("/mock/testImage.bmp")
+    .then((res: number[]) => {
+      for (let i: number = 0; i < res.length; i++) {
+        expect(res[i]).toEqual(expectedRes[i]);
+      }
+    });
   });
 
   it("should draw the pixels in the canvas", () => {
