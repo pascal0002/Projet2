@@ -1,6 +1,7 @@
 // tslint:disable:no-any
 // tslint:disable:no-magic-numbers
 import { TestBed } from "@angular/core/testing";
+import { firstLineBlackPixels, whiteBitmap } from "../../../../server/mock/bitmapImage-mock";
 import { AppModule } from "../app.module";
 import { ImageDisplayerService } from "./image-displayer.service";
 
@@ -61,9 +62,33 @@ describe("ImageDisplayerService", () => {
     }
   });
 
-  /*it("should not return an array of the image pixels", () => {
+  /*it("should erase the difference", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-    expect(service.getImagePixels("")).toBeFalsy();
+    const testCanvas: HTMLCanvasElement = document.createElement("canvas");
+    const ctx: CanvasRenderingContext2D | null = testCanvas.getContext("2d");
+
+    service.originalImagePixels = whiteBitmap.pixels;
+    service.modifiedImagePixels = firstLineBlackPixels;
+
+    const testModifiedPixels: number[] = firstLineBlackPixels;
+    const testOriginalPixels: number[] = whiteBitmap.pixels;
+    // const testModifiedImage: ImageData = new ImageData(640, 480);
+    const testPixelsToChange: number[] = [];
+
+    for (let i: number = 0; i < 1920; i += 3) {
+        testPixelsToChange.push(i);
+    }
+    // for (let i: number = 0; i < 921600; i++) {
+    //   testModifiedImage.data[i] = testModifiedPixels[i];
+    // }
+
+    if (ctx) {
+      service.drawPixelsInCanvas(ctx, testModifiedPixels);
+      // ctx.putImageData(testModifiedImage, 0, 0);
+      service.eraseDifference(ctx, testPixelsToChange);
+      expect(ctx.getImageData(0, 0, 640, 480).data).toEqual(testOriginalPixels);
+
+    }
   });*/
 
 });
