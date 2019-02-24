@@ -31,7 +31,8 @@ describe("ImageDisplayerService", () => {
       for (let i: number = 0; i < res.length; i++) {
         expect(res[i]).toEqual(expectedRes[i]);
       }
-    });
+    })
+    .catch((err) => {console.error(err); });
   });
 
   it("should draw the pixels in the canvas", () => {
