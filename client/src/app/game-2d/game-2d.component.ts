@@ -41,7 +41,6 @@ export class Game2DComponent implements AfterViewInit {
     this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
       .then((res) => {
         (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
-        this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
       })
       .catch((err: Error) => { console.error(err); });
@@ -52,8 +51,9 @@ export class Game2DComponent implements AfterViewInit {
                                                   this.differenceImgPixels)
       .then(
         (res) => {
-          if (res.length) {
-            this.onDifferenceFound(res);
+          if (res) {
+            this.onDifferenceFound(res.posOfPixelsToErase);
+            this.differenceImgPixels = res.updatedDifferenceImage;
           } else {
             this.onClickFail();
           }

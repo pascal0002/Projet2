@@ -25,7 +25,6 @@ export class ImageDisplayerService {
     const imageData: ImageData = new ImageData(Constants.VALID_BMP_WIDTH, Constants.VALID_BMP_HEIGHT);
     let canvasIndex: number = 0;
 
-    // Iterate through every pixel
     for (let imageIndex: number = 0; imageIndex < pixels.length;
       imageIndex += Constants.NEXT_PIXEL_RGB) {
       // B value
@@ -53,6 +52,7 @@ export class ImageDisplayerService {
     this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
     this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
   }
+
   public getFolderLocation(path: string, isTheOriginalImage: boolean): string {
     return (isTheOriginalImage) ?
       Constants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string

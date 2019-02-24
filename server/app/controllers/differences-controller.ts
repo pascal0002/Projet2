@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import { Constants } from "../../../common/communication/Constants";
-// import { IClickInfo } from "../../../common/communication/ClickInfo";
 import { IDiffInfoToHandle } from "../../../common/communication/DiffInfoToHandle";
+import { IDifferenceErased } from "../../../common/communication/DifferenceErased";
 import { IDifferenceImage } from "../../../common/communication/DifferenceImage";
 import { BitmapDecoder } from "../services/bitmap-decoder.service";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
@@ -32,7 +32,6 @@ export class DifferencesController {
             this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
                                                      Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
                                                      differenceImage.name);
-            // res.send(true);
             res.json(imgOfDifferencePixels);
         });
 
@@ -41,14 +40,21 @@ export class DifferencesController {
             const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(diffInfoToHandle.clickInfo);
             if (this.differenceIdentificator2DService.confirmDifference(diffInfoToHandle.clickInfo,
                                                                         diffInfoToHandle.differenceImage.pixels)) {
-                    this.differenceIdentificator2DService.eraseDifference(positionInPixelsArray,
-                                                                          diffInfoToHandle.differenceImage.pixels,
-                                                                          Constants.VALID_BMP_WIDTH);
+                    const updatedDiffImg: number[] = this.differenceIdentificator2DService.eraseDifference(
+                                                                                                    positionInPixelsArray,
+                                                                                                    diffInfoToHandle.differenceImage.pixels,
+                                                                                                    Constants.VALID_BMP_WIDTH);
 
+                    const differenceErased: IDifferenceErased = {
+                        posOfPixelsToErase: this.differenceIdentificator2DService.posOfDifferencePixels,
+                        updatedDifferenceImage: updatedDiffImg,
+                    };
                     // Send the array of the pos of diff pixels
-                    res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
+                    // res.json(this.differenceIdentificator2DService.posOfDifferencePixels);
+                    res.json(differenceErased);
                 } else {
-                    res.send([]);
+                    res.send(null);
+                    // res.send([]);
                 }
         });
 

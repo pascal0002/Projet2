@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { IClickInfo } from "../../../../common/communication/ClickInfo";
 import { Constants } from "../../../../common/communication/Constants";
 import { IDiffInfoToHandle } from "../../../../common/communication/DiffInfoToHandle";
+import { IDifferenceErased } from "../../../../common/communication/DifferenceErased";
 import { IDifferenceImage } from "../../../../common/communication/DifferenceImage";
 import { GameCard } from "../../../../common/communication/game-card";
 
@@ -44,12 +45,12 @@ export class DifferenceValidatorService {
       .catch((err: Error) => { console.error(err); }) as Promise<number[]>);
   }
 
-  public async sendClickInfo(mousePos: IClickInfo, differencePixels: number[]): Promise<number[]> {
-    const differenceImage: IDifferenceImage = {name: "cac", pixels: differencePixels};
+  public async sendClickInfo(mousePos: IClickInfo, differencePixels: number[]): Promise<IDifferenceErased> {
+    const differenceImage: IDifferenceImage = {name: "", pixels: differencePixels};
     const diffInfo: IDiffInfoToHandle = {clickInfo: mousePos, differenceImage: differenceImage };
 
-    return new Promise<number[]>((resolve: Function) => {
-      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API_DIFFVALIDATOR_URL, diffInfo)
+    return new Promise<IDifferenceErased>((resolve: Function) => {
+      resolve(this.http.post<IDifferenceErased>(Constants.SERVER_BASE_URL + Constants.API_DIFFVALIDATOR_URL, diffInfo)
         .toPromise());
     });
   }
