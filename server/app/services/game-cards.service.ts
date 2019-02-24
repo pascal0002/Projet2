@@ -24,7 +24,7 @@ export class GameCardsService {
       "modifiedImage": modifiedImg,
     };
 
-    return Axios.post<IBitmapImage>("http://localhost:3000/api/differences", images)
+    return Axios.post<IBitmapImage>( Constants.SERVER_BASE_URL + Constants.API + Constants.DIFFERENCE_CONTROLLER, images)
       .then((image: AxiosResponse<IBitmapImage>) => {
         return image.data;
       });
