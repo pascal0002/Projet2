@@ -1,6 +1,7 @@
 // tslint:disable:no-magic-numbers
 import { expect } from "chai";
 import * as fs from "fs";
+import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { firstLineBlackPixels } from "../../mock/bitmapImage-mock";
 import { BitmapDecoder } from "./bitmap-decoder.service";
 import { BitmapEncoder } from "./bitmap-encoder.service";
@@ -47,7 +48,8 @@ describe("bit-map-encoder-service", () => {
 
     it("should correctly get the pixels from a specified path", (done: Function) => {
         const bmpGeneratorService: BmpFileGenerator = new BmpFileGenerator(new BitmapEncoder());
-        bmpGeneratorService.createTemporaryFile(firstLineBlackPixels, "/public/originalImages/test.bmp", "test.bmp");
+        const bmpImg: IBitmapImage = {height: 480, width: 640, bitDepth: 24, fileName: "test.bmp", pixels: firstLineBlackPixels };
+        bmpGeneratorService["generateOriginalBMPFile"](bmpImg);
         expect(bitmapDecoder.getPixels("/public/originalImages/test.bmp")).to.deep.equal(firstLineBlackPixels);
         fs.unlinkSync(process.cwd() + "/public/originalImages/test.bmp");
 

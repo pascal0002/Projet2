@@ -5,7 +5,6 @@ import { IDiffInfoToHandle } from "../../../common/communication/DiffInfoToHandl
 import { IDifferenceErased } from "../../../common/communication/DifferenceErased";
 import { IDifferenceImage } from "../../../common/communication/DifferenceImage";
 import { BitmapDecoder } from "../services/bitmap-decoder.service";
-import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { DifferenceIdentificator2DService } from "../services/difference-identificator-2d.service";
 import { DifferencesGeneratorService } from "../services/differences-generator.service";
 import Types from "../types";
@@ -15,7 +14,6 @@ export class DifferencesController {
 
     public constructor(@inject(Types.DifferencesGeneratorService) private differencesGeneratorService: DifferencesGeneratorService,
                        @inject(Types.BitmapDecoder) private bitmapDecoder: BitmapDecoder,
-                       @inject(Types.BmpFileGenerator) private bitmapGenerator: BmpFileGenerator,
                        @inject(Types.DifferenceIdentificator2DService) private differenceIdentificator2DService:
             DifferenceIdentificator2DService) { }
 
@@ -29,9 +27,6 @@ export class DifferencesController {
             const differenceImage: IDifferenceImage = req.body;
             const imgOfDifferencePixels: number[] = this.bitmapDecoder.getPixels(Constants.PUBLIC_DIFF_FOLDER_PATH
                 + differenceImage.name);
-            this.bitmapGenerator.createTemporaryFile(imgOfDifferencePixels,
-                                                     Constants.PUBLIC_TEMP_FOLDER_PATH + differenceImage.name,
-                                                     differenceImage.name);
             res.json(imgOfDifferencePixels);
         });
 
