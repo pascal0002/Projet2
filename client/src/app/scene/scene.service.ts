@@ -51,6 +51,7 @@ export class SceneService {
   }
 
   public generateAllObjects(title: string): void {
+    this.clearObjects();
     this.game3dGeneratorService.generateGame(this.originalScene, this.modifiedScene, title);
   }
 
@@ -112,6 +113,10 @@ export class SceneService {
     for (let i: number = this.originalScene.children.length - 1; i >= 0; i--) {
       this.originalScene.remove(this.originalScene.children[i]);
     }
+    for (let i: number = this.modifiedScene.children.length - 1; i >= 0; i--) {
+      this.modifiedScene.remove(this.modifiedScene.children[i]);
+    }
     this.addLighting(this.originalScene);
+    this.addLighting(this.modifiedScene);
   }
 }
