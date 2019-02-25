@@ -17,7 +17,8 @@ describe("ImageDisplayerService", () => {
 
   it("should be created", () => {
     const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
-    expect(service).toBeTruthy();
+    expect(service).toBeTruthy()
+    .catch((err) => {console.error(err); });
   });
 
   it("should return an array of pixels when using httpClientSpy", () => {
@@ -29,7 +30,8 @@ describe("ImageDisplayerService", () => {
     imageDisplayerService.getImagePixels("/mock/testImage.bmp")
     .then((res: number[]) => {
       for (let i: number = 0; i < res.length; i++) {
-        expect(res[i]).toEqual(expectedRes[i]);
+        expect(res[i]).toEqual(expectedRes[i])
+        .catch((err) => {console.error(err); });
       }
     })
     .catch((err) => {console.error(err); });
@@ -47,20 +49,23 @@ describe("ImageDisplayerService", () => {
 
     service.drawPixelsInCanvas(ctx, pixelsToInsert);
     for (let i: number = 0; i < expectedResult.length; i++) {
-      expect(ctx.getImageData(0, 0, 2, 1).data[i]).toEqual(expectedResult[i]);
+      expect(ctx.getImageData(0, 0, 2, 1).data[i]).toEqual(expectedResult[i])
+      .catch((err) => {console.error(err); });
     }
   });
 
   it("should return the folder location of the specified original image", () => {
      const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
      const isTheOriginalImage: boolean = true;
-     expect(service.getFolderLocation("originalImage.bmp", isTheOriginalImage)).toEqual("/public/originalImages/originalImage.bmp");
+     expect(service.getFolderLocation("originalImage.bmp", isTheOriginalImage)).toEqual("/public/originalImages/originalImage.bmp")
+     .catch((err) => {console.error(err); });
    });
 
   it("should return the folder location of the specified modified image", () => {
      const service: ImageDisplayerService = TestBed.get(ImageDisplayerService);
      const isTheOriginalImage: boolean = false;
-     expect(service.getFolderLocation("modifImage.bmp", isTheOriginalImage)).toEqual("/public/modifiedImages/modifImage.bmp");
+     expect(service.getFolderLocation("modifImage.bmp", isTheOriginalImage)).toEqual("/public/modifiedImages/modifImage.bmp")
+     .catch((err) => {console.error(err); });
    });
 
   it("should return the pixels flipped", () => {
@@ -69,7 +74,8 @@ describe("ImageDisplayerService", () => {
 
     const flippedPixels: number[] = service["flipPixelsOnYAxis"](pixelsToFlip);
     for (let i: number = 919680; i > 921600; i++) {
-      expect(flippedPixels[i]).toEqual(0);
+      expect(flippedPixels[i]).toEqual(0)
+      .catch((err) => {console.error(err); });
     }
   });
 
@@ -86,9 +92,12 @@ describe("ImageDisplayerService", () => {
     posOfPixelsToChange.push(919680);
 
     service.eraseDifference(ctx, posOfPixelsToChange);
-    expect(service.modifiedImagePixels[0]).toEqual(255);
-    expect(service.modifiedImagePixels[1]).toEqual(255);
-    expect(service.modifiedImagePixels[2]).toEqual(255);
+    expect(service.modifiedImagePixels[0]).toEqual(255)
+    .catch((err) => {console.error(err); });
+    expect(service.modifiedImagePixels[1]).toEqual(255)
+    .catch((err) => {console.error(err); });
+    expect(service.modifiedImagePixels[2]).toEqual(255)
+    .catch((err) => {console.error(err); });
   });
 
   it("should be able to erase a white difference of 3 pixels and turn it black", () => {
@@ -128,7 +137,8 @@ describe("ImageDisplayerService", () => {
     }
 
     service.eraseDifference(ctx, posOfPixelsToChange);
-    expect(service.modifiedImagePixels).toEqual(whitePixels);
+    expect(service.modifiedImagePixels).toEqual(whitePixels)
+    .catch((err) => {console.error(err); });
   });
 
 });
