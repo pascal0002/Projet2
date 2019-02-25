@@ -108,5 +108,4 @@ describe("GameViewService", () => {
   it("should return a valid string time with 600s", () => {
     expect(service.timeToString(600)).toEqual("10:00");
   });
-
 });
