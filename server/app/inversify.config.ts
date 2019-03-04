@@ -15,6 +15,7 @@ import { DifferencesGeneratorService } from "./services/differences-generator.se
 import { FormValidator2DService } from "./services/form-validator-2D.service";
 import { FormValidator3DService } from "./services/form-validator-3D.service";
 import { GameCardsService } from "./services/game-cards.service";
+import { HighScoreService } from "./services/high-score.service";
 import { LoginService } from "./services/login.service";
 import { ModifiedSceneBuilderService } from "./services/modified-scene-builder.service";
 import { OriginalSceneBuilderService } from "./services/original-scene-builder.service";
@@ -47,4 +48,5 @@ container.bind(Types.OriginalSceneBuilderService).to(OriginalSceneBuilderService
 container.bind(Types.ModifiedSceneBuilderService).to(ModifiedSceneBuilderService);
 container.bind(Types.ScenesParameterGeneratorService).to(ScenesParameterGeneratorService);
 container.bind(Types.Scene3DService).to(Scene3DService);
+container.bind(Types.HighScoreService).to(HighScoreService);
 export { container };
