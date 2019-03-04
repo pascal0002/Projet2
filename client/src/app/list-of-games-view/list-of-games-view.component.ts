@@ -33,8 +33,8 @@ export class ListOfGamesViewComponent {
   public delete(gameCard: GameCard): void {
     swal({
       closeOnClickOutside: false,
-      text: "Vouler vous vraiment supprimer ce jeu ?",
-      buttons: ["Annuler", "Supprimer le jeu!"],
+      text: "Voulez-vous vraiment supprimer ce jeu ?",
+      buttons: ["Annuler", "Supprimer ce jeu!"],
     })
     .then((confirm: boolean) => {if (confirm) {this.listOfGamesService.delete(gameCard); }})
     .catch((err: Error) => console.error(err));
