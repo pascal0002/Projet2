@@ -1,4 +1,5 @@
 import { Component, Input } from "@angular/core";
+import swal from "sweetalert";
 import { Mode } from "../../../../common/communication/Constants";
 import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
@@ -30,6 +31,10 @@ export class ListOfGamesViewComponent {
   }
 
   public delete(gameCard: GameCard): void {
+    swal({
+      text: "Vouler vous vraiment supprimer ce jeu ?",
+      buttons: ["Annuler", "Supprimer le jeu!"],
+    });
     this.listOfGamesService.delete(gameCard);
   }
 }
