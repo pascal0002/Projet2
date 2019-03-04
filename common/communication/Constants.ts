@@ -141,6 +141,7 @@ export abstract class Constants {
     static readonly IMAGE_PAIR: string = "/image_pair";
     static readonly INFO_3D_GAME: string = "/info_3D_game";
     static readonly DELETE: string = "/delete";
+    static readonly RESET: string = "/reset";
     static readonly IMAGE_DATA: string = "/gameCard3D/imageData";
     static readonly OBJECTS: string = "/objects/";
     static readonly SCENES: string = "/scenes/";
