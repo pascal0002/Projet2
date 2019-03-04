@@ -39,4 +39,7 @@ export class ListOfGamesViewComponent {
     .then((confirm: boolean) => {if (confirm) {this.listOfGamesService.delete(gameCard); }})
     .catch((err: Error) => console.error(err));
   }
+
+  public reset(gameCard: GameCard): void {
+  }
 }
