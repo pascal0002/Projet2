@@ -1,9 +1,13 @@
 import { IPixel } from "./Pixel";
 
 export abstract class Constants {
-    static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
+    
+    static readonly DIFFERENCE_EXTENSION: string = "Differences.bmp";
+    static readonly FILE_WANTED: string = "image/jpeg";
+    static readonly SKYBLUE_COLOR: string = "skyblue";
+    static readonly BACK_SLASH: string = "/";
 
-    static readonly BACK_SLASH = "/";
+    static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
     static readonly MINIMAL_TIME_DUO: number = 150;
     static readonly MAXIMAL_TIME_DUO: number = 300;
     static readonly MINIMAL_TIME_SOLO: number = 210;
@@ -14,6 +18,18 @@ export abstract class Constants {
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
 
+    static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
+
+    static readonly MINIMUM_NAME_LENGTH: number = 3;
+    static readonly MAXIMUM_NAME_LENGTH: number = 15;
+    static readonly MINIMUM_USERNAME_LENGTH: number = 3;
+    static readonly MAXIMUM_USERNAME_LENGTH: number = 20;
+
+    // Login error messages
+    static readonly LOGIN_ERROR_NAME_SIZE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+    static readonly LOGIN_ERROR_NAME_IN_USE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+
+    // Folder paths
     static readonly PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
     static readonly PUBLIC_MODIF_FOLDER_PATH: string = "/public/modifiedImages/";
     static readonly PUBLIC_DIFF_FOLDER_PATH: string = "/public/differenceImages/";
@@ -23,12 +39,11 @@ export abstract class Constants {
     static readonly MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
     static readonly DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/";
 
-    static readonly DB_URL: string = "mongodb://admin:admin102@ds163254.mlab.com:63254/log2990-h19-equipe102";
-
-    static readonly MINIMUM_NAME_LENGTH: number = 3;
-    static readonly MAXIMUM_NAME_LENGTH: number = 15;
-    static readonly MINIMUM_USERNAME_LENGTH: number = 3;
-    static readonly MAXIMUM_USERNAME_LENGTH: number = 20;
+    // Canvas IDs
+    static readonly ORIGINAL_CANVAS_2D: string = "ogCanvas";
+    static readonly MODIFIED_CANVAS_2D: string = "modifCanvas";
+    static readonly ORIGINAL_CANVAS_3D: string = "leftCanvas";
+    static readonly MODIFIED_CANVAS_3D: string = "rightCanvas";
 
     // for the 2D form validator
     static readonly MIN_TITLE_LENGTH: number = 3;
@@ -99,11 +114,40 @@ export abstract class Constants {
     static readonly SQUARE_FACTOR: number = 2;
     static readonly DIMENSIONS_NB: number = 3;
 
+    // Routes clients
+    static readonly API:string = "api";
+    static readonly DIFFERENCE_CONTROLLER: string = "/differences"
+    static readonly GAME_LIST_URL: string = "/games_list";
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
-    static readonly API_NEWGAME_URL: string = "api/differences/new_game";
-    static readonly API_DIFFVALIDATOR_URL: string = "api/differences/difference_validator";
-    static readonly API_IMAGEPIXEL_URL: string = "api/differences/image_pixels";
+    static readonly NEWGAME_URL: string = "/differences/new_game";
+    static readonly DIFFVALIDATOR_URL: string = "/differences/difference_validator";
+    static readonly IMAGEPIXEL_URL: string = "/differences/image_pixels";
+    static readonly SCENE_URL: string = "/scene/scenes"; 
+    static readonly IMAGE_PAIR_URL: string = "/game_cards/image_pair"; 
+    static readonly GAME_3D_INFO_URL: string = "/game_cards/info_3D_game";
+    static readonly GAME_2D_CARDS_URL: string = "/game_cards/2D_cards";
+    static readonly GAME_3D_CARDS_URL: string = "/game_cards/3D_cards";
+    static readonly DELETE_CARD_URL: string = "/game_cards/delete";
+    static readonly SCENE_OBJECTS_URL : string = "/scene/objects";
+    static readonly GAME_3D_CARD_DATA_URL: string = "/scene/gameCard3D/imageData";
 
+    // Routes pour les controlleurs
+    static readonly NEW_GAME: string = "/new_game";
+    static readonly DIFFERENCE_VALIDATOR: string = "/difference_validator";
+    static readonly IMAGE_PIXELS: string = "/image_pixels";
+    static readonly CARDS_2D: string = "/2D_cards";
+    static readonly CARDS_3D: string = "/3D_cards";
+    static readonly IMAGE_PAIR: string = "/image_pair";
+    static readonly INFO_3D_GAME: string = "/info_3D_game";
+    static readonly DELETE: string = "/delete";
+    static readonly IMAGE_DATA: string = "/gameCard3D/imageData";
+    static readonly OBJECTS: string = "/objects/";
+    static readonly SCENES: string = "/scenes/";
+
+    // Messages d'erreur pour le formulaire
+    static readonly BAD_INFO_ERROR: string = "Les informations envoyées ne sont pas valides!";
+    static readonly BAD_NUMBER_OF_DIFF_ERROR: string = "Les deux images sélectionnées doivent avoir exactement 7 différences";
+    static readonly BAD_NAME_ERROR: string = "Une partie avec ce nom existe déjà !";
     static readonly DIFFIMAGE_SUFFIX = "Differences.bmp";
 
     // game View
@@ -158,6 +202,7 @@ export abstract class Constants {
 
 
     static readonly CAMERA_FIELD_OF_VIEW: number = 80;
+    static readonly CAMERA_MINIMAL_DISTANCE: number = 1;
     static readonly CAMERA_RENDER_DISTANCE: number = 500;
     static readonly Z_CAMERA_POSITION: number = 90;
 
@@ -181,6 +226,14 @@ export abstract class Constants {
 
     static readonly TIMER_RESOLUTION: number = 100;
     static readonly TIMER_INCREMENT: number = Constants.SECOND_TO_MILLISECOND / Constants.TIMER_RESOLUTION;
+
+    //modification scene 3D
+    static readonly DELETE_ONLY: string = JSON.stringify([true, false, false]);
+    static readonly COLOR_ONLY: string = JSON.stringify([false, true, false]);
+    static readonly ADD_ONLY: string = JSON.stringify([false, false, true]);
+
+    static readonly DELETE_ELEMENT: number = 0;
+    static readonly CHANGE_COLOR: number = 1;
 }
 
 export enum Dimension {

@@ -18,7 +18,7 @@ export class ImageDisplayerService {
     const imgLocation: IImageLocation = { location: imageLocation };
 
     return new Promise<number[]>((resolve: Function, res: Function) =>
-      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API_IMAGEPIXEL_URL, imgLocation).toPromise()));
+      resolve(this.http.post<number[]>(Constants.SERVER_BASE_URL + Constants.API + Constants.IMAGEPIXEL_URL, imgLocation).toPromise()));
   }
 
   public drawPixelsInCanvas(ctx: CanvasRenderingContext2D, pixels: number[]): void {
@@ -27,7 +27,7 @@ export class ImageDisplayerService {
 
     for (let imageIndex: number = 0; imageIndex < pixels.length;
       imageIndex += Constants.NEXT_PIXEL_RGB) {
-      // RGB values are stored in the BGR order in the canvas
+      // The r and g values are inversed in the images that are gotten from the server
       imageData.data[canvasIndex + Constants.RED_COLOR] = pixels[imageIndex + Constants.BLUE_COLOR];
       imageData.data[canvasIndex + Constants.GREEN_COLOR] = pixels[imageIndex + Constants.GREEN_COLOR];
       imageData.data[canvasIndex + Constants.BLUE_COLOR] = pixels[imageIndex + Constants.RED_COLOR];
@@ -52,8 +52,8 @@ export class ImageDisplayerService {
 
   public getFolderLocation(path: string, isTheOriginalImage: boolean): string {
     return (isTheOriginalImage) ?
-      Constants.PUBLIC_OG_FOLDER_PATH + path.split("/").pop() as string
-      : Constants.PUBLIC_MODIF_FOLDER_PATH + path.split("/").pop() as string;
+      Constants.PUBLIC_OG_FOLDER_PATH + path.split(Constants.BACK_SLASH).pop() as string
+      : Constants.PUBLIC_MODIF_FOLDER_PATH + path.split(Constants.BACK_SLASH).pop() as string;
   }
 
   private flipPixelsOnYAxis(pixels: number[]): number[] {

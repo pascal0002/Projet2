@@ -41,7 +41,7 @@ export class FormValidator2DService {
 
     private validateImageExtension(extension: string): boolean {
 
-        return (extension.split(".").pop() === "bmp");
+        return (extension.split(".").pop() === Constants.VALID_FILE_EXTENSION);
     }
 
 }

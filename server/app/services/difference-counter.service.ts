@@ -51,7 +51,7 @@ export class DifferenceCounterService {
     while (pixelStack.length > 0) {
       const neighbors: number[] = this.getNeighbors(pixelStack.shift());
       neighbors.forEach((neighbor: number) => {
-        if ( this.pixelIsBlackAndNotVisited(pixelMap.value[neighbor])) {
+        if (this.pixelIsBlackAndNotVisited(pixelMap.value[neighbor])) {
           pixelMap.value[neighbor][Constants.IS_VISITED] = true;
           pixelStack.push(neighbor);
         }

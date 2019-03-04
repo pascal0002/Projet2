@@ -45,11 +45,11 @@ export class GameCardForm3DComponent implements OnInit {
     });
   }
 
-  public requireCheckboxesToBeCheckedValidator(): ValidatorFn {
+  private requireCheckboxesToBeCheckedValidator(): ValidatorFn {
     return this.formHandler3DService.getValidatorFunction();
   }
 
-  public get3DFormInfo(): IFormInfo3D {
+  private get3DFormInfo(): IFormInfo3D {
 
     return {
       gameName: this.form3DGroup.controls.cardName.value,
@@ -73,12 +73,12 @@ export class GameCardForm3DComponent implements OnInit {
       );
   }
 
-  public resetInputValues(): void {
+  private resetInputValues(): void {
     this.form3DGroup.reset();
     this.error = "";
   }
 
-  public closeForm(): void {
+  private closeForm(): void {
     this.resetInputValues();
     this.form3DClosedEvent.emit(true);
   }

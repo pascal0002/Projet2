@@ -92,24 +92,30 @@ export class GameViewService {
   public onCycle(): void {
     this.timerModel.cycle++;
 
-    /*Supprime le callback du timer de médaille*/
+    // Supprime le callback du timer de médaille
     clearInterval(this.timerModel.bestScoreIntervalCache);
 
     if (this.timerModel.cycle < Constants.NUMBER_MEDAL) {
-      this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
-      this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle + 1];
-
-      /*On recommence un cycle et on ajuste le temps de la médaille suivante avec le tableau des meilleurs scores*/
-      this.timerModel.targetTime = this.model.gamecard.bestTimeSolo[this.timerModel.cycle].time - this.timerModel.time;
-      this.timerModel.bestScoreTime = 0;
-      this.startBestScoreTimer();
+      this.changeMedalBackground();
+      this.startNewCycle();
     } else {
-      /*Pas de médaille :( On arrête de suivre le temps*/
+      // Pas de médaille :( On arrête de suivre le temps
       this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
     }
   }
 
-  public timeToString(time: number): string {
+  private changeMedalBackground(): void {
+    this.timerEL.backgroundColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle];
+    this.timerEL.outerStrokeColor = Constants.MEDAL_COLOR_SCALE[this.timerModel.cycle + 1];
+  }
+
+  private startNewCycle(): void {
+    this.timerModel.targetTime = this.model.gamecard.bestTimeSolo[this.timerModel.cycle].time - this.timerModel.time;
+    this.timerModel.bestScoreTime = 0;
+    this.startBestScoreTimer();
+  }
+
+  private timeToString(time: number): string {
     const seconds: number = Math.floor(time % Constants.MINUTE_TO_SECOND);
     const minutes: number = Math.floor(time / Constants.MINUTE_TO_SECOND);
 
