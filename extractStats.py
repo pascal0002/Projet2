@@ -44,6 +44,8 @@ def cleanLine(line):
     line = line.replace(")",") ")
     line = line.replace(":"," : ")
     line = line.replace("-"," - ")
+    line = line.replace("."," - ")
+    line = line.replace("[","[ - ")
     return line
 
 
@@ -67,6 +69,7 @@ def containsOne(array1,array2):
 def readNextLine(file):
     line = file.readline()
     if line == "":
+        file.close()
         removeStatFile("__out__")
         raise Exception("Fin de lecture anormale")
     return re.split(" |:",line.strip())
@@ -74,6 +77,7 @@ def readNextLine(file):
 def readNextLineAndClean(file):
     line = file.readline()
     if line == "":
+        file.close()
         removeStatFile("__out__")
         raise Exception("Fin de lecture anormale")
     line = cleanLine(line.strip())
@@ -245,7 +249,7 @@ def parseStats(stats):
             commits.append(newCommit)
 
         line = skipRemaining(stats)
-
+    stats.close()
     removeStatFile("./__out__")
     return commits
         
