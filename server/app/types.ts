@@ -7,6 +7,7 @@ export default {
         GameCardsController: Symbol("GameCardsController"),
         GameCardsService: Symbol("GameCardsService"),
         DifferencesController: Symbol("DifferencesController"),
+        HighScoreController: Symbol("HighScoreController"),
         DifferenceCounterService: Symbol("DifferenceCounterService"),
         FormValidator2DService: Symbol("FormValidator2DService"),
         FormValidator3DService: Symbol("FormValidator3DService"),
