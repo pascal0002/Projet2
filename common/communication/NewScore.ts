@@ -1,7 +1,9 @@
 import { GameCard } from "./game-card";
+import { Mode } from "./Constants";
 
 export interface INewScore {
-    gameCard: GameCard, 
+    gameCard: GameCard,
+    mode: Mode,
     user: string, 
     time: number,
 }
