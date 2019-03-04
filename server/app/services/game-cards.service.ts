@@ -1,6 +1,7 @@
 import Axios, { AxiosResponse } from "axios";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
+import { IBestTime } from "../../../common/communication/BestTime";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { Constants, Dimension } from "../../../common/communication/Constants";
 import { IFormInfo2D } from "../../../common/communication/FormInfo2D";
@@ -12,7 +13,6 @@ import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
-import { IBestTime } from "../../../common/communication/BestTime";
 
 @injectable()
 export class GameCardsService {

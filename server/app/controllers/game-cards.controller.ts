@@ -4,6 +4,7 @@ import * as mongoose from "mongoose";
 import { IBestTime } from "../../../common/communication/BestTime";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { Constants, Dimension } from "../../../common/communication/Constants";
+import { GameCard } from "../../../common/communication/game-card";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
 import { DatabaseService } from "../services/database.service";
 import { FormValidator2DService } from "../services/form-validator-2D.service";
@@ -13,7 +14,6 @@ import { gameCard3D } from "../services/game-card-3D-schema";
 import { GameCardsService } from "../services/game-cards.service";
 import { scene3D } from "../services/scene3D-schema";
 import Types from "../types";
-import { GameCard } from "../../../common/communication/game-card";
 
 @injectable()
 export class GameCardsController {
