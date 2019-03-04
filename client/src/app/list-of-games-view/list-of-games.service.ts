@@ -84,4 +84,19 @@ export class ListOfGamesService {
       this.listes[dimension].splice(index, 1);
     }
   }
+
+  public reset(gameCard: GameCard): void {
+    this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API + Constants.RESET_CARD_URL, gameCard)
+      .toPromise()
+      .then((newGameCard: GameCard) => {
+        (newGameCard.dimension === Dimension.TWO_DIMENSION) ?
+        this.resetFromList(gameCard, Constants.LIST_2D, newGameCard) :
+        this.resetFromList(gameCard, Constants.LIST_3D, newGameCard);
+      })
+      .catch((err) => { console.error("erreur :", err); });
+  }
+
+  private resetFromList(gameCard: GameCard, dimension: number, newGameCard: GameCard): void {
+  }
+
 }

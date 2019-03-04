@@ -41,5 +41,12 @@ export class ListOfGamesViewComponent {
   }
 
   public reset(gameCard: GameCard): void {
+    swal({
+      closeOnClickOutside: false,
+      text: "Voulez-vous vraiment réinitialiser ce jeu ?",
+      buttons: ["Annuler", "Réinitialiser ce jeu!"],
+    })
+    .then((confirm: boolean) => {if (confirm) {this.listOfGamesService.reset(gameCard); }})
+    .catch((err: Error) => console.error(err));
   }
 }
