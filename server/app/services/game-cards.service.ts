@@ -12,6 +12,7 @@ import { DatabaseService } from "./database.service";
 import { DifferenceCounterService } from "./difference-counter.service";
 import { gameCard2D } from "./game-card-2D-schema";
 import { gameCard3D } from "./game-card-3D-schema";
+import { IBestTime } from "../../../common/communication/BestTime";
 
 @injectable()
 export class GameCardsService {
@@ -128,8 +129,8 @@ export class GameCardsService {
     return Constants.MODIFIED_IMAGE_FOLDER + imageName;
   }
 
-  private generateBestTime(minimalTime: number, maximalTime: number): { user: string, time: number }[] {
-    const highScores: { user: string, time: number }[] = [];
+  public generateBestTime(minimalTime: number, maximalTime: number): IBestTime[] {
+    const highScores: IBestTime[] = [];
     for (let i: number = 0; i < Constants.NUMBER_HIGH_SCORE; i++) {
       const highScore: number = this.getRandomRange(minimalTime, maximalTime);
       const userID: number = this.getRandomRange(0, Constants.MAXIMAL_USER_ID);
