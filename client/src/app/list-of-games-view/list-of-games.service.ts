@@ -97,6 +97,10 @@ export class ListOfGamesService {
   }
 
   private resetFromList(gameCard: GameCard, dimension: number, newGameCard: GameCard): void {
+    const index: number = this.listes[dimension].indexOf(gameCard, 0);
+    if (index > -1) {
+      this.listes[dimension][index] = newGameCard;
+    }
   }
 
 }
