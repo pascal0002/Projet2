@@ -12,7 +12,7 @@ export class HighScoreController {
     public get router(): Router {
         const router: Router = Router();
         router.post(Constants.BACK_SLASH, (req: Request, res: Response, next: NextFunction) => {
-            res.json(this.highScoreService.updateGameCard());
+            res.json(this.highScoreService.updateGameCard(req.body));
         });
 
         return router;
