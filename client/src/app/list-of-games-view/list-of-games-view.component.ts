@@ -32,6 +32,7 @@ export class ListOfGamesViewComponent {
 
   public delete(gameCard: GameCard): void {
     swal({
+      closeOnClickOutside: false,
       text: "Vouler vous vraiment supprimer ce jeu ?",
       buttons: ["Annuler", "Supprimer le jeu!"],
     })
