@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
+import { IBestTime } from "../../../common/communication/BestTime";
 import { IBitmapImage } from "../../../common/communication/BitmapImage";
 import { Constants, Dimension } from "../../../common/communication/Constants";
 import { BmpFileGenerator } from "../services/bmp-file-generator.service";
@@ -12,6 +13,7 @@ import { gameCard3D } from "../services/game-card-3D-schema";
 import { GameCardsService } from "../services/game-cards.service";
 import { scene3D } from "../services/scene3D-schema";
 import Types from "../types";
+import { GameCard } from "../../../common/communication/game-card";
 
 @injectable()
 export class GameCardsController {
@@ -84,6 +86,28 @@ export class GameCardsController {
             } else {
                 this.databaseService.remove(gameCard3D, {title: req.body.title});
                 this.databaseService.remove(scene3D, {title: req.body.title});
+            }
+        });
+
+        router.post(Constants.RESET, (req: Request, res: Response, next: NextFunction) => {
+            const bestTimeSolo: IBestTime[] = this.gameCardsService.generateBestTime(Constants.MINIMAL_TIME_SOLO,
+                                                                                     Constants.MAXIMAL_TIME_SOLO);
+            const bestTime1v1: IBestTime[] = this.gameCardsService.generateBestTime(Constants.MINIMAL_TIME_DUO,
+                                                                                    Constants.MAXIMAL_TIME_DUO);
+            const newGameCard: GameCard = req.body;
+            newGameCard.bestTime1v1 = bestTime1v1;
+            newGameCard.bestTimeSolo = bestTimeSolo;
+
+            if (req.body.dimension === Dimension.TWO_DIMENSION) {
+                this.databaseService.updateOne(gameCard2D, {title : req.body.title},
+                                               {bestScoreSolo: bestTimeSolo, bestScore1v1: bestTime1v1})
+                .catch((err: Error) => console.error(err));
+                res.json(newGameCard);
+            } else {
+                this.databaseService.updateOne(gameCard3D, {title : req.body.title},
+                                               {bestScoreSolo: bestTimeSolo, bestScore1v1: bestTime1v1})
+                .catch((err: Error) => console.error(err));
+                res.json(newGameCard);
             }
         });
 
