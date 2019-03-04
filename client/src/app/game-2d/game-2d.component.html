@@ -1,9 +1,9 @@
 <div id="game">
   <div class="game-panel">
-    <canvas #ogCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
+    <canvas [hidden]="!imagesHaveBeenLoaded" #ogCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
   </div>
   <div class="game-panel">
-    <canvas #modifCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
+    <canvas [hidden]="!imagesHaveBeenLoaded" #modifCanvas width=640 height=480 (click)="sendClickInfo($event)" draggable="false"></canvas>
 
   </div>
 </div>

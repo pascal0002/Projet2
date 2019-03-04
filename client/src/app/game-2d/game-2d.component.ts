@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
 import { Constants } from "../../../../common/communication/Constants";
-import { GameCard } from "../../../../common/communication/game-card";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
 import { ImageDisplayerService } from "./image-displayer.service";
@@ -11,9 +10,9 @@ import { ImageDisplayerService } from "./image-displayer.service";
   styleUrls: ["./game-2d.component.css"],
 })
 export class Game2DComponent implements AfterViewInit {
-  public gameCard: GameCard;
   public differenceImgPixels: number[];
   public canClickAgain: boolean = true;
+  public imagesHaveBeenLoaded: boolean = false;
   public modifCtx: CanvasRenderingContext2D;
   @ViewChild(Constants.ORIGINAL_CANVAS_2D) public ogCanvas: ElementRef;
   @ViewChild(Constants.MODIFIED_CANVAS_2D) public modifCanvas: ElementRef;
@@ -21,14 +20,10 @@ export class Game2DComponent implements AfterViewInit {
   public constructor(public gameViewService: GameViewService,
                      private differenceValidatorService: DifferenceValidatorService,
                      private imageDisplayerService: ImageDisplayerService) {
-    this.gameCard = gameViewService.model.gamecard;
+    this.canClickAgain = true;
+    this.imagesHaveBeenLoaded = false;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
-
-    this.differenceValidatorService.getDifferenceImgPixels()
-      .then((res: number[]) => {
-        this.differenceImgPixels = res;
-      })
-      .catch((err) => { console.error(err); });
+    this.setDifferenceImgPixels();
   }
 
   public ngAfterViewInit(): void {
@@ -38,22 +33,32 @@ export class Game2DComponent implements AfterViewInit {
     this.drawTheTwoImages(ogCtx, this.modifCtx);
   }
 
+  private setDifferenceImgPixels(): void {
+    this.differenceValidatorService.getDifferenceImgPixels()
+    .then((res: number[]) => {
+      this.differenceImgPixels = res;
+    })
+    .catch((err) => { console.error(err); });
+  }
+
   private drawTheTwoImages(ogCtx: CanvasRenderingContext2D, modifCtx: CanvasRenderingContext2D): void {
-    this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
-    this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false)
+    this.drawImageInCanvas(ogCtx, this.gameViewService.model.gamecard.image, true);
+    this.drawImageInCanvas(modifCtx, this.gameViewService.model.gamecard.imageModified, false)
     .then(() => {
       this.gameViewService.startChrono();
+      this.imagesHaveBeenLoaded = true;
     });
   }
 
   private drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): Promise<void> {
     return new Promise((resolve) => {
-      resolve(this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
-      .then((res) => {
-        (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
-        this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
-      })
-      .catch((err: Error) => { console.error(err); }));
+      resolve(
+            this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
+            .then((res) => {
+              (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
+              this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
+            })
+            .catch((err: Error) => { console.error(err); }));
     });
   }
 
