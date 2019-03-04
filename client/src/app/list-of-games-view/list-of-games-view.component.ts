@@ -34,7 +34,7 @@ export class ListOfGamesViewComponent {
     swal({
       text: "Vouler vous vraiment supprimer ce jeu ?",
       buttons: ["Annuler", "Supprimer le jeu!"],
-    });
+    }).catch((err: Error) => console.error(err));
     this.listOfGamesService.delete(gameCard);
   }
 }
