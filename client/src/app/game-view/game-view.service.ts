@@ -37,7 +37,7 @@ export class GameViewService {
     this.timerModel = { bestScoreTime: 0, time: 0, targetTime: 0, cycle: 0, output: "0", intervalCache: 0, bestScoreIntervalCache: 0 };
   }
 
-  public init(): void {
+  public startChrono(): void {
     this.timerModel.targetTime = this.model.gamecard.bestTimeSolo[this.timerModel.cycle].time;
     this.startBestScoreTimer();
     this.startTimer();

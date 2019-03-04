@@ -23,28 +23,38 @@ export class Game2DComponent implements AfterViewInit {
                      private imageDisplayerService: ImageDisplayerService) {
     this.gameCard = gameViewService.model.gamecard;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
-  }
 
-  public ngAfterViewInit(): void {
     this.differenceValidatorService.getDifferenceImgPixels()
       .then((res: number[]) => {
         this.differenceImgPixels = res;
       })
       .catch((err) => { console.error(err); });
+  }
+
+  public ngAfterViewInit(): void {
     const ogCtx: CanvasRenderingContext2D = this.ogCanvas.nativeElement.getContext(Constants.CTX_2D);
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
-    this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
-    this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false);
+    this.drawTheTwoImages(ogCtx, this.modifCtx);
   }
 
-  private drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): void {
-    this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
+  private drawTheTwoImages(ogCtx: CanvasRenderingContext2D, modifCtx: CanvasRenderingContext2D): void {
+    this.drawImageInCanvas(ogCtx, this.gameCard.image, true);
+    this.drawImageInCanvas(this.modifCtx, this.gameCard.imageModified, false)
+    .then(() => {
+      this.gameViewService.startChrono();
+    });
+  }
+
+  private drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): Promise<void> {
+    return new Promise((resolve) => {
+      resolve(this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
       .then((res) => {
         (isOriginalImg) ? this.imageDisplayerService.originalImagePixels = res : this.imageDisplayerService.modifiedImagePixels = res;
         this.imageDisplayerService.drawPixelsInCanvas(ctx, res);
       })
-      .catch((err: Error) => { console.error(err); });
+      .catch((err: Error) => { console.error(err); }));
+    });
   }
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
