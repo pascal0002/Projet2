@@ -27,6 +27,7 @@ export class Game3DComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // this.gameViewService.startChrono();
     this.sceneService.createOriginalCanvas(this.leftCanvas);
     this.ngZone.runOutsideAngular(() => this.renderLeft());
     this.sceneService.createModifiedCanvas(this.rightCanvas);

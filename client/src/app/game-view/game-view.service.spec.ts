@@ -43,7 +43,7 @@ describe("GameViewService", () => {
   });
 
   it("should set the correct gold target time on init", () => {
-    service.init();
+    service.startChrono();
     expect(service.timerModel.targetTime).toEqual(20);
   });
 
@@ -60,14 +60,14 @@ describe("GameViewService", () => {
   });
 
   it("should reset correctly the timer callback", async () => {
-    service.init();
+    service.startChrono();
     service.reset();
     await sleep(Constants.TIMER_RESOLUTION);
     expect(service.timerModel.time).toEqual(0);
   });
 
   it("should cycle when 100%", async () => {
-    service.init();
+    service.startChrono();
     service.timerModel.targetTime = 1;
     spyOn(service, "onCycle");
     await sleep(Constants.TIMER_RESOLUTION + 1000);
