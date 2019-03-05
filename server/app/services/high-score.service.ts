@@ -15,6 +15,17 @@ export class HighScoreService {
     }
 
     private updateTime(highScore: IBestTime[], newScore: number, user: string): IBestTime[] {
+        if (newScore < highScore[0].time) {
+            highScore[2] = highScore[1];
+            highScore[1] = highScore[0];
+            highScore[0] = {user: user, time: newScore};
+        } else if (newScore < highScore[1].time) {
+            highScore[2] = highScore[1];
+            highScore[1] = {user: user, time: newScore};
+        } else if (newScore < highScore[2].time) {
+            highScore[2] = {user: user, time: newScore};
+        }
+
         return highScore;
     }
 }
