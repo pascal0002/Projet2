@@ -62,7 +62,7 @@ export class SceneService {
   private initializeMovements(canvas: HTMLCanvasElement): void {
     this.controls = new THREE.FirstPersonControls(this.camera, canvas);
     this.controls.movementSpeed = 100;
-    this.controls.lookSpeed = 0.250;
+    this.controls.lookSpeed = 0.25;
   }
 
   private addLighting(scene: THREE.Scene): void {
