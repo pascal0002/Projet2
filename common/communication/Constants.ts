@@ -116,6 +116,7 @@ export abstract class Constants {
     // Routes clients
     static readonly API:string = "api";
     static readonly DIFFERENCE_CONTROLLER: string = "/differences"
+    static readonly HIGH_SCORE_CONTROLLER: string = "/high_score"
     static readonly GAME_LIST_URL: string = "/games_list";
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
     static readonly NEWGAME_URL: string = "/differences/new_game";

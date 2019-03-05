@@ -1,3 +1,4 @@
+import Axios, { AxiosResponse } from "axios";
 import { NextFunction, Request, Response, Router } from "express";
 import { inject, injectable } from "inversify";
 import * as mongoose from "mongoose";
@@ -112,6 +113,19 @@ export class GameCardsController {
         });
 
         router.post(Constants.NEW_SCORE, (req: Request, res: Response, next: NextFunction) => {
+            Axios.post<GameCard>( Constants.SERVER_BASE_URL + Constants.API + Constants.HIGH_SCORE_CONTROLLER, req.body)
+            .then((gameCard: AxiosResponse<GameCard>) => {
+                if (gameCard.data.dimension === Dimension.TWO_DIMENSION) {
+                    this.databaseService.updateOne(gameCard2D, {title : gameCard.data.title}, gameCard.data)
+                    .catch((err: Error) => console.error(err));
+                    res.json(gameCard);
+                } else {
+                    this.databaseService.updateOne(gameCard3D, {title : gameCard.data.title}, gameCard.data)
+                    .catch((err: Error) => console.error(err));
+                    res.json(gameCard);
+                }
+            })
+            .catch((err: Error) => {console.log(err)});
         });
 
         return router;
