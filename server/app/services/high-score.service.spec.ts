@@ -5,14 +5,7 @@ import { GameCard } from "../../../common/communication/game-card";
 import { HighScoreService } from "./high-score.service";
 
 let highScoreService: HighScoreService;
-const mockGameCard: GameCard = {
-    title: "title",
-    image: "image",
-    imageModified: "image2",
-    bestTimeSolo: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
-    bestTime1v1: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
-    dimension: Dimension.TWO_DIMENSION,
-};
+let mockGameCard: GameCard;
 
 describe("high-score-service", () => {
 
@@ -20,6 +13,14 @@ describe("high-score-service", () => {
 
         beforeEach((done: Mocha.Done) => {
             highScoreService = new HighScoreService();
+            mockGameCard = {
+                title: "title",
+                image: "image",
+                imageModified: "image2",
+                bestTimeSolo: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
+                bestTime1v1: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
+                dimension: Dimension.TWO_DIMENSION,
+            };
             done();
         });
 
@@ -96,6 +97,25 @@ describe("high-score-service", () => {
                 imageModified: "image2",
                 bestTimeSolo: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
                 bestTime1v1: [{user: "premier", time: 100}, {user: "newUser", time: 150}, {user: "deuxieme", time: 200}],
+                dimension: Dimension.TWO_DIMENSION,
+            };
+            expect(highScoreService.updateGameCard(mockNewScore)).to.deep.equal(expectedGameCard);
+            done();
+        });
+
+        it("should return the expected gameCard when the new time is equal to the first", (done: Function) => {
+            const mockNewScore: INewScore = {
+                gameCard: mockGameCard,
+                mode: Mode.ONE_VS_ONE,
+                user: "newUser",
+                time: 100,
+            };
+            const expectedGameCard: GameCard = {
+                title: "title",
+                image: "image",
+                imageModified: "image2",
+                bestTimeSolo: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
+                bestTime1v1: [{user: "premier", time: 100}, {user: "newUser", time: 100}, {user: "deuxieme", time: 200}],
                 dimension: Dimension.TWO_DIMENSION,
             };
             expect(highScoreService.updateGameCard(mockNewScore)).to.deep.equal(expectedGameCard);
