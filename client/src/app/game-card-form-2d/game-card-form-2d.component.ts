@@ -11,7 +11,7 @@ import { FormValidator2dService } from "./form-validator-2d.service";
   styleUrls: ["./game-card-form-2d.component.css"],
 })
 export class GameCardForm2DComponent implements OnInit {
-  @Output() public form2DClosedEvent: EventEmitter<boolean> = new EventEmitter();
+  @Output() public form2DClosedEvent: EventEmitter<boolean>;
 
   public form2DGroup: FormGroup;
   private formInfo: IFormInfo2D;
@@ -25,6 +25,7 @@ export class GameCardForm2DComponent implements OnInit {
       originalImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
       modifiedImage: { height: 0, width: 0, bitDepth: 0, fileName: "", pixels: [] },
     };
+    this.form2DClosedEvent = new EventEmitter();
     this.error = "";
   }
 

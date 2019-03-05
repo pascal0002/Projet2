@@ -1,7 +1,9 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild  } from "@angular/core";
+import { Subscription } from "rxjs";
 import { Constants } from "../../../../common/communication/Constants";
 import { GameViewService } from "../game-view/game-view.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
+import { ErrorDisplayer2dService } from "./error-displayer-2d.service";
 import { ImageDisplayerService } from "./image-displayer.service";
 
 @Component({
@@ -9,21 +11,27 @@ import { ImageDisplayerService } from "./image-displayer.service";
   templateUrl: "./game-2d.component.html",
   styleUrls: ["./game-2d.component.css"],
 })
-export class Game2DComponent implements AfterViewInit {
+export class Game2DComponent implements AfterViewInit, OnDestroy {
   public differenceImgPixels: number[];
+  public clickSubscription: Subscription;
   public canClickAgain: boolean = true;
   public imagesHaveBeenLoaded: boolean = false;
   public modifCtx: CanvasRenderingContext2D;
+
   @ViewChild(Constants.ORIGINAL_CANVAS_2D) public ogCanvas: ElementRef;
   @ViewChild(Constants.MODIFIED_CANVAS_2D) public modifCanvas: ElementRef;
+  @ViewChild("modifErrorCanvas") public modifTextCanvas: ElementRef;
 
   public constructor(public gameViewService: GameViewService,
                      private differenceValidatorService: DifferenceValidatorService,
-                     private imageDisplayerService: ImageDisplayerService) {
+                     private imageDisplayerService: ImageDisplayerService,
+                     private errorDisplayerService: ErrorDisplayer2dService) {
+
     this.canClickAgain = true;
     this.imagesHaveBeenLoaded = false;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
     this.setDifferenceImgPixels();
+    this.clickSubscription = this.errorDisplayerService.clickingPermission.subscribe((permission) => this.canClickAgain = permission);
   }
 
   public ngAfterViewInit(): void {
@@ -31,6 +39,10 @@ export class Game2DComponent implements AfterViewInit {
     this.modifCtx = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
     this.drawTheTwoImages(ogCtx, this.modifCtx);
+  }
+
+  public ngOnDestroy(): void {
+    this.clickSubscription.unsubscribe();
   }
 
   private setDifferenceImgPixels(): void {
@@ -64,28 +76,28 @@ export class Game2DComponent implements AfterViewInit {
 
   public sendClickInfo(mouseEvent: MouseEvent): void {
     if (this.canClickAgain) {
+      this.canClickAgain = false;
       this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
                                                     this.differenceImgPixels)
         .then(
-          (res) => {
-            if (res) {
-              this.onDifferenceFound(res.posOfPixelsToErase);
-              this.differenceImgPixels = res.updatedDifferenceImage;
+          (differenceToErase) => {
+            if (differenceToErase) {
+              this.onDifferenceFound(differenceToErase.posOfPixelsToErase);
+              this.differenceImgPixels = differenceToErase.updatedDifferenceImage;
+              this.waitQuarterASecond();
             } else {
-              this.onClickFail();
+              this.onClickFail(mouseEvent.offsetX, mouseEvent.offsetY, this.modifCtx, this.modifTextCanvas);
             }
           },
         )
         .catch((err) => { console.error("erreur :", err); });
-      this.waitHalfASecond();
     }
   }
 
-  private waitHalfASecond(): void {
-    this.canClickAgain = false;
+  private waitQuarterASecond(): void {
     setTimeout(() => {
       this.canClickAgain = true;
-    },         Constants.HALF_A_SECOND);
+    },         (Constants.QUARTER_A_SECOND));
   }
 
   private onDifferenceFound(differencePixelsToErase: number[]): void {
@@ -94,8 +106,9 @@ export class Game2DComponent implements AfterViewInit {
     this.gameViewService.onDiffFound();
   }
 
-  private onClickFail(): void {
+  private onClickFail(xPos: number, yPos: number, ctx: CanvasRenderingContext2D, textCanvas: ElementRef): void {
     this.differenceValidatorService.playFailSound();
+    const textCtx: CanvasRenderingContext2D = textCanvas.nativeElement.getContext(Constants.CTX_2D);
+    this.errorDisplayerService.drawError(xPos, yPos, textCtx);
   }
-
 }

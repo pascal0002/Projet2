@@ -5,6 +5,7 @@
   height: 480px;
   margin-left: 50px;
   user-select: none;
+  position: relative;
 }
 
 #game{
@@ -14,3 +15,10 @@
   text-align: center;
   vertical-align: middle;
 }
+
+.dynamicCanvas{
+  z-index: 999;
+  position: absolute;
+  top:0;
+  left: 0;
+} 

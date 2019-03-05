@@ -14,11 +14,12 @@ export class GameCardForm3DComponent implements OnInit {
   public form3DGroup: FormGroup;
   public objectTypes: string[];
   public error: string;
-  @Output() public form3DClosedEvent: EventEmitter<boolean> = new EventEmitter();
+  @Output() public form3DClosedEvent: EventEmitter<boolean>;
 
   public constructor(private formHandler3DService: FormHandler3DService) {
     this.objectTypes = Constants.OBJECT_TYPES;
     this.error = "";
+    this.form3DClosedEvent = new EventEmitter();
   }
 
   public ngOnInit(): void {
