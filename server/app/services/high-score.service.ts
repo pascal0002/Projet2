@@ -14,7 +14,7 @@ export class HighScoreService {
         return newScore.gameCard;
     }
 
-    private updateTime(highScore: IBestTime[], newScore: number, user: string): IBestTime[] {
+    private updateTime(highScore: IBestTime[], newScore: number, user: string): void {
         if (newScore < highScore[Constants.FIRST].time) {
             highScore[Constants.THIRD] = highScore[Constants.SECOND];
             highScore[Constants.SECOND] = highScore[Constants.FIRST];
@@ -25,7 +25,5 @@ export class HighScoreService {
         } else if (newScore < highScore[Constants.THIRD].time) {
             highScore[Constants.THIRD] = {user: user, time: newScore};
         }
-
-        return highScore;
     }
 }
