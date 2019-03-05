@@ -111,6 +111,9 @@ export class GameCardsController {
             }
         });
 
+        router.post(Constants.NEW_SCORE, (req: Request, res: Response, next: NextFunction) => {
+        });
+
         return router;
     }
 }

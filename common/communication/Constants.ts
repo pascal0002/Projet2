@@ -128,6 +128,7 @@ export abstract class Constants {
     static readonly GAME_3D_CARDS_URL: string = "/game_cards/3D_cards";
     static readonly DELETE_CARD_URL: string = "/game_cards/delete";
     static readonly RESET_CARD_URL: string = "/game_cards/reset";
+    static readonly NEW_SCORE_CARD_URL: string = "/game_cards/new_score";
     static readonly SCENE_OBJECTS_URL : string = "/scene/objects";
     static readonly GAME_3D_CARD_DATA_URL: string = "/scene/gameCard3D/imageData";
 
@@ -141,6 +142,7 @@ export abstract class Constants {
     static readonly INFO_3D_GAME: string = "/info_3D_game";
     static readonly DELETE: string = "/delete";
     static readonly RESET: string = "/reset";
+    static readonly NEW_SCORE: string = "/new_score";
     static readonly IMAGE_DATA: string = "/gameCard3D/imageData";
     static readonly OBJECTS: string = "/objects/";
     static readonly SCENES: string = "/scenes/";
