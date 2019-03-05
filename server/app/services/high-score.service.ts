@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { IBestTime } from "../../../common/communication/BestTime";
-import { Mode, Constants } from "../../../common/communication/Constants";
+import { Constants, Mode } from "../../../common/communication/Constants";
 import { INewScore } from "../../../common/communication/NewScore";
 import { GameCard } from "../../../common/communication/game-card";
 
