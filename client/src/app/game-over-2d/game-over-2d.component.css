@@ -1,0 +1,11 @@
+.square {
+    position: fixed;
+    z-index: 1000;
+    width: 1300px;
+    height: 1300px;
+    background-color: red;
+}
+
+.wrapper{
+    text-align: center;
+}

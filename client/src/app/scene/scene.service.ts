@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import * as THREE from "three";
-require("three-first-person-controls")(THREE);
+// require("three-first-person-controls")(THREE);
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { ISnapshot } from "../../../../common/communication/Snapshot";
