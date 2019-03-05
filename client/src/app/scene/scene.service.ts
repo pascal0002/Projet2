@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import * as THREE from "three";
+require("three-first-person-controls")(THREE);
 import { Constants } from "../../../../common/communication/Constants";
 import { IFormInfo3D } from "../../../../common/communication/FormInfo3D";
 import { ISnapshot } from "../../../../common/communication/Snapshot";
@@ -17,6 +18,8 @@ export class SceneService {
   public camera: THREE.PerspectiveCamera;
   public originalGlRenderer: THREE.WebGLRenderer;
   public modifiedGlRenderer: THREE.WebGLRenderer;
+  public controls: THREE.FirstPersonControls;
+  public clock: THREE.Clock = new THREE.Clock();
 
   public constructor(private http: HttpClient, private game3dGeneratorService: Game3dGeneratorService) {
     this.originalScene = new THREE.Scene();
@@ -29,6 +32,7 @@ export class SceneService {
 
   public createOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.makeOriginalScene(canvas);
+    this.initializeMovements(canvas);
     this.addLighting(this.originalScene);
   }
 
@@ -40,19 +44,25 @@ export class SceneService {
     this.originalGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false, preserveDrawingBuffer: true });
   }
 
-  public createModifiedCanvas(rightCanvas: HTMLCanvasElement): void {
-    this.makeModifiedScene(rightCanvas);
+  public createModifiedCanvas(canvas: HTMLCanvasElement): void {
+    this.makeModifiedScene(canvas);
     this.addLighting(this.modifiedScene);
   }
 
-  private makeModifiedScene(rightCanvas: HTMLCanvasElement): void {
+  private makeModifiedScene(canvas: HTMLCanvasElement): void {
     this.modifiedScene.background = new THREE.Color(Constants.SKYBLUE_COLOR);
-    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: rightCanvas, antialias: false });
+    this.modifiedGlRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false });
   }
 
   public generateAllObjects(title: string): void {
     this.clearObjects();
     this.game3dGeneratorService.generateGame(this.originalScene, this.modifiedScene, title);
+  }
+
+  private initializeMovements(canvas: HTMLCanvasElement): void {
+    this.controls = new THREE.FirstPersonControls(this.camera, canvas);
+    this.controls.movementSpeed = 100;
+    this.controls.lookSpeed = 0.250;
   }
 
   private addLighting(scene: THREE.Scene): void {
@@ -70,6 +80,7 @@ export class SceneService {
     requestAnimationFrame(() => {
       this.renderLeft(canvas);
     });
+    this.controls.update(this.clock.getDelta());
     this.originalGlRenderer.render(this.originalScene, this.camera);
   }
 
@@ -78,7 +89,7 @@ export class SceneService {
     requestAnimationFrame(() => {
       this.renderRight(canvas);
     });
-    this.modifiedGlRenderer.render(this.modifiedScene, this.camera.clone());
+    this.modifiedGlRenderer.render(this.modifiedScene, this.camera);
   }
 
   public async createObjects(formInfo: IFormInfo3D): Promise<IThreeObject[]> {
