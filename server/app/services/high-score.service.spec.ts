@@ -121,5 +121,24 @@ describe("high-score-service", () => {
             expect(highScoreService.updateGameCard(mockNewScore)).to.deep.equal(expectedGameCard);
             done();
         });
+
+        it("should return the expected gameCard when the new time is the best", (done: Function) => {
+            const mockNewScore: INewScore = {
+                gameCard: mockGameCard,
+                mode: Mode.ONE_VS_ONE,
+                user: "newUser",
+                time: 99,
+            };
+            const expectedGameCard: GameCard = {
+                title: "title",
+                image: "image",
+                imageModified: "image2",
+                bestTimeSolo: [{user: "premier", time: 100}, {user: "deuxieme", time: 200}, {user: "troisieme", time: 300}],
+                bestTime1v1: [{user: "newUser", time: 99}, {user: "premier", time: 100}, {user: "deuxieme", time: 200}],
+                dimension: Dimension.TWO_DIMENSION,
+            };
+            expect(highScoreService.updateGameCard(mockNewScore)).to.deep.equal(expectedGameCard);
+            done();
+        });
     });
 });
