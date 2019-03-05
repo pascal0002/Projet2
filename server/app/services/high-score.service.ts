@@ -1,6 +1,6 @@
 import { injectable } from "inversify";
 import { IBestTime } from "../../../common/communication/BestTime";
-import { Mode } from "../../../common/communication/Constants";
+import { Mode, Constants } from "../../../common/communication/Constants";
 import { INewScore } from "../../../common/communication/NewScore";
 import { GameCard } from "../../../common/communication/game-card";
 
@@ -15,15 +15,15 @@ export class HighScoreService {
     }
 
     private updateTime(highScore: IBestTime[], newScore: number, user: string): IBestTime[] {
-        if (newScore < highScore[0].time) {
-            highScore[2] = highScore[1];
-            highScore[1] = highScore[0];
-            highScore[0] = {user: user, time: newScore};
-        } else if (newScore < highScore[1].time) {
-            highScore[2] = highScore[1];
-            highScore[1] = {user: user, time: newScore};
-        } else if (newScore < highScore[2].time) {
-            highScore[2] = {user: user, time: newScore};
+        if (newScore < highScore[Constants.FIRST].time) {
+            highScore[Constants.THIRD] = highScore[Constants.SECOND];
+            highScore[Constants.SECOND] = highScore[Constants.FIRST];
+            highScore[Constants.FIRST] = {user: user, time: newScore};
+        } else if (newScore < highScore[Constants.SECOND].time) {
+            highScore[Constants.THIRD] = highScore[Constants.SECOND];
+            highScore[Constants.SECOND] = {user: user, time: newScore};
+        } else if (newScore < highScore[Constants.THIRD].time) {
+            highScore[Constants.THIRD] = {user: user, time: newScore};
         }
 
         return highScore;
