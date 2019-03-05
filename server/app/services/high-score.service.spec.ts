@@ -34,5 +34,16 @@ describe("high-score-service", () => {
             done();
         });
 
+        it("should return the original gameCard when the new time is equal to the last one", (done: Function) => {
+            const mockNewScore: INewScore = {
+                gameCard: mockGameCard,
+                mode: Mode.ONE_VS_ONE,
+                user: "newUser",
+                time: 300,
+            };
+            expect(highScoreService.updateGameCard(mockNewScore)).to.deep.equal(mockGameCard);
+            done();
+        });
+
     });
 });
