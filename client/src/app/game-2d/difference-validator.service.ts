@@ -55,7 +55,7 @@ export class DifferenceValidatorService {
     });
   }
 
-  public playVictorySound(): void {
+  public playSuccessSound(): void {
     const audio: HTMLAudioElement = new Audio();
     audio.src = Constants.SOUND_FOLDER + Constants.VICTORY_SOUND;
     audio.play()
