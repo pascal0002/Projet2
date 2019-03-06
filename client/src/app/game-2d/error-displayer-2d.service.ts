@@ -17,8 +17,8 @@ export class ErrorDisplayer2dService {
   public drawError(xPos: number, yPos: number, textCtx: CanvasRenderingContext2D): void {
     const adjustedPosition: IClickInfo = this.getAdjustedErrorPosition(xPos, yPos);
     this.setStyle(textCtx);
-    this.drawText("ERROR", adjustedPosition.xPos, adjustedPosition.yPos, textCtx);
-    this.drawTextOutline("ERROR", adjustedPosition.xPos, adjustedPosition.yPos, textCtx);
+    this.drawText(Constants.ERROR_MESSAGE_IDENTIFICATION, adjustedPosition.xPos, adjustedPosition.yPos, textCtx);
+    this.drawTextOutline(Constants.ERROR_MESSAGE_IDENTIFICATION, adjustedPosition.xPos, adjustedPosition.yPos, textCtx);
     this.clearCanvasAfterASecond(textCtx);
   }
 
@@ -31,12 +31,12 @@ export class ErrorDisplayer2dService {
   }
 
   private getAdjustedErrorPosition(xPosition: number, yPosition: number): IClickInfo {
-    return {xPos: xPosition - 75, yPos: yPosition - 15};
+    return {xPos: xPosition - Constants.X_POS_CORRECTION, yPos: yPosition - Constants.Y_POS_CORRECTION};
   }
 
   private setStyle(textCtx: CanvasRenderingContext2D): void {
-    textCtx.font = "50px Poppins";
-    textCtx.fillStyle = "red";
+    textCtx.font = Constants.ERROR_FONT;
+    textCtx.fillStyle = Constants.ERROR_FILL_STYLE;
   }
 
   private clearCanvasAfterASecond(ctx: CanvasRenderingContext2D): void {

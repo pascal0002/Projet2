@@ -17,12 +17,11 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
   public clickIsEnabled: boolean;
   public canSendInfoToServer: boolean;
   public imagesHaveBeenLoaded: boolean;
-  // public modifCtx: CanvasRenderingContext2D;
 
   @ViewChild(Constants.ORIGINAL_CANVAS_2D) public ogCanvas: ElementRef;
   @ViewChild(Constants.MODIFIED_CANVAS_2D) public modifCanvas: ElementRef;
-  @ViewChild("modifTextCanvas") public modifTextCanvas: ElementRef;
-  @ViewChild("ogTextCanvas") public ogTextCanvas: ElementRef;
+  @ViewChild(Constants.MODIFIED_CANVAS_TEXT_2D) public modifTextCanvas: ElementRef;
+  @ViewChild(Constants.ORIGINAL_CANVAS_TEXT_2D) public ogTextCanvas: ElementRef;
 
   public constructor(public gameViewService: GameViewService,
                      private differenceValidatorService: DifferenceValidatorService,
@@ -35,6 +34,7 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
     this.setDifferenceImgPixels();
     this.clickPermission = this.errorDisplayerService.clickingPermission.subscribe((permission) => this.clickIsEnabled = permission);
+
   }
 
   public ngAfterViewInit(): void {
