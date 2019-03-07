@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { ElementRef, Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { CircleProgressComponent } from "ng-circle-progress";
+import swal from "sweetalert";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
 import { GameModel } from "../../../../common/communication/GameModel";
 import { INewScore } from "../../../../common/communication/NewScore";
@@ -85,8 +86,16 @@ export class GameViewService {
       })
       .catch((err) => { console.error("erreur :", err); });
 
-    this.router.navigate([Constants.GAME_LIST_URL])
-    .catch((err) => console.error(err));
+    swal({
+      title: "Félicitation !",
+      text: "Vous avez gagné",
+      icon: "success",
+      closeOnClickOutside: false,
+    })
+    .then((confirm: boolean) => {if (confirm) {this.router.navigate([Constants.GAME_LIST_URL])
+                                               .catch((err) => console.error(err)); }})
+    .catch((err: Error) => console.error(err));
+
   }
 
   public onOpponentDiffFound(): void {
