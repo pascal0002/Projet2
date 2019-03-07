@@ -54,7 +54,14 @@ export class GameViewService {
 
   public onDiffFound(): void {
     this.diffFoundCount++;
+    if (this.model.mode === Mode.SOLO) {
+      if (this.diffFoundCount === Constants.VALID_NUMBER_OF_DIFFERENCES) {
+        this.endGame();
+       }
+    }
   }
+
+  private endGame(): void {}
 
   public onOpponentDiffFound(): void {
     this.opponentDiffFoundCount++;
