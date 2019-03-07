@@ -116,16 +116,18 @@ export class GameCardsController {
             Axios.post<GameCard>( Constants.SERVER_BASE_URL + Constants.API + Constants.HIGH_SCORE_CONTROLLER, req.body)
             .then((gameCard: AxiosResponse<GameCard>) => {
                 if (gameCard.data.dimension === Dimension.TWO_DIMENSION) {
-                    this.databaseService.updateOne(gameCard2D, {title : gameCard.data.title}, gameCard.data)
+                    this.databaseService.updateOne(gameCard2D, {title : gameCard.data.title}, {bestScoreSolo : gameCard.data.bestTimeSolo,
+                                                                                               bestScore1v1 : gameCard.data.bestTime1v1})
                     .catch((err: Error) => console.error(err));
-                    res.json(gameCard);
+                    res.json(gameCard.data);
                 } else {
-                    this.databaseService.updateOne(gameCard3D, {title : gameCard.data.title}, gameCard.data)
+                    this.databaseService.updateOne(gameCard3D, {title : gameCard.data.title}, {bestScoreSolo : gameCard.data.bestTimeSolo,
+                                                                                               bestScore1v1 : gameCard.data.bestTime1v1})
                     .catch((err: Error) => console.error(err));
-                    res.json(gameCard);
+                    res.json(gameCard.data);
                 }
             })
-            .catch((err: Error) => {console.log(err)});
+            .catch((err: Error) => { console.error(err); });
         });
 
         return router;
