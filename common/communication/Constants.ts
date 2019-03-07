@@ -26,7 +26,7 @@ export abstract class Constants {
 
     // Login error messages
     static readonly LOGIN_ERROR_NAME_SIZE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
-    static readonly LOGIN_ERROR_NAME_IN_USE: string = "Le nom d'utilisateur doit être composé de 3 à 20 caractères alphanumériques";
+    static readonly LOGIN_ERROR_NAME_IN_USE: string = "Ce nom d'utilisateur est déjà utilisé";
 
     // Folder paths
     static readonly PUBLIC_OG_FOLDER_PATH: string = "/public/originalImages/";
