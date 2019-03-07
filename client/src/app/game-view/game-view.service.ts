@@ -1,9 +1,13 @@
 import { formatDate } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 import { ElementRef, Injectable } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
 import { GameModel } from "../../../../common/communication/GameModel";
+import { INewScore } from "../../../../common/communication/NewScore";
 import { ITimerProps } from "../../../../common/communication/TimerProps";
+import { GameCard } from "../../../../common/communication/game-card";
+import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
 
 @Injectable({
   providedIn: "root",
@@ -21,7 +25,7 @@ export class GameViewService {
 
   public timerModel: ITimerProps;
 
-  public constructor() {
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) {
     this.model = {
       mode: Mode.SOLO,
       gamecard: {
@@ -61,7 +65,23 @@ export class GameViewService {
     }
   }
 
-  private endGame(): void {}
+  private endGame(): void {
+    const newScore: INewScore = {
+      gameCard: this.model.gamecard,
+      mode: this.model.mode,
+      user: "USER",
+      time: 50,
+    };
+
+    this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API + Constants.NEW_SCORE_URL, newScore)
+      .toPromise()
+      .then((newGameCard: GameCard) => {
+        (newGameCard.dimension === Dimension.TWO_DIMENSION) ?
+        this.listOfGameService.resetFromList(this.model.gamecard, Constants.LIST_2D, newGameCard) :
+        this.listOfGameService.resetFromList(this.model.gamecard, Constants.LIST_3D, newGameCard);
+      })
+      .catch((err) => { console.error("erreur :", err); });
+  }
 
   public onOpponentDiffFound(): void {
     this.opponentDiffFoundCount++;
