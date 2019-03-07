@@ -1,4 +1,5 @@
 // tslint:disable:no-magic-numbers
+// tslint:disable:no-any
 
 import { ElementRef } from "@angular/core";
 import { CircleProgressComponent } from "ng-circle-progress";
@@ -17,6 +18,11 @@ const mockGameCard: GameCard = {
   dimension: Dimension.TWO_DIMENSION,
 };
 
+const http: any = jasmine.createSpy("HttpClient");
+const listOfGamesService: any = jasmine.createSpy("ListOfGamesService");
+const userLoginService: any = jasmine.createSpy("UserLoginService");
+const router: any = jasmine.createSpy("Router");
+
 describe("GameViewService", () => {
 
   const sleep: Function = async (ms: number) => {
@@ -24,7 +30,7 @@ describe("GameViewService", () => {
   };
 
   beforeEach(() => {
-    service = new GameViewService();
+    service = new GameViewService(http, listOfGamesService, userLoginService, router);
     service.model.gamecard = mockGameCard;
 
     mockConsoleView = mock(ElementRef);

@@ -9,7 +9,12 @@ import { Game3DComponent } from "./game-3d.component";
 describe("Game3DComponent", () => {
   const ngZone: any = jasmine.createSpy("NgZone");
   const sceneService: any = jasmine.createSpy("SceneService");
-  const gameViewService: GameViewService = new GameViewService();
+
+  const http: any = jasmine.createSpy("HttpClient");
+  const listOfGamesService: any = jasmine.createSpy("ListOfGamesService");
+  const userLoginService: any = jasmine.createSpy("UserLoginService");
+  const router: any = jasmine.createSpy("Router");
+  const gameViewService: GameViewService = new GameViewService(http, listOfGamesService, userLoginService, router);
 
   const component: Game3DComponent = new Game3DComponent(ngZone, sceneService, gameViewService);
 
