@@ -1,6 +1,7 @@
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { ElementRef, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { CircleProgressComponent } from "ng-circle-progress";
 import { Constants, Dimension, Mode } from "../../../../common/communication/Constants";
 import { GameModel } from "../../../../common/communication/GameModel";
@@ -25,7 +26,7 @@ export class GameViewService {
 
   public timerModel: ITimerProps;
 
-  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService) {
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService, private router: Router) {
     this.model = {
       mode: Mode.SOLO,
       gamecard: {
@@ -81,6 +82,9 @@ export class GameViewService {
         this.listOfGameService.resetFromList(this.model.gamecard, Constants.LIST_3D, newGameCard);
       })
       .catch((err) => { console.error("erreur :", err); });
+
+    this.router.navigate([Constants.GAME_LIST_URL])
+    .catch((err) => console.error(err));
   }
 
   public onOpponentDiffFound(): void {
