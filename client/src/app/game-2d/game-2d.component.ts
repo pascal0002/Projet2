@@ -57,15 +57,17 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
   }
 
   private drawTheTwoImages(ogCtx: CanvasRenderingContext2D, modifCtx: CanvasRenderingContext2D): void {
-    this.drawImageInCanvas(ogCtx, this.gameViewService.model.gamecard.image, true);
+    this.drawImageInCanvas(ogCtx, this.gameViewService.model.gamecard.image, true)
+    .catch((err: Error) => { console.error(err); });
     this.drawImageInCanvas(modifCtx, this.gameViewService.model.gamecard.imageModified, false)
     .then(() => {
       this.gameViewService.startChrono();
       this.imagesHaveBeenLoaded = true;
-    });
+    })
+    .catch((err: Error) => { console.error(err); });
   }
 
-  private drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): Promise<void> {
+  private async drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): Promise<void> {
     return new Promise((resolve) => {
       resolve(
             this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))

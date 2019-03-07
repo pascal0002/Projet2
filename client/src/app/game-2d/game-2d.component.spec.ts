@@ -19,6 +19,7 @@ describe("GameCardFormComponent3D", () => {
   });
 
   it("should create", () => {
-    expect(game2DSpy).toBeTruthy();
+    expect(game2DSpy).toBeTruthy()
+    .catch((err: Error) => { console.error(err); });
   });
 });
