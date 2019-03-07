@@ -9,19 +9,17 @@ import { UserLoginService } from "./user-login.service";
   styleUrls: ["./user-login.component.css"],
 })
 export class UserLoginComponent {
-  public username: string;
   public isUsernameValid: boolean;
   public errorMessage: string;
 
-  public constructor(private userLoginService: UserLoginService, private router: Router) {
+  public constructor(public userLoginService: UserLoginService, private router: Router) {
     this.isUsernameValid = false;
     this.errorMessage = Constants.LOGIN_ERROR_NAME_SIZE;
   }
 
   public validateUsername(username: string): void {
-    this.username = username;
     this.userLoginService
-      .validateUsername(this.username)
+      .validateUsername(username)
       .subscribe(
         (isValid: boolean) => {
           this.isUsernameValid = isValid;
@@ -32,7 +30,7 @@ export class UserLoginComponent {
 
   public connect(): void {
     this.userLoginService
-      .connect(this.username)
+      .connect()
       .subscribe((isValid: boolean) => {
         this.isUsernameValid = isValid;
         this.errorMessage = Constants.LOGIN_ERROR_NAME_IN_USE;
