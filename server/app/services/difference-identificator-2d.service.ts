@@ -41,6 +41,7 @@ export class DifferenceIdentificator2DService {
 
     public eraseDifference(currentPixelPos: number, pixels: number[], imageWidth: number): number[] {
         this.resetPosOfDifferencePixels();
+        this.posOfDifferencePixels.push(currentPixelPos);
         const pixelStack: number[] = [currentPixelPos];
         pixels[currentPixelPos] = Constants.WHITE_PIXEL_PARAMETER;
         pixels[currentPixelPos + 1] = Constants.WHITE_PIXEL_PARAMETER;

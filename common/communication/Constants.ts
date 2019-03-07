@@ -13,7 +13,8 @@ export abstract class Constants {
     static readonly MINIMAL_TIME_SOLO: number = 210;
     static readonly MAXIMAL_TIME_SOLO: number = 360;
     static readonly SECOND_PER_MINUTE: number = 60;
-    static readonly HALF_A_SECOND: number = 500;
+    static readonly QUARTER_A_SECOND: number = 250;
+    static readonly ONE_SECOND: number = 1000;
     static readonly MAXIMAL_USER_ID: number = 999;
     static readonly TWO_DIGIT: number = -2;
 
@@ -38,13 +39,24 @@ export abstract class Constants {
     static readonly MODIFIED_IMAGE_FOLDER: string = "http://localhost:3000/modifiedImages/";
     static readonly DIFFERENCE_IMAGE_FOLDER: string = "http://localhost:3000/differenceImages/";
 
-    // Canvas IDs
+    // Canvas 2D
     static readonly ORIGINAL_CANVAS_2D: string = "ogCanvas";
+    static readonly ORIGINAL_CANVAS_TEXT_2D: string ="ogTextCanvas";
     static readonly MODIFIED_CANVAS_2D: string = "modifCanvas";
+    static readonly MODIFIED_CANVAS_TEXT_2D: string ="modifTextCanvas";
+
+    // Canvas 3D
     static readonly ORIGINAL_CANVAS_3D: string = "leftCanvas";
     static readonly MODIFIED_CANVAS_3D: string = "rightCanvas";
 
-    // for the 2D form validator
+    // For the error identification 2D
+    static readonly ERROR_FONT: string ="50px Poppins";
+    static readonly ERROR_FILL_STYLE: string ="red";
+    static readonly ERROR_MESSAGE_IDENTIFICATION: string = "ERROR";
+    static readonly X_POS_CORRECTION: number = 75;
+    static readonly Y_POS_CORRECTION: number = 15;
+
+    // For the 2D form validator
     static readonly MIN_TITLE_LENGTH: number = 3;
     static readonly MAX_TITLE_LENGTH: number = 15;
     static readonly VALID_BMP_HEIGHT: number = 480;

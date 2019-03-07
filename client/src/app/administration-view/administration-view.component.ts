@@ -29,7 +29,7 @@ export class AdministrationViewComponent {
   }
 
   public closeForm2D($event: boolean): void {
-    this.form2DIsHidden = true;
+    this.form2DIsHidden = $event;
   }
 
   public openForm3D(): void {
@@ -37,6 +37,6 @@ export class AdministrationViewComponent {
   }
 
   public closeForm3D($event: boolean): void {
-    this.form3DIsHidden = true;
+    this.form3DIsHidden = $event;
   }
 }
