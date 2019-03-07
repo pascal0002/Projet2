@@ -71,7 +71,7 @@ export class GameViewService {
       gameCard: this.model.gamecard,
       mode: this.model.mode,
       user: "USER",
-      time: 50,
+      time: Math.floor(this.timerModel.time / Constants.TIMER_RESOLUTION),
     };
 
     this.http.post<GameCard>(Constants.SERVER_BASE_URL + Constants.API + Constants.NEW_SCORE_URL, newScore)
