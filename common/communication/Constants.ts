@@ -7,6 +7,9 @@ export abstract class Constants {
     static readonly SKYBLUE_COLOR: string = "skyblue";
     static readonly BACK_SLASH: string = "/";
 
+    static readonly END_GAME_SOLO: number = 7;
+    static readonly END_GAME_DUO: number = 4;
+    
     static readonly VALID_NUMBER_OF_DIFFERENCES: number = 7;
     static readonly MINIMAL_TIME_DUO: number = 150;
     static readonly MAXIMAL_TIME_DUO: number = 300;
