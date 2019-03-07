@@ -68,7 +68,7 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
   }
 
   private async drawImageInCanvas(ctx: CanvasRenderingContext2D, imageLocation: string, isOriginalImg: boolean): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       resolve(
             this.imageDisplayerService.getImagePixels(this.imageDisplayerService.getFolderLocation(imageLocation, isOriginalImg))
             .then((imgPixels) => {
