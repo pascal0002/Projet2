@@ -40,7 +40,6 @@ export class GameViewComponent implements OnInit, AfterViewInit, OnDestroy {
   public ngAfterViewInit(): void {
     this.gameViewService.consoleEL = this.consoleView;
     this.gameViewService.timerEL = this.medalTimeProgressBarView;
-    // this.gameViewService.startChrono();
   }
 
   public changeTimeProgressBarOuterColor(color: string): void {
