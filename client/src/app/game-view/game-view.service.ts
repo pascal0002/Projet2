@@ -62,14 +62,19 @@ export class GameViewService {
 
   public onDiffFound(): void {
     this.diffFoundCount++;
-    if (this.model.mode === Mode.SOLO) {
-      if (this.diffFoundCount === Constants.VALID_NUMBER_OF_DIFFERENCES) {
-        this.endGame();
-       }
+    if (this.isEndOfGame()) {
+      this.endGame();
     }
   }
 
+  private isEndOfGame(): boolean {
+    return ((this.model.mode === Mode.SOLO && this.diffFoundCount === Constants.END_GAME_SOLO) ||
+            (this.model.mode === Mode.ONE_VS_ONE && this.diffFoundCount === Constants.END_GAME_DUO));
+  }
+
   private endGame(): void {
+    this.stopTimer();
+
     const newScore: INewScore = {
       gameCard: this.model.gamecard,
       mode: this.model.mode,
@@ -113,6 +118,10 @@ export class GameViewService {
       this.timerModel.output = this.timeToString(this.timerModel.time / Constants.TIMER_RESOLUTION);
     };
     this.timerModel.intervalCache = setInterval(callback, Constants.TIMER_RESOLUTION);
+  }
+
+  private stopTimer(): void {
+    clearInterval(this.timerModel.intervalCache);
   }
 
   public startBestScoreTimer(): void {
