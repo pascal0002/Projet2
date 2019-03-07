@@ -9,6 +9,7 @@ import { INewScore } from "../../../../common/communication/NewScore";
 import { ITimerProps } from "../../../../common/communication/TimerProps";
 import { GameCard } from "../../../../common/communication/game-card";
 import { ListOfGamesService } from "../list-of-games-view/list-of-games.service";
+import { UserLoginService } from "../user-login/user-login.service";
 
 @Injectable({
   providedIn: "root",
@@ -26,7 +27,8 @@ export class GameViewService {
 
   public timerModel: ITimerProps;
 
-  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService, private router: Router) {
+  public constructor(private http: HttpClient, private listOfGameService: ListOfGamesService,
+                     private userLoginService: UserLoginService, private router: Router) {
     this.model = {
       mode: Mode.SOLO,
       gamecard: {
@@ -70,7 +72,7 @@ export class GameViewService {
     const newScore: INewScore = {
       gameCard: this.model.gamecard,
       mode: this.model.mode,
-      user: "USER",
+      user: this.userLoginService.username,
       time: Math.floor(this.timerModel.time / Constants.TIMER_RESOLUTION),
     };
 
