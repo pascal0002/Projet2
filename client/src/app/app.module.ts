@@ -8,6 +8,7 @@ import { BitmapReaderService } from "../app/game-card-form-2d/bitmap-reader.serv
 import { FormValidator2dService } from "../app/game-card-form-2d/form-validator-2d.service";
 import { AdministrationViewComponent } from "./administration-view/administration-view.component";
 import { AppComponent } from "./app.component";
+import { Game2DMultiplayerComponent } from "./game-2d-multiplayer/game-2d-multiplayer.component";
 import { Game2DComponent } from "./game-2d/game-2d.component";
 import { ImageDisplayerService } from "./game-2d/image-displayer.service";
 import { Game3DComponent } from "./game-3d/game-3d.component";
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
     SceneComponent,
     Game2DComponent,
     Game3DComponent,
+    Game2DMultiplayerComponent,
   ],
   imports: [
     BrowserModule,

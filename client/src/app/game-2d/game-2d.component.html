@@ -2,11 +2,11 @@
   <div class="game-panel">
     <canvas [hidden]="!imagesHaveBeenLoaded" #ogCanvas width=640 height=480 draggable="false"></canvas>
     <canvas #ogTextCanvas (click)="sendClickInfo($event, true)"  class="textCanvas" width=640 height=480></canvas>
-    <div class="clickInterdiction" [hidden]="clickIsEnabled"></div>
+    <div class="clickInterdiction" [hidden]="!clickPermissionService.hasClickedAnError()"></div>
   </div>
   <div class="game-panel">
     <canvas [hidden]="!imagesHaveBeenLoaded" #modifCanvas width=640 height=480  draggable="false"></canvas>
     <canvas #modifTextCanvas (click)="sendClickInfo($event, false)"  class="textCanvas" width=640 height=480></canvas>
-    <div class="clickInterdiction" [hidden]="clickIsEnabled"></div>
+    <div class="clickInterdiction" [hidden]="!clickPermissionService.hasClickedAnError()"></div>
   </div>
 </div>

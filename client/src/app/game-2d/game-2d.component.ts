@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild  } from "@angular/core";
-import { Subscription } from "rxjs";
+import { AfterViewInit, Component, ElementRef, ViewChild  } from "@angular/core";
 import { Constants } from "../../../../common/communication/Constants";
 import { GameViewService } from "../game-view/game-view.service";
+import { ClickPermissionService } from "./click-permission.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
 import { ErrorDisplayer2dService } from "./error-displayer-2d.service";
 import { ImageDisplayerService } from "./image-displayer.service";
@@ -11,11 +11,8 @@ import { ImageDisplayerService } from "./image-displayer.service";
   templateUrl: "./game-2d.component.html",
   styleUrls: ["./game-2d.component.css"],
 })
-export class Game2DComponent implements AfterViewInit, OnDestroy {
+export class Game2DComponent implements AfterViewInit {
   public differenceImgPixels: number[];
-  public clickPermission: Subscription;
-  public clickIsEnabled: boolean;
-  public canSendInfoToServer: boolean;
   public imagesHaveBeenLoaded: boolean;
 
   @ViewChild(Constants.ORIGINAL_CANVAS_2D) public ogCanvas: ElementRef;
@@ -26,15 +23,13 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
   public constructor(public gameViewService: GameViewService,
                      private differenceValidatorService: DifferenceValidatorService,
                      private imageDisplayerService: ImageDisplayerService,
-                     private errorDisplayerService: ErrorDisplayer2dService) {
+                     private errorDisplayerService: ErrorDisplayer2dService,
+                     private clickPermissionService: ClickPermissionService) {
 
-    this.clickIsEnabled = true;
     this.imagesHaveBeenLoaded = false;
-    this.canSendInfoToServer = true;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
+    this.clickPermissionService = new ClickPermissionService(errorDisplayerService);
     this.setDifferenceImgPixels();
-    this.clickPermission = this.errorDisplayerService.clickingPermission.subscribe((permission) => this.clickIsEnabled = permission);
-
   }
 
   public ngAfterViewInit(): void {
@@ -42,10 +37,6 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
     const modifCtx: CanvasRenderingContext2D = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
 
     this.drawTheTwoImages(ogCtx, modifCtx);
-  }
-
-  public ngOnDestroy(): void {
-    this.clickPermission.unsubscribe();
   }
 
   private setDifferenceImgPixels(): void {
@@ -62,6 +53,7 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
     .then(() => {
       this.gameViewService.startChrono();
       this.imagesHaveBeenLoaded = true;
+      this.clickPermissionService.canSendInfoToServer = true;
     });
   }
 
@@ -80,8 +72,8 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
   }
 
   public sendClickInfo(mouseEvent: MouseEvent, ogCanvasIsClicked: boolean): void {
-    if (this.canSendInfoToServer && this.clickIsEnabled) {
-      this.canSendInfoToServer = false;
+    if (this.clickPermissionService.canClickAgain()) {
+      this.clickPermissionService.blockClicksToServer();
       this.differenceValidatorService.sendClickInfo(this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
                                                     this.differenceImgPixels)
         .then(
@@ -95,14 +87,8 @@ export class Game2DComponent implements AfterViewInit, OnDestroy {
           },
         )
         .catch((err) => { console.error("erreur :", err); });
-      this.waitQuarterASecond();
+      this.clickPermissionService.unblockClicksToServerAfterDelay();
     }
-  }
-
-  private waitQuarterASecond(): void {
-    setTimeout(() => {
-      this.canSendInfoToServer = true;
-    },         (Constants.QUARTER_A_SECOND));
   }
 
   private onDifferenceFound(differencePixelsToErase: number[]): void {

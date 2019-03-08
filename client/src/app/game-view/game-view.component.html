@@ -23,7 +23,13 @@
   </header>
 
   <div *ngIf="gameViewService.model.gamecard.dimension === 0; else threeD">
-    <app-game-2d #game2d></app-game-2d>
+    <div *ngIf="gameViewService.model.mode == 0; else OneVSOneGame">
+      <app-game-2d #game2d></app-game-2d>
+    </div>
+    
+    <ng-template #OneVSOneGame>
+        <app-game-2d-multiplayer></app-game-2d-multiplayer>
+    </ng-template>   
   </div>
 
   <ng-template #threeD>
