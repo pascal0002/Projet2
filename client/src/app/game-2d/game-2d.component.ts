@@ -105,12 +105,6 @@ export class Game2DComponent implements AfterViewInit {
   }
 
   public sendClickInfoMultiplayer(mouseEvent: MouseEvent, ogCanvasIsClicked: boolean): void {
-    console.log("is doing the right thing 1v1");
-    // const differenceImage: IDifferenceImage = {name: "", pixels: this.differenceImgPixels };
-    // const diffInfo: IDiffInfoToHandle = {clickInfo: mousePos, differenceImage: differenceImage };
-    // const diffRequestMsg: IMessage = { data: diffInfo };
-    // this.websocketMultiplayer2DService.sendMessage(MessageMultiplayer2D.ERASE_DIFFERENCE_REQUEST, diffRequestMsg);
-    // this.websocketMultiplayer2DService.listenForDifferenceToErase();
     this.differenceValidatorService.sendClickInfoMultiplayer(
                                                     this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
                                                     this.differenceImgPixels);

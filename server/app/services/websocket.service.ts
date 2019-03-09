@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import "reflect-metadata";
 import * as socketIo from "socket.io";
 import { Constants } from "../../../common/communication/Constants";
-// import { IDiffInfoToHandle } from "../../../common/communication/DiffInfoToHandle";
 import { IDifferenceErased } from "../../../common/communication/DifferenceErased";
 import { IMessage } from "../../../common/communication/Message";
 import { MessageMultiplayer2D } from "../../../common/communication/MessageMultiplayer2D";
@@ -78,21 +77,3 @@ export class WebsocketService {
 
     }
 }
-
-/*const diffInfoToHandle: IDiffInfoToHandle = req.body;
-            const positionInPixelsArray: number = this.differenceIdentificator2DService.getPositionInArray(diffInfoToHandle.clickInfo);
-            if (this.differenceIdentificator2DService.confirmDifference(diffInfoToHandle.clickInfo,
-                                                                        diffInfoToHandle.differenceImage.pixels)) {
-                    const updatedDiffImg: number[] = this.differenceIdentificator2DService.eraseDifference(
-                                                                                                    positionInPixelsArray,
-                                                                                                    diffInfoToHandle.differenceImage.pixels,
-                                                                                                    Constants.VALID_BMP_WIDTH);
-
-                    const differenceErased: IDifferenceErased = {
-                        posOfPixelsToErase: this.differenceIdentificator2DService.posOfDifferencePixels,
-                        updatedDifferenceImage: updatedDiffImg,
-                    };
-                    res.json(differenceErased);
-                } else {
-                    res.send(null);
-                } */

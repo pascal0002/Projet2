@@ -18,7 +18,9 @@ export class WebsocketService {
 
   public listenForUsernameValidation(): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      this.socket.on(MessageType.VALIDATE_USERNAME, (data: boolean) => observer.next(data));
+      this.socket.on(MessageType.VALIDATE_USERNAME, (data: boolean) => {
+        observer.next(data);
+      });
     });
   }
 
