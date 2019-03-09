@@ -5,7 +5,10 @@ import { Constants } from "../../../../common/communication/Constants";
 import { IDiffInfoToHandle } from "../../../../common/communication/DiffInfoToHandle";
 import { IDifferenceErased } from "../../../../common/communication/DifferenceErased";
 import { IDifferenceImage } from "../../../../common/communication/DifferenceImage";
+import { IMessage } from "../../../../common/communication/Message";
+import { MessageMultiplayer2D } from "../../../../common/communication/MessageMultiplayer2D";
 import { GameCard } from "../../../../common/communication/game-card";
+import { WebsocketMultiplayer2dService } from "../game-2d-multiplayer/websocket-multiplayer-2d.service";
 
 @Injectable({
   providedIn: "root",
@@ -14,7 +17,9 @@ export class DifferenceValidatorService {
 
   public game2d: GameCard;
 
-  public constructor(private http: HttpClient) {
+  public constructor(private http: HttpClient,
+                     private websocketMultiplayer2DService: WebsocketMultiplayer2dService) {
+    this.websocketMultiplayer2DService.initSocket();
   }
 
   public getClickInfo(xPosition: number, yPosition: number): IClickInfo {
@@ -53,6 +58,13 @@ export class DifferenceValidatorService {
       resolve(this.http.post<IDifferenceErased>(Constants.SERVER_BASE_URL + Constants.API + Constants.DIFFVALIDATOR_URL, diffInfo)
         .toPromise());
     });
+  }
+
+  public sendClickInfoMultiplayer(mousePos: IClickInfo, differencePixels: number[]): void {
+    const differenceImage: IDifferenceImage = {name: "", pixels: differencePixels };
+    const diffInfo: IDiffInfoToHandle = {clickInfo: mousePos, differenceImage: differenceImage };
+    const diffRequestMsg: IMessage = { data: diffInfo };
+    this.websocketMultiplayer2DService.sendMessage(MessageMultiplayer2D.ERASE_DIFFERENCE_REQUEST, diffRequestMsg);
   }
 
   public playSuccessSound(): void {

@@ -6,7 +6,20 @@
   </div>
   <div class="game-panel">
     <canvas [hidden]="!imagesHaveBeenLoaded" #modifCanvas width=640 height=480  draggable="false"></canvas>
-    <canvas #modifTextCanvas (click)="sendClickInfo($event, false)"  class="textCanvas" width=640 height=480></canvas>
+    <div *ngIf="gameViewService.model.mode == 0; else OneVSOneGame">
+        <canvas #modifTextCanvas (click)="sendClickInfo($event, false)"  class="textCanvas" width=640 height=480></canvas>
+    </div>
+    <ng-template #OneVSOneGame>
+        <canvas #modifTextCanvas (click)="sendClickInfoMultiplayer($event,false)" class="textCanvas" width=640 height=480></canvas>
+    </ng-template>
     <div class="clickInterdiction" [hidden]="!clickPermissionService.hasClickedAnError()"></div>
   </div>
 </div>
+
+<!-- <div *ngIf="gameViewService.model.mode == 0; else OneVSOneGame">
+    <app-game-2d #game2d></app-game-2d>
+  </div>
+  
+  <ng-template #OneVSOneGame>
+      <app-game-2d-multiplayer></app-game-2d-multiplayer>
+  </ng-template> -->

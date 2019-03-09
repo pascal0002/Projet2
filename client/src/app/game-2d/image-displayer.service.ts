@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 import { Constants } from "../../../../common/communication/Constants";
 import { IImageLocation } from "../../../../common/communication/ImageLocation";
 
@@ -10,8 +11,10 @@ import { IImageLocation } from "../../../../common/communication/ImageLocation";
 export class ImageDisplayerService {
   public originalImagePixels: number[];
   public modifiedImagePixels: number[];
+  public modifiedPixelsObserver: Subject<number[]>;
 
   public constructor(private http: HttpClient) {
+    this.modifiedPixelsObserver = new Subject<number[]>();
   }
 
   public async getImagePixels(imageLocation: string): Promise<number[]> {
@@ -47,6 +50,7 @@ export class ImageDisplayerService {
       flippedModifiedPixels[pixelPos + Constants.BLUE_COLOR] = flippedOriginalPixels[pixelPos + Constants.BLUE_COLOR];
     });
     this.modifiedImagePixels = this.flipPixelsOnYAxis(flippedModifiedPixels);
+    this.modifiedPixelsObserver.next(this.modifiedImagePixels);
     this.drawPixelsInCanvas(modifCtx, this.modifiedImagePixels);
   }
 

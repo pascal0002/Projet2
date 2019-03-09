@@ -3,10 +3,12 @@ import * as spies from "chai-spies";
 import * as express from "express";
 import * as http from "http";
 import { mock } from "ts-mockito";
+import { DifferenceIdentificator2DService } from "./difference-identificator-2d.service";
 import { LoginService } from "./login.service";
 import { WebsocketService } from "./websocket.service";
 
 let mockLoginService: LoginService;
+const mockDifferenceIdentificator2DService: DifferenceIdentificator2DService = new DifferenceIdentificator2DService();
 let service: WebsocketService;
 let fakeServer: http.Server;
 
@@ -14,7 +16,7 @@ describe("socket.io mock", () => {
 
     beforeEach((done: Mocha.Done) => {
         mockLoginService = mock(LoginService);
-        service = new WebsocketService(mockLoginService);
+        service = new WebsocketService(mockLoginService, mockDifferenceIdentificator2DService);
         fakeServer = new http.Server(express);
         service.init(fakeServer);
         chai.use(spies);

@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild  } from "@angular/core";
 import { Constants } from "../../../../common/communication/Constants";
+import { IMessage } from "../../../../common/communication/Message";
+import { WebsocketMultiplayer2dService } from "../game-2d-multiplayer/websocket-multiplayer-2d.service";
 import { GameViewService } from "../game-view/game-view.service";
 import { ClickPermissionService } from "./click-permission.service";
 import { DifferenceValidatorService } from "./difference-validator.service";
@@ -24,12 +26,23 @@ export class Game2DComponent implements AfterViewInit {
                      private differenceValidatorService: DifferenceValidatorService,
                      private imageDisplayerService: ImageDisplayerService,
                      private errorDisplayerService: ErrorDisplayer2dService,
-                     private clickPermissionService: ClickPermissionService) {
+                     private clickPermissionService: ClickPermissionService,
+                     private websocketMultiplayer2DService: WebsocketMultiplayer2dService) {
 
+    websocketMultiplayer2DService.initSocket();
     this.imagesHaveBeenLoaded = false;
     this.differenceValidatorService.game2d = gameViewService.model.gamecard;
-    this.clickPermissionService = new ClickPermissionService(errorDisplayerService);
+    this.clickPermissionService = new ClickPermissionService(this.errorDisplayerService);
     this.setDifferenceImgPixels();
+    this.setSocketListeners();
+  }
+
+  private setSocketListeners(): void {
+    this.websocketMultiplayer2DService.listenForDifferenceToErase().subscribe((differenceToErase: IMessage) => {
+      const modifCtx: CanvasRenderingContext2D = this.modifCanvas.nativeElement.getContext(Constants.CTX_2D);
+      this.imageDisplayerService.eraseDifference(modifCtx, differenceToErase.data.posOfPixelsToErase);
+      this.differenceImgPixels = differenceToErase.data.updatedDifferenceImage;
+    });
   }
 
   public ngAfterViewInit(): void {
@@ -89,6 +102,18 @@ export class Game2DComponent implements AfterViewInit {
         .catch((err) => { console.error("erreur :", err); });
       this.clickPermissionService.unblockClicksToServerAfterDelay();
     }
+  }
+
+  public sendClickInfoMultiplayer(mouseEvent: MouseEvent, ogCanvasIsClicked: boolean): void {
+    console.log("is doing the right thing 1v1");
+    // const differenceImage: IDifferenceImage = {name: "", pixels: this.differenceImgPixels };
+    // const diffInfo: IDiffInfoToHandle = {clickInfo: mousePos, differenceImage: differenceImage };
+    // const diffRequestMsg: IMessage = { data: diffInfo };
+    // this.websocketMultiplayer2DService.sendMessage(MessageMultiplayer2D.ERASE_DIFFERENCE_REQUEST, diffRequestMsg);
+    // this.websocketMultiplayer2DService.listenForDifferenceToErase();
+    this.differenceValidatorService.sendClickInfoMultiplayer(
+                                                    this.differenceValidatorService.getClickInfo(mouseEvent.offsetX, mouseEvent.offsetY),
+                                                    this.differenceImgPixels);
   }
 
   private onDifferenceFound(differencePixelsToErase: number[]): void {

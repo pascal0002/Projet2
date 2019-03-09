@@ -1,19 +1,20 @@
-<div class="wrapper">
+<!-- <div class="wrapper">
   <div class="waitingRoom" [hidden]="!isInWaitingRoom">
     <img id="hourglass" src="../../assets/hourglass.png" />
     <div class="loading">Waiting for another player to join</div>
   </div>
-</div>
+</div> -->
 
-<div id="game" [hidden]="isInWaitingRoom">
+<app-game-2d></app-game-2d>
+<!-- <div id="game" [hidden]="isInWaitingRoom">
   <div class="game-panel" [hidden]="isInWaitingRoom">
     <canvas #ogCanvas width=640 height=480 draggable="false"></canvas>
     <canvas #ogTextCanvas (click)="sendClickInfo($event, true)"  class="textCanvas" width=640 height=480></canvas>
-    <div class="clickInterdiction" [hidden]="clickIsEnabled"></div>
+    <div class="clickInterdiction"></div>
   </div>
   <div class="game-panel" [hidden]="isInWaitingRoom">
     <canvas #modifCanvas width=640 height=480  draggable="false"></canvas>
     <canvas #modifTextCanvas (click)="sendClickInfo($event, false)"  class="textCanvas" width=640 height=480></canvas>
-    <div class="clickInterdiction" [hidden]="clickIsEnabled"></div>
+    <div class="clickInterdiction"></div>
   </div>
-</div>
+</div> -->
