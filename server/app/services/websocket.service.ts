@@ -68,7 +68,8 @@ export class WebsocketService {
                         updatedDifferenceImage: updatedDiffPixels,
                     };
                     erasePixelMsg = { data: differenceErased };
-                    this.socket.emit(MessageMultiplayer2D.DIFFERENCE_FOUND, erasePixelMsg);
+                    this.socket.sockets.emit(MessageMultiplayer2D.DIFFERENCE_FOUND, erasePixelMsg);
+                    // this.socket.emit(MessageMultiplayer2D.DIFFERENCE_FOUND, erasePixelMsg);
                 } else {
                     this.socket.emit(MessageMultiplayer2D.DIFFERENCE_NOT_FOUND, erasePixelMsg);
                 }
