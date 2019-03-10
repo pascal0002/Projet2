@@ -125,7 +125,7 @@ export class GameCardsController {
                     res.json(gameCard);
                 }
             })
-            .catch((err: Error) => {console.log(err)});
+            .catch((err: Error) => console.log(err));
         });
 
         return router;

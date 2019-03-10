@@ -131,6 +131,7 @@ export abstract class Constants {
     static readonly HIGH_SCORE_CONTROLLER: string = "/high_score"
     static readonly GAME_LIST_URL: string = "/games_list";
     static readonly SERVER_BASE_URL: string = "http://localhost:3000/";
+
     static readonly NEWGAME_URL: string = "/differences/new_game";
     static readonly DIFFVALIDATOR_URL: string = "/differences/difference_validator";
     static readonly IMAGEPIXEL_URL: string = "/differences/image_pixels";

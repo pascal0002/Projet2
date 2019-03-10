@@ -298,8 +298,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                image: "http://localhost:3000/originalImages/originalImage.bmp",
-                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                image: "http://:3000/originalImages/originalImage.bmp",
+                imageModified: "http://:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
                 bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -320,8 +320,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                image: "http://localhost:3000/originalImages/originalImage.bmp",
-                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                image: "http://:3000/originalImages/originalImage.bmp",
+                imageModified: "http://:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user999", time : 360}, {user : "user999", time : 360}, {user : "user999", time : 360}],
                 bestTime1v1: [{user : "user999", time : 300}, {user : "user999", time : 300}, {user : "user999", time : 300}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -343,8 +343,8 @@ describe("game-cards-service", () => {
 
             const expectedGameCard: GameCard = {
                 title: "game",
-                image: "http://localhost:3000/originalImages/originalImage.bmp",
-                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                image: "http://:3000/originalImages/originalImage.bmp",
+                imageModified: "http://:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user109", time : 226}, {user : "user109", time : 240}, {user : "user109", time : 253}],
                 bestTime1v1: [{user : "user109", time : 166}, {user : "user109", time : 180}, {user : "user109", time : 193}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -450,8 +450,8 @@ describe("game-cards-service", () => {
 
             const gameCard: GameCard = {
                 title: "game",
-                image: "http://localhost:3000/originalImages/originalImage.bmp",
-                imageModified: "http://localhost:3000/modifiedImages/modifiedImage.bmp",
+                image: "http://:3000/originalImages/originalImage.bmp",
+                imageModified: "http://:3000/modifiedImages/modifiedImage.bmp",
                 bestTimeSolo: [{user : "user0", time : 210}, {user : "user0", time : 210}, {user : "user0", time : 210}],
                 bestTime1v1: [{user : "user0", time : 150}, {user : "user0", time : 150}, {user : "user0", time : 150}],
                 dimension: Dimension.TWO_DIMENSION,
@@ -584,7 +584,7 @@ describe("game-cards-service", () => {
         it("should return the right path to the original image", (done: Function) => {
 
             expect(gameCardsServiceStub.generateOriginalImagePath("originalImage.bmp"))
-            .to.equal("http://localhost:3000/originalImages/originalImage.bmp");
+            .to.equal("http://:3000/originalImages/originalImage.bmp");
             done();
         });
     });
@@ -599,7 +599,7 @@ describe("game-cards-service", () => {
         it("should return the right path to the modified image", (done: Function) => {
 
             expect(gameCardsServiceStub.generateModifiedImagePath("modifiedImage.bmp"))
-            .to.equal("http://localhost:3000/modifiedImages/modifiedImage.bmp");
+            .to.equal("http://:3000/modifiedImages/modifiedImage.bmp");
             done();
         });
     });
@@ -614,7 +614,7 @@ describe("game-cards-service", () => {
         it("should return the right path to the modified image", (done: Function) => {
 
             expect(gameCardsServiceStub.generateDifferenceImagePath("differenceImage.bmp"))
-            .to.equal("http://localhost:3000/differenceImages/differenceImage.bmp");
+            .to.equal("http://:3000/differenceImages/differenceImage.bmp");
             done();
         });
     });

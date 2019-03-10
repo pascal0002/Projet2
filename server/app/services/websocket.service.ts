@@ -21,6 +21,7 @@ export class WebsocketService {
 
     public init(server: http.Server): void {
         this.socket = socketIo(server);
+        this.socket.listen(server);
         this.listen();
         this.listenMultiplayer2D();
     }
@@ -54,7 +55,7 @@ export class WebsocketService {
     }
 
     public listenMultiplayer2D(): void {
-        this.socket.on("connection", (socket: socketIo.Server) => {
+        this.socket.sockets.on("connection", (socket: socketIo.Server) => {
             socket.on(MessageMultiplayer2D.ERASE_DIFFERENCE_REQUEST, (diffMsgRequest: IMessage) => {
                 const positionInPixelsArray: number = this.diffIdentifService.getPositionInArray(diffMsgRequest.data.clickInfo);
                 let erasePixelMsg: IMessage = { data: null};
@@ -69,7 +70,7 @@ export class WebsocketService {
                     };
                     erasePixelMsg = { data: differenceErased };
                     this.socket.sockets.emit(MessageMultiplayer2D.DIFFERENCE_FOUND, erasePixelMsg);
-                    // this.socket.emit(MessageMultiplayer2D.DIFFERENCE_FOUND, erasePixelMsg);
+
                 } else {
                     this.socket.emit(MessageMultiplayer2D.DIFFERENCE_NOT_FOUND, erasePixelMsg);
                 }
